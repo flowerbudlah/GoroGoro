@@ -1,0 +1,88 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="root" value="${pageContext.request.contextPath }/" />
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게시판 생성 페이지</title>
+<!-- Bootstrap CDN -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<style>
+/* 슬라이더 영역 CSS */
+.slider img{ display:block; width:100%; max-width:100%; height:300px; }
+body{ background-color: white; }
+</style>
+</head>
+<body>
+<!-- 메뉴부분 -->
+<c:import url="/WEB-INF/view/include/top_menu.jsp"/>
+<!--가운데 그림-->
+<article class="slider">	
+	<img src="${root }image/furano02.jpg">
+</article>
+
+<!--메인화면에 내용 들어가는 부분  -->
+<div style="padding-top:100px; padding-bottom:100px; ">
+<div class="container">
+
+	<form action="${root }admin/board_management/boardCategoryName">
+		<strong>1. 카테고리 생성</strong><br>
+		1) 생성할 카테고리 이름: 
+		<input type="text" id="boardCategoryName" value="" name="boardCategoryName" style="width:300px;">
+		<button type="submit" class="btn btn-warning btn-sm" style="text-align:right;">카테고리 생성하기</button>
+	</form>
+	<br>
+	<form action="${root }admin/board_management/boardName">
+		<strong>2. 게시판 생성</strong><br>
+		1) 대분류 카테고리 선택: 
+	 	<select name="boardCategoryNo">
+			<c:forEach var="CategoryListDTO" items="${CategoryList }">	
+				<option value="${CategoryListDTO.boardCategoryNo }">
+					${CategoryListDTO.boardCategoryName }
+				</option>
+			</c:forEach>	
+		</select>
+		 <br>
+		2) 게시판 이름 설정:
+		<input type="hidden" id="boardCategoryNo" value="boardCategoryNo" name="boardCategoryNo"/>
+		<input type="text" id="boardName" value="" name="boardName" style="width:300px;">
+		<button type="submit" class="btn btn-warning btn-sm" style="text-align:right;">새로운 게시판 생성하기</button>	
+	</form>
+	<br>
+	
+	<form action="${root }admin/board_management/changeBoardName">
+		<strong>3. 게시판 이름 변경</strong><br>
+		1) 변경대상 게시판: 
+		<select name="boardNo">
+			<c:forEach var="BoardListDTO" items="${BoardList }">	
+				<option value="${BoardListDTO.boardNo }">
+					${BoardListDTO.boardNo }- ${BoardListDTO.boardName }
+				</option>
+			</c:forEach>	
+		</select><br>
+		2) 변경할 게시판 이름:
+		<input type="hidden" id="boardNo" value="boardNo" name="boardNo"/>
+		<input type="text" id="boardName" value="" name="boardName" style="width:300px;">
+		<button type="submit" class="btn btn-warning btn-sm" style="text-align:right;">변경하기</button>			
+	</form>
+	
+	<br>
+	<strong>4. 게시판 제거</strong><br><br>
+	
+	<strong>5. 게시판 카테고리 변경</strong><br>
+	
+	
+	
+
+</div>
+</div>
+	
+<!-- 하단 -->
+<c:import url="/WEB-INF/view/include/bottom_info.jsp" />
+</body>
+</html>

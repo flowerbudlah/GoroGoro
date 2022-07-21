@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 관리자 페이지 -->
+<mapper namespace="admin">
+
+	<!-- 1. 게시판 대분류 카테고리 생성  -->
+	<insert id="makeCategory" parameterType="java.lang.String" >
+		insert into boardCategory(boardCategoryName) values(#{boardCategoryName})
+	</insert>
+
+	<!-- 2. 대분류 카테고리에 속하는 진짜 게시판 이름과 인덱스 생성 -->
+	<insert id="makeBoard" parameterType="com.tjoeun.spring.dto.BoardDTO" >
+		insert into boardInCategory(boardName, boardCategoryNo) values(#{boardName}, #{boardCategoryNo})
+	</insert>
+	
+	<!-- 3. 게시판 이름 변경 -->
+	<update id="changeBoardName" parameterType="com.tjoeun.spring.dto.BoardDTO" >
+		update boardInCategory 
+		set boardName = #{boardName}
+		where boardNo = #{boardNo}
+	</update>
+	
+	
+		
+		
+		
+		
+</mapper>

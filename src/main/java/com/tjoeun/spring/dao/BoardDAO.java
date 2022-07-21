@@ -1,0 +1,96 @@
+package com.tjoeun.spring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.tjoeun.spring.dto.PostDTO;
+
+@Repository
+public class BoardDAO {
+
+	
+	@Autowired
+	private SqlSessionTemplate sqlSessionTemplate;
+	
+	
+	//1. 전체게시물이 있는 게시판 메인화면(페이지 작업 수행 rowBounds)으로 간다. 
+	public List<PostDTO> goMain(int boardNo, RowBounds rowBounds){
+		List<PostDTO> postList = sqlSessionTemplate.selectList("board.goMain", boardNo, rowBounds); 
+		return postList;
+	}
+	
+	
+	//2. 해당 게시판에 있는 전체게시물 리스트(페이지 작업때문에 필요함.)
+	public int getPostCnt(int boardNo) {
+		int postCnt = sqlSessionTemplate.selectOne("board.getPostCnt", boardNo);
+		return postCnt;
+	}
+
+
+	//2. 글쓰기 Create
+	public int writeProcess(PostDTO writePostDTO) {
+		return sqlSessionTemplate.insert("board.writeProcess", writePostDTO); 
+	}
+
+	
+	//3. 특정한 글 하나 읽기 Read
+	public PostDTO read(int postNo){
+		PostDTO readPostDTO = sqlSessionTemplate.selectOne("board.read", postNo);
+		return readPostDTO;
+	}
+
+	
+
+
+	//4. 특정 글 삭제하기
+	public int deleteBoard(int postNo) throws Exception { 
+		return sqlSessionTemplate.delete("board.deleteBoard", postNo);
+	}
+		
+	//7. 좋아요 버튼
+	public int like(int postNo) throws Exception {
+		return sqlSessionTemplate.update("board.like", postNo); 
+	}
+	
+	//5. 게시판 이름 가져오기 
+	public String getBoardName(int boardNo) {
+		return sqlSessionTemplate.selectOne("board.getBoardName", boardNo);
+	}
+	
+	
+	
+	//6. 조회수 증가 
+	public void increasingViewCount(int postNo) {
+		sqlSessionTemplate.update("board.increasingViewCount", postNo); 
+	}
+	
+	
+
+	
+	
+	//8. 글 수정
+	public void modifyThePost(PostDTO modifyPostDTO) {
+		sqlSessionTemplate.update("board.modifyThePost", modifyPostDTO);
+	}
+
+
+	
+
+
+
+
+
+
+	
+
+
+	
+
+	
+	
+	
+}
