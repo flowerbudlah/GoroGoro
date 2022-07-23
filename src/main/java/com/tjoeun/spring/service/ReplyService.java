@@ -22,7 +22,6 @@ public class ReplyService {
 		ReplyDTO replyDTO = new ReplyDTO();
 			
 		int writingCount = 0;
-		
 		writingCount = replyDAO.writeReplyProcess(writeReplyDTO); 
 			
 		if (writingCount > 0) {
@@ -41,8 +40,27 @@ public class ReplyService {
 	}
 
 	
+	//3. 댓글삭제
+	public ReplyDTO removeReply(int replyNo) {
+		
+		ReplyDTO replyDTO = new ReplyDTO();
+		
+		int removeCount = replyDAO.removeReply(replyNo); 
+		
+		if(removeCount > 0) { //댓글삭제 성공
+			replyDTO.setResult("SUCCESS");
+		}else{ //댓글삭제 미성공
+			replyDTO.setResult("FAIL"); //대소문자가 중요합니다. 
+		}
+		
+		return replyDTO;
+	}
 	
 	
+	
+	
+	
+
 	
 	
 	

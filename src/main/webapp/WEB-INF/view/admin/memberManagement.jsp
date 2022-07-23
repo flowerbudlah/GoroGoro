@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시물 관리</title>
+<title>회원관리</title>
 <!-- Bootstrap CDN -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -19,11 +19,17 @@ body{ background-color: white; }
 </head>
 <body>
 <!-- 메뉴부분 -->
-<c:import url="/WEB-INF/view/include/top_menu.jsp"/>
+<c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
 <article class="slider">	
-	<img src="${root }image/dandelion.jpg">
+	<img src="${root }image/FogAndFlower.jpg">
 </article>
+
+
+
+
+
+
 <!--메인화면에 내용 들어가는 부분  -->
 <div style="margin-top:50px; padding-top:0px; padding-bottom:30px">
 <div class="container">
@@ -34,11 +40,15 @@ body{ background-color: white; }
 	
 	
 	
-
+	
+	
+	
+	
+	
 
 </div>
 </div>
 <!-- 하단 -->
-<c:import url="/WEB-INF/view/include/bottom_info.jsp" />
+<c:import url="/WEB-INF/view/include/bottomInfo.jsp" />
 </body>
 </html>

@@ -3,9 +3,14 @@
   
 <mapper namespace="board">
 
+
 	<!-- 1. 메인페이지로 간다.(with 글목록) -->
 	<select id="goMain" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO">
-		select * from freeBoard where boardNo = #{boardNo} order by postNo desc
+		select postNo, title, content, writer, regDate, viewCount, sameThinking, uploadFileName, boardNo, 
+				(select count(*) from reply where postNo = f.postNo) as replyCount 
+		from freeBoard f 
+		where boardNo = #{boardNo}
+		order by postNo desc
 	</select>
 
 
@@ -24,7 +29,10 @@
 
 	<!-- 3. 글 하나 읽기 Reading -->
 	<select id="read" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO" >
-		select * from freeBoard where postNo=#{postNo}	
+		select postNo, title, content, writer, regDate, viewCount, sameThinking, uploadFileName, boardNo, 
+		(select count(*) from reply where postNo = f.postNo) as replyCount 
+		from freeBoard f 
+		where postNo = #{postNo}	
 	</select>
 	
 	
@@ -56,7 +64,7 @@
 
 	
 	<!-- 8. 글 수정하기 -->
-	<update id="modifyThePost" parameterType="com.tjoeun.spring.dto.PostDTO">
+	<update id="modify" parameterType="com.tjoeun.spring.dto.PostDTO">
 		update freeBoard
 		set title = #{title}, content = #{content}, uploadFileName = #{uploadFileName, jdbcType=VARCHAR} 
 		where postNo = #{postNo}

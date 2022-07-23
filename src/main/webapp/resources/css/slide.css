@@ -48,13 +48,13 @@
   
   /* 각 슬라이드가 변경되는 것을 시각적으로 확인하기 쉽도록 각 슬라이드별 색상 적용 */
   .slide_item.item1 {
-    background-image: url(http://localhost:8090/NerdCommunity/image/banner/slide01.png);
+    background-image: url(http://localhost:8090/GoroGoroCommunity/image/banner/slide01.png);
   }
   .slide_item.item2 {
-    background-image: url(http://localhost:8090/NerdCommunity/image/banner/slide02.png);
+    background-image: url(http://localhost:8090/GoroGoroCommunity/image/banner/slide02.png);
   }
   .slide_item.item3 {
-    background-image: url(http://localhost:8090/NerdCommunity/image/banner/slide03.png);
+    background-image: url(http://localhost:8090/GoroGoroCommunity/image/banner/slide03.png);
   }
   .slide_item.item4 {
     background-image: url();

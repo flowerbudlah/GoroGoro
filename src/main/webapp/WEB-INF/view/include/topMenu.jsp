@@ -61,9 +61,9 @@
 			</li>
 			<li>관리자 페이지
 				<ul> 
-					<li><a href="${root }admin/member_management" style="color:black;">회원 관리</a></li><br>
-					<li><a href="${root }admin/post_management" style="color:black;">게시물 관리</a></li><br>
-					<li><a href="${root }admin/board_management" style="color:black;">게시판 관리</a></li>
+					<li><a href="${root }admin/memberManagement" style="color:black;">회원 관리</a></li><br>
+					<li><a href="${root }admin/postManagement" style="color:black;">게시물 관리</a></li><br>
+					<li><a href="${root }admin/boardManagement" style="color:black;">게시판 관리</a></li>
 				</ul>
 			</li>
 		</ul>

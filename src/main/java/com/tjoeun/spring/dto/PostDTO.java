@@ -17,16 +17,12 @@ public class PostDTO {
 	private Date regDate; //글 작성일
 	private int viewCount; //조회수
 	private  int sameThinking; //좋아요 공감버튼! 
+	private int replyCount; //해당 글의 댓글 수 
 	
 	
 	private String result; 
 	
 	private String uploadFileName; // 데이터베이스에 저장되어있는 파일이름을 저장하는 변수
 	private MultipartFile uploadFile; // browser가 보내는 file data를 저장하는 변수
-
-	
-	
-	
-	
 
 }

@@ -43,9 +43,6 @@ public class BoardDAO {
 		return readPostDTO;
 	}
 
-	
-
-
 	//4. 특정 글 삭제하기
 	public int deleteBoard(int postNo) throws Exception { 
 		return sqlSessionTemplate.delete("board.deleteBoard", postNo);
@@ -68,13 +65,10 @@ public class BoardDAO {
 		sqlSessionTemplate.update("board.increasingViewCount", postNo); 
 	}
 	
-	
 
-	
-	
 	//8. 글 수정
-	public void modifyThePost(PostDTO modifyPostDTO) {
-		sqlSessionTemplate.update("board.modifyThePost", modifyPostDTO);
+	public int modify(PostDTO modifyPostDTO) {
+		return sqlSessionTemplate.update("board.modify", modifyPostDTO);
 	}
 
 

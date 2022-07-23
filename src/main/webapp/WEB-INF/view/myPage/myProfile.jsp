@@ -20,7 +20,7 @@ body{ background-color: white; }
 </head>
 <body>
 <!-- 메뉴부분 -->
-<c:import url="/WEB-INF/view/include/top_menu.jsp"/>
+<c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
 <article class="slider">	
 	<img src="${root }image/yamamotoShinzi_food.jpg">
@@ -45,6 +45,6 @@ body{ background-color: white; }
 </div>
 	
 <!-- 하단 -->
-<c:import url="/WEB-INF/view/include/bottom_info.jsp" />
+<c:import url="/WEB-INF/view/include/bottomInfo.jsp" />
 </body>
 </html>

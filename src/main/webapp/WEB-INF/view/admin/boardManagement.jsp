@@ -20,7 +20,7 @@ body{ background-color: white; }
 </head>
 <body>
 <!-- 메뉴부분 -->
-<c:import url="/WEB-INF/view/include/top_menu.jsp"/>
+<c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
 <article class="slider">	
 	<img src="${root }image/furano02.jpg">
@@ -30,14 +30,14 @@ body{ background-color: white; }
 <div style="padding-top:100px; padding-bottom:100px; ">
 <div class="container">
 
-	<form action="${root }admin/board_management/boardCategoryName">
+	<form action="${root }admin/boardManagement/boardCategoryName">
 		<strong>1. 카테고리 생성</strong><br>
 		1) 생성할 카테고리 이름: 
 		<input type="text" id="boardCategoryName" value="" name="boardCategoryName" style="width:300px;">
 		<button type="submit" class="btn btn-warning btn-sm" style="text-align:right;">카테고리 생성하기</button>
 	</form>
 	<br>
-	<form action="${root }admin/board_management/boardName">
+	<form action="${root }admin/boardManagement/boardName">
 		<strong>2. 게시판 생성</strong><br>
 		1) 대분류 카테고리 선택: 
 	 	<select name="boardCategoryNo">
@@ -55,7 +55,7 @@ body{ background-color: white; }
 	</form>
 	<br>
 	
-	<form action="${root }admin/board_management/changeBoardName">
+	<form action="${root }admin/boardManagement/changeBoardName">
 		<strong>3. 게시판 이름 변경</strong><br>
 		1) 변경대상 게시판: 
 		<select name="boardNo">
@@ -83,6 +83,6 @@ body{ background-color: white; }
 </div>
 	
 <!-- 하단 -->
-<c:import url="/WEB-INF/view/include/bottom_info.jsp" />
+<c:import url="/WEB-INF/view/include/bottomInfo.jsp" />
 </body>
 </html>

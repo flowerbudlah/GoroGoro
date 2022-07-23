@@ -94,7 +94,7 @@ body{ background-color: white; }
 </style>
 </head>
 <body>
-<c:import url="/WEB-INF/view/include/top_menu.jsp" />
+<c:import url="/WEB-INF/view/include/topMenu.jsp" />
 <article class="slider">
 	<img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg">	
 </article>
@@ -146,6 +146,6 @@ body{ background-color: white; }
 	</div>
 </div>
 <!-- 하단 정보 -->  
-<c:import url="/WEB-INF/view/include/bottom_info.jsp" />
+<c:import url="/WEB-INF/view/include/bottomInfo.jsp" />
 </body>
 </html>

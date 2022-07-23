@@ -4,17 +4,26 @@
 
 <mapper namespace="reply">
 
-	<!-- 댓글 달기 -->
+	<!--1. 댓글 달기 -->
 	<insert id="writeReplyProcess" parameterType="com.tjoeun.spring.dto.ReplyDTO" useGeneratedKeys="true" keyProperty="replyNo">
 		insert into reply(postNo, replyContent, replyWriter, replyRegDate) 
 				values(#{postNo}, #{replyContent}, #{replyWriter}, Now())
 	</insert>
 
 
-	<!-- 댓글 목록 가져오기 -->
+	<!--2. 댓글 목록 가져오기 -->
 	<select id="replyList" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.ReplyDTO">
 		select * from reply where postNo = #{postNo}        
 	</select>
+	
+	
+	<!-- 3. 댓글 삭제 -->
+	<delete id="removeReply" parameterType="java.lang.Integer">
+		delete from reply where replyNo = #{replyNo}
+	</delete>
+	
+	
+	
 	
 	
 	

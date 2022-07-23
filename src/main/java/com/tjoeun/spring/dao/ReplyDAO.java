@@ -26,7 +26,16 @@ public class ReplyDAO {
 	    return sqlSessionTemplate.selectList("reply.replyList", postNo);
 	}
 	
+	//3. 댓글삭제
+	public int removeReply(int replyNo) {
+		return sqlSessionTemplate.delete("reply.removeReply", replyNo);
+	}
 	
-
+	
+	
+	
+	
+	
+	
 	
 }

@@ -129,14 +129,24 @@ public class BoardService {
 	}
 	
 	
-	
-
-	
 	//8. 글수정
-	public void modifyThePosts(PostDTO modifyPostDTO) {
+	public PostDTO modify(PostDTO modifyPostDTO) {
 		
-		boardDAO.modifyThePost(modifyPostDTO);
+		PostDTO postDTO = new PostDTO(); 
+		
+		int updateCnt = boardDAO.modify(modifyPostDTO);
+		
+		if (updateCnt > 0) {
+			postDTO.setResult("SUCCESS"); 
+		} else {
+			postDTO.setResult("FAIL");
+		}
+		return postDTO;
+	}
+		
+		
+		
+		
+				
 		
 	}
-
-}

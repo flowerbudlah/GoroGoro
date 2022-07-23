@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <c:url var="root" value="${pageContext.request.contextPath }/" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,16 +60,10 @@ function deleteBoardCallback(obj){
     }
 }
 
-//3. 게시글 수정 페이지로 이동
-function modify(){
-	location.href = "modify";
-}
-
 //4. 신고하기
 function report(){
 	location.href = "report";
 }
-
 
 //5. 좋아요. 공감버튼
 function like(){
@@ -89,11 +84,10 @@ function like(){
             		var result = obj.result;
             		
             		if(result == "SUCCESS"){
-            			
             			alert("공감하셨습니다.");   
-            			location.reload();
-            	
-            			//location.href = "read?postNo=${postNo}";  
+            			location.href = "read?postNo=${postNo}";  
+            			location.reload(); 
+            			return;
             		} else {     
             			alert("공감하는것에 문제가 생김");    
             			return;
@@ -107,10 +101,10 @@ function like(){
     } //yn 끝  
 }//Like의 끝
 
+
 function writeReplyProcess(){ //댓글 작성
 	
 	var postNo = $("#postNo").val(); //게시물 번호 
-	
 	var replyWriter = $("#replyWriter").val(); //작성자
 	var replyContent = $("#replyContent").val(); //내용
 	
@@ -132,7 +126,7 @@ function writeReplyProcess(){ //댓글 작성
 			
 		 $.ajax({   
                 url      : "writeReplyProcess",
-                data     : $("#writeReplyDTO").serialize(),
+                data     : $("#writeReplyDTO").serialize(), // controller 단 참조할 것!
                 dataType : "JSON",
                 cache    : false,
                 async    : true,
@@ -154,14 +148,58 @@ function writeReplyProcess(){ //댓글 작성
 			if(result == "SUCCESS"){				
 				alert("댓글 등록을 성공하였습니다.");				
 				location.href = "read?postNo=${postNo}";  
-				
+				return;
 			} else {				
 				alert("댓글 등록을 실패하였습니다.");	
 				return;
 			}
 		}
 	}
+	
+	function removeReply(){
+		
+		var replyNo = $("#replyNo").val(); //리플 번호
+		
+		var yn = confirm("댓글을 삭제하시겠습니까?");		
+		
+		if(yn){
+				
+			 $.ajax({   
+	                url      : "removeReply",
+	                data     : { replyNo : replyNo },
+	                dataType : "JSON",
+	                cache    : false,
+	                async    : true,
+	                type     : "POST",    
+	                success  : function(obj) { 
+	                	afterRemove(obj); 
+	                },           
+	                error: function(request,status,error){
+	                	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	                }
+				}) //아작스 
+			};	//yn의 끝
+	}
+	
+	
+	//2. 2) 댓글 삭제 콜백함수
+	function afterRemove(obj){
 
+	    if(obj != null){        
+	        
+	        var result = obj.result;
+	        
+	        if(result == "SUCCESS"){  
+	            alert("댓글 삭제를 성공하였습니다.");   
+	            location.href = "read?postNo=${postNo}";  
+	        } else {     
+	            alert("댓글 삭제를 실패하였습니다.");    
+	            return;
+	        }
+	    }
+	}
+
+	
 </script>
 <style>
 .reply{ font-size: 12px; }
@@ -171,7 +209,7 @@ function writeReplyProcess(){ //댓글 작성
 </head>
 <body>
 <!-- 상단 메뉴 부분 -->
-<c:import url="/WEB-INF/view/include/top_menu.jsp" />
+<c:import url="/WEB-INF/view/include/topMenu.jsp" />
 <!-- 본문 -->
 <div class="container" style="margin-top:200px; margin-bottom:100px;">
 	<div class="row">
@@ -208,13 +246,13 @@ function writeReplyProcess(){ //댓글 작성
 			<textarea id="content" name="content" class="form-control" rows="20" style="resize:none" disabled="disabled">${readPostDTO.content}</textarea>
 		</div><!-- 첨부이미지와 내용 end -->
 		
-		</form>
 		<!-- 댓글 관련 부분 -->
 		<div class="form-group">
-			<label for="board_content">댓글[0]</label><br>
+			<label for="board_content">댓글 [${readPostDTO.replyCount }] </label>
+		</div>
+				</form>
 				
-				
-				<!--댓글 목록불러오기 -->
+<!--댓글 목록불러오기 -->
 <div class="reply">
 	<ul>
 	<c:forEach var="reply" items="${replyList}" >
@@ -224,14 +262,19 @@ function writeReplyProcess(){ //댓글 작성
 			<div class="replyDate">댓글작성일시: 
 			<fmt:formatDate value="${reply.replyRegDate}" pattern="yyyy-MM-dd hh:mm:ss" />
 			<!-- 댓글삭제버튼은 댓글작성자와 관리자만 볼 수 있게 처리 -->
-			
-	<a href="" class="badge badge-pill badge-light" style="font-size:13px;">X</a>
-			
+
+			<a class="badge badge-pill badge-light" style="font-size:13px;" onclick="javascript:removeReply();" >
+				<input type="hidden" id="replyNo" name="replyNo" value="${reply.replyNo}"/> 
+		
+			X
+			</a>
+			 
 			</div>
 <textarea id="replyContent" name="replyContent" class="form-control" rows="3" style="resize:none" disabled="disabled">
 ${reply.replyContent }
 </textarea>
-		</li><br>
+		</li>
+		<br>
 	</c:forEach>
 	</ul>
 </div>
@@ -278,7 +321,8 @@ ${reply.replyContent }
 	<div class="form-group">
 		<div class="text-right">
 			<button type="button" class="btn btn-primary btn-sm" onclick="javascript:goMain();">목록으로</button>
-			<a href="modify" class="btn btn-info btn-sm" onclick="javascript:modify();">수정하기</a>
+			<a href="modify?postNo=${postNo }" class="btn btn-info btn-sm">수정하기</a>
+			<!--http://localhost:8090/GoroGoroCommunity/board/modify?postNo=1  -->
 			<button type="button" class="btn btn-secondary btn-sm" onclick="javascript:deleteBoard();">삭제하기</button>
 			<a href="report" class="btn btn-danger btn-sm" onclick="javascript:report();">게시글 신고</a>&emsp;&emsp; 
 		</div>
@@ -289,8 +333,7 @@ ${reply.replyContent }
 	</div>
 	<div class="col-sm-3"></div>
 	</div>
-</div>
 <!-- 하단 정보 -->  
-<c:import url="/WEB-INF/view/include/bottom_info.jsp" />
+<c:import url="/WEB-INF/view/include/bottomInfo.jsp" />
 </body>
 </html>
