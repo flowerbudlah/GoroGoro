@@ -21,7 +21,7 @@ function goMain(){
 	location.href = "main?boardNo=${readPostDTO.boardNo}";
 }
 
-//2. 게시글 삭제
+//2. 1) 게시글 삭제
 function deleteBoard(){
 	var postNo = $("#postNo").val();
 	var yn = confirm("게시글을 삭제하시겠습니까?");        
@@ -101,9 +101,8 @@ function like(){
     } //yn 끝  
 }//Like의 끝
 
-
-function writeReplyProcess(){ //댓글 작성
-	
+//6. 댓글 작성
+function writeReplyProcess(){
 	var postNo = $("#postNo").val(); //게시물 번호 
 	var replyWriter = $("#replyWriter").val(); //작성자
 	var replyContent = $("#replyContent").val(); //내용
@@ -139,67 +138,62 @@ function writeReplyProcess(){ //댓글 작성
 		};	//yn의 끝
 	} //writeReplyProcess
 
-	function writeReplyCallback(obj){ //댓글 작성 콜백 함수
+//7. 댓글 작성 콜백 함수
+function writeReplyCallback(obj){ 
 	
-		if(obj != null){		
+	if(obj != null){		
+	var result = obj.result;
 			
-			var result = obj.result;
-			
-			if(result == "SUCCESS"){				
-				alert("댓글 등록을 성공하였습니다.");				
-				location.href = "read?postNo=${postNo}";  
-				return;
-			} else {				
-				alert("댓글 등록을 실패하였습니다.");	
-				return;
-			}
+	if(result == "SUCCESS"){				
+		alert("댓글 등록을 성공하였습니다.");				
+		location.href = "read?postNo=${postNo}";  
+		return;
+	} else {				
+		alert("댓글 등록을 실패하였습니다.");	
+		return;
+	}
 		}
 	}
 	
-	function removeReply(){
+
+//8. 댓글 삭제 콜백 함수
+function removeReply(){
+	var replyNo = $("#replyNo").val(); //리플 번호
+	
+	var yn = confirm("댓글을 삭제하시겠습니까?");		
 		
-		var replyNo = $("#replyNo").val(); //리플 번호
+	if(yn){
 		
-		var yn = confirm("댓글을 삭제하시겠습니까?");		
-		
-		if(yn){
-				
-			 $.ajax({   
-	                url      : "removeReply",
-	                data     : { replyNo : replyNo },
-	                dataType : "JSON",
-	                cache    : false,
-	                async    : true,
-	                type     : "POST",    
-	                success  : function(obj) { 
-	                	afterRemove(obj); 
-	                },           
-	                error: function(request,status,error){
-	                	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	                }
+		$.ajax({   
+			url      : "removeReply",
+			data     : { replyNo : replyNo },
+			dataType : "JSON",
+			cache    : false,
+			async    : true,
+			type     : "POST",    
+			success  : function(obj) { afterRemove(obj); },           
+			error	 : function(request,status,error){
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
 				}) //아작스 
 			};	//yn의 끝
+		}
+	
+//9. 댓글 삭제 콜백 함수	
+function afterRemove(obj){
+	if(obj != null){        
+		
+		var result = obj.result;
+		
+		if(result == "SUCCESS"){  
+			alert("댓글 삭제를 성공하였습니다.");   
+			location.href = "read?postNo=${postNo}";  
+		} else {     
+			alert("댓글 삭제를 실패하였습니다.");    
+			return;
+		}
 	}
-	
-	
-	//2. 2) 댓글 삭제 콜백함수
-	function afterRemove(obj){
-
-	    if(obj != null){        
-	        
-	        var result = obj.result;
-	        
-	        if(result == "SUCCESS"){  
-	            alert("댓글 삭제를 성공하였습니다.");   
-	            location.href = "read?postNo=${postNo}";  
-	        } else {     
-	            alert("댓글 삭제를 실패하였습니다.");    
-	            return;
-	        }
-	    }
-	}
-
-	
+}
 </script>
 <style>
 .reply{ font-size: 12px; }
@@ -217,8 +211,8 @@ function writeReplyProcess(){ //댓글 작성
 	<div class="col-sm-7">
 	<div class="card shadow-none">
 	<div class="card-body">
-	<h4 class="card-title">${postNo }</h4>
-		<form id="boardForm" name="boardForm">     
+	<h4 class="card-title"></h4>
+	<form id="boardForm" name="boardForm">     
 		<div class="form-group">
 			<label for="postNo">글번호</label>
 			<input type="text" id="postNo" name="postNo" class="form-control" value="${readPostDTO.postNo}" disabled="disabled"/>
@@ -237,45 +231,37 @@ function writeReplyProcess(){ //댓글 작성
 			<input type="text" id="title" name="title" class="form-control" value="${readPostDTO.title}" disabled="disabled"/>
 		</div>
 		
-		<div class="form-group"><!-- 첨부이미지와 내용 start -->
+		<!-- 첨부이미지와 내용 start -->
 		<div class="form-group">
-			<label for="board_file"><!-- 첨부이미지 --></label>
+		<div class="form-group">
+			<!-- 첨부이미지 -->
+			<label for="board_file">	</label>
 			<img src="image/logo.png" width="100%"/>            
 		</div>
 			<label for="content">내용</label>
 			<textarea id="content" name="content" class="form-control" rows="20" style="resize:none" disabled="disabled">${readPostDTO.content}</textarea>
-		</div><!-- 첨부이미지와 내용 end -->
-		
-		<!-- 댓글 관련 부분 -->
+		</div>
+		<!-- 첨부이미지와 내용 end -->
 		<div class="form-group">
 			<label for="board_content">댓글 [${readPostDTO.replyCount }] </label>
 		</div>
-				</form>
-				
-<!--댓글 목록불러오기 -->
-<div class="reply">
-	<ul>
-	<c:forEach var="reply" items="${replyList}" >
-		<li>
-
-			<div class="replyWiter">작성자: ${reply.replyWriter}</div>
-			<div class="replyDate">댓글작성일시: 
-			<fmt:formatDate value="${reply.replyRegDate}" pattern="yyyy-MM-dd hh:mm:ss" />
-			<!-- 댓글삭제버튼은 댓글작성자와 관리자만 볼 수 있게 처리 -->
-
-			<a class="badge badge-pill badge-light" style="font-size:13px;" onclick="javascript:removeReply();" >
-				<input type="hidden" id="replyNo" name="replyNo" value="${reply.replyNo}"/> 
-		
-			X
-			</a>
-			 
-			</div>
-<textarea id="replyContent" name="replyContent" class="form-control" rows="3" style="resize:none" disabled="disabled">
-${reply.replyContent }
-</textarea>
-		</li>
-		<br>
-	</c:forEach>
+	</form>
+	<!--댓글 목록불러오기 -->
+	<div class="reply">
+		<ul>
+		<c:forEach var="reply" items="${replyList}" >
+			<li>
+				<div class="replyWiter">작성자: ${reply.replyWriter}
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+				댓글작성일시: <fmt:formatDate value="${reply.replyRegDate}" pattern="yyyy-MM-dd hh:mm:ss" />
+				<!-- 댓글삭제버튼은 댓글작성자와 관리자만 볼 수 있게 처리 -->
+				<a class="badge badge-pill badge-light" style="font-size:13px;" onclick="javascript:removeReply();" >
+					<input type="hidden" id="replyNo" name="replyNo" value="${reply.replyNo}"/>X <!-- 댓글삭제버튼 -->
+				</a>
+				</div>
+				<textarea id="replyContent" name="replyContent" class="form-control" rows="3" style="resize:none" disabled="disabled">${reply.replyContent }</textarea>
+			</li><br>
+		</c:forEach>
 	</ul>
 </div>
 				

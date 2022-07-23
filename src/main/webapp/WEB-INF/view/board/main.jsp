@@ -22,7 +22,7 @@
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!-- 그 게시판 윗 부분 그림-->
 <article class="slider">
-	<img src="http://localhost:8090/NerdCommunity/image/convenientStore.png"> 
+	<img src="http://localhost:8090/GoroGoroCommunity/image/convenientStore.png"> 
 </article>
 
 <!--Post List(게시글 리스트)-->
