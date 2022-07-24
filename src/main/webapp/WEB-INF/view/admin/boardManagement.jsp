@@ -15,7 +15,6 @@
 <style>
 /* 슬라이더 영역 CSS */
 .slider img{ display:block; width:100%; max-width:100%; height:300px; }
-body{ background-color: white; }
 </style>
 </head>
 <body>
@@ -81,7 +80,6 @@ body{ background-color: white; }
 
 </div>
 </div>
-	
 <!-- 하단 -->
 <c:import url="/WEB-INF/view/include/bottomInfo.jsp" />
 </body>

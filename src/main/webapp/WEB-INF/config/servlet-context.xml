@@ -93,6 +93,7 @@
     <beans:constructor-arg ref="messageSource"/>
     </beans:bean>
   
+  
 	<!-- enctype="multipart/form-data를 설정했을 때 data가 정상적으로 전송되게 함-->
 	<beans:bean class="org.springframework.web.multipart.support.StandardServletMultipartResolver" id="multipartResolver"/>
                  

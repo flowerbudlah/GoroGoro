@@ -22,7 +22,17 @@ public class PostDTO {
 	
 	private String result; 
 	
+	
+	
 	private String uploadFileName; // 데이터베이스에 저장되어있는 파일이름을 저장하는 변수
+	//팡야에서 private String post_file; 
+	
+	
 	private MultipartFile uploadFile; // browser가 보내는 file data를 저장하는 변수
+	//팡야에서 private MultipartFile upload_file; 
+	
+	
+	
+	
 
 }

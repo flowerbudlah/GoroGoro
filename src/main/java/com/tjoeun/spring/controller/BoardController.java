@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
@@ -48,9 +49,6 @@ public class BoardController {
 		model.addAttribute("pageDTO", pageDTO);
 		model.addAttribute("page", page);
 		
-	
-		
-		
 		return "board/main";
 		
 	}
@@ -62,12 +60,14 @@ public class BoardController {
 		return "board/write";
 	}
 	
+	
 	//3. 게시글 등록 Creating 
 	@RequestMapping("/writeProcess")
-    public @ResponseBody PostDTO writeProcess(HttpServletRequest request, HttpServletResponse response, PostDTO writePostDTO) {	
+    public @ResponseBody PostDTO writeProcess(HttpServletRequest request, HttpServletResponse response, PostDTO writePostDTO){	
     	PostDTO postDTO = boardService.writeProcess(writePostDTO);
         return postDTO;
     }
+	
 	
 	//4. 글읽기 Reading (댓글 포함)
 	@RequestMapping("/read")
@@ -85,8 +85,8 @@ public class BoardController {
 		List<ReplyDTO> replyList =  replyService.replyList(postNo);
 		model.addAttribute("replyList", replyList); 
 		
-	
 		return "board/read";
+		
 	}
 		
 	//5. 글 삭제 Deleting
@@ -102,8 +102,6 @@ public class BoardController {
 		ReplyDTO ReplyDTO = replyService.removeReply(replyNo); 
 		return ReplyDTO;
 	}
-		
-	
 	
 	//6. 좋아요(추천, 공감)
 	@RequestMapping("/like") // http://localhost:8090/NerdCommunity/board/like
@@ -122,8 +120,7 @@ public class BoardController {
     }
 	
 	
-	
-	
+
 	//7. 글 수정 페이지로 이동
 	@RequestMapping("/modify")
 	public String modify(@RequestParam("postNo") int postNo, @ModelAttribute("modifyPostDTO") PostDTO modifyPostDTO, Model model) {

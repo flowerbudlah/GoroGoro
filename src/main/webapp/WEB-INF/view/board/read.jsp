@@ -199,6 +199,7 @@ function afterRemove(obj){
 .reply{ font-size: 12px; }
 .replyWriter{ text-align:left; position: absolute; }
 .replyRegDate{ text-align:right;  position: relative; }
+
 </style>
 </head>
 <body>
@@ -294,16 +295,19 @@ function afterRemove(obj){
 			<center>
 				<a href="read?postNo=${postNo}" onclick="javascript:like();">
 					<input type="hidden" id="postNo" name="postNo"	value="${postNo}"/> <!-- 게시글 번호 -->
-					<img src="http://localhost:8090/NerdCommunity/image/sameThoughtButton.gif">
+					<img src="http://localhost:8090/GoroGoroCommunity/image/sameThoughtButton.gif">
+					
+					
 				</a>
 				<br>
 				<strong>★${readPostDTO.sameThinking }★</strong>
 				
 			</center>
 		</div>
-	
+		<br><br>
 		
-	</div><!-- <div class="card-body"> -->
+	
+	
 	<div class="form-group">
 		<div class="text-right">
 			<button type="button" class="btn btn-primary btn-sm" onclick="javascript:goMain();">목록으로</button>
@@ -314,7 +318,7 @@ function afterRemove(obj){
 		</div>
 	</div>
           
-   
+   </div><!-- <div class="card-body"> -->
 	</div>
 	</div>
 	<div class="col-sm-3"></div>

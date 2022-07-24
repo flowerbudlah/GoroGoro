@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var='root' value="${pageContext.request.contextPath }/"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,8 +30,6 @@
  		var title = $("#title").val(); //제목
 		var content = $("#content").val(); //내용
 		
-		var uploadFileName = $("#uploadFileName").val(); 
-		
 		if (writer == ""){			
 			alert("작성자를 입력해주세요.");
 			$("#writer").focus();
@@ -57,8 +56,10 @@
 				
 			 $.ajax({   
 	                url      : "${root}board/writeProcess",
-	                data     : $("#writePostDTO").serialize(),
+	              
+	                data     : $("#writePostDTO").serialize(), 
 	                dataType : "JSON",
+	                 
 	                cache    : false,
 	                async    : true,
 	                type     : "POST",    
@@ -105,10 +106,11 @@ body{ background-color: white; }
 		<div class="col-sm-7">
 			<div class="card shadow-sm">
 				<div class="card-body"><h4 class="card-title">글쓰기</h4>
-			
-				<form id="writePostDTO" name="writePostDTO" enctype="multipart/form-data">	
+
+				<form id="writePostDTO" method="post" name="writePostDTO" enctype="multipart/form-data">	
 				
-				<input type="hidden" name="boardNo" id="boardNo" value="${boardNo }">
+					<input type="hidden" name="boardNo" id="boardNo" value="${boardNo }">
+				
 					<div class="form-group">
 						<label for="writer">작성자</label>
 						<input type="text" id="writer" name="writer" class="form-control"/>
@@ -119,14 +121,14 @@ body{ background-color: white; }
 					</div>
 					<div class="form-group">
 						<label for="content">내용</label>
-						<textarea id="content" name="content" class="form-control" rows="10" style="resize:none"></textarea>
+						<textarea id="content" name="content" class="form-control" rows="15" style="resize:none"></textarea>
 					</div>
 					
 					<div class="form-group">
-						<label for="uploadFileName">첨부 이미지</label>
-						<input type="file" id="uploadFileName" name="uploadFileName" class="form-control" accept="image/*"/>
+						<label for="uploadFile">첨부 이미지</label>
+						<input type="file" id="uploadFile" name="uploadFile" class="form-control" accept="image/*" multiple="true"/>
 					</div>
-								
+									
 					<div class="form-group">
 						<div class="text-right">
 							
@@ -135,9 +137,8 @@ body{ background-color: white; }
 							
 						</div>	
 					</div>
-					
+			
 					</form>
-					
 					
 				</div>
 			</div>

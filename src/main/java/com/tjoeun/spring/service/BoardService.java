@@ -1,5 +1,7 @@
 package com.tjoeun.spring.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tjoeun.spring.dao.BoardDAO;
 import com.tjoeun.spring.dto.PageDTO;
@@ -17,14 +20,19 @@ import com.tjoeun.spring.dto.PostDTO;
 @PropertySource("/WEB-INF/properties/option.properties")
 public class BoardService {
 	
+	
 	@Value("${path.load}")
 	private String pathLoad; //파일 업로드와 관련있다. 파일 경로 
+	
 	
 	@Value("${page.listcnt}")
 	private int page_listcnt; // 한 페이지당 보여주는 글의 개수
 	
+	
 	@Value("${page.paginationcnt}")
 	private int page_paginationcnt;	// 한 페이지당 보여주는 페이지 버튼 개수
+	
+	
 	
 	@Autowired
 	private BoardDAO boardDAO; 
@@ -56,23 +64,23 @@ public class BoardService {
 	}
 	
 	
-	
 	//2-2. 글쓰기
 	public PostDTO writeProcess(PostDTO writePostDTO) {
 				
 		PostDTO postDTO = new PostDTO();
 		
-		int writingCount = 0;
-		writingCount = boardDAO.writeProcess(writePostDTO); 
+
+		int writingCount = boardDAO.writeProcess(writePostDTO); //글 입력
+		
 		if (writingCount > 0) {
 			postDTO.setResult("SUCCESS");
 		} else {
 			postDTO.setResult("FAIL"); 
 		}
-		return postDTO;				
+		
+		return postDTO;		
 	}
 	
-
 	//3. 특정한 게시글 하나 읽기
 	public PostDTO read(int postNo){
 		PostDTO readPostDTO = boardDAO.read(postNo);

@@ -92,14 +92,9 @@ body{ background-color: white; }
 					</div>
 					<form:input path="member_address" placeholder="상세주소" id="roadAddress" class="form-control"/>
 				</div>
-				<div class="form-group"> 
-					<form:label path="question">아이디 또는 비밀번호 분실시 질문</form:label>
-					<form:input path="question" class="form-control"/>
-				</div> 
-                 <div class="form-group">
-					<form:label path="answer">위 질문에 대한 답</form:label>
-					<form:input path="answer" class="form-control"/>
-				</div>   
+				
+			
+           
 				<div class="text-right" style="margin-top:100px">
 					<form:button class="btn btn-danger" onclick="javascript:join_success();">회원가입 완료</form:button>
 				</div>

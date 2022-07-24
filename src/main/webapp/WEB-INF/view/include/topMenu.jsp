@@ -22,7 +22,7 @@
 	
 	<!-- 배너 들어갈 자리 -->
 	<a class="navbar-brand" href="${root }main">
-		<img src="${root}image/banner/peko_And_Poko.png" height="50px">
+		<img src="${root}image/banner/pinkPeko.gif" height="50px">
 		<img src="${root}image/banner/banner.png" height="50px"><!-- 고로고로 배너 -->	
 	</a>
 	
