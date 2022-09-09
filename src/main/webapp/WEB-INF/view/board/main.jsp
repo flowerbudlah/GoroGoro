@@ -20,24 +20,23 @@ function searchList(){
 	
 	var postNo = $("#postNo").val(); //게시물 번호 
 	var type = $("#type").val(); //타입
-	var keyword = $("#keyword").val(); //내용
+	var keyword = $("#keyword").val(); 
 	
 	$.ajax({
 		type: 'GET',
 		url : 'searchList',
 		data : $("form[name=search-form]").serialize(),
 		success : function(result){
-			$('#boardtable > tbody').empty(); 	//테이블 초기화
+			$('#boardtable').empty(); 	//테이블 초기화
 			if(result.length>=1){
 				result.forEach(function(item){
 					str='<tr>'
-					str+="<td>"+item.postNo+"</td>"; //글번호
-					str+="<td><a href='/board/detail?idx=" +item.postNo+ "'>" + item.title + "</a></td>"; //제목
-					str+="<td>"+item.writer+"</td>"; //작성자
-					str+="<td>"+item.regDate+"</td>"; //작성날짜
-					//<fmt:formatDate value="${postDTO.regDate }" pattern="yyyy-MM-dd"/>
-					str+="<td>"+item.viewCount+"</td>"; //조회수
-					str+="<td>"+item.sameThinking+"</td>"; //공감수
+					str+="<td><center>"+item.postNo+"</center></td>"; //글번호
+					str+="<td><a href='read?postNo=" +item.postNo+ "'>" + item.title + "<font color='red'>["+ item.replyCount+"]</font></a></td>"; //제목
+					str+="<td><center>"+item.writer+"</center></td>"; //작성자
+					str+="<td><center><fmt:formatDate value="+item.regDate+"pattern='yyyy-MM-dd'/></center></td>"; //작성날짜
+					str+="<td><center>"+item.viewCount+"</center></td>"; //조회수
+					str+="<td><center>"+item.sameThinking+"</center></td>"; //공감수
 					str+="</tr>"
 					$('#boardtable').append(str);
         		})				 
@@ -56,9 +55,7 @@ function searchList(){
 <!-- 그 게시판 윗 부분 그림-->
 <article class="slider">
 	<img src="/GoroGoroCommunity/image/convenientStore.png"> 
-	<!-- http://localhost:8090        /GoroGoroCommunity/image/convenientStore.png -->
 </article>
-
 <!--Post List(게시글 리스트)-->
 <div class="container" style="margin-top:100px; margin-bottom:100px;">
 	<div class="card shadow-none">
@@ -76,6 +73,7 @@ function searchList(){
 						<th class="text-center d-none d-md-table-cell">공감수</th>
 					</tr>
 				</thead>
+				
 				
 				<tbody id="boardtable">
 				<c:forEach var="postDTO" items="${postList }" >
@@ -95,7 +93,6 @@ function searchList(){
 					</tr>
 				</c:forEach>
 				</tbody>
-				
 				
 				
 				
@@ -163,9 +160,10 @@ function searchList(){
 				<option value="title">제목</option>
 				<option value="content">내용</option>
 				<option value="writer">작성자</option>
-			</select>
-			<input type="text" name="keyword" value="" required="required" id="keyword"></input>
-			<input type="button" onclick="searchList()" class="btn btn-warning btn-sm" value="검색"></input>	
+			</select>			
+			<input type="text" name="keyword" required="required" id="keyword"  value=""/>
+			<input type="button" value="검색" onclick="searchList()" class="btn btn-warning btn-sm" />
+			
 		</form>
 		<!-- 검색기능끝 -->	
 				

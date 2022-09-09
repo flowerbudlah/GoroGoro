@@ -69,7 +69,6 @@ public class BoardController {
 		searchListPostDTO.setType(type); 
 		searchListPostDTO.setKeyword(keyword); 
 		
-	
 		List<PostDTO> searchList = boardService.searchList(searchListPostDTO);  
 		model.addAttribute("searchList", searchList);
 		

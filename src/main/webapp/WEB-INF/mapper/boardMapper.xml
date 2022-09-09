@@ -3,14 +3,13 @@
   
 <mapper namespace="board">
 
-
 	<!-- 1. 메인페이지로 간다.(with 글목록) -->
 	<select id="goMain" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO">
 		select postNo, title, content, writer, regDate, viewCount, sameThinking, uploadFileName, boardNo, 
 				(select count(*) from reply where postNo = f.postNo) as replyCount 
 		from freeBoard f 
 		where boardNo = #{boardNo}
-		order by postNo desc
+		order by postNo DESC
 	</select>
 
 
