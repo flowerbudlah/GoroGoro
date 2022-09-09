@@ -17,6 +17,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">    
 function searchList(){
+	
+	var postNo = $("#postNo").val(); //게시물 번호 
+	var type = $("#type").val(); //타입
+	var keyword = $("#keyword").val(); //내용
+	
 	$.ajax({
 		type: 'GET',
 		url : 'searchList',
@@ -36,7 +41,7 @@ function searchList(){
 					str+="</tr>"
 					$('#boardtable').append(str);
         		})				 
-			}
+			} //if문의 끝
 		}  //function의 끝
 	}) //ajax의 끝
 }//function의 끝	
@@ -153,20 +158,17 @@ function searchList(){
 			
 		<!-- 검색 기능 -->			
 		<form name="search-form" autocomplete="off" class="text-center" style="margin-top:30px; margin-bottom:30px;">
-			<input type="hidden" name="boardNo" value="${boardNo }" required="required"/>
-			<select name="type">
+			<input type="hidden" name="boardNo" value="${boardNo }" required="required" id="boardNo"/>
+			<select name="type" id="type">
 				<option value="title">제목</option>
 				<option value="content">내용</option>
 				<option value="writer">작성자</option>
 			</select>
-			<!-- http://localhost:8090/GoroGoroCommunity/board/main?boardNo=1 -->
-			<!-- http://localhost:8090/GoroGoroCommunity/board/main?type=title&keyword=%E3%84%B9%E3%85%87%E3%84%B9&boardNo=1 -->
-			<input type="text" name="keyword" value=""></input>
+			<input type="text" name="keyword" value="" required="required" id="keyword"></input>
 			<input type="button" onclick="searchList()" class="btn btn-warning btn-sm" value="검색"></input>	
 		</form>
 		<!-- 검색기능끝 -->	
-
-		
+				
 		</div>
 	</div>
 </div>
