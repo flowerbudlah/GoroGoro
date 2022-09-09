@@ -23,7 +23,6 @@ public class BoardDAO {
 		return postList;
 	}
 	
-	
 	//2. 해당 게시판에 있는 전체게시물 리스트(페이지 작업때문에 필요함.)
 	public int getPostCnt(int boardNo) {
 		int postCnt = sqlSessionTemplate.selectOne("board.getPostCnt", boardNo);
@@ -71,20 +70,14 @@ public class BoardDAO {
 		return sqlSessionTemplate.update("board.modify", modifyPostDTO);
 	}
 
-
 	
-
-
-
-
-
-
-	
-
-
-	
-
+	//게시판 글 검색
+	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
+		return sqlSessionTemplate.selectList("board.searchList", searchListPostDTO); 
+	}
 	
 	
+
+
 	
 }

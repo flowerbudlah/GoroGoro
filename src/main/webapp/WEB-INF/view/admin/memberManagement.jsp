@@ -22,7 +22,7 @@ body{ background-color: white; }
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
 <article class="slider">	
-	<img src="${root }image/FogAndFlower.jpg">
+	<img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg">
 </article>
 
 

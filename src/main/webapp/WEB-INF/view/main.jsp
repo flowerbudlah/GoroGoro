@@ -15,26 +15,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
 
-
 <style>
 /* 슬라이더 영역 CSS */
 .slider img{ display:block; width:100%; max-width:100%; height:300px; }
 .card-title{font-family: 'Single Day', cursive; }
 
-body{
-      background-image: url(http://localhost:8090/GoroGoroCommunity/image/bottom-bg.jpg);
-      background-repeat: no-repeat;
-      background-position: center bottom;
-      background-attachment: fixed; 
-}
-
-h1{
-      background-color: #222;
-      color: white;
-      text-align: center;
-      padding: 10px;
-    }
-
+body{ background-image: url(http://localhost:8090/GoroGoroCommunity/image/bottom-bg.jpg);
+	background-repeat: no-repeat; background-position: center bottom; background-attachment: fixed; 
+	}
+h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
 </style>
 </head>
 <body>
@@ -54,19 +43,17 @@ h1{
 <div style="padding-top:50px; padding-bottom:100px">
 <div class="container">
   <div>
-    <h1>HTML5</h1>
+    <h4>HTML5</h4>
     <p>Non minim qui consequat dolor minim amet consequat est est excepteur anim ex proident. Esse tempor nulla dolore occaecat est fugiat qui dolor mollit aliqua. Lorem dolor amet veniam quis duis labore aute fugiat eiusmod cillum exercitation nulla. Pariatur enim mollit do deserunt incididunt non duis. Irure id fugiat duis veniam enim enim ullamco velit enim duis qui eu occaecat. Enim adipisicing irure id irure excepteur in laborum tempor. Quis ut esse quis proident.</p>
   </div>
-
 <br><br><br>
   <div>
-    <h1>CSS3</h1>
+    <h4>CSS3</h4>
     <p>Non minim qui consequat dolor minim amet consequat est est excepteur anim ex proident. Esse tempor nulla dolore occaecat est fugiat qui dolor mollit aliqua. Lorem dolor amet veniam quis duis labore aute fugiat eiusmod cillum exercitation nulla. Pariatur enim mollit do deserunt incididunt non duis. Irure id fugiat duis veniam enim enim ullamco velit enim duis qui eu occaecat. Enim adipisicing irure id irure excepteur in laborum tempor. Quis ut esse quis proident.</p>
   </div>
-
 <br><br><br>
   <div>
-    <h1>Javascript</h1>
+    <h4>Javascript</h4>
     <p>Non minim qui consequat dolor minim amet consequat est est excepteur anim ex proident. Esse tempor nulla dolore occaecat est fugiat qui dolor mollit aliqua. Lorem dolor amet veniam quis duis labore aute fugiat eiusmod cillum exercitation nulla. Pariatur enim mollit do deserunt incididunt non duis. Irure id fugiat duis veniam enim enim ullamco velit enim duis qui eu occaecat. Enim adipisicing irure id irure excepteur in laborum tempor. Quis ut esse quis proident.</p>
   </div>
 

@@ -16,12 +16,13 @@
 	$(document).ready(function(){		
 	});
 	
+	
 	/** 게시판 - 목록 페이지 이동 */
 	function goMain(){
 		var boardNo = $("#boardNo").val();
 		location.href = "${root}board/main?boardNo=${boardNo}";
 	}
-
+	
 	/** 게시판 - 작성  */
 	function writeProcess(){
 		
@@ -29,6 +30,8 @@
 		var writer = $("#writer").val(); //작성자
  		var title = $("#title").val(); //제목
 		var content = $("#content").val(); //내용
+		
+		var formData = new FormData($('#writePostDTO')[0]);	
 		
 		if (writer == ""){			
 			alert("작성자를 입력해주세요.");
@@ -56,14 +59,16 @@
 				
 			 $.ajax({   
 	                url      : "${root}board/writeProcess",
-	              
 	                data     : $("#writePostDTO").serialize(), 
 	                dataType : "JSON",
-	                 
+	          
+	    		
 	                cache    : false,
 	                async    : true,
 	                type     : "POST",    
-	                success  : function(obj) { insertBoardCallback(obj);},           
+	                success  : function(obj) { 
+	                	insertBoardCallback(obj);
+	                },           
 	                error: function(request,status,error){
 	                	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	                }
@@ -87,6 +92,8 @@
 			}
 		}
 	}
+		
+
 </script>
 <style>
 /* 슬라이더 영역 CSS */

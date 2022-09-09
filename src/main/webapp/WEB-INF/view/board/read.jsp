@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<c:url var="root" value="${pageContext.request.contextPath }/" />
 
 <!DOCTYPE html>
 <html>
@@ -152,10 +151,9 @@ function writeReplyCallback(obj){
 		alert("댓글 등록을 실패하였습니다.");	
 		return;
 	}
-		}
-	}
+}
+}
 	
-
 //8. 댓글 삭제 콜백 함수
 function removeReply(){
 	var replyNo = $("#replyNo").val(); //리플 번호
@@ -199,14 +197,20 @@ function afterRemove(obj){
 .reply{ font-size: 12px; }
 .replyWriter{ text-align:left; position: absolute; }
 .replyRegDate{ text-align:right;  position: relative; }
-
+.slider img{display:block; width:100%; max-width:100%; height:300px;} /* 슬라이더 영역 CSS */
 </style>
 </head>
 <body>
 <!-- 상단 메뉴 부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp" />
+<!-- 그 게시판 윗 부분 그림-->  
+<article class="slider">
+	<!-- http://localhost:8090/GoroGoroCommunity/image/convenientStore.png  맞는거-->
+	<img src="/GoroGoroCommunity/image/convenientStore.png"> 
+	<!-- http://localhost:8090/resources/image/convenientStore.png -->
+</article>
 <!-- 본문 -->
-<div class="container" style="margin-top:200px; margin-bottom:100px;">
+<div class="container" style="margin-top:100px; margin-bottom:100px;">
 	<div class="row">
 	<div class="col-sm-3"></div>
 	<div class="col-sm-7">
@@ -268,7 +272,7 @@ function afterRemove(obj){
 				
 				
 		<!-- 댓글 작성 부분 -->
-		<form id="writeReplyDTO" name="writeReplyDTO">
+	<form id="writeReplyDTO" name="writeReplyDTO">
 			
 		<input type="hidden" name="postNo" id="postNo" value="${postNo }">
 			
@@ -295,9 +299,7 @@ function afterRemove(obj){
 			<center>
 				<a href="read?postNo=${postNo}" onclick="javascript:like();">
 					<input type="hidden" id="postNo" name="postNo"	value="${postNo}"/> <!-- 게시글 번호 -->
-					<img src="http://localhost:8090/GoroGoroCommunity/image/sameThoughtButton.gif">
-					
-					
+					<img src="/GoroGoroCommunity/image/sameThoughtButton.gif">
 				</a>
 				<br>
 				<strong>★${readPostDTO.sameThinking }★</strong>

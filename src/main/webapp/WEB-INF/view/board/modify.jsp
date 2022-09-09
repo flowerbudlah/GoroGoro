@@ -16,8 +16,6 @@
 <!-- 게시글 번호 -->
 <% String postNo = request.getParameter("postNo");%> 
 <c:set var="postNo" value="<%=postNo %>"/> 
-
-
 <script type="text/javascript">
 	
 	$(document).ready(function(){        

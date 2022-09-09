@@ -22,7 +22,7 @@
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
 <article class="slider">	
-	<img src="${root }image/furano02.jpg">
+	<img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg">
 </article>
 
 <!--메인화면에 내용 들어가는 부분  -->

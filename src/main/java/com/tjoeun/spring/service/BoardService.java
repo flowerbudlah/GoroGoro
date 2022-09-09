@@ -1,7 +1,5 @@
 package com.tjoeun.spring.service;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -9,36 +7,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.tjoeun.spring.dao.BoardDAO;
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
 
-
 @Service
 @PropertySource("/WEB-INF/properties/option.properties")
 public class BoardService {
 	
-	
 	@Value("${path.load}")
 	private String pathLoad; //파일 업로드와 관련있다. 파일 경로 
-	
 	
 	@Value("${page.listcnt}")
 	private int page_listcnt; // 한 페이지당 보여주는 글의 개수
 	
-	
 	@Value("${page.paginationcnt}")
 	private int page_paginationcnt;	// 한 페이지당 보여주는 페이지 버튼 개수
 	
-	
-	
 	@Autowired
 	private BoardDAO boardDAO; 
-	
-	
-	
+
 	//1. 게시판 메인 페이지로 이동(페이지 작업 완료)
 	public List<PostDTO> goMain(int boardNo, int page) {
 		
@@ -49,8 +38,7 @@ public class BoardService {
 		return postList;
 	}
 	
-	
-	
+
 	//2. 게시판 메인 페이지의 페이징과 관련있는 해당 게시판의 전체 글 수
 	public PageDTO getPostCnt(int boardNo, int currentPage) {
 		
@@ -151,9 +139,22 @@ public class BoardService {
 		}
 		return postDTO;
 	}
+
+
+	
+	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
+		return boardDAO.searchList(searchListPostDTO);
 		
-		
-		
+	}
+	
+	
+	
+	
+	
+	
+
+	
+	
 		
 				
 		

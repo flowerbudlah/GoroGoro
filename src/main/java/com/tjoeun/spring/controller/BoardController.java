@@ -1,6 +1,8 @@
 package com.tjoeun.spring.controller;
 
+
 import java.util.List;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,12 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
@@ -30,7 +34,7 @@ public class BoardController {
 	
 	@Autowired
 	private ReplyService replyService;
-
+	
 	//1. 게시판 메인화면으로 간다. 
 	@RequestMapping("/main")
 	public String main
@@ -52,6 +56,25 @@ public class BoardController {
 		return "board/main";
 		
 	}
+		
+	//게시물 검색(아작스 이용)
+	@GetMapping("/searchList")
+	public @ResponseBody List<PostDTO> searchList(
+	@RequestParam("type") String type, 
+	@RequestParam("keyword") String keyword, 
+	@RequestParam("boardNo") int boardNo, Model model) throws Exception{
+
+		PostDTO searchListPostDTO = new PostDTO(); 
+		searchListPostDTO.setBoardNo(boardNo); 
+		searchListPostDTO.setType(type); 
+		searchListPostDTO.setKeyword(keyword); 
+		
+	
+		List<PostDTO> searchList = boardService.searchList(searchListPostDTO);  
+		model.addAttribute("searchList", searchList);
+		
+		return searchList; 
+	} 
 	
 	//2. 글쓰기페이지로 이동 
 	@RequestMapping("/write")
@@ -63,12 +86,14 @@ public class BoardController {
 	
 	//3. 게시글 등록 Creating 
 	@RequestMapping("/writeProcess")
-    public @ResponseBody PostDTO writeProcess(HttpServletRequest request, HttpServletResponse response, PostDTO writePostDTO){	
-    	PostDTO postDTO = boardService.writeProcess(writePostDTO);
+    public @ResponseBody PostDTO writeProcess
+    (HttpServletRequest request, HttpServletResponse response, PostDTO writePostDTO){	
+		
+		PostDTO postDTO = boardService.writeProcess(writePostDTO);
         return postDTO;
     }
 	
-	
+
 	//4. 글읽기 Reading (댓글 포함)
 	@RequestMapping("/read")
 	public String read(@RequestParam("postNo") int postNo, @ModelAttribute("readPostDTO") PostDTO postDTO, Model model) {
@@ -103,12 +128,14 @@ public class BoardController {
 		return ReplyDTO;
 	}
 	
+	
 	//6. 좋아요(추천, 공감)
-	@RequestMapping("/like") // http://localhost:8090/NerdCommunity/board/like
+	@RequestMapping("/like") 
 	public @ResponseBody PostDTO like(HttpServletRequest request, HttpServletResponse response, int postNo) throws Exception {
 		PostDTO likePostDTO = boardService.like(postNo);
 		return likePostDTO;
 	}
+	
 	
 	//8. 댓글등록 
 	@RequestMapping("/writeReplyProcess")
@@ -118,8 +145,7 @@ public class BoardController {
 		
         return ReplyDTO;
     }
-	
-	
+
 
 	//7. 글 수정 페이지로 이동
 	@RequestMapping("/modify")
@@ -143,5 +169,22 @@ public class BoardController {
 	}
 	
 	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 
 }

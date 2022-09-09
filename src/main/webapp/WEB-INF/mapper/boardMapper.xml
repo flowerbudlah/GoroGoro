@@ -69,4 +69,20 @@
 		<!-- 위의 file은 데이터베이스에 저장되어있는 파일이름을 저장하는 변수 -->
 	</update>
 	
+	<!-- AJAX 게시글 검색 	-->
+	<select id="searchList" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="com.tjoeun.spring.dto.PostDTO">
+		select * from freeBoard where boardNo = #{boardNo} 
+			<if test="type!=null and type == 'title'">
+				and title like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type!=null and type == 'content'">
+				and content like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type!=null and type == 'writer'">
+				and writer like CONCAT('%',#{keyword},'%')
+			</if>
+			order by postNo DESC 
+	</select>
+	
+	
 </mapper>
