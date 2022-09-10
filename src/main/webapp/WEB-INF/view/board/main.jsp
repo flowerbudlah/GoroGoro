@@ -2,8 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:url var="root" value="${pageContext.request.contextPath }/" />
-<!-- 살아있다: http://localhost:8090/GoroGoroCommunity/board/  -->
-
+<!-- http://localhost:8090/GoroGoroCommunity/board/  -->
 
 <!DOCTYPE html>
 <html>
@@ -34,7 +33,7 @@ function searchList(){
 					str+="<td><center>"+item.postNo+"</center></td>"; //글번호
 					str+="<td><a href='read?postNo=" +item.postNo+ "'>" + item.title + "<font color='red'>["+ item.replyCount+"]</font></a></td>"; //제목
 					str+="<td><center>"+item.writer+"</center></td>"; //작성자
-					str+="<td><center><fmt:formatDate value="+item.regDate+"pattern='yyyy-MM-dd'/></center></td>"; //작성날짜
+					str+="<td><center>"+item.reg_date+"</center></td>"; //작성날짜
 					str+="<td><center>"+item.viewCount+"</center></td>"; //조회수
 					str+="<td><center>"+item.sameThinking+"</center></td>"; //공감수
 					str+="</tr>"
@@ -62,7 +61,6 @@ function searchList(){
 		<div class="card-body">	
 			<h4 class="card-title">${boardName }</h4>
 			<table class="table table-hover">
-				
 				<thead>
 					<tr>
 						<th class="text-center d-none d-md-table-cell">글번호</th>
@@ -73,17 +71,11 @@ function searchList(){
 						<th class="text-center d-none d-md-table-cell">공감수</th>
 					</tr>
 				</thead>
-				
-				
 				<tbody id="boardtable">
 				<c:forEach var="postDTO" items="${postList }" >
-					<tr >
+					<tr>
 						<td class="text-center d-none d-md-table-cell">${postDTO.postNo }</td>
-						<td> 
-							<a href='read?postNo=${postDTO.postNo}' style="color:black">
-								${postDTO.title } <font color="red">[${postDTO.replyCount }]</font>
-							</a>
-						</td>
+						<td><a href='read?postNo=${postDTO.postNo}' style="color:black">${postDTO.title } <font color="red">[${postDTO.replyCount }]</font></a></td>
 						<td class="text-center d-none d-md-table-cell">${postDTO.writer }</td>
 						<td class="text-center d-none d-md-table-cell">
 							<fmt:formatDate value="${postDTO.regDate }" pattern="yyyy-MM-dd"/>
@@ -93,13 +85,10 @@ function searchList(){
 					</tr>
 				</c:forEach>
 				</tbody>
-				
-				
-				
 			</table>
+			
 			<div class="text-right">
-	<!-- http://localhost:8090/GoroGoroCommunity/board/           write?boardNo=1 -->
-				<a href="write?boardNo=${boardNo }" class="btn btn-warning">글쓰기</a>
+				<a href="write?boardNo=${boardNo }" class="btn btn-warning">글쓰기</a><!-- http://localhost:8090/GoroGoroCommunity/board/write?boardNo=1 -->
 			</div>
 			<!-- 페이징(Paging) -->			
 			<div class="d-none d-md-block">
@@ -153,19 +142,18 @@ function searchList(){
 				</ul>
 			</div>
 			
-		<!-- 검색 기능 -->			
-		<form name="search-form" autocomplete="off" class="text-center" style="margin-top:30px; margin-bottom:30px;">
-			<input type="hidden" name="boardNo" value="${boardNo }" required="required" id="boardNo"/>
-			<select name="type" id="type">
-				<option value="title">제목</option>
-				<option value="content">내용</option>
-				<option value="writer">작성자</option>
-			</select>			
-			<input type="text" name="keyword" required="required" id="keyword"  value=""/>
-			<input type="button" value="검색" onclick="searchList()" class="btn btn-warning btn-sm" />
-			
-		</form>
-		<!-- 검색기능끝 -->	
+			<!-- 검색 기능 -->			
+			<form name="search-form" autocomplete="off" class="text-center" style="margin-top:30px; margin-bottom:30px;">
+				<input type="hidden" name="boardNo" value="${boardNo }" required="required" id="boardNo"/>
+				<select name="type" id="type">
+					<option value="title">제목</option>
+					<option value="content">내용</option>
+					<option value="writer">작성자</option>
+				</select>			
+				<input type="text" name="keyword" id="keyword" value="" required="required"/> <!-- required="required"  -->
+				<input type="button" value="검색" onclick="searchList()" class="btn btn-warning btn-sm" />
+			</form>
+			<!-- 검색기능끝 -->	
 				
 		</div>
 	</div>

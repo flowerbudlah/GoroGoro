@@ -84,8 +84,8 @@ function like(){
             		
             		if(result == "SUCCESS"){
             			alert("공감하셨습니다.");   
+            			location.reload(true); 
             			location.href = "read?postNo=${postNo}";  
-            			location.reload(); 
             			return;
             		} else {     
             			alert("공감하는것에 문제가 생김");    
@@ -205,9 +205,7 @@ function afterRemove(obj){
 <c:import url="/WEB-INF/view/include/topMenu.jsp" />
 <!-- 그 게시판 윗 부분 그림-->  
 <article class="slider">
-	<!-- http://localhost:8090/GoroGoroCommunity/image/convenientStore.png  맞는거-->
 	<img src="/GoroGoroCommunity/image/convenientStore.png"> 
-	<!-- http://localhost:8090/resources/image/convenientStore.png -->
 </article>
 <!-- 본문 -->
 <div class="container" style="margin-top:100px; margin-bottom:100px;">
@@ -240,7 +238,7 @@ function afterRemove(obj){
 		<div class="form-group">
 		<div class="form-group">
 			<!-- 첨부이미지 -->
-			<label for="board_file">	</label>
+			<label for="board_file"></label>
 			<img src="image/logo.png" width="100%"/>            
 		</div>
 			<label for="content">내용</label>
@@ -257,7 +255,7 @@ function afterRemove(obj){
 		<c:forEach var="reply" items="${replyList}" >
 			<li>
 				<div class="replyWiter">작성자: ${reply.replyWriter}
-				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 				댓글작성일시: <fmt:formatDate value="${reply.replyRegDate}" pattern="yyyy-MM-dd hh:mm:ss" />
 				<!-- 댓글삭제버튼은 댓글작성자와 관리자만 볼 수 있게 처리 -->
 				<a class="badge badge-pill badge-light" style="font-size:13px;" onclick="javascript:removeReply();" >

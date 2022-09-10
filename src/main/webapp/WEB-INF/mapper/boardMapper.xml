@@ -70,7 +70,9 @@
 	
 	<!-- AJAX 게시글 검색 	-->
 	<select id="searchList" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="com.tjoeun.spring.dto.PostDTO">
-		select * from freeBoard where boardNo = #{boardNo} 
+		select postNo, title, writer, DATE_FORMAT(regDate,'%Y-%m-%d') as reg_date, viewCount, sameThinking
+		from freeBoard
+		where boardNo = #{boardNo} 
 			<if test="type!=null and type == 'title'">
 				and title like CONCAT('%',#{keyword},'%')
 			</if>
