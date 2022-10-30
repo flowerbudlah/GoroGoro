@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:url var="root" value="${pageContext.request.contextPath }/" />
 <!-- http://localhost:8090/GoroGoroCommunity/board/  -->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,17 +15,22 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">    
 function searchList(){
-	
-	var postNo = $("#postNo").val(); //게시물 번호 
-	var type = $("#type").val(); //타입
-	var keyword = $("#keyword").val(); 
-	
+
+	const keyword = $("#keyword").val(); //내용
+	if (keyword == ""){			
+				alert("검색어를 입력해주세요.");
+				$("#keyword").focus();
+				return;
+	}
+				
+
 	$.ajax({
-		type: 'GET',
+		type: 'get',
 		url : 'searchList',
-		data : $("form[name=search-form]").serialize(),
+		data : $("form[name=search-form]").serialize(), 
 		success : function(result){
 			$('#boardtable').empty(); 	//테이블 초기화
+			
 			if(result.length>=1){
 				result.forEach(function(item){
 					str='<tr>'
@@ -38,8 +42,11 @@ function searchList(){
 					str+="<td><center>"+item.sameThinking+"</center></td>"; //공감수
 					str+="</tr>"
 					$('#boardtable').append(str);
-        		})				 
-			} //if문의 끝
+        		})		
+			}else{
+					str='검색결과가 없습니다.'; 
+					$('#boardtable').append(str);
+			}
 		}  //function의 끝
 	}) //ajax의 끝
 }//function의 끝	
@@ -143,15 +150,16 @@ function searchList(){
 			</div>
 			
 			<!-- 검색 기능 -->			
-			<form name="search-form" autocomplete="off" class="text-center" style="margin-top:30px; margin-bottom:30px;">
-				<input type="hidden" name="boardNo" value="${boardNo }" required="required" id="boardNo"/>
-				<select name="type" id="type">
+			<form action="javascript:searchList()" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px; margin-bottom:30px;">
+				<input type="hidden" name="boardNo" value="${boardNo }"/>
+				<select name="type">
+					<option value="titleANDcontent">제목+내용</option>
 					<option value="title">제목</option>
 					<option value="content">내용</option>
 					<option value="writer">작성자</option>
 				</select>			
-				<input type="text" name="keyword" id="keyword" value="" required="required"/> <!-- required="required"  -->
-				<input type="button" value="검색" onclick="searchList()" class="btn btn-warning btn-sm" />
+				<input type="text" value="" name="keyword" id="keyword"/> <!-- required="required"  -->
+				<input type="button" onclick="javascript:searchList()" class="btn btn-warning btn-sm" value="검색"/>
 			</form>
 			<!-- 검색기능끝 -->	
 				

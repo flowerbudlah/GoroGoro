@@ -83,9 +83,8 @@ function like(){
             		var result = obj.result;
             		
             		if(result == "SUCCESS"){
-            			alert("공감하셨습니다.");   
-            			location.reload(true); 
-            			location.href = "read?postNo=${postNo}";  
+ 						location.replace('read?postNo=${postNo}');
+            			alert("공감하셨습니다."); 
             			return;
             		} else {     
             			alert("공감하는것에 문제가 생김");    

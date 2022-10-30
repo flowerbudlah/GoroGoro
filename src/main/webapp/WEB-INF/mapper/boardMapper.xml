@@ -72,15 +72,18 @@
 	<select id="searchList" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="com.tjoeun.spring.dto.PostDTO">
 		select postNo, title, writer, DATE_FORMAT(regDate,'%Y-%m-%d') as reg_date, viewCount, sameThinking
 		from freeBoard
-		where boardNo = #{boardNo} 
+		where boardNo = #{boardNo} and 
 			<if test="type!=null and type == 'title'">
-				and title like CONCAT('%',#{keyword},'%')
+				title like CONCAT('%',#{keyword},'%')
 			</if>
 			<if test="type!=null and type == 'content'">
-				and content like CONCAT('%',#{keyword},'%')
+				content like CONCAT('%',#{keyword},'%')
 			</if>
 			<if test="type!=null and type == 'writer'">
-				and writer like CONCAT('%',#{keyword},'%')
+				writer like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type!=null and type == 'titleANDcontent'">
+				(title like CONCAT('%',#{keyword},'%') OR content like CONCAT('%',#{keyword},'%'))
 			</if>
 			order by postNo DESC 
 	</select>

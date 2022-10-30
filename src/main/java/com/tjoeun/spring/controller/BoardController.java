@@ -1,8 +1,6 @@
 package com.tjoeun.spring.controller;
 
-
 import java.util.List;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,7 +54,8 @@ public class BoardController {
 		return "board/main";
 		
 	}
-		
+	
+	
 	//게시물 검색(아작스 이용)
 	@GetMapping("/searchList")
 	public @ResponseBody List<PostDTO> searchList(
@@ -74,6 +73,10 @@ public class BoardController {
 		
 		return searchList; 
 	} 
+	
+	
+	
+	
 	
 	//2. 글쓰기페이지로 이동 
 	@RequestMapping("/write")
