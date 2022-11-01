@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="member">
+
+	<!-- 1. 회원가입 Create-->
+	<insert id="signUpProcess" parameterType="com.tjoeun.spring.dto.MemberDTO" useGeneratedKeys="true" keyProperty="memberNo">
+		insert into members(email, passwords, nick, question, answer, signUpDate) 
+		values(#{email}, #{passwords}, #{nick}, #{question}, #{answer}, Now())
+	</insert>
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
