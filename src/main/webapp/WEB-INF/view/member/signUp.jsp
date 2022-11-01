@@ -18,9 +18,10 @@
 		
 		var email = $("#email").val(); //이메일(아이디)
 		var nick = $("#nick").val(); // 대화명
-		var passwords = $("#passwords").val(); //작성자
 		var question = $("#question").val(); //질문
 		var answer = $("#answer").val(); //답
+		var passwords = $("#passwords").val(); //작성자
+		
 		
 		var formData = new FormData($('#signUpMemberDTO')[0]);	
 		
@@ -42,6 +43,19 @@
 			return;
 		}
 		
+		if(question == ""){			
+			alert("아이디 분실시 사용하실 질문를 입력해주세요.");
+			$("#question").focus();
+			return;
+		}
+		
+		if(answer == ""){			
+			alert("아이디 분실시 사용실 답을 입력해주세요.");
+			$("#answer").focus();
+			return;
+		}
+		
+		
 		var yn = confirm("회원가입 하시겠습니까?");		
 		
 		if(yn){
@@ -59,7 +73,8 @@
 			};	//yn의 끝
 		} //signUp()의 끝
 			
-	/** 게시판 - 작성 콜백 함수 */
+		
+	//회원가입 완료 콜백함수
 	function insertBoardCallback(obj){
 	
 		if(obj != null){		
@@ -80,6 +95,11 @@
 	function goToTheSignIn(){
 		location.href = "${root}member/signIn";
 	}
+	
+	
+	
+	
+	
 	
 //3. 이메일(아이디) 중복확인 쿼리와 대화명(닉네임) 중복확인 쿼리
 //1) 이메일 중복확인 
