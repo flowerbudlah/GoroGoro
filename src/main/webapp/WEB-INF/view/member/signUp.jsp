@@ -14,7 +14,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 //1. 회원가입 완료버튼 누르고, 회원가입 
-	function signUp(){
+	function signUpProcess(){
 		
 		var email = $("#email").val(); //이메일(아이디)
 		var nick = $("#nick").val(); // 대화명
@@ -54,7 +54,6 @@
 			$("#answer").focus();
 			return;
 		}
-		
 		
 		var yn = confirm("회원가입 하시겠습니까?");		
 		
@@ -190,15 +189,22 @@ body{ background-color: white; }
 				
 			</div> 
 			<div class="form-group"> 
-				<label for="question">로그인 시 이메일 또는 비밀번호 분실시 질문</label>
-				<input type="text" name="question" id="question" class="form-control"/>
+				<label for="question">이메일 또는 비밀번호 분실시 질문</label>
+				<select name="question" id="question" class="form-control">
+					<option value="${allPaymentList.circumstance }">${allPaymentList.circumstance }</option>
+					<option value="hometown">당신의 고향은 어디입니까?</option>
+    				<option value="nickname">별명은 무엇인가요? </option>
+    				<option value="firstlove">첫사랑은 누구인가요?</option>
+    				<option value="pet">애완동물의 이름은?</option>
+    				<option value="treasure">당신의 보물1호는 무엇인가요?</option>
+				</select>
 			</div> 
 			<div class="form-group">
 				<label for="answer">↑↑↑↑↑ 위 질문에 대한 답</label>
 				<input type="text" name="answer" id="answer" class="form-control"/>
 			</div>   
 			<div class="text-right" style="margin-top:50px">
-				<button class="btn btn-danger" onclick="javascript:signUp();">회원가입 완료</button>
+				<button class="btn btn-danger" onclick="javascript:signUpProcess();">회원가입 완료</button>
 			</div>
 			</form>
 		</div>
