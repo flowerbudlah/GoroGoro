@@ -14,14 +14,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
-
 <style>
 /* 슬라이더 영역 CSS */
 .slider img{ display:block; width:100%; max-width:100%; height:300px; }
 .card-title{font-family: 'Single Day', cursive; }
 
-body{ background-image: url(http://localhost:8090/GoroGoroCommunity/image/bottom-bg.jpg);
-	background-repeat: no-repeat; background-position: center bottom; background-attachment: fixed; 
+body{
+	 background-image: url(http://localhost:8090/GoroGoroCommunity/image/bottom-bg.jpg);
+	 background-repeat: no-repeat; background-position: center bottom; background-attachment: fixed; 
 	}
 h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
 </style>
@@ -43,13 +43,24 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
 <div style="padding-top:50px; padding-bottom:100px">
 <div class="container">
   <div>
-    <h4>HTML5</h4>
-    <p>Non minim qui consequat dolor minim amet consequat est est excepteur anim ex proident. Esse tempor nulla dolore occaecat est fugiat qui dolor mollit aliqua. Lorem dolor amet veniam quis duis labore aute fugiat eiusmod cillum exercitation nulla. Pariatur enim mollit do deserunt incididunt non duis. Irure id fugiat duis veniam enim enim ullamco velit enim duis qui eu occaecat. Enim adipisicing irure id irure excepteur in laborum tempor. Quis ut esse quis proident.</p>
+    <h4>첨부 이미지 업로드, 수정, 삭제</h4>
+    <p class="text-center">
+    	<strong>
+    	1. 첨부파일을 업로드 <br>
+    	2. 첨부파일 수정 <br>
+    	3. 첨부파일 삭제
+    	</strong>
+    </p>
   </div>
 <br><br><br>
   <div>
-    <h4>CSS3</h4>
-    <p>Non minim qui consequat dolor minim amet consequat est est excepteur anim ex proident. Esse tempor nulla dolore occaecat est fugiat qui dolor mollit aliqua. Lorem dolor amet veniam quis duis labore aute fugiat eiusmod cillum exercitation nulla. Pariatur enim mollit do deserunt incididunt non duis. Irure id fugiat duis veniam enim enim ullamco velit enim duis qui eu occaecat. Enim adipisicing irure id irure excepteur in laborum tempor. Quis ut esse quis proident.</p>
+    <h4>회원기능</h4>
+    <p class="text-center">
+    	1. 로그인<br>
+    	2. 로그아웃 <br>
+    	3. 회원가입, 회원정보수정, 회원탈퇴, 비밀번호 찾기<br>
+    	4. 개인 프로필 기능(사진 업로드, 본인이 신고당한 건수)
+    </p>
   </div>
 <br><br><br>
   <div>

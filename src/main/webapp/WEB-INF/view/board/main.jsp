@@ -18,12 +18,11 @@ function searchList(){
 
 	const keyword = $("#keyword").val(); //내용
 	if (keyword == ""){			
-				alert("검색어를 입력해주세요.");
-				$("#keyword").focus();
-				return;
+		alert("검색어를 입력해주세요.");
+		$("#keyword").focus();
+		return;
 	}
-				
-
+			
 	$.ajax({
 		type: 'get',
 		url : 'searchList',
@@ -82,7 +81,19 @@ function searchList(){
 				<c:forEach var="postDTO" items="${postList }" >
 					<tr>
 						<td class="text-center d-none d-md-table-cell">${postDTO.postNo }</td>
-						<td><a href='read?postNo=${postDTO.postNo}' style="color:black">${postDTO.title } <font color="red">[${postDTO.replyCount }]</font></a></td>
+						<td>
+							<a href='read?postNo=${postDTO.postNo}' style="color:black">
+								${postDTO.title }
+								<!-- 업로드 파일이 있다면 -->
+								<c:if test="${postDTO.fileName != null }">
+									<img src="/GoroGoroCommunity/image/uploadingPhoto.png" width=20px;>
+								</c:if>
+								<!-- 댓글이 있을경우, 댓글 수  -->
+						 		<font color="red">
+						 			[${postDTO.replyCount }]
+						 		</font>
+						 	</a>
+						</td>
 						<td class="text-center d-none d-md-table-cell">${postDTO.writer }</td>
 						<td class="text-center d-none d-md-table-cell">
 							<fmt:formatDate value="${postDTO.regDate }" pattern="yyyy-MM-dd"/>

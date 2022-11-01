@@ -5,7 +5,7 @@
 
 	<!-- 1. 메인페이지로 간다.(with 글목록) -->
 	<select id="goMain" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO">
-		select postNo, title, content, writer, regDate, viewCount, sameThinking, uploadFileName, boardNo, 
+		select postNo, title, content, writer, regDate, viewCount, sameThinking, fileName, boardNo, 
 				(select count(*) from reply where postNo = f.postNo) as replyCount 
 		from freeBoard f 
 		where boardNo = #{boardNo}
@@ -19,17 +19,27 @@
    </select>
    
 	
-	<!-- 2. 글쓰기 Create (파일 업로드 반영) uploadFileName은 파일이름입니다. -->
+	<!-- 2. 글쓰기 Create-->
 	<insert id="writeProcess" parameterType="com.tjoeun.spring.dto.PostDTO" useGeneratedKeys="true" keyProperty="postNo">
-		insert into freeBoard(boardNo, title, content, writer, regDate, uploadFileName) 
-		values(#{boardNo}, #{title}, #{content}, #{writer}, Now(), #{uploadFileName, jdbcType=VARCHAR})
+		insert into freeBoard(boardNo, title, content, writer, regDate, fileName) 
+		values(#{boardNo}, #{title}, #{content}, #{writer}, Now(), #{fileName, jdbcType=VARCHAR})
 	</insert>
+	
+	
+	
+	<!-- 2-1. 이미지 파일 업로드(첨부파일) -->
+	<insert id="addFiles" parameterType="com.tjoeun.spring.dto.FileDTO" useGeneratedKeys="true" keyProperty="fileNo">
+		insert into freeBoard_file(postNo, fileNo, fileNameKey, fileName, filePath, fileSize, uploadDate)
+		values(#{postNo}, #{fileNo}, #{fileNameKey}, #{fileName}, #{filePath}, #{fileSize}, NOW()) 
+	</insert>
+
 
 
 
 	<!-- 3. 글 하나 읽기 Reading -->
 	<select id="read" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO" >
-		select postNo, title, content, writer, regDate, viewCount, sameThinking, uploadFileName, boardNo, (select count(*) from reply where postNo = f.postNo) as replyCount 
+		select postNo, title, content, writer, regDate, viewCount, sameThinking, fileName, boardNo, 
+				(select count(*) from reply where postNo = f.postNo) as replyCount 
 		from freeBoard f 
 		where postNo = #{postNo}	
 	</select>
@@ -63,10 +73,11 @@
 	<!-- 8. 글 수정하기 -->
 	<update id="modify" parameterType="com.tjoeun.spring.dto.PostDTO">
 		update freeBoard
-		set title = #{title}, content = #{content}, uploadFileName = #{uploadFileName, jdbcType=VARCHAR} 
+		set title = #{title}, content = #{content}, fileName = #{fileName, jdbcType=VARCHAR} 
 		where postNo = #{postNo}
 		<!-- 위의 file은 데이터베이스에 저장되어있는 파일이름을 저장하는 변수 -->
 	</update>
+	
 	
 	<!-- AJAX 게시글 검색 	-->
 	<select id="searchList" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="com.tjoeun.spring.dto.PostDTO">

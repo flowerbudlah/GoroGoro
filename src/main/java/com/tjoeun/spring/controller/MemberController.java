@@ -1,17 +1,12 @@
 package com.tjoeun.spring.controller;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-
-
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-
 
 	
 	@RequestMapping("/signIn")
@@ -25,12 +20,12 @@ public class MemberController {
 	
 	
 	@RequestMapping("/signUp")
-	public String signUp(Model model) {
-		
-	
-		
+	public String signUp(Model model) { //회원가입 페이지로 이동
 		return "member/signUp";
 	}
+	
+	
+	
 	
 	
 	

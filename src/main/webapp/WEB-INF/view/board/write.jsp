@@ -23,14 +23,14 @@
 		location.href = "${root}board/main?boardNo=${boardNo}";
 	}
 	
-	/** 게시판 - 작성  */
+	/* 글 작성  */
 	function writeProcess(){
 		
 		var boardNo = $("#boardNo").val(); //게시판 번호
 		var writer = $("#writer").val(); //작성자
  		var title = $("#title").val(); //제목
 		var content = $("#content").val(); //내용
-		
+	
 		var formData = new FormData($('#writePostDTO')[0]);	
 		
 		if (writer == ""){			
@@ -51,18 +51,20 @@
 			return;
 		}
 			
-		
 		var yn = confirm("게시글을 등록하시겠습니까?");		
+		
+		if(fileName != null ){
+			var fileName = $("#fileName").val(); //내용			
+		}
 		
 		
 		if(yn){
-				
+			
 			 $.ajax({   
-	                url      : "${root}board/writeProcess",
+	                url      : "${root}board/writeProcess", 
+	                enctype  : "multipart/form-data",
 	                data     : $("#writePostDTO").serialize(), 
 	                dataType : "JSON",
-	          
-	    		
 	                cache    : false,
 	                async    : true,
 	                type     : "POST",    
@@ -75,7 +77,7 @@
 				}) //아작스 
 			};	//yn의 끝
 		} //writeProcess()의 끝
-	
+			
 	/** 게시판 - 작성 콜백 함수 */
 	function insertBoardCallback(obj){
 	
@@ -113,9 +115,7 @@ body{ background-color: white; }
 		<div class="col-sm-7">
 			<div class="card shadow-sm">
 				<div class="card-body"><h4 class="card-title">글쓰기</h4>
-
-				<form id="writePostDTO" method="post" name="writePostDTO" enctype="multipart/form-data">	
-				
+				<form action="${root}board/writeProcess" id="writePostDTO" name="writePostDTO" method="post" enctype="multipart/form-data" onsubmit="return false;">
 					<input type="hidden" name="boardNo" id="boardNo" value="${boardNo }">
 				
 					<div class="form-group">
@@ -130,27 +130,24 @@ body{ background-color: white; }
 						<label for="content">내용</label>
 						<textarea id="content" name="content" class="form-control" rows="15" style="resize:none"></textarea>
 					</div>
-					
+					<!-- 첨부파일 시작-->
 					<div class="form-group">
-						<label for="uploadFile">첨부 이미지</label>
-						<input type="file" id="uploadFile" name="uploadFile" class="form-control" accept="image/*" multiple="true"/>
+						<label for="fileName">첨부 이미지</label>
+						<input type="file" id="fileName" name="fileName" class="form-control" accept="image/*">						
 					</div>
-									
-					<div class="form-group">
-						<div class="text-right">
-							
-							<button type="button" class="btn btn-secondary btn-sm" onclick="javascript:goMain();">목록으로</button>
-							<button type="button" class="btn btn-info btn-sm" onclick="javascript:writeProcess();">등록하기</button>
-							
-						</div>	
-					</div>
-			
-					</form>
+					<!-- 첨부파일 끝 -->	
+				</form>
+				
+				<div class="form-group">
+					<div class="text-right">
+						<button type="button" class="btn btn-secondary btn-sm" onclick="javascript:goMain();">목록으로</button>
+						<button type="button" class="btn btn-info btn-sm" onclick="javascript:writeProcess();">등록하기</button>
+					</div>	
+				</div>
 					
 				</div>
 			</div>
-		</div>
-		<div class="col-sm-3"></div>
+		</div><div class="col-sm-3"></div>
 	</div>
 </div>
 <!-- 하단 정보 -->  

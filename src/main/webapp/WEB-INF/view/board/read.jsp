@@ -232,18 +232,25 @@ function afterRemove(obj){
 			<label for="title">제목</label>
 			<input type="text" id="title" name="title" class="form-control" value="${readPostDTO.title}" disabled="disabled"/>
 		</div>
-		
+	
 		<!-- 첨부이미지와 내용 start -->
 		<div class="form-group">
-		<div class="form-group">
-			<!-- 첨부이미지 -->
-			<label for="board_file"></label>
-			<img src="image/logo.png" width="100%"/>            
-		</div>
+		<!-- 첨부이미지 -->
+		<c:if test="${readPostDTO.fileName != null }">
+          	<div class="form-group">
+          		<label for="fileName">첨부 이미지</label>
+          		<!-- http://localhost:8090/GoroGoroCommunity/board/upload/ -->
+          		<img src="/GoroGoroCommunity/upload/${readPostDTO.fileName}" width=100%; height=250px;/>       
+          	</div>
+		</c:if>
+		
+			<!-- 내용 -->
 			<label for="content">내용</label>
 			<textarea id="content" name="content" class="form-control" rows="20" style="resize:none" disabled="disabled">${readPostDTO.content}</textarea>
 		</div>
 		<!-- 첨부이미지와 내용 end -->
+		
+		
 		<div class="form-group">
 			<label for="board_content">댓글 [${readPostDTO.replyCount }] </label>
 		</div>

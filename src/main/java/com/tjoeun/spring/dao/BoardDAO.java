@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tjoeun.spring.dto.PostDTO;
+import com.tjoeun.spring.dto.FileDTO;
 
 @Repository
 public class BoardDAO {
@@ -34,7 +35,11 @@ public class BoardDAO {
 	public int writeProcess(PostDTO writePostDTO) {
 		return sqlSessionTemplate.insert("board.writeProcess", writePostDTO); 
 	}
-
+	
+	//첨부파일 등록
+	public int addFiles(FileDTO fileDTO) throws Exception {
+		return sqlSessionTemplate.insert("board.addFiles", fileDTO);
+	}
 	
 	//3. 특정한 글 하나 읽기 Read
 	public PostDTO read(int postNo){
@@ -75,8 +80,6 @@ public class BoardDAO {
 	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
 		return sqlSessionTemplate.selectList("board.searchList", searchListPostDTO); 
 	}
-	
-	
 
 
 	

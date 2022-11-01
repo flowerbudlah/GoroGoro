@@ -55,7 +55,6 @@ public class BoardController {
 		
 	}
 	
-	
 	//게시물 검색(아작스 이용)
 	@GetMapping("/searchList")
 	public @ResponseBody List<PostDTO> searchList(
@@ -76,8 +75,6 @@ public class BoardController {
 	
 	
 	
-	
-	
 	//2. 글쓰기페이지로 이동 
 	@RequestMapping("/write")
 	public String write(Model model, @RequestParam("boardNo") int boardNo){
@@ -89,7 +86,7 @@ public class BoardController {
 	//3. 게시글 등록 Creating 
 	@RequestMapping("/writeProcess")
     public @ResponseBody PostDTO writeProcess
-    (HttpServletRequest request, HttpServletResponse response, PostDTO writePostDTO){	
+    (HttpServletRequest request, HttpServletResponse response, PostDTO writePostDTO) throws Exception{	
 		
 		PostDTO postDTO = boardService.writeProcess(writePostDTO);
         return postDTO;
@@ -171,22 +168,5 @@ public class BoardController {
 	}
 	
 	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 
 }
