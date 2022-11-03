@@ -1,7 +1,7 @@
 package com.tjoeun.spring.dto;
 
 import java.util.Date;
-import java.util.List;
+
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,9 +29,9 @@ public class PostDTO {
 	private String keyword;//키워드 
 	private String type; //검색종류
 	
-	//파일 업로드 관련
-	private List<MultipartFile> files;
-	private String fileName; 
+	private String imageFileName; //업로드한 사진의 이름
+	private MultipartFile imageFile; //업로드한 사진파일 
+	
 	
 	
 }

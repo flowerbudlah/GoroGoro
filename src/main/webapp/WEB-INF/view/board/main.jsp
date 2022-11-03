@@ -85,7 +85,8 @@ function searchList(){
 							<a href='read?postNo=${postDTO.postNo}' style="color:black">
 								${postDTO.title }
 								<!-- 업로드 파일이 있다면 -->
-								<c:if test="${postDTO.fileName != null }">
+								<!-- 업로드 파일이 있다면 -->
+								<c:if test="${postDTO.imageFileName != '' }">
 									<img src="/GoroGoroCommunity/image/uploadingPhoto.png" width=20px;>
 								</c:if>
 								<!-- 댓글이 있을경우, 댓글 수  -->

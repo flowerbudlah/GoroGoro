@@ -236,11 +236,11 @@ function afterRemove(obj){
 		<!-- 첨부이미지와 내용 start -->
 		<div class="form-group">
 		<!-- 첨부이미지 -->
-		<c:if test="${readPostDTO.fileName != null }">
+		<c:if test="${readPostDTO.imageFileName != ''}">
           	<div class="form-group">
           		<label for="fileName">첨부 이미지</label>
           		<!-- http://localhost:8090/GoroGoroCommunity/board/upload/ -->
-          		<img src="/GoroGoroCommunity/upload/${readPostDTO.fileName}" width=100%; height=250px;/>       
+          		<img src="/GoroGoroCommunity/upload/${readPostDTO.imageFileName}" width=100%; height=250px;/>       
           	</div>
 		</c:if>
 		

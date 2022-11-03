@@ -10,8 +10,24 @@
 		values(#{email}, #{passwords}, #{nick}, #{question}, #{answer}, Now())
 	</insert>
 
-
-
+	<!-- 2. 아이디 용인 이메일 중복체크 -->
+	<select id="checkEmail" resultType="java.lang.String" parameterType="java.lang.String">
+		select email
+		from members
+		where email like CONCAT (#{email}, '%')
+	</select>
+	
+	<!-- 3. 대화명 중복체크 -->
+	<select id="checkNick" resultType="java.lang.String" parameterType = "java.lang.String">
+		select nick 
+		from members 
+		where nick = #{nick}
+	</select>
+  	 
+	<!--4. 로그인 -->
+ 	<select id="signIn" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
+ 		select * from members where id = #{id} and passwords = #{passwords}
+	</select>
 
 
 

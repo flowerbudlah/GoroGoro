@@ -59,13 +59,19 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
     	1. 로그인<br>
     	2. 로그아웃 <br>
     	3. 회원가입, 회원정보수정, 회원탈퇴, 비밀번호 찾기<br>
-    	4. 개인 프로필 기능(사진 업로드, 본인이 신고당한 건수)
+    	4. 개인 프로필 기능(사진 업로드, 본인이 신고당한 건수)<br>
+    	5. 게시글 신고(신고당한사람은 플래그가 증가한다. 더티지수증가)
     </p>
   </div>
 <br><br><br>
   <div>
-    <h4>Javascript</h4>
-    <p>Non minim qui consequat dolor minim amet consequat est est excepteur anim ex proident. Esse tempor nulla dolore occaecat est fugiat qui dolor mollit aliqua. Lorem dolor amet veniam quis duis labore aute fugiat eiusmod cillum exercitation nulla. Pariatur enim mollit do deserunt incididunt non duis. Irure id fugiat duis veniam enim enim ullamco velit enim duis qui eu occaecat. Enim adipisicing irure id irure excepteur in laborum tempor. Quis ut esse quis proident.</p>
+    <h4>관리자 기능</h4>
+    <p class="text-center">
+    	1. 게시글 삭제<br>
+    	2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(더티지수가 100이상인경우)<br>
+    	3. 신고된 게시글 처리<br>
+    	
+    </p>
   </div>
 
     

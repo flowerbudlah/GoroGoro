@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
@@ -76,7 +76,7 @@ public class BoardController {
 	
 	
 	//2. 글쓰기페이지로 이동 
-	@RequestMapping("/write")
+	@RequestMapping("/write") 
 	public String write(Model model, @RequestParam("boardNo") int boardNo){
 		model.addAttribute("boardNo", boardNo); //게시판 일련번호(인덱스)
 		return "board/write";
@@ -85,8 +85,8 @@ public class BoardController {
 	
 	//3. 게시글 등록 Creating 
 	@RequestMapping("/writeProcess")
-    public @ResponseBody PostDTO writeProcess
-    (HttpServletRequest request, HttpServletResponse response, PostDTO writePostDTO) throws Exception{	
+    public  @ResponseBody PostDTO writeProcess
+    (HttpServletRequest request, HttpServletResponse response, PostDTO writePostDTO, MultipartFile imageFile) throws Exception{	
 		
 		PostDTO postDTO = boardService.writeProcess(writePostDTO);
         return postDTO;

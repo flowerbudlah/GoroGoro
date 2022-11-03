@@ -5,7 +5,7 @@
 
 	<!-- 1. 메인페이지로 간다.(with 글목록) -->
 	<select id="goMain" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO">
-		select postNo, title, content, writer, regDate, viewCount, sameThinking, fileName, boardNo, 
+		select postNo, title, content, writer, regDate, viewCount, sameThinking, boardNo, imageFileName, 
 				(select count(*) from reply where postNo = f.postNo) as replyCount 
 		from freeBoard f 
 		where boardNo = #{boardNo}
@@ -18,27 +18,15 @@
 		select count(*) from freeBoard where boardNo = #{boardNo}
    </select>
    
-	
 	<!-- 2. 글쓰기 Create-->
 	<insert id="writeProcess" parameterType="com.tjoeun.spring.dto.PostDTO" useGeneratedKeys="true" keyProperty="postNo">
-		insert into freeBoard(boardNo, title, content, writer, regDate, fileName) 
-		values(#{boardNo}, #{title}, #{content}, #{writer}, Now(), #{fileName, jdbcType=VARCHAR})
+		insert into freeBoard(boardNo, title, content, writer, regDate, imageFileName) 
+		values(#{boardNo}, #{title}, #{content}, #{writer}, Now(), #{imageFileName, jdbcType=VARCHAR})
 	</insert>
 	
-	
-	
-	<!-- 2-1. 이미지 파일 업로드(첨부파일) -->
-	<insert id="addFiles" parameterType="com.tjoeun.spring.dto.FileDTO" useGeneratedKeys="true" keyProperty="fileNo">
-		insert into freeBoard_file(postNo, fileNo, fileNameKey, fileName, filePath, fileSize, uploadDate)
-		values(#{postNo}, #{fileNo}, #{fileNameKey}, #{fileName}, #{filePath}, #{fileSize}, NOW()) 
-	</insert>
-
-
-
-
 	<!-- 3. 글 하나 읽기 Reading -->
 	<select id="read" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO" >
-		select postNo, title, content, writer, regDate, viewCount, sameThinking, fileName, boardNo, 
+		select postNo, title, content, writer, regDate, viewCount, sameThinking, boardNo, imageFileName,  
 				(select count(*) from reply where postNo = f.postNo) as replyCount 
 		from freeBoard f 
 		where postNo = #{postNo}	
@@ -49,8 +37,6 @@
 	<delete id="deleteBoard" parameterType="java.lang.Integer">
     	delete from freeBoard where postNo = #{postNo}
     </delete>
-    
-  
     
     <!-- 7. 좋아요 버튼 클릭 -->
 	<update id="like" parameterType="java.lang.Integer">

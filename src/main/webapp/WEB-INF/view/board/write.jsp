@@ -13,9 +13,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script type="text/javascript">
 	
-	$(document).ready(function(){		
-	});
-	
+	$(document).ready(function(){	});
 	
 	/** 게시판 - 목록 페이지 이동 */
 	function goMain(){
@@ -51,22 +49,18 @@
 			return;
 		}
 			
-		var yn = confirm("게시글을 등록하시겠습니까?");		
-		
-		if(fileName != null ){
-			var fileName = $("#fileName").val(); //내용			
-		}
-		
+		var yn = confirm("게시글을 등록하시겠습니까?"); //작동
 		
 		if(yn){
 			
 			 $.ajax({   
 	                url      : "${root}board/writeProcess", 
 	                enctype  : "multipart/form-data",
-	                data     : $("#writePostDTO").serialize(), 
-	                dataType : "JSON",
+	                data     : formData,
 	                cache    : false,
 	                async    : true,
+	                contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
+	                processData: false, // 이것을 붙이고 업로드가 되었다. 
 	                type     : "POST",    
 	                success  : function(obj) { 
 	                	insertBoardCallback(obj);
@@ -114,9 +108,10 @@ body{ background-color: white; }
 		<div class="col-sm-3"></div>
 		<div class="col-sm-7">
 			<div class="card shadow-sm">
-				<div class="card-body"><h4 class="card-title">글쓰기</h4>
-				<form action="${root}board/writeProcess" id="writePostDTO" name="writePostDTO" method="post" enctype="multipart/form-data" onsubmit="return false;">
-					<input type="hidden" name="boardNo" id="boardNo" value="${boardNo }">
+				<div class="card-body">
+				<h4 class="card-title">글쓰기</h4>
+				<form action="${root}board/writeProcess" id="writePostDTO" name="writePostDTO" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="boardNo" id="boardNo" value="${boardNo }"> 
 				
 					<div class="form-group">
 						<label for="writer">작성자</label>
@@ -130,14 +125,16 @@ body{ background-color: white; }
 						<label for="content">내용</label>
 						<textarea id="content" name="content" class="form-control" rows="15" style="resize:none"></textarea>
 					</div>
+					
 					<!-- 첨부파일 시작-->
 					<div class="form-group">
-						<label for="fileName">첨부 이미지</label>
-						<input type="file" id="fileName" name="fileName" class="form-control" accept="image/*">						
+						<label for="imageFile">첨부 이미지</label>
+						<input type="file" id="imageFile" name="imageFile" class="form-control" accept="image/*">						
 					</div>
+					<!-- test -->
+	
 					<!-- 첨부파일 끝 -->	
 				</form>
-				
 				<div class="form-group">
 					<div class="text-right">
 						<button type="button" class="btn btn-secondary btn-sm" onclick="javascript:goMain();">목록으로</button>

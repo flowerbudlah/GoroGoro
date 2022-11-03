@@ -1,10 +1,10 @@
 package com.tjoeun.spring.service;
 
-import java.io.File;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
+
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,22 +16,20 @@ import org.springframework.web.multipart.MultipartFile;
 import com.tjoeun.spring.dao.BoardDAO;
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
-import com.tjoeun.spring.dto.FileDTO;
+
 
 @Service
 @PropertySource("/WEB-INF/properties/option.properties")
 public class BoardService {
 		
 	@Value("${path.load}")
-	private String pathLoad;; //파일 업로드와 관련있다. 파일 경로 
+	private String pathLoad; //파일 업로드와 관련있다. 파일이 저장되는 경로
 
 	@Value("${page.listcnt}")
 	private int page_listcnt; // 한 페이지당 보여주는 글의 개수
 	
-	
 	@Value("${page.paginationcnt}")
 	private int page_paginationcnt;	// 한 페이지당 보여주는 페이지 버튼 개수
-	
 	
 	@Autowired
 	private BoardDAO boardDAO; 
@@ -61,18 +59,15 @@ public class BoardService {
 	
 	//2-2. 글쓰기
 	public PostDTO writeProcess(PostDTO writePostDTO) throws Exception {
-				
+		
 		PostDTO postDTO = new PostDTO();
 		
-		int writingCount = 0; 
-		
-		writingCount = boardDAO.writeProcess(writePostDTO); //글 입력
-		
-		//첨부파일(이미지) 등록관련
-		List<FileDTO> fileList = getFileInfo(writePostDTO);  
-		for(FileDTO fileDTO : fileList) {
-			boardDAO.addFiles(fileDTO); //파일들 등록
-		}
+		//상품을 등록하기 전에 이경우는 반드시 이미지 파일을 업로드 하기 때문
+		MultipartFile imageFile = writePostDTO.getImageFile(); 
+		String UploadingImageFileName = saveUploadFile(imageFile);
+		writePostDTO.setImageFileName(UploadingImageFileName);
+				
+		int writingCount = boardDAO.writeProcess(writePostDTO); //글 입력
 		
 		if (writingCount > 0) {
 			postDTO.setResult("SUCCESS");
@@ -82,60 +77,22 @@ public class BoardService {
 		return postDTO;		
 	}
 	
-	//게시판-첨부파일 정보 조회
-	public List<FileDTO> getFileInfo(PostDTO writePostDTO) throws Exception {
-		
-		List<MultipartFile> files = writePostDTO.getFiles(); //게시물에 딸린 파일들 다 가져오기. 
-		
-		List<FileDTO> fileList = new ArrayList<FileDTO>(); 
-		
-		FileDTO fileDTO = new FileDTO();
-		
-		int postNo = writePostDTO.getPostNo(); 
-		
-		String fileName = null; 
-		String fileExt = null; 
-		String fileNameKey = null; 
-		String fileSize = null; 
-		
-		String filePath = "C:\\Users\\USER\\OneDrive\\바탕 화면\\Programming"; 
-	
-		if(files != null && files.size() > 0) { //파일에 뭔가가 있다. 
+	//이미지 파일 첨부
+	private String saveUploadFile(MultipartFile imageFile) {
 			
-			File file = new File(filePath); //위 저장되는 파일경로에 무슨파일 file 이 있지? 
-			if(file.exists() == false) { //파일이 저장될 위 경로에 파일이 없다면, 만들라
-				file.mkdirs(); 
-			}
+		String imageFileName = imageFile.getOriginalFilename();
 			
-			for(MultipartFile multipartFile: files) {
-				
-				fileName = multipartFile.getOriginalFilename(); 
-				fileExt = fileName.substring(fileName.lastIndexOf("."));  	
-				fileNameKey = getRandomString()+fileExt; // 파일명 변경(uuid로 암호화) + 확장자
-				fileSize = String.valueOf(multipartFile.getSize()); 
-				
-				file = new File(filePath+"/"+fileNameKey); //설정한 Path에 파일 저장
-				
-				multipartFile.transferTo(file);
-				
-				fileDTO = new FileDTO(); 
-				
-				fileDTO.setPostNo(postNo); 
-				fileDTO.setFileName(fileName); 
-				fileDTO.setFileNameKey(fileNameKey); 
-				fileDTO.setFilePath(filePath); 
-				fileDTO.setFileSize(fileSize); 
-				
-				fileList.add(fileDTO); 
-			}
-		} // //파일에 뭔가가 있는 경우, if문의 끝
-		return fileList;
+		try {
+			imageFile.transferTo(new File(pathLoad + "/" + imageFileName));
+		} catch (IllegalStateException e){
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return imageFileName;
 	}
-	
-	//32글자의 랜덤한 문자열(숫자포함) 생성
-	public String getRandomString() {
-		return UUID.randomUUID().toString().replaceAll("-", ""); 
-	}
+
 
 	//3. 특정한 게시글 하나 읽기
 	public PostDTO read(int postNo){
