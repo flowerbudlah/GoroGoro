@@ -43,12 +43,12 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
 <div style="padding-top:50px; padding-bottom:100px">
 <div class="container">
   <div>
-    <h4>첨부 이미지 업로드, 수정, 삭제</h4>
+    <h4>첨부 이미지 업로드, 수정,</h4>
     <p class="text-center">
     	<strong>
-    	1. 첨부파일을 업로드 <br>
+    	1. 첨부파일을 업로드(이미지 파일 업로드하는 것은 함) <br>
     	2. 첨부파일 수정 <br>
-    	3. 첨부파일 삭제
+      	4. 이미지 파일이 첨부된 것 수정하기
     	</strong>
     </p>
   </div>

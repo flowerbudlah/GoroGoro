@@ -13,6 +13,7 @@ public class MemberDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 		
+	//1. 회원가입
 	public int signUpProcess(MemberDTO signUpMemberDTO) {
 		return sqlSessionTemplate.insert("member.signUpProcess", signUpMemberDTO);
 	}

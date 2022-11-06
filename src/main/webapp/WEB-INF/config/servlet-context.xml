@@ -25,8 +25,8 @@
 	<!-- Controller 에서 return하는 문자열(경로)에 접두사, 접미사 설정하기 -->
 	<!-- ViewResolver : View 해석기 -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-	<beans:property name="prefix" value="/WEB-INF/view/" />
-	<beans:property name="suffix" value=".jsp" />
+		<beans:property name="prefix" value="/WEB-INF/view/" />
+		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
 	
@@ -83,7 +83,7 @@
 	<beans:bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource" id="messageSource" >
 	<beans:property name="basenames" >
 		<beans:list>
-			<beans:value>/WEB-INF/properties/error_message</beans:value>
+			<beans:value>/WEB-INF/properties/errorMessage</beans:value>
 		</beans:list>
 	</beans:property>
 	</beans:bean> 

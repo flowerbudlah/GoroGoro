@@ -169,9 +169,7 @@ function removeReply(){
 			async    : true,
 			type     : "POST",    
 			success  : function(obj) { afterRemove(obj); },           
-			error	 : function(request,status,error){
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					}
+			error	 : function(request,status,error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
 				}) //아작스 
 			};	//yn의 끝
 		}

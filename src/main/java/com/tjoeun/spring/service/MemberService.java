@@ -19,8 +19,8 @@ public class MemberService {
 	private MemberDTO loginMemberDTO;
 
 	
-	//1. 회원가입(새로운 회원인 newMemberDTO의 탄생)
-	public MemberDTO signUpProcess(MemberDTO signUpMemberDTO) throws Exception {
+	//1. 회원가입(새로운 회원의 탄생)
+	public MemberDTO signUpProcess(MemberDTO signUpMemberDTO){
 		
 		MemberDTO  newMemberDTO = new MemberDTO ();
 		
@@ -31,9 +31,10 @@ public class MemberService {
 		} else { //회원가입이 실패했다는 뜻
 			newMemberDTO.setResult("FAIL"); 
 		}
-		return newMemberDTO; 
+		return newMemberDTO; 	
 	}
-
+	
+	
 	//2. (아이디 용)이메일 중복체크 
 	public boolean checkEmail(String email) {
 		String checkingEmail = memberDAO.checkEmail(email); 

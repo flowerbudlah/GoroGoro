@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:url var="root" value="${pageContext.request.contextPath }/" />
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,18 +17,16 @@
 <c:set var="postNo" value="<%=postNo %>"/> 
 <script type="text/javascript">
 	
-	$(document).ready(function(){        
+	$(document).ready(function(){        });
 	
-	});
-	
-	
-    
-	/*수정 Ajax*/
+	//수정 아작스
 	function modifyProcess(){
 
         var title = $("#title").val();
         var content = $("#content").val();
         var postNo = $("#postNo").val();    
+        
+        var formData = new FormData($('#modifyPostDTO')[0]);	
         
         if (title == ""){            
             alert("제목을 입력해주세요.");
@@ -50,8 +47,10 @@
             $.ajax({    
                 
                url      : "modifyProcess",
-               data     : $("#boardForm").serialize(),
-               dataType : "JSON",
+               enctype  : "multipart/form-data",
+               data     : formData,
+               contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
+               processData: false, // 이것을 붙이고 업로드가 되었다. 
                cache    : false,
                async    : true,
                type     : "POST",    
@@ -80,10 +79,26 @@
         }
     } 
 	
-
-	
-	
-	
+	//8. 댓글 삭제 콜백 함수
+	function deleteImageFile(){
+		var postNo = $("#postNo").val(); //리플 번호
+		
+		var yn = confirm("이미 업로드하신 이미지 첨부파일을 삭제하시겠습니까?");		
+			
+		if(yn){
+			
+			$.ajax({   
+				url      : "deleteImageFile",
+				data     : { postNo : postNo },
+				dataType : "JSON",
+				cache    : false,
+				async    : true,
+				type     : "POST",    
+				success  : function(obj) { },           
+				error	 : function(request,status,error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+					}) //아작스 
+				};	//yn의 끝
+			}
 	
 </script>
 </head>
@@ -99,7 +114,7 @@
 				<div class="card-body">
 					<h4 class="card-title">${postNo } </h4>
 					
-					<form id="boardForm" name="boardForm">
+					<form id="modifyPostDTO" name="modifyPostDTO" enctype="multipart/form-data">
 					 <input type="hidden" name="postNo" value="${postNo }" > 
 						<div class="form-group">
 							<label for="writer">작성자</label>
@@ -118,11 +133,18 @@
 							<textarea id="content" name="content" class="form-control" rows="15" style="resize:none">${PostDTOfromDB.content }</textarea>
 						</div>
 						
-						
 						<div class="form-group">
-							<label for="board_file">첨부 이미지</label>
-							<img src="${root }image/logo.png" width="100%"/>	
-							<input type="file" name="board_file" id="board_file" class="form-control" accept="image/*"/>					
+							<label for="imageFile">
+							첨부 이미지: 
+							
+							
+							${PostDTOfromDB.imageFileName }
+							<!--첨부이미지 제거-->
+							<a class="badge badge-pill badge-light" style="font-size:13px;" onclick="javascript:deleteImageFile();" >
+								<input type="hidden" id="postNo" name="postNo" value="${PostDTOfromDB.postNo}"/>X <!-- 댓글삭제버튼 -->
+							</a>
+							</label>	
+							<input type="file" name="imageFile" id="imageFile" class="form-control" accept="image/*"/>					
 						</div>
 			
             </form>

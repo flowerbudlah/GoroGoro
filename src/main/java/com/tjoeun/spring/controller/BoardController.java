@@ -92,6 +92,36 @@ public class BoardController {
         return postDTO;
     }
 	
+	
+	//7. 글 수정 페이지로 이동
+	@RequestMapping("/modify")
+	public String modify(@RequestParam("postNo") int postNo, @ModelAttribute("modifyPostDTO") PostDTO modifyPostDTO, Model model) {
+				
+		model.addAttribute("postNo", postNo);
+					
+		PostDTO PostDTOfromDB = boardService.read(postNo); 
+		model.addAttribute("PostDTOfromDB", PostDTOfromDB);
+		//수정하고자 하는 그 글! 
+					
+			return "board/modify";	
+	}
+	
+	//게시판 수정과정
+	@RequestMapping("/modifyProcess")
+	public @ResponseBody PostDTO modify
+	(HttpServletRequest request, HttpServletResponse response, PostDTO modifyPostDTO, MultipartFile imageFile) throws Exception{
+		    PostDTO postDTO = boardService.modify(modifyPostDTO); //수정하겠다고 하는 그 글들이 입력되어 고쳐쓴 새로운 PostDTO가 된다. 
+		    return postDTO;
+		}
+		
+		
+	//9. 이미지 첨부파일 삭제
+	@RequestMapping("/deleteImageFile")
+	public @ResponseBody PostDTO deleteImageFile(int postNo) {
+		PostDTO afterDeletingImageFile = boardService.deleteImageFile(postNo); 
+		return afterDeletingImageFile;
+	}
+
 
 	//4. 글읽기 Reading (댓글 포함)
 	@RequestMapping("/read")
@@ -135,7 +165,6 @@ public class BoardController {
 		return likePostDTO;
 	}
 	
-	
 	//8. 댓글등록 
 	@RequestMapping("/writeReplyProcess")
     public @ResponseBody ReplyDTO writeReplyProcess(HttpServletRequest request, HttpServletResponse response, ReplyDTO writeReplyDTO) {	
@@ -145,28 +174,5 @@ public class BoardController {
         return ReplyDTO;
     }
 
-
-	//7. 글 수정 페이지로 이동
-	@RequestMapping("/modify")
-	public String modify(@RequestParam("postNo") int postNo, @ModelAttribute("modifyPostDTO") PostDTO modifyPostDTO, Model model) {
-		
-		model.addAttribute("postNo", postNo);
-			
-		PostDTO PostDTOfromDB = boardService.read(postNo); 
-		model.addAttribute("PostDTOfromDB", PostDTOfromDB);
-		//수정하고자 하는 그 글! 
-			
-		return "board/modify";	
-	}
-
-	
-	//게시판 수정과정
-	@RequestMapping("/modifyProcess")
-	public @ResponseBody PostDTO modify(HttpServletRequest request, HttpServletResponse response, PostDTO modifyPostDTO) throws Exception{
-	    PostDTO postDTO = boardService.modify(modifyPostDTO); //수정하겠다고 하는 그 글들이 입력되어 고쳐쓴 새로운 PostDTO가 된다. 
-	    return postDTO;
-	}
-	
-	
 
 }

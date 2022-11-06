@@ -12,19 +12,18 @@
 		order by postNo DESC
 	</select>
 
-
-	<!-- 그 해당 게시판에 써져있는 게시글 수 가져오기(페이징 작업때문에 필요하다. ) -->
+	<!--2. 그 해당 게시판에 써져있는 게시글 수 가져오기(페이징 작업때문에 필요하다. ) -->
 	<select id="getPostCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		select count(*) from freeBoard where boardNo = #{boardNo}
    </select>
    
-	<!-- 2. 글쓰기 Create-->
+	<!-- 3. 글쓰기 Create(이미지 파일 첨부기능포함)-->
 	<insert id="writeProcess" parameterType="com.tjoeun.spring.dto.PostDTO" useGeneratedKeys="true" keyProperty="postNo">
 		insert into freeBoard(boardNo, title, content, writer, regDate, imageFileName) 
-		values(#{boardNo}, #{title}, #{content}, #{writer}, Now(), #{imageFileName, jdbcType=VARCHAR})
+		values(#{boardNo}, #{title}, #{content}, #{writer}, Now(), #{imageFileName})
 	</insert>
 	
-	<!-- 3. 글 하나 읽기 Reading -->
+	<!-- 4. 글 하나 읽기 Reading -->
 	<select id="read" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO" >
 		select postNo, title, content, writer, regDate, viewCount, sameThinking, boardNo, imageFileName,  
 				(select count(*) from reply where postNo = f.postNo) as replyCount 
@@ -52,18 +51,25 @@
     
 	<!-- 6. 조회수 증가 -->
 	<update id="increasingViewCount" parameterType="java.lang.Integer">
-		update freeBoard set viewCount = viewCount + 1 where postNo = #{postNo}
+		update freeBoard set viewCount = viewCount + 1 
+		where postNo = #{postNo}
 	</update>
 	
 		
 	<!-- 8. 글 수정하기 -->
 	<update id="modify" parameterType="com.tjoeun.spring.dto.PostDTO">
 		update freeBoard
-		set title = #{title}, content = #{content}, fileName = #{fileName, jdbcType=VARCHAR} 
+		set title = #{title}, content = #{content}, imageFileName = #{imageFileName, jdbcType=VARCHAR} 
 		where postNo = #{postNo}
-		<!-- 위의 file은 데이터베이스에 저장되어있는 파일이름을 저장하는 변수 -->
+		<!-- 위의 file은 데이터베이스에 저장되어있는 이미지 파일이름을 저장하는 변수 -->
 	</update>
 	
+
+	<update id="deleteImageFile"  parameterType="java.lang.Integer">
+		update freeBoard 
+		set imageFileName = null
+		where postNo = #{postNo}
+	</update>	
 	
 	<!-- AJAX 게시글 검색 	-->
 	<select id="searchList" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="com.tjoeun.spring.dto.PostDTO">
@@ -85,5 +91,7 @@
 			order by postNo DESC 
 	</select>
 	
+
+
 	
 </mapper>

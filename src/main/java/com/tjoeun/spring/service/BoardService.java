@@ -62,7 +62,7 @@ public class BoardService {
 		
 		PostDTO postDTO = new PostDTO();
 		
-		//상품을 등록하기 전에 이경우는 반드시 이미지 파일을 업로드 하기 때문
+		//반드시 이미지 파일을 업로드 하기 때문
 		MultipartFile imageFile = writePostDTO.getImageFile(); 
 		String UploadingImageFileName = saveUploadFile(imageFile);
 		writePostDTO.setImageFileName(UploadingImageFileName);
@@ -92,8 +92,43 @@ public class BoardService {
 		
 		return imageFileName;
 	}
-
-
+	
+	//8. 글수정
+	public PostDTO modify(PostDTO modifyPostDTO) {
+		
+		PostDTO postDTO = new PostDTO(); 
+		
+		//글을 수정하면서 이참에 새롭게 이미지를 업로드 하실려는 경우, 
+		MultipartFile imageFile = modifyPostDTO.getImageFile(); 
+		String UploadingImageFileName = saveUploadFile(imageFile);
+		modifyPostDTO.setImageFileName(UploadingImageFileName);
+		
+		int updateCnt = boardDAO.modify(modifyPostDTO);
+		
+		if (updateCnt > 0) {
+			postDTO.setResult("SUCCESS"); 
+		} else {
+			postDTO.setResult("FAIL");
+		}
+		return postDTO;
+	}
+	
+	//글을 수정하는데,그냥 이미지 파일을 없애는 경우 
+	public PostDTO deleteImageFile(int postNo) {
+		
+		PostDTO postDTO = new PostDTO(); 
+		
+		int deleteImageFile = boardDAO.deleteImageFile(postNo); 
+		
+		if (deleteImageFile > 0) {
+			postDTO.setResult("SUCCESS"); 
+		} else {
+			postDTO.setResult("FAIL");
+		}
+		return postDTO;
+	}
+	
+	
 	//3. 특정한 게시글 하나 읽기
 	public PostDTO read(int postNo){
 		PostDTO readPostDTO = boardDAO.read(postNo);
@@ -134,9 +169,6 @@ public class BoardService {
 	
 	
 	
-	
-	
-	
 	//5. 게시판 이름 가져오기 
 	public String getBoardName(int boardNo) {
 		return boardDAO.getBoardName(boardNo);
@@ -148,23 +180,11 @@ public class BoardService {
 	}
 	
 	
-	//8. 글수정
-	public PostDTO modify(PostDTO modifyPostDTO) {
-		
-		PostDTO postDTO = new PostDTO(); 
-		
-		int updateCnt = boardDAO.modify(modifyPostDTO);
-		
-		if (updateCnt > 0) {
-			postDTO.setResult("SUCCESS"); 
-		} else {
-			postDTO.setResult("FAIL");
-		}
-		return postDTO;
-	}
+
 
 
 	
+	//게시글 검색 
 	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
 		return boardDAO.searchList(searchListPostDTO);
 		

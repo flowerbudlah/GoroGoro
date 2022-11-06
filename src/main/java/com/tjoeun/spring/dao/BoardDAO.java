@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tjoeun.spring.dto.PostDTO;
-import com.tjoeun.spring.dto.FileDTO;
+
 
 @Repository
 public class BoardDAO {
@@ -36,11 +36,7 @@ public class BoardDAO {
 		return sqlSessionTemplate.insert("board.writeProcess", writePostDTO); 
 	}
 	
-	//첨부파일 등록
-	public int addFiles(FileDTO fileDTO) throws Exception {
-		return sqlSessionTemplate.insert("board.addFiles", fileDTO);
-	}
-	
+
 	//3. 특정한 글 하나 읽기 Read
 	public PostDTO read(int postNo){
 		PostDTO readPostDTO = sqlSessionTemplate.selectOne("board.read", postNo);
@@ -75,6 +71,12 @@ public class BoardDAO {
 		return sqlSessionTemplate.update("board.modify", modifyPostDTO);
 	}
 
+	//글 수정시 아예 이미지 파일을 없애는 쿼리
+	public int deleteImageFile(int postNo) {
+		return sqlSessionTemplate.update("board.deleteImageFile", postNo);
+	}
+	
+	
 	
 	//게시판 글 검색
 	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {

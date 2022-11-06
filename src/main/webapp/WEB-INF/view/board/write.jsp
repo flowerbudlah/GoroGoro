@@ -110,9 +110,8 @@ body{ background-color: white; }
 			<div class="card shadow-sm">
 				<div class="card-body">
 				<h4 class="card-title">글쓰기</h4>
-				<form action="${root}board/writeProcess" id="writePostDTO" name="writePostDTO" method="post" enctype="multipart/form-data">
+				<form id="writePostDTO" name="writePostDTO" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="boardNo" id="boardNo" value="${boardNo }"> 
-				
 					<div class="form-group">
 						<label for="writer">작성자</label>
 						<input type="text" id="writer" name="writer" class="form-control"/>
@@ -124,15 +123,14 @@ body{ background-color: white; }
 					<div class="form-group">
 						<label for="content">내용</label>
 						<textarea id="content" name="content" class="form-control" rows="15" style="resize:none"></textarea>
-					</div>
-					
+					</div>		
 					<!-- 첨부파일 시작-->
 					<div class="form-group">
+					<!-- private String imageFileName; //업로드한 사진의 이름
+						 private MultipartFile imageFile; //업로드한 사진파일  -->
 						<label for="imageFile">첨부 이미지</label>
 						<input type="file" id="imageFile" name="imageFile" class="form-control" accept="image/*">						
 					</div>
-					<!-- test -->
-	
 					<!-- 첨부파일 끝 -->	
 				</form>
 				<div class="form-group">

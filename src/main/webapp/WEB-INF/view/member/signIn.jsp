@@ -80,8 +80,8 @@ body{ background-color: white; }
 		 <div class="col-lg-4 col-sm-6"></div>
 			<div class="card shadow-none">
 				<div class="card-body">
+				
 						<form action="" method="post" name="" id="" >
-						
 						<div class="form-group">
 							<label for="email">이메일(아이디)</label>
 							<input type="text" name="email" id="email" class="form-control"/>
