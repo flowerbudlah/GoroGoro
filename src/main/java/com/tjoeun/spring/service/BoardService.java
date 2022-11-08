@@ -95,13 +95,16 @@ public class BoardService {
 	
 	//8. 글수정
 	public PostDTO modify(PostDTO modifyPostDTO) {
-		
+			
 		PostDTO postDTO = new PostDTO(); 
 		
 		//글을 수정하면서 이참에 새롭게 이미지를 업로드 하실려는 경우, 
 		MultipartFile imageFile = modifyPostDTO.getImageFile(); 
-		String UploadingImageFileName = saveUploadFile(imageFile);
-		modifyPostDTO.setImageFileName(UploadingImageFileName);
+		
+		if(imageFile.getSize() > 0) { //원글에서 업로드 된 파일이 있다면 
+			String UploadingImageFileName = saveUploadFile(imageFile);
+			modifyPostDTO.setImageFileName(UploadingImageFileName);
+		}
 		
 		int updateCnt = boardDAO.modify(modifyPostDTO);
 		
@@ -114,11 +117,11 @@ public class BoardService {
 	}
 	
 	//글을 수정하는데,그냥 이미지 파일을 없애는 경우 
-	public PostDTO deleteImageFile(int postNo) {
+	public PostDTO deleteImageFile(PostDTO imageFilePostDTO) {
 		
 		PostDTO postDTO = new PostDTO(); 
 		
-		int deleteImageFile = boardDAO.deleteImageFile(postNo); 
+		int deleteImageFile = boardDAO.deleteImageFile(imageFilePostDTO); 
 		
 		if (deleteImageFile > 0) {
 			postDTO.setResult("SUCCESS"); 

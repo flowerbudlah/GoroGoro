@@ -14,7 +14,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 
-	function signIn(){
+	function signIn(){		
 		
 		var email = $("#email").val(); //게시판 번호
 		var passwords = $("#passwords").val(); //작성자
@@ -63,6 +63,7 @@
 		}
 	
 </script>
+
 <style>
 /* 슬라이더 영역 CSS */
 .slider img{ display:block; width:100%; max-width:100%; height:300px; }

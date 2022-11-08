@@ -28,7 +28,7 @@
 		select postNo, title, content, writer, regDate, viewCount, sameThinking, boardNo, imageFileName,  
 				(select count(*) from reply where postNo = f.postNo) as replyCount 
 		from freeBoard f 
-		where postNo = #{postNo}	
+		where postNo = #{postNo} 	
 	</select>
 	
 	
@@ -65,11 +65,12 @@
 	</update>
 	
 
-	<update id="deleteImageFile"  parameterType="java.lang.Integer">
+	<update id="deleteImageFile" parameterType="com.tjoeun.spring.dto.PostDTO">
 		update freeBoard 
-		set imageFileName = null
+		set imageFileName = #{imageFileName}
 		where postNo = #{postNo}
 	</update>	
+	
 	
 	<!-- AJAX 게시글 검색 	-->
 	<select id="searchList" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="com.tjoeun.spring.dto.PostDTO">

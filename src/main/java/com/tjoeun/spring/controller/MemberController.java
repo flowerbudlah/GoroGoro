@@ -40,17 +40,16 @@ public class MemberController {
 	@RequestMapping("/signUpProcess")
 	public String signUpProcess
 	(@Valid @ModelAttribute("signUpMemberDTO") MemberDTO signUpMemberDTO, BindingResult result){
-		
-		if(result.hasErrors()) { 
-			return "member/signUp"; 
+	
+		if(result.hasErrors()) {// 유효성 검사시 에러가 있다면
+			return "member/signUp";//그냥 그 페이지
+		} else {
+			memberService.signUpProcess(signUpMemberDTO);
+			return "member/afterSignUp"; //유효성 검사시 에러가 없다면 로그인 전 페이지 
 		}
-
-		memberService.signUpProcess(signUpMemberDTO);
-		return "member/signIn"; //회원가입이 성공했으면 로그인 페이지로 간다. 
 	}
-	
-	
 
+	
 	@RequestMapping("/signIn")
 	public String signIn() {
 		return "member/signIn";

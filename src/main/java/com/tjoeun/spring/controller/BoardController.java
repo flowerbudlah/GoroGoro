@@ -106,19 +106,22 @@ public class BoardController {
 			return "board/modify";	
 	}
 	
+	
+	
 	//게시판 수정과정
 	@RequestMapping("/modifyProcess")
 	public @ResponseBody PostDTO modify
 	(HttpServletRequest request, HttpServletResponse response, PostDTO modifyPostDTO, MultipartFile imageFile) throws Exception{
-		    PostDTO postDTO = boardService.modify(modifyPostDTO); //수정하겠다고 하는 그 글들이 입력되어 고쳐쓴 새로운 PostDTO가 된다. 
-		    return postDTO;
-		}
 		
-		
+		PostDTO postDTO = boardService.modify(modifyPostDTO); //수정하겠다고 하는 그 글들이 입력되어 고쳐쓴 새로운 PostDTO가 된다. 
+		return postDTO;
+	
+	}
+	
 	//9. 이미지 첨부파일 삭제
 	@RequestMapping("/deleteImageFile")
-	public @ResponseBody PostDTO deleteImageFile(int postNo) {
-		PostDTO afterDeletingImageFile = boardService.deleteImageFile(postNo); 
+	public @ResponseBody PostDTO deleteImageFile(HttpServletRequest request, HttpServletResponse response, PostDTO imageFilePostDTO) {
+		PostDTO afterDeletingImageFile = boardService.deleteImageFile(imageFilePostDTO); 
 		return afterDeletingImageFile;
 	}
 

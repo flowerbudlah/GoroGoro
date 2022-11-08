@@ -34,9 +34,7 @@ public class MemberDTO {
 	private String answer; //아이디 비밀번호 분실시 답(위 질문에 대한 답)
 	private Date signUpDate; //가입일
 	
-	
-	
-	
+
 	private String result; //회원가입 성공여부를 할려주는 결과변수
 	
 	
@@ -44,12 +42,16 @@ public class MemberDTO {
 	private boolean inputEmail; //중복검사 유효성검사와 곤련있는 부분
 	private boolean inputNick;
 	
+
 	private boolean signIn;
 	
 	public MemberDTO() {
 		this.inputEmail = false; //중복검사 유효성검사와 관련있는 부분
 		this.inputNick = false; 
 	}
+	
+	
+	
 	
 	
 

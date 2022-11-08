@@ -14,8 +14,8 @@ public class MemberDAO {
 	private SqlSessionTemplate sqlSessionTemplate;
 		
 	//1. 회원가입
-	public int signUpProcess(MemberDTO signUpMemberDTO) {
-		return sqlSessionTemplate.insert("member.signUpProcess", signUpMemberDTO);
+	public void signUpProcess(MemberDTO signUpMemberDTO) {
+		sqlSessionTemplate.insert("member.signUpProcess", signUpMemberDTO);
 	}
 
 	//2. 아이디 대용인 이메일 중복체크

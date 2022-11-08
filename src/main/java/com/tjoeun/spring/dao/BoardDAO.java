@@ -72,11 +72,9 @@ public class BoardDAO {
 	}
 
 	//글 수정시 아예 이미지 파일을 없애는 쿼리
-	public int deleteImageFile(int postNo) {
-		return sqlSessionTemplate.update("board.deleteImageFile", postNo);
+	public int deleteImageFile(PostDTO imageFilePostDTO) {
+		return sqlSessionTemplate.update("board.deleteImageFile", imageFilePostDTO);
 	}
-	
-	
 	
 	//게시판 글 검색
 	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {

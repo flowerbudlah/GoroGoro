@@ -18,20 +18,9 @@ public class MemberService {
 	@Lazy @Resource(name = "loginMemberDTO")
 	private MemberDTO loginMemberDTO;
 
-	
 	//1. 회원가입(새로운 회원의 탄생)
-	public MemberDTO signUpProcess(MemberDTO signUpMemberDTO){
-		
-		MemberDTO  newMemberDTO = new MemberDTO ();
-		
-		int SuccessOfSignIn = memberDAO.signUpProcess(signUpMemberDTO); //회원가입 정보 입력
-		
-		if (SuccessOfSignIn > 0) { //회원가입이 성공했다는 뜻
-			newMemberDTO.setResult("SUCCESS");
-		} else { //회원가입이 실패했다는 뜻
-			newMemberDTO.setResult("FAIL"); 
-		}
-		return newMemberDTO; 	
+	public void signUpProcess(MemberDTO signUpMemberDTO){
+		memberDAO.signUpProcess(signUpMemberDTO); 
 	}
 	
 	
