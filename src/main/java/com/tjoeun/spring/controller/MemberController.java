@@ -8,15 +8,14 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tjoeun.spring.dto.MemberDTO;
 import com.tjoeun.spring.service.MemberService;
-import com.tjoeun.spring.validator.MemberValidator;
+
 
 
 @Controller
@@ -55,15 +54,6 @@ public class MemberController {
 		return "member/signIn";
 	}
 	
-
-	
-	
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		MemberValidator validator1 = new MemberValidator();
-		binder.addValidators(validator1);
-	}
-
 
 
 	
