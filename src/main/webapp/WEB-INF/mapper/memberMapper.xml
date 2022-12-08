@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="member">
 
 	<!-- 1. 회원가입 Create-->
@@ -10,12 +9,12 @@
 		values(#{email}, #{passwords}, #{nick}, #{question}, #{answer}, Now())
 	</insert>
 
+
 	<!-- 2. 아이디 용인 이메일 중복체크 -->
 	<select id="checkEmail" resultType="java.lang.String" parameterType="java.lang.String">
-		select email
-		from members
-		where email like CONCAT (#{email}, '%')
+		select email from members where email like CONCAT (#{email}, '%')
 	</select>
+	
 	
 	<!-- 3. 대화명 중복체크 -->
 	<select id="checkNick" resultType="java.lang.String" parameterType = "java.lang.String">

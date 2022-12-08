@@ -6,17 +6,14 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.validation.BindingResult;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tjoeun.spring.dto.MemberDTO;
 import com.tjoeun.spring.service.MemberService;
-
-
 
 @Controller
 @RequestMapping("/member")
@@ -47,15 +44,24 @@ public class MemberController {
 			return "member/afterSignUp"; //유효성 검사시 에러가 없다면 로그인 전 페이지 
 		}
 	}
-
 	
+	//1. 이메일(아이디) 중복체크
+	@RequestMapping(value ="/checkId.do")
+	public @ResponseBody String checkEmail(String email) {
+		String result = memberService.checkEmail(email);
+		
+		if(result == null){
+			return "0"; //사용가능
+		} else {
+			return "1"; //사용불가
+		}
+	}
+	
+		
 	@RequestMapping("/signIn")
 	public String signIn() {
 		return "member/signIn";
 	}
-	
-
-
 	
 	//4. 로그인버튼을 누르고 로그인성공하기. 
 	@PostMapping("/signInProcess")

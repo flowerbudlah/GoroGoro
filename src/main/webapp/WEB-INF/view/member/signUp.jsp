@@ -12,7 +12,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
 <style>
 /* 슬라이더 영역 CSS */
 .slider img{ display:block; width:100%; max-width:100%; height:300px; }
@@ -33,14 +32,14 @@ body{ background-color: white; }
 		<div class="col-sm-7"><h4>회원가입</h4>
 		<div class="card shadow-none">
 		<div class="card-body">
+		<form action="${root}member/signUpProcess" name="signUpMemberDTO" method="post" id="signUpMemberDTO">
 			<table>
 				<tr>
 					<td>이메일(E-mail address)</td>
 	  				<td>
 	  					<input type="text" id="email" name="email" class="form-control"/>
-	  					<font id = "checkId" size = "2"></font>
-	  				</td>	
-	  						
+	  					<font id="checkId" size="2"></font>
+	  				</td>			
 				</tr>
 				<tr>
 	 	 			<td>비밀번호</td>
@@ -58,10 +57,12 @@ body{ background-color: white; }
 			
 				<tr>
 	  				<td>닉네임</td>
-	  				<td><input type="text" name="display_name" class="form-control"></td>
+	  				<td>
+	  					<input type="text" id="nick" name="nick" class="form-control">
+	  				</td>
 				</tr>
 				<tr>
-					<td>이메일 또는 비밀번호 분실시 질문&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td>이메일 또는 비밀번호 분실시 질문&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td>
 						<select name="question" id="question" class="form-control">
 							<option value="hometown">당신의 고향은 어디입니까?</option>
@@ -81,19 +82,18 @@ body{ background-color: white; }
 	  					<div class="text-right" style="margin-top:50px; margin-bottom:50px;">
 							<input type = "submit" class="btn btn-danger" value="회원가입 완료" onclick="javascript:signUpProcess();">
 						</div>
-	  				
 	  				</td>
 				</tr>
 			</table>
-			
-			<script>
-$('.pw').keyup(function(){
+			</form>
+	<script>
+$('.pw').focusout(function(){
 	
-	let pass1 = $("#passwords").val();
-    let pass2 = $("#passwordsConfirm").val();
+	let passwords = $("#passwords").val();
+    let passwordsConfirm = $("#passwordsConfirm").val();
     
-    if (pass1 != "" && pass2 != ""){
-    	if (pass1 == pass2){
+    if (passwords != "" && passwordsConfirm != ""){
+    	if(passwords == passwordsConfirm){
         	$("#checkPw").html('비밀번호가 일치합니다. ');
         	$("#checkPw").attr('color','green');
         } else {
@@ -102,20 +102,33 @@ $('.pw').keyup(function(){
         }
     }
 })
+</script>		
+<script>
+$("#email").focusout(function(){
+	$.ajax({
+		url : "${root}member/checkId.do",
+		type : "post",
+		data : {email : $("#email").val()},
+		success : function(data){
+			if(data == "1"){
+				
+				$("#checkId").html('아이디 중복');
+	            $("#checkId").attr('color','red');
+			}else{
+			
+				$("#checkId").html('아이디 사용가능');
+	        	$("#checkId").attr('color','green');
+			}
+		}
+	});
+});
 </script>
-			
-			
-			
-			
 		</div>
 		</div>
 		</div>
 		<div class="col-sm-3"></div>
 	</div>
 </div>
-
-
-
 <!-- 하단 -->
 <c:import url="/WEB-INF/view/include/bottomInfo.jsp" />
 </body>

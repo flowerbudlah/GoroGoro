@@ -20,8 +20,7 @@ public class MemberDAO {
 
 	//2. 아이디 대용인 이메일 중복체크
 	public String checkEmail(String email) {
-		String checkingEmail = sqlSessionTemplate.selectOne("member.checkEmail", email);
-		return checkingEmail;
+		return sqlSessionTemplate.selectOne("member.checkEmail", email);
 	}
 
 	//3. 대화명 중복체크
@@ -36,6 +35,10 @@ public class MemberDAO {
 	}
 	
 
+	
+	
+	
+	
 	
 		
 

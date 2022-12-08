@@ -25,13 +25,8 @@ public class MemberService {
 	
 	
 	//2. (아이디 용)이메일 중복체크 
-	public boolean checkEmail(String email) {
-		String checkingEmail = memberDAO.checkEmail(email); 
-		if(checkingEmail == null) {	
-			return true; //입력한 이메일이 존재하지 않기에 입력한 이메일 사용가능. 
-		} else {	
-			return false; //입력한 이메일 이미 존재하기에 사용불가
-		}
+	public String checkEmail(String email) {
+		return memberDAO.checkEmail(email);
 	} 
 
 	//3. 대화명(닉네임) 중복 체크
