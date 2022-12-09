@@ -18,10 +18,26 @@ public class MemberService {
 	@Lazy @Resource(name = "loginMemberDTO")
 	private MemberDTO loginMemberDTO;
 
+	
+	
 	//1. 회원가입(새로운 회원의 탄생)
-	public void signUpProcess(MemberDTO signUpMemberDTO){
-		memberDAO.signUpProcess(signUpMemberDTO); 
+	public MemberDTO signUpProcess(MemberDTO signUpMemberDTO){
+		
+		MemberDTO newMemberDTO = new MemberDTO(); 
+		
+		int signUp = memberDAO.signUpProcess(signUpMemberDTO); 
+		
+		if(signUp>0) {
+			newMemberDTO.setResult("success");
+		} else {
+			newMemberDTO.setResult("fail");
+		}
+		return newMemberDTO; 
 	}
+	
+	
+	
+	
 	
 	
 	//2. (아이디 용)이메일 중복체크 
@@ -30,13 +46,8 @@ public class MemberService {
 	} 
 
 	//3. 대화명(닉네임) 중복 체크
-	public boolean checkNick(String nick) {
-		String checkingNick = memberDAO.checkNick(nick); 
-		if(checkingNick == null) {	
-			return true; //입력한 대화명이 존재하지 않기에 입력한 이메일 사용가능. 
-		} else {	
-			return false; //입력한 대화명은 이미 다른사람이 사용중이기애(이미 존재하기에) 사용불가
-		}
+	public String checkNick(String nick) {
+		return  memberDAO.checkNick(nick);
 	}
 
 	//4.Sign In or Log In
@@ -53,14 +64,4 @@ public class MemberService {
 		}
 	}
 
-
-	
-
-		
-	
-	
-	
-	
-	
-	
 }

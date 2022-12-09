@@ -34,26 +34,33 @@ public class MemberController {
 	
 	//2. 회원가입 완료버튼 누르고 회원가입 하기
 	@RequestMapping("/signUpProcess")
-	public String signUpProcess
-	(@Valid @ModelAttribute("signUpMemberDTO") MemberDTO signUpMemberDTO, BindingResult result){
-	
-		if(result.hasErrors()) {// 유효성 검사시 에러가 있다면
-			return "member/signUp";//그냥 그 페이지
-		} else {
-			memberService.signUpProcess(signUpMemberDTO);
-			return "member/afterSignUp"; //유효성 검사시 에러가 없다면 로그인 전 페이지 
-		}
+	public  @ResponseBody MemberDTO signUpProcess(MemberDTO signUpMemberDTO){
+		
+		MemberDTO newMemberDTO = memberService.signUpProcess(signUpMemberDTO); //회원가입 완료
+		return newMemberDTO; 
 	}
 	
 	//1. 이메일(아이디) 중복체크
-	@RequestMapping(value ="/checkId.do")
+	@RequestMapping("/checkEmail")
 	public @ResponseBody String checkEmail(String email) {
 		String result = memberService.checkEmail(email);
 		
 		if(result == null){
-			return "0"; //사용가능
+			return "available"; //사용가능
 		} else {
-			return "1"; //사용불가
+			return "unavailable"; //사용불가
+		}
+	}
+	
+	//닉네임 중복체크
+	@RequestMapping("/checkNick")
+	public @ResponseBody String checkNick(String nick) {
+		String result = memberService.checkNick(nick);
+		
+		if(result == null){
+			return "available"; //사용가능
+		} else {
+			return "unavailable"; //사용불가
 		}
 	}
 	
