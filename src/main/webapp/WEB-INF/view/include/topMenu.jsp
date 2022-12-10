@@ -10,11 +10,24 @@
 .main > li {font-color:white;  margin-right: 20px;  margin-left: 20px;  margin-top: 10px; margin-bottom: 10px; line-height: 30px; }
 .main > li ul li{ float: left; list-style: none; font-weight: bolder; font-size: 14px;  position: relative; margin:0 auto; }
 .main > li:hover ul{ opacity: 1; pointer-events: auto; }
-
 .ml-auto{ font-size:14px;}
-
 </style>
-
+<script type="text/javascript">
+function signOut(){ //사인아웃
+	
+	$.ajax({   
+		url      : "${root}member/signOut", 
+		type     : "POST",    
+		success  : function(){
+			alert("로그아웃 되었습니다. ");
+			location.reload();
+		},           
+		error    : function(request,status,error){
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
+		}
+	}) //아작스		
+} 	
+</script>
 <nav class="navbar navbar-expand-md bg-light navbar-dark fixed-top shadow-lg">
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
 		<span class="navbar-toggler-icon"></span>
@@ -62,7 +75,7 @@
 			<li>관리자 페이지
 				<ul> 
 					<li><a href="${root }admin/memberManagement" style="color:black;">회원 관리</a></li><br>
-					<li><a href="${root }admin/postManagement" style="color:black;">게시물 관리</a></li><br>
+					<li><a onClick="" style="color:black;">게시물 관리</a></li><br>
 					<li><a href="${root }admin/boardManagement" style="color:black;">게시판 관리</a></li>
 				</ul>
 			</li>
@@ -73,9 +86,12 @@
 		<c:choose>
 			<c:when test="${signInMemberDTO.signIn == true }"><!--로그인 된상태 -->
 				<li><a href="${root }member/modify" style="color:black;">회원정보수정</a></li>&emsp;
-				<li><a href="${root }member/logout" style="color:black;">로그아웃</a></li>&emsp;
+				
+				<li>
+				<a href="javascript:signOut();" attr-a="onclick : attr-a" style="color:black;">로그아웃</a>
+			
+				</li>&emsp;
 				<li><a href="${root }member/delete" style="color:black;">회원탈퇴</a></li>
-	
 			</c:when>
 			<c:otherwise><!-- 로그인 안된상태 -->
 			

@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="root" value="${pageContext.request.contextPath }/" />
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<c:set var="root" value="${pageContext.request.contextPath }/" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +12,43 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+function signOut(){ //로그인
+	
+	var email = $("#email").val(); //이메일(아이디)
+	var passwords = $("#passwords").val(); //작성자
 
+	var formData = new FormData($('#signUpMemberDTO')[0]);	
+	
+	if(email == ""){			
+		alert("이메일 주소를 입력해주세요.");
+		$("#email").focus();
+		return;
+	}
+
+	if (passwords == ""){			
+		alert("패스워드를 입려개주세요");
+		$("#passwords").focus();
+		return;
+	}
+			
+		$.ajax({   
+			url      : "${root}member/signUpProcess", 
+	        data     : formData,
+	        cache    : false,
+	                async    : true,
+	                contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
+	                processData: false, // 이것을 붙이고 업로드가 되었다. 
+	                type     : "POST",    
+	                success  : function(){ alert("로그아웃 되었습니다. ");  },           
+	                error: function(request,status,error){
+	                	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	                }
+				}) //아작스		
+		} 	
+
+	}
+</script>
 
 
 <style>

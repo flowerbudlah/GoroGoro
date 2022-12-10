@@ -1,6 +1,7 @@
 package com.tjoeun.spring.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,8 +95,11 @@ public class MemberController {
 		
 	}
 	
-	
-	
+	@RequestMapping("/signOut") 
+	public @ResponseBody void signOut(HttpSession session) {
+		signInMemberDTO.setSignIn(false); //로그인 풀리고, 
+		session.invalidate(); //세션 종료
+	}
 	
 
 }
