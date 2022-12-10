@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath }/" />
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
@@ -12,57 +13,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script type="text/javascript">
 
-	function signIn(){		
-		
-		var email = $("#email").val(); //게시판 번호
-		var passwords = $("#passwords").val(); //작성자
-	
-		var formData = new FormData($('#writePostDTO')[0]);	
-		
-		if (email == ""){			
-			alert("이메일를 입력해주세요.");
-			$("#email").focus();
-			return;
-		}
-			
-		if (passwords == ""){			
-			alert("패스워드를 입력해주세요.");
-			$("#passwords").focus();
-			return;
-		}
-	
-		$.ajax({   
-			url      : "${root}member/signInProcess", 
-			data     : $("#writePostDTO").serialize(), 
-			dataType : "JSON",
-			cache    : false,
-			async    : true,
-			type     : "POST",    
-			success  : function(obj) { insertBoardCallback(obj); },           
-			error	 : function(request,status,error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); }
-			}) //아작스 
-		} //signIn()의 끝
-		
-		//로그인 성공 콜백함수 
-		function insertBoardCallback(obj){
-		
-			if(obj != null){		
-				
-				var signIn = obj.signIn;
-				
-				if(signIn == "true"){				
-					alert("로그인을 성공하였습니다. ");				
-					goMain();				 
-				} else {				
-					alert("로그인을 실패하였습니다. ");	
-					return;
-				}
-			}
-		}
-	
-</script>
+
 
 <style>
 /* 슬라이더 영역 CSS */
@@ -81,8 +33,8 @@ body{ background-color: white; }
 		 <div class="col-lg-4 col-sm-6"></div>
 			<div class="card shadow-none">
 				<div class="card-body">
-				
-						<form action="" method="post" name="" id="" >
+					<form action="${root }member/signInProcess" modelAttribute="signInMemberDTO" method="post" name="" id="" >
+					
 						<div class="form-group">
 							<label for="email">이메일(아이디)</label>
 							<input type="text" name="email" id="email" class="form-control"/>
@@ -111,8 +63,7 @@ body{ background-color: white; }
 							</div>
 						</div>
 						
-						
-						</form>
+					</form>
 				</div>
 			</div>
 		</div>

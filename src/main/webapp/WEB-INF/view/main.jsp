@@ -57,7 +57,7 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
     <p class="text-center">
     	1. 로그인<br>
     	2. 로그아웃 <br>
-    	3. 회원가입, 회원정보수정, 회원탈퇴, 비밀번호 찾기<br>
+    	3. 회원정보수정, 회원탈퇴, 비밀번호 찾기<br>
     	4. 개인 프로필 기능(사진 업로드, 본인이 신고당한 건수)<br>
     	5. 게시글 신고(신고당한사람은 플래그가 증가한다. 더티지수증가)
     </p>

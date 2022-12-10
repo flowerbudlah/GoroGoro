@@ -6,10 +6,12 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tjoeun.spring.dto.MemberDTO;
@@ -21,14 +23,13 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
-	
-	@Resource(name="loginMemberDTO")
-	@Lazy
-	private MemberDTO loginMemberDTO;
-	
+
+	@Resource(name="signInMemberDTO") 
+	private @Lazy MemberDTO signInMemberDTO; //로그인, 세션 쿠키와 관련있는 부분
+
 	//1. 회원가입 페이지로 이동
 	@RequestMapping("/signUp")
-	public String signUp() { //회원가입 페이지로 이동
+	public String signUp(){ //회원가입 페이지로 이동
 		return "member/signUp";
 	}
 	
@@ -39,6 +40,8 @@ public class MemberController {
 		MemberDTO newMemberDTO = memberService.signUpProcess(signUpMemberDTO); //회원가입 완료
 		return newMemberDTO; 
 	}
+	
+	
 	
 	//1. 이메일(아이디) 중복체크
 	@RequestMapping("/checkEmail")
@@ -65,18 +68,34 @@ public class MemberController {
 	}
 	
 		
+	
+	//로그인 페이지로 입장
 	@RequestMapping("/signIn")
 	public String signIn() {
 		return "member/signIn";
 	}
 	
+	
 	//4. 로그인버튼을 누르고 로그인성공하기. 
 	@PostMapping("/signInProcess")
-	public String signInProcess(MemberDTO tmpLoginMemberDTO) {
+	public String signInProcess
+	(@Valid @ModelAttribute("tmpSignInMemberDTO") MemberDTO tmpSignInMemberDTO, BindingResult result) {
 		
-		memberService.signIn(tmpLoginMemberDTO);
-		return null;
+		if(result.hasErrors()) {
+			return "member/signIn"; 
+		}
+		memberService.signIn(tmpSignInMemberDTO);
+			
+		if(signInMemberDTO.isSignIn() == true) { 
+			return "member/login_success"; //로그인 성공시
+		} else { 
+			return "member/login_failure"; //로그인 실패시 
+		}
+		
 	}
+	
+	
+	
 	
 
 }

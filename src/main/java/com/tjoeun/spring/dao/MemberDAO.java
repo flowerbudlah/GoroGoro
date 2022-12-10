@@ -18,22 +18,23 @@ public class MemberDAO {
 		return sqlSessionTemplate.insert("member.signUpProcess", signUpMemberDTO);
 	}
 
-	
 	//2. 아이디 대용인 이메일 중복체크
 	public String checkEmail(String email) {
 		return sqlSessionTemplate.selectOne("member.checkEmail", email);
 	}
-
 	
 	//3. 대화명 중복체크
 	public String checkNick(String nick) {
 		return sqlSessionTemplate.selectOne("member.checkNick", nick);
 	}
 
-	
 	//4. Log In or Sign In
-	public MemberDTO signIn(MemberDTO tmpLoginMemberDTO) {
-		return sqlSessionTemplate.selectOne("member.signIn", tmpLoginMemberDTO);
-	}		
+	public MemberDTO signIn(MemberDTO tmpSignInMemberDTO) {
+		return sqlSessionTemplate.selectOne("member.signIn", tmpSignInMemberDTO);
+	}
+	
+	
+	
+	
 
 }

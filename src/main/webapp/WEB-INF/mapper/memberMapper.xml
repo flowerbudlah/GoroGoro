@@ -23,9 +23,9 @@
 		where nick = #{nick}
 	</select>
   	 
-	<!--4. 로그인 -->
+	<!--4. 로그인(Sign In) -->
  	<select id="signIn" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
- 		select * from members where id = #{id} and passwords = #{passwords}
+ 		select * from members where email = #{email} and passwords = #{passwords}
 	</select>
 
 

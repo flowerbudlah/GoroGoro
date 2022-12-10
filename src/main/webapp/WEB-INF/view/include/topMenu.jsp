@@ -67,10 +67,22 @@
 				</ul>
 			</li>
 		</ul>
+		
 		<!-- 로그인 회원가입 부분(회원정보수정, 로그아웃, 호원탈퇴)-->
 		<ul class="navbar-nav ml-auto">
-			<li class="nav-item"><a href="${root }member/signIn" style="color:black;">로그인</a></li>&emsp;
-			<li class="nav-item"><a href="${root }member/signUp" style="color:black;">회원가입</a></li>
+		<c:choose>
+			<c:when test="${signInMemberDTO.signIn == true }"><!--로그인 된상태 -->
+				<li><a href="${root }member/modify" style="color:black;">회원정보수정</a></li>&emsp;
+				<li><a href="${root }member/logout" style="color:black;">로그아웃</a></li>&emsp;
+				<li><a href="${root }member/delete" style="color:black;">회원탈퇴</a></li>
+	
+			</c:when>
+			<c:otherwise><!-- 로그인 안된상태 -->
+			
+				<li class="nav-item"><a href="${root }member/signIn" style="color:black;">로그인</a></li>&emsp;
+				<li class="nav-item"><a href="${root }member/signUp" style="color:black;">회원가입</a></li>
+			</c:otherwise>   
+		</c:choose>
 		</ul>
 			<a class="navbar-brand">
 				<img src="${root}image/banner/smilingPekko.png" height="60px"> <!-- 뒤에 페코사진 들어갈 자리 -->
