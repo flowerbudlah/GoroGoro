@@ -14,9 +14,8 @@
 <script src="${root }js/validation.js"></script>
 <script type="text/javascript">
 
-	$(document).ready(function(){	});
+$(document).ready(function(){	});
 
-	/** 게시판 - 목록 페이지 이동 */
 	function signIn(){
 		location.href = "${root}member/signIn";
 	}
@@ -214,7 +213,7 @@ $("#email").keyup(function(){
 });
 
 //닉네임 중복검사
-$("#nick").focusout(function(){
+$("#nick").blur(function(){ //foucusout, keyup, change, blur
 
 	$.ajax({
 		url : "${root}member/checkNick",

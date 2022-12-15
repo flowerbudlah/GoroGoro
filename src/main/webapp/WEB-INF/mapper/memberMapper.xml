@@ -18,9 +18,7 @@
 	
 	<!-- 3. 대화명 중복체크 -->
 	<select id="checkNick" resultType="java.lang.String" parameterType = "java.lang.String">
-		select nick 
-		from members 
-		where nick = #{nick}
+		select nick from members where nick = #{nick}
 	</select>
   	 
 	<!--4. 로그인(Sign In) -->

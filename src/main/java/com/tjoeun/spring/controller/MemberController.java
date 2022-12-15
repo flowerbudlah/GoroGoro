@@ -1,15 +1,16 @@
 package com.tjoeun.spring.controller;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
-
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,7 +27,8 @@ public class MemberController {
 	private MemberService memberService;
 
 	@Resource(name="signInMemberDTO") 
-	private @Lazy MemberDTO signInMemberDTO; //로그인, 세션 쿠키와 관련있는 부분
+	@Lazy
+	private MemberDTO signInMemberDTO; //로그인, 세션 쿠키와 관련있는 부분
 
 	//1. 회원가입 페이지로 이동
 	@RequestMapping("/signUp")
@@ -36,7 +38,7 @@ public class MemberController {
 	
 	//2. 회원가입 완료버튼 누르고 회원가입 하기
 	@RequestMapping("/signUpProcess")
-	public  @ResponseBody MemberDTO signUpProcess(MemberDTO signUpMemberDTO){
+	public @ResponseBody MemberDTO signUpProcess(MemberDTO signUpMemberDTO){
 		
 		MemberDTO newMemberDTO = memberService.signUpProcess(signUpMemberDTO); //회원가입 완료
 		return newMemberDTO; 
@@ -77,24 +79,27 @@ public class MemberController {
 	}
 	
 	
+	
 	//4. 로그인버튼을 누르고 로그인성공하기. 
 	@PostMapping("/signInProcess")
-	public String signInProcess
-	(@Valid @ModelAttribute("tmpSignInMemberDTO") MemberDTO tmpSignInMemberDTO, BindingResult result) {
-		
-		if(result.hasErrors()) {
-			return "member/signIn"; 
-		}
-		memberService.signIn(tmpSignInMemberDTO);
+	public void signInProcess
+	(HttpServletRequest request, HttpServletResponse response, MemberDTO tmpSignInMemberDTO) {
 			
-		if(signInMemberDTO.isSignIn() == true) { 
-			return "member/login_success"; //로그인 성공시
-		} else { 
-			return "member/login_failure"; //로그인 실패시 
-		}
+		memberService.signIn(tmpSignInMemberDTO); //로그인 시도 
 		
+		if(signInMemberDTO.isSignIn() == true) {//이것이 true 
+			
+			
+		} else if(signInMemberDTO.isSignIn() ==  false ) {
+			try {
+				response.getWriter().write("loginFail");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
-	
+		
 	@RequestMapping("/signOut") 
 	public @ResponseBody void signOut(HttpSession session) {
 		signInMemberDTO.setSignIn(false); //로그인 풀리고, 

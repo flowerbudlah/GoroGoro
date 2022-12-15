@@ -26,7 +26,6 @@ public class MemberDTO {
 	
 	private String result; //회원가입 성공여부를 할려주는 결과변수
 	
-	
 	private boolean signIn; //로그인이 된상태면 이것이 true, 로그인이 안된상태면 false 
 		
 

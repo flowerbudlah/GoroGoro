@@ -80,18 +80,19 @@ function signOut(){ //사인아웃
 				</ul>
 			</li>
 		</ul>
-		
+		${signInMemberDTO.signIn}
 		<!-- 로그인 회원가입 부분(회원정보수정, 로그아웃, 호원탈퇴)-->
 		<ul class="navbar-nav ml-auto">
 		<c:choose>
 			<c:when test="${signInMemberDTO.signIn == true }"><!--로그인 된상태 -->
+			${signInMemberDTO.nick }님께서 로그인을 하셨습니다.<br>
 				<li><a href="${root }member/modify" style="color:black;">회원정보수정</a></li>&emsp;
 				
 				<li>
 				<a href="javascript:signOut();" attr-a="onclick : attr-a" style="color:black;">로그아웃</a>
 			
-				</li>&emsp;
-				<li><a href="${root }member/delete" style="color:black;">회원탈퇴</a></li>
+				</li>
+			
 			</c:when>
 			<c:otherwise><!-- 로그인 안된상태 -->
 			
