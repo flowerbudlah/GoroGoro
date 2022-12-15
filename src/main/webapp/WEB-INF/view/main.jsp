@@ -46,8 +46,7 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
     <h4>앞으로 해야할 것 </h4>
     <p class="text-center">
     	<strong>
-    	1. 첨부파일을 업로드(이미지 파일 업로드하는 것은 함) <br>
-    	2. 첨부파일 수정 <br>
+    	1. 첨부파일(이미지 뿐만아니라)을 업로드, 수정, 삭제<br>
     	</strong>
     </p>
   </div>
@@ -64,9 +63,8 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
   <div>
     <h4>관리자 기능</h4>
     <p class="text-center">
-    	1. 게시글 삭제<br>
-    	2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(더티지수가 100이상인경우)<br>
-    	3. 신고된 게시글 처리<br>
+    	1. 게시글 삭제, 신고된 게시글 처리<br><br>
+    	2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(더티지수가 100이상인경우)
     </p>
   </div>
 
