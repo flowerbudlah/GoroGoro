@@ -42,25 +42,18 @@ function signIn(){ //로그인
      	processData: false, // 이것을 붙이고 업로드가 되었다. 
      	type     : "POST",    
      	success  : function(data, textStatus, xhr) {
-
             if (data == 'loginFail') {
-
-                 alert('로그인에 실패하였습니다.')
-
+                 alert('로그인에 실패하였습니다. 아이디와 비밀번호는 다시한번 확인해주세요. '); 
              } else {
-
-            	  alert('로그인에 성공하였습니다.')
-
+            	  alert('로그인에 성공하였습니다.'); 
+            	  location.href = "${root}";
              }
-
          },          
-     	error: function(request,status,error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);   
+     	error: function(request,status,error){ 
+     		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);   
  		}
 	}) //아작스		
 }//signIn()함수의 끝
-
-
-
 </script>
 <style>
 .slider img{ display:block; width:100%; max-width:100%; height:300px; }
@@ -78,9 +71,7 @@ body{ background-color: white; }
 		 <div class="col-lg-4 col-sm-6"></div>
 			<div class="card shadow-none">
 				<div class="card-body">
-				
 				<form method="post" name="tmpSignInMemberDTO" id="tmpSignInMemberDTO" >
-				
 					<div class="form-group">
 						<label for="email">이메일(아이디)</label>
 						<input type="email" name="email" id="email" class="form-control"/>
@@ -100,7 +91,6 @@ body{ background-color: white; }
 						</div>
 					</div>
 				</form>
-				
 				</div>
 		</div>
 	</div>

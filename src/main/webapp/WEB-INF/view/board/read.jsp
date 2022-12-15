@@ -293,9 +293,6 @@ function afterRemove(obj){
 			
 		</div>
 
-		
-		
-		
 		<!-- 공감(좋아요)버튼 -->
 	  	<div class="form-group">
 			<center>
@@ -309,8 +306,6 @@ function afterRemove(obj){
 			</center>
 		</div>
 		<br><br>
-		
-	
 	
 	<div class="form-group">
 		<div class="text-right">

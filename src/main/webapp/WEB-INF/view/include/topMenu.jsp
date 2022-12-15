@@ -80,19 +80,13 @@ function signOut(){ //사인아웃
 				</ul>
 			</li>
 		</ul>
-		${signInMemberDTO.signIn}
 		<!-- 로그인 회원가입 부분(회원정보수정, 로그아웃, 호원탈퇴)-->
 		<ul class="navbar-nav ml-auto">
 		<c:choose>
 			<c:when test="${signInMemberDTO.signIn == true }"><!--로그인 된상태 -->
-			${signInMemberDTO.nick }님께서 로그인을 하셨습니다.<br>
+				<strong>${signInMemberDTO.nick }</strong>님께서 로그인을 하셨습니다.&emsp;
 				<li><a href="${root }member/modify" style="color:black;">회원정보수정</a></li>&emsp;
-				
-				<li>
-				<a href="javascript:signOut();" attr-a="onclick : attr-a" style="color:black;">로그아웃</a>
-			
-				</li>
-			
+				<li><a href="javascript:signOut();" attr-a="onclick : attr-a" style="color:black;">로그아웃</a></li>
 			</c:when>
 			<c:otherwise><!-- 로그인 안된상태 -->
 			
@@ -102,7 +96,7 @@ function signOut(){ //사인아웃
 		</c:choose>
 		</ul>
 			<a class="navbar-brand">
-				<img src="${root}image/banner/smilingPekko.png" height="60px"> <!-- 뒤에 페코사진 들어갈 자리 -->
+				<img src="${root}image/banner/smilingPekko.png" height="50px"> <!-- 뒤에 페코사진 들어갈 자리 -->
 			</a>
 	</div><!-- 게시판 메뉴와 회원부분 끝 -->
 </nav>
