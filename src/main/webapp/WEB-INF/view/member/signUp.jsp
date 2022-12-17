@@ -30,6 +30,8 @@ $(document).ready(function(){	});
 		
 		var passwords = $("#passwords").val(); //작성자
 		var passwordsConfirm = $("#passwordsConfirm").val(); //작성자
+		
+		var emailValidity = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
 
 		var formData = new FormData($('#signUpMemberDTO')[0]);	
 		
@@ -56,7 +58,7 @@ $(document).ready(function(){	});
 		
 		if(yn){
 			
-			if(passwords == passwordsConfirm){
+			if(passwords == passwordsConfirm && ( emailValidity.test($("#email").val()) ) ){
 				
 				 $.ajax({   
 		                url      : "${root}member/signUpProcess", 
@@ -73,7 +75,9 @@ $(document).ready(function(){	});
 					}) //아작스		
 			} else if(passwords != passwordsConfirm) {
 				alert("패스워드는 같아야합니다. "); 
-			}	
+			} else if(!emailValidity.test($("#email").val()) ){//이메일 형식에 맞지않는경우, 
+				alert("이메일의 형식에 맞게 입력을 해주세요! "); 
+			}
 		}//yn의 끝
 	} //signUpProcess()의 끝
 		
@@ -119,7 +123,6 @@ body{ background-color: white; }
 	  				<td>
 	  					<input type="email" id="email" name="email" class="form-control"/>
 	  					<font id="checkId" size="2"></font>
-	  					<span class="uidResult"></span>
 	  				</td>			
 				</tr>
 				<tr>
@@ -133,7 +136,6 @@ body{ background-color: white; }
 	  				<td>
 						<input type="password" name="passwordsConfirm" id="passwordsConfirm" class="form-control pw"/>
 						<font id="checkPw" size="2"></font>
-						<span id="passResult"></span>
 	  				</td>
 				</tr>
 				<tr>
@@ -193,6 +195,15 @@ $('.pw').focusout(function(){
 
 //아이디용 이메일 중복검사
 $("#email").keyup(function(){
+	
+	var emailValidity = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+	
+	//이메일 유효성 검사
+	if(!emailValidity.test($("#email").val())){ //이메일 형식에 맞지않는경우, 
+		$("#checkId").html('이메일형식에 맞게 입력해주세요.');
+        $("#checkId").attr('color','red');
+		return false;
+	}
 
 	$.ajax({
 		url : "${root}member/checkEmail",
@@ -211,7 +222,6 @@ $("#email").keyup(function(){
 		}
 	});
 });
-
 //닉네임 중복검사
 $("#nick").blur(function(){ //foucusout, keyup, change, blur
 
@@ -221,11 +231,9 @@ $("#nick").blur(function(){ //foucusout, keyup, change, blur
 		data : {nick: $("#nick").val()},
 		success : function(result){
 			if(result == "unavailable"){
-				
 				$("#checkNick").html('중복된 닉네임! 사용불가');
 	            $("#checkNick").attr('color','red');
 			}else if(result == "available"){
-		
 				$("#checkNick").html('사용가능합니다.');
 	        	$("#checkNick").attr('color','green');
 			}

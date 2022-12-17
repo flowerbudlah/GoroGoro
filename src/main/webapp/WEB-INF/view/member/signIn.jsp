@@ -17,6 +17,21 @@
 function signIn(){ //로그인
 	
 	var email = $("#email").val(); //이메일(아이디)
+	
+	$.ajax({
+		url : "${root}member/checkEmail",
+		type : "post",
+		data : { email : $("#email").val() },
+		success : function(data){
+			if(data == "available"){
+
+			} else if(data == "available") {
+				alert("입력하신 아이디가 존재하지 않습니다. "); 
+			}
+		}
+	});
+	
+
 	var passwords = $("#passwords").val(); //작성자
 
 	if(email == ""){			
@@ -31,28 +46,30 @@ function signIn(){ //로그인
 		return;
 	}
 	
+	
 	var formData = new FormData($('#tmpSignInMemberDTO')[0]);	
-			
+
 	 $.ajax({   
 		url      : "${root}member/signInProcess", 
-     	data     : formData,
-     	cache    : false,
-     	async    : true,
-     	contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
-     	processData: false, // 이것을 붙이고 업로드가 되었다. 
-     	type     : "POST",    
-     	success  : function(data, textStatus, xhr) {
-            if (data == 'loginFail') {
-                 alert('로그인에 실패하였습니다. 아이디와 비밀번호는 다시한번 확인해주세요. '); 
-             } else {
-            	  alert('로그인에 성공하였습니다.'); 
-            	  location.href = "${root}";
-             }
-         },          
-     	error: function(request,status,error){ 
-     		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);   
- 		}
-	}) //아작스		
+    	data     : formData,
+    	cache    : false,
+    	async    : true,
+    	contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
+    	processData: false, // 이것을 붙이고 업로드가 되었다. 
+    	type     : "POST",    
+    	success  : function(data, textStatus, xhr) {
+           if (data == 'loginFail') {
+                alert('로그인에 실패하였습니다. 아이디와 비밀번호는 다시한번 확인해주세요. '); 
+            } else {
+           	  alert('로그인에 성공하였습니다.'); 
+           	  location.href = "${root}";
+            }
+        },          
+    	error: function(request,status,error){ 
+    		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);   
+		}
+	}) //아작스	
+
 }//signIn()함수의 끝
 </script>
 <style>

@@ -25,7 +25,7 @@
  	<select id="signIn" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
  		select * from members where email = #{email} and passwords = #{passwords}
 	</select>
-
+	
 
 
 

@@ -12,9 +12,6 @@ public class MemberDTO {
 	private int memberNo; //회원일련번호
 	
 	private String email;  //아이디와 같은 기능의 이메일
-	
-	@Size(min=1, max=5) 
-	@Pattern(regexp = "[가-힣]*")
 	private String nick;  //대화명
 
 	private String passwords;  //비밀번호

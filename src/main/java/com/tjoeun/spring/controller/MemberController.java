@@ -58,6 +58,8 @@ public class MemberController {
 		}
 	}
 	
+	
+	
 	//닉네임 중복체크
 	@RequestMapping("/checkNick")
 	public @ResponseBody String checkNick(String nick) {

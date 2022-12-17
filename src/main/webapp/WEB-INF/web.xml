@@ -10,19 +10,18 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 
-	
-	   <!-- The mapping for the default servlet -->
-  <!--현재 Application 에서 받아들이는 모든 요청(request) 에 대해서 appServlet 이라고 정의되어있는 Sevlet을 사용함-->
-  <servlet-mapping>
-    <servlet-name>appServlet</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
+	<!-- The mapping for the default servlet -->
+	<!--현재 Application 에서 받아들이는 모든 요청(request) 에 대해서 appServlet 이라고 정의되어있는 Sevlet을 사용함-->
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
   
-<!-- 요청(request) 정보를 분석해서 Controller 를 선택하는 Servlet 지정하기-->
-  <servlet>
-    <servlet-name>appServlet</servlet-name>
-    <!-- Spring MVC에서 제공하는 기본 Servlet을 지정함 -->
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	<!-- 요청(request) 정보를 분석해서 Controller 를 선택하는 Servlet 지정하기-->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<!-- Spring MVC에서 제공하는 기본 Servlet을 지정함 -->
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     
     <!-- ApplicationContext 설정하기
         Spring MVC 으로 만든 WebApplication에 대한 설정 부분-->
@@ -86,9 +85,5 @@
   
   
   
-  
-  
-  
-
   
 </web-app>
