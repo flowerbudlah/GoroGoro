@@ -74,11 +74,16 @@ function signOut(){ //사인아웃
 			</li>
 			<li>관리자 페이지
 				<ul> 
-					<li><a href="${root }admin/memberManagement" style="color:black;">회원 관리</a></li><br>
-					<li><a onClick="" style="color:black;">게시물 관리</a></li><br>
-					<li><a href="${root }admin/boardManagement" style="color:black;">게시판 관리</a></li>
+				<c:choose>
+      				<c:when test="${signInMemberDTO.signIn == true }"> <!-- 로그인을 해야지 보이는 관리자 페이지 -->
+						<li><a href="${root }admin/memberManagement" style="color:black;">회원 관리</a></li><br>
+						<li><a href="${root }admin/postManagement" style="color:black;">게시물 관리</a></li><br>
+						<li><a href="${root }admin/boardManagement" style="color:black;">게시판 관리</a></li>
+					</c:when>
+				<c:otherwise></c:otherwise>    
+				</c:choose>
 				</ul>
-			</li>
+			</li>	
 		</ul>
 		<!-- 로그인 회원가입 부분(회원정보수정, 로그아웃, 호원탈퇴)-->
 		<ul class="navbar-nav ml-auto">

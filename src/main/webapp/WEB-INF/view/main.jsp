@@ -42,32 +42,24 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
 <!--메인화면에 내용 들어가는 부분  -->
 <div style="padding-top:50px; padding-bottom:100px">
 <div class="container">
-  <div>
-    <h4>앞으로 해야할 것 </h4>
-    <p class="text-center">
-    	<strong>
-    	1. 첨부파일(이미지 뿐만아니라)을 업로드, 수정, 삭제<br>
-    	</strong>
+	<div>
+    	<h4>관리자 기능(관리자만 들어갈수있는 관리자페이지 만들기)</h4>
+		<p class="text-center">
+    	1. 게시글 삭제, 신고된 게시글 처리(관리자 페이지 만들기)<br><br>
+    	2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(더티지수가 100이상인경우)
     </p>
   </div>
+ 
 <br><br><br>
   <div>
-    <h4>회원기능</h4>
+    <h4>회원기능 & 첨부파일(이미지 뿐아니라)</h4>
     <p class="text-center">
-    	3. 회원정보수정, 회원탈퇴, 비밀번호 찾기<br>
+
+    	3. 회원탈퇴, 비밀번호 찾기<br>
     	4. 개인 프로필 기능(사진 업로드, 본인이 신고당한 건수)<br>
     	5. 게시글 신고(신고당한사람은 플래그가 증가한다. 더티지수증가)
     </p>
   </div>
-<br><br><br>
-  <div>
-    <h4>관리자 기능</h4>
-    <p class="text-center">
-    	1. 게시글 삭제, 신고된 게시글 처리<br><br>
-    	2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(더티지수가 100이상인경우)
-    </p>
-  </div>
-
 </div>
 </div>
 <!-- 하단 -->
