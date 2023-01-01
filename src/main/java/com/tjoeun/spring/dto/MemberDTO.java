@@ -1,10 +1,7 @@
 package com.tjoeun.spring.dto;
 
 import java.util.Date;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import lombok.Data;
-
 
 @Data
 public class MemberDTO {

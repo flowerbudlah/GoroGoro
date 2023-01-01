@@ -83,8 +83,8 @@ function like(){
             		var result = obj.result;
             		
             		if(result == "SUCCESS"){
- 						location.replace('read?postNo=${postNo}');
-            			alert("공감하셨습니다."); 
+            			alert("공감하셨습니다.");
+            			window.location.reload(); 
             			return;
             		} else {     
             			alert("공감하는것에 문제가 생김");    

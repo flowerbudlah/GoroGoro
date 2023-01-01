@@ -54,7 +54,7 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
   <div>
     <h4>회원기능</h4>
     <p class="text-center">
-    	3. 회원정보수정, 회원탈퇴, 비밀번호 찾기, 회원가입시 유효성 검사 이메일 비번 닉네임 유효성 만들기<br>
+    	3. 회원정보수정, 회원탈퇴, 비밀번호 찾기<br>
     	4. 개인 프로필 기능(사진 업로드, 본인이 신고당한 건수)<br>
     	5. 게시글 신고(신고당한사람은 플래그가 증가한다. 더티지수증가)
     </p>
@@ -67,8 +67,6 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
     	2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(더티지수가 100이상인경우)
     </p>
   </div>
-
-    
 
 </div>
 </div>

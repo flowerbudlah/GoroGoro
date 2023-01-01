@@ -13,25 +13,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-
 function signIn(){ //로그인
 	
 	var email = $("#email").val(); //이메일(아이디)
-	
-	$.ajax({
-		url : "${root}member/checkEmail",
-		type : "post",
-		data : { email : $("#email").val() },
-		success : function(data){
-			if(data == "available"){
-
-			} else if(data == "available") {
-				alert("입력하신 아이디가 존재하지 않습니다. "); 
-			}
-		}
-	});
-	
-
 	var passwords = $("#passwords").val(); //작성자
 
 	if(email == ""){			
@@ -41,11 +25,10 @@ function signIn(){ //로그인
 	}
 
 	if (passwords == ""){			
-		alert("패스워드를 입력개주세요");
+		alert("패스워드를 입력해주세요.");
 		$("#passwords").focus();
 		return;
 	}
-	
 	
 	var formData = new FormData($('#tmpSignInMemberDTO')[0]);	
 
@@ -56,10 +39,10 @@ function signIn(){ //로그인
     	async    : true,
     	contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
     	processData: false, // 이것을 붙이고 업로드가 되었다. 
-    	type     : "POST",    
+    	type     : "post",    
     	success  : function(data, textStatus, xhr) {
            if (data == 'loginFail') {
-                alert('로그인에 실패하였습니다. 아이디와 비밀번호는 다시한번 확인해주세요. '); 
+        	  alert('아이디와 비밀번호는 다시한번 확인해주세요. '); 
             } else {
            	  alert('로그인에 성공하였습니다.'); 
            	  location.href = "${root}";
@@ -69,7 +52,6 @@ function signIn(){ //로그인
     		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);   
 		}
 	}) //아작스	
-
 }//signIn()함수의 끝
 </script>
 <style>
@@ -88,7 +70,8 @@ body{ background-color: white; }
 		 <div class="col-lg-4 col-sm-6"></div>
 			<div class="card shadow-none">
 				<div class="card-body">
-				<form method="post" name="tmpSignInMemberDTO" id="tmpSignInMemberDTO" >
+							
+				<form action="javascript:signIn()" method="post" name="tmpSignInMemberDTO" id="tmpSignInMemberDTO" >
 					<div class="form-group">
 						<label for="email">이메일(아이디)</label>
 						<input type="email" name="email" id="email" class="form-control"/>
@@ -104,7 +87,7 @@ body{ background-color: white; }
 						</div>
 						<br>
 						<div class="text-right">
-							<button type="button" class="btn btn-danger" onclick="javascript:signIn();">로그인</button>
+							<input type="button" class="btn btn-danger" onclick="javascript:signIn()" value="로그인"/>
 						</div>
 					</div>
 				</form>

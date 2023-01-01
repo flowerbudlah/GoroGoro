@@ -51,11 +51,9 @@
     
 	<!-- 6. 조회수 증가 -->
 	<update id="increasingViewCount" parameterType="java.lang.Integer">
-		update freeBoard set viewCount = viewCount + 1 
-		where postNo = #{postNo}
+		update freeBoard set viewCount = viewCount + 1 where postNo = #{postNo}
 	</update>
 	
-		
 	<!-- 8. 글 수정하기 -->
 	<update id="modify" parameterType="com.tjoeun.spring.dto.PostDTO">
 		update freeBoard
@@ -64,7 +62,7 @@
 		<!-- 위의 file은 데이터베이스에 저장되어있는 이미지 파일이름을 저장하는 변수 -->
 	</update>
 	
-
+	
 	<update id="deleteImageFile" parameterType="com.tjoeun.spring.dto.PostDTO">
 		update freeBoard 
 		set imageFileName = #{imageFileName}
@@ -91,8 +89,5 @@
 			</if>
 			order by postNo DESC 
 	</select>
-	
-
-
 	
 </mapper>

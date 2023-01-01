@@ -26,7 +26,6 @@ public class TopMenuInterceptor implements HandlerInterceptor{
 
 		List<BoardDTO> BoardList = topMenuService.getBoardList(); //카테고리에 속해있는 게시판 부분 
 		request.setAttribute("BoardList", BoardList);
-	
 
 		return true;
 	}
