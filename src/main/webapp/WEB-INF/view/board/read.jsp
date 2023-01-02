@@ -241,14 +241,11 @@ function afterRemove(obj){
           		<img src="/GoroGoroCommunity/upload/${readPostDTO.imageFileName}" width=100%; height=250px;/>       
           	</div>
 		</c:if>
-		
 			<!-- 내용 -->
 			<label for="content">내용</label>
 			<textarea id="content" name="content" class="form-control" rows="20" style="resize:none" disabled="disabled">${readPostDTO.content}</textarea>
 		</div>
 		<!-- 첨부이미지와 내용 end -->
-		
-		
 		<div class="form-group">
 			<label for="board_content">댓글 [${readPostDTO.replyCount }] </label>
 		</div>
@@ -259,12 +256,17 @@ function afterRemove(obj){
 		<c:forEach var="reply" items="${replyList}" >
 			<li>
 				<div class="replyWiter">작성자: ${reply.replyWriter}
-				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 				댓글작성일시: <fmt:formatDate value="${reply.replyRegDate}" pattern="yyyy-MM-dd hh:mm:ss" />
-				<!-- 댓글삭제버튼은 댓글작성자와 관리자만 볼 수 있게 처리 -->
-				<a class="badge badge-pill badge-light" style="font-size:13px;" onclick="javascript:removeReply();" >
-					<input type="hidden" id="replyNo" name="replyNo" value="${reply.replyNo}"/>X <!-- 댓글삭제버튼 -->
-				</a>
+				<c:choose>
+					<c:when test="${signInMemberDTO.nick == reply.replyWriter || signInMemberDTO.memberNo == 1 || signInMemberDTO.nick == readPostDTO.writer  }">
+						<a class="badge badge-pill badge-light" style="font-size:13px;" onclick="javascript:removeReply();" >
+							<input type="hidden" id="replyNo" name="replyNo" value="${reply.replyNo}"/>X <!-- 댓글삭제버튼 -->
+						</a>
+					</c:when>
+					<c:otherwise></c:otherwise>
+				</c:choose>
+				
 				</div>
 				<textarea id="replyContent" name="replyContent" class="form-control" rows="3" style="resize:none" disabled="disabled">${reply.replyContent }</textarea>
 			</li><br>
@@ -275,19 +277,15 @@ function afterRemove(obj){
 <c:choose>
 	<c:when test="${signInMemberDTO.signIn == true }">
 	<form id="writeReplyDTO" name="writeReplyDTO">
-			
 		<input type="hidden" name="postNo" id="postNo" value="${postNo }">
-			
 		<!-- 댓글 작성 폼 -->	
 		<div class="reply">
-			<label for="replyWriter">작성자</label>
-			<input type="text" id="replyWriter" name="replyWriter"/>
-			<textarea id="replyContent" name="replyContent" class="form-control" rows="2" style="resize:none" placeholder="댓글을 입력해주세요! 고운말을 써주세요!"></textarea>
+			<input type="hidden" id="replyWriter" name="replyWriter" value="${signInMemberDTO.nick }"/>
+			<textarea id="replyContent" name="replyContent" class="form-control" rows="3" style="resize:none" placeholder="댓글을 입력해주세요! 고운말을 써주세요!"></textarea>
 			<div class="text-right">
 				<button type="button" class="btn btn-info btn-sm" onclick="javascript:writeReplyProcess();">작성완료</button>
 			</div>
-		</div>
-			
+		</div>	
 	</form>
 	</c:when>
 	<c:otherwise></c:otherwise>
@@ -314,12 +312,8 @@ function afterRemove(obj){
 			<a href="modify?postNo=${postNo }" class="btn btn-info btn-sm">수정하기</a>
 			<!--http://localhost:8090/GoroGoroCommunity/board/modify?postNo=1  -->
 			<button type="button" class="btn btn-secondary btn-sm" onclick="javascript:deleteBoard();">삭제하기</button>
-			<c:choose>
-				<c:when test="${signInMemberDTO.signIn == true }">
-				<a href="report?postNo=${postNo }" class="btn btn-danger btn-sm">게시글 신고</a>&emsp;&emsp; 
-				</c:when>
-				<c:otherwise></c:otherwise>
-			</c:choose>
+			<a href="report?postNo=${postNo }" class="btn btn-danger btn-sm">게시글 신고</a>&emsp;&emsp; 
+				
 		</div>
 	</div>
           

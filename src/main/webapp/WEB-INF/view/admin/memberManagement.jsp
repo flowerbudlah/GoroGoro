@@ -21,31 +21,18 @@ body{ background-color: white; }
 <!-- 메뉴부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
-<article class="slider">	
-	<img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg">
-</article>
-
-
-
-
-
-
+<article class="slider"><img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg"></article>
 <!--메인화면에 내용 들어가는 부분  -->
-<div style="margin-top:50px; padding-top:0px; padding-bottom:30px">
+<div style="padding-top:50px; padding-bottom:100px">
 <div class="container">
+<h5>관리자 전용 페이지(For the Administrator Only)</h5>
+<p>1. 회원검색</p>
 
-
 	
 	
 	
 	
 	
-	
-	
-	
-	
-	
-
 </div>
 </div>
 <!-- 하단 -->

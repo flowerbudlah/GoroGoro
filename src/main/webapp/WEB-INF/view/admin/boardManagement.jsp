@@ -21,14 +21,11 @@
 <!-- 메뉴부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
-<article class="slider">	
-	<img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg">
-</article>
-
+<article class="slider"><img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg"></article>
 <!--메인화면에 내용 들어가는 부분  -->
-<div style="padding-top:100px; padding-bottom:100px; ">
+<div style="padding-top:50px; padding-bottom:100px; ">
 <div class="container">
-
+	<h5>관리자 전용 페이지(For the Administrator Only)</h5>
 	<form action="${root }admin/boardManagement/boardCategoryName">
 		<strong>1. 카테고리 생성</strong><br>
 		1) 생성할 카테고리 이름: 
