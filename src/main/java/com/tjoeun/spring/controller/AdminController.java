@@ -50,11 +50,10 @@ public class AdminController {
 		return "admin/postManagement";
 	}
 	
-	//3. 회원 관리 페이지로 이동한다. 
-	@RequestMapping("/memberManagement")
-	public String memberManagement() {
-		return "admin/memberManagement";
-	}
+
+	
+	
+	
 	
 
 }

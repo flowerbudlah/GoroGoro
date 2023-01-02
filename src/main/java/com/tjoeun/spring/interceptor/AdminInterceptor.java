@@ -29,15 +29,8 @@ public class AdminInterceptor implements HandlerInterceptor{
 		}
 		
 		String contextPath = request.getContextPath();
-		response.sendRedirect(contextPath + "/etc/not_admin"); //관리자가 아닌사람이 관리자 페이지를 들어가는 경우, 이 페이지로 들어간다. 
-		//http://localhost:8090/GoroGoroCommunity/etc/not_admin
-		
+		response.sendRedirect(contextPath + "/etc/notAdmin");
 		return false;
-
-		//관리자 페이지
-		//http://localhost:8090/GoroGoroCommunity/admin/memberManagement
-		//http://localhost:8090/GoroGoroCommunity/admin/boardManagement
-		//http://localhost:8090/GoroGoroCommunity/admin/postManagement
-		
+	      
 	}
 }

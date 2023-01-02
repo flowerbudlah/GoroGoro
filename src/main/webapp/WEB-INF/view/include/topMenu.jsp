@@ -80,7 +80,7 @@ function signOut(){ //사인아웃
 						<li><a href="${root }admin/postManagement" style="color:black;">게시물 관리</a></li><br>
 						<li><a href="${root }admin/boardManagement" style="color:black;">게시판 관리</a></li>
 					</c:when>
-				<c:otherwise></c:otherwise>    
+				<c:otherwise></c:otherwise>     
 				</c:choose>
 				</ul>
 			</li>	

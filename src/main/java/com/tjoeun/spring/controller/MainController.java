@@ -1,12 +1,9 @@
 package com.tjoeun.spring.controller;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -18,12 +15,13 @@ public class MainController {
 		return "main";
 	}
 	
-
-	@GetMapping("etc/not_admin")
-	public String notAdmin() {
-		return "etc/not_admin";
-	}
 	
+	//4. 로그인을 한 뒤에 관리자가 아닌 사람이 관리자 페이지에 들어가는 경우, 
+	@RequestMapping("/etc/notAdmin")
+	public String notAdmin() {
+		return "etc/notAdmin";
+	}
+	//http://localhost:8090/GoroGoroCommunity/etc/notAdmin	
 	
 	
 	

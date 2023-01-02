@@ -54,8 +54,7 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
   <div>
     <h4>회원기능 & 첨부파일(이미지 뿐아니라)</h4>
     <p class="text-center">
-
-    	3. 회원탈퇴, 비밀번호 찾기<br>
+		2. 게시판은 회원가입을하고 로그인을 한 회원만 사용할수있다. 
     	4. 개인 프로필 기능(사진 업로드, 본인이 신고당한 건수)<br>
     	5. 게시글 신고(신고당한사람은 플래그가 증가한다. 더티지수증가)
     </p>
