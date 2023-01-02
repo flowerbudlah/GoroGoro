@@ -271,9 +271,9 @@ function afterRemove(obj){
 		</c:forEach>
 	</ul>
 </div>
-				
-				
-		<!-- 댓글 작성 부분 -->
+<!-- 댓글 작성 부분(로그인을 한 회원만 보이게) -->
+<c:choose>
+	<c:when test="${signInMemberDTO.signIn == true }">
 	<form id="writeReplyDTO" name="writeReplyDTO">
 			
 		<input type="hidden" name="postNo" id="postNo" value="${postNo }">
@@ -289,10 +289,11 @@ function afterRemove(obj){
 		</div>
 			
 	</form>
-			
-			
-		</div>
-
+	</c:when>
+	<c:otherwise></c:otherwise>
+</c:choose>
+<!-- 댓글 작성 부분(로그인을 한 회원만 보이게) -->
+		</div><!-- <div class="card-body"> -->
 		<!-- 공감(좋아요)버튼 -->
 	  	<div class="form-group">
 			<center>
@@ -309,17 +310,22 @@ function afterRemove(obj){
 	
 	<div class="form-group">
 		<div class="text-right">
-			<button type="button" class="btn btn-primary btn-sm" onclick="javascript:goMain();">목록으로</button>
+			<button type="button" class="btn btn-primary btn-sm" onclick="javascript:goMain();">글 목록으로</button>
 			<a href="modify?postNo=${postNo }" class="btn btn-info btn-sm">수정하기</a>
 			<!--http://localhost:8090/GoroGoroCommunity/board/modify?postNo=1  -->
 			<button type="button" class="btn btn-secondary btn-sm" onclick="javascript:deleteBoard();">삭제하기</button>
-			<a href="report" class="btn btn-danger btn-sm" onclick="javascript:report();">게시글 신고</a>&emsp;&emsp; 
+			<c:choose>
+				<c:when test="${signInMemberDTO.signIn == true }">
+				<a href="report?postNo=${postNo }" class="btn btn-danger btn-sm">게시글 신고</a>&emsp;&emsp; 
+				</c:when>
+				<c:otherwise></c:otherwise>
+			</c:choose>
 		</div>
 	</div>
           
    </div><!-- <div class="card-body"> -->
-	</div>
-	</div>
+	</div><!-- sm7 -->
+	</div><!-- row -->
 	<div class="col-sm-3"></div>
 	</div>
 <!-- 하단 정보 -->  

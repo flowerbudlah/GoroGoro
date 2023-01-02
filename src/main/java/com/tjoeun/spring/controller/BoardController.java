@@ -176,6 +176,15 @@ public class BoardController {
 		
         return ReplyDTO;
     }
+	
+	//게시글 신고 페이지로 이동한다.
+	@RequestMapping("/report")
+	public String report(@RequestParam("postNo") int postNo, Model model) {
+		model.addAttribute("postNo", postNo);
+		return "board/report";	
+	}
+	
+	
 
 
 }

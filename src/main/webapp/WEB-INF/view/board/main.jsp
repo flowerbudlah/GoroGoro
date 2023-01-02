@@ -105,10 +105,17 @@ function searchList(){
 				</c:forEach>
 				</tbody>
 			</table>
+			<!-- 글쓰기 -->
+			<c:choose>
+				<c:when test="${signInMemberDTO.signIn == true }"><!-- 글쓰기버튼은 로그인을 한 사람만 보인다. -->
+					<div class="text-right">
+						<a href="write?boardNo=${boardNo }" class="btn btn-warning">글쓰기</a>
+						<!-- http://localhost:8090/GoroGoroCommunity/board/write?boardNo=1 -->
+					</div>
+				</c:when>	
+				<c:otherwise></c:otherwise>
+			</c:choose>
 			
-			<div class="text-right">
-				<a href="write?boardNo=${boardNo }" class="btn btn-warning">글쓰기</a><!-- http://localhost:8090/GoroGoroCommunity/board/write?boardNo=1 -->
-			</div>
 			<!-- 페이징(Paging) -->			
 			<div class="d-none d-md-block">
 				<ul class="pagination justify-content-center">

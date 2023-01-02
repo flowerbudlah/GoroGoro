@@ -63,13 +63,17 @@ function signOut(){ //사인아웃
 		</c:forEach>
 		</ul>
 	    <!-- 게시판 메뉴의 끝 -->
-
 		<ul class="navbar-nav main">
 			<li>마이 페이지
 				<ul> 
+				<c:choose>
+      			<c:when test="${signInMemberDTO.signIn == true }"> <!-- 로그인을 해야지 보이는 관리자 페이지 -->
 					<li><a href="" style="color:black;">내 프로필 보기</a></li><br>
-					<li><a href="" style="color:black;">회원정보수정</a></li><br>
+					<li><a href="${root }member/modify" style="color:black;">회원정보수정</a></li><br>
 					<li><a href="" style="color:black;">나의 게시물</a></li>
+				</c:when>
+				<c:otherwise></c:otherwise>
+				</c:choose>
 				</ul>
 			</li>
 			<li>관리자 페이지
@@ -90,11 +94,9 @@ function signOut(){ //사인아웃
 		<c:choose>
 			<c:when test="${signInMemberDTO.signIn == true }"><!--로그인 된상태 -->
 				<strong>${signInMemberDTO.nick }</strong>님께서 로그인을 하셨습니다.&emsp;
-				<li><a href="${root }member/modify" style="color:black;">회원정보수정</a></li>&emsp;
 				<li><a href="javascript:signOut();" attr-a="onclick : attr-a" style="color:black;">로그아웃</a></li>
 			</c:when>
 			<c:otherwise><!-- 로그인 안된상태 -->
-			
 				<li class="nav-item"><a href="${root }member/signIn" style="color:black;">로그인</a></li>&emsp;
 				<li class="nav-item"><a href="${root }member/signUp" style="color:black;">회원가입</a></li>
 			</c:otherwise>   

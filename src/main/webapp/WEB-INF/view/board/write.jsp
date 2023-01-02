@@ -112,10 +112,7 @@ body{ background-color: white; }
 				<h4 class="card-title">글쓰기</h4>
 				<form id="writePostDTO" name="writePostDTO" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="boardNo" id="boardNo" value="${boardNo }"> 
-					<div class="form-group">
-						<label for="writer">작성자</label>
-						<input type="text" id="writer" name="writer" class="form-control"/>
-					</div>
+					<input type="hidden" id="writer" name="writer" value="${signInMemberDTO.nick }"/>
 					<div class="form-group">
 						<label for="title">제목</label>
 						<input type="text" id="title" name="title" class="form-control"/>
