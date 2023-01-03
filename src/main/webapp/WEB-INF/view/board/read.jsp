@@ -256,7 +256,7 @@ function afterRemove(obj){
 		<c:forEach var="reply" items="${replyList}" >
 			<li>
 				<div class="replyWiter">작성자: ${reply.replyWriter}
-				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+				&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 				댓글작성일시: <fmt:formatDate value="${reply.replyRegDate}" pattern="yyyy-MM-dd hh:mm:ss" />
 				<c:choose>
 					<c:when test="${signInMemberDTO.nick == reply.replyWriter || signInMemberDTO.memberNo == 1 || signInMemberDTO.nick == readPostDTO.writer  }">

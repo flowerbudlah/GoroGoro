@@ -21,9 +21,56 @@
 		where boardNo = #{boardNo}
 	</update>
 	
+	<!-- 4. 게시판 제거  -->
+	<delete id="deleteBoard" parameterType="java.lang.Integer">
+		delete from boardInCategory where boardNo =#{boardNo}
+	</delete>
+	
+	
+	<!-- 4. 게시판 상위 카테고리 제거  -->
+	<delete id="deleteCategory" parameterType="java.lang.Integer">
+		delete from boardCategory where boardCategoryNo =#{boardCategoryNo}
+	</delete>
+	
+	
+	<!-- 회원목록 가져오기 -->
+	<select id="takeMemberList" resultType="com.tjoeun.spring.dto.MemberDTO">
+		select m.memberNo, m.email, m.nick, m.signUpdate, 
+		(select count(*) from freeboard f where f.writer =m.nick ) as 'postCount', 
+		(select count(*) from reply r where r.replyWriter =m.nick ) as 'replyCount'
+		from members m
+		order by memberNo asc	
+	</select>
+	
+	
+	<!-- AJAX 게시글 검색 	-->
+	<select id="searchList" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
+		select * 
+		from members
+		where 
+		<if test="type!=null and type == 'email'">
+			email like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="type!=null and type == 'content'">
+			nick like CONCAT('%',#{keyword},'%')
+		</if>
+			order by memberNo DESC 
+	</select>
+	
+	
+	
 	
 		
+	<!-- 특정한 한 회원이 쓴글의 수 -->
+	<select id="postCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(*) from freeBoard where writer = #{writer}	
+	</select>	
 		
+	<!-- 특정한 한 회원이 쓴글의 수 -->
+	<select id="replyCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(*) from reply where writer = #{writer}	
+	</select>		
 		
+
 		
 </mapper>

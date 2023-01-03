@@ -1,11 +1,13 @@
 package com.tjoeun.spring.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tjoeun.spring.dto.BoardDTO;
-
+import com.tjoeun.spring.dto.MemberDTO;
 
 @Repository
 public class AdminDAO {
@@ -28,7 +30,38 @@ public class AdminDAO {
 		sqlSessionTemplate.update("admin.changeBoardName", boardDTOinCategory); 
 	}
 	
+	//4. 회원목록 가져오기
+	public List<MemberDTO> takeMemberList() {
+		return sqlSessionTemplate.selectList("admin.takeMemberList");
+	}
+	
+	//카테고리 삭제
+	public void deleteCategory(int boardCategoryNo) {
+		sqlSessionTemplate.delete("admin.deleteCategory", boardCategoryNo); 
+	}	
 
+	//카테고리에 속한 게시판 삭제
+	public void deleteBoard(int boardNo) {
+		sqlSessionTemplate.delete("admin.deleteBoard", boardNo); 
+	}
+	
+	//특정한 한 회원이 쓴 글의 수 가져오기 
+	public int postCount(String writer) {
+		return sqlSessionTemplate.selectOne("admin.postCount", writer); 
+	}
+	
+	//특정한 한 회원이 쓴 댓글 수 가져오기 
+	public int replyCount(String writer) {
+		return sqlSessionTemplate.selectOne("admin.postReply", writer); 
+	}
+	
+	//아작스로 관리자 회원검색
+	public List<MemberDTO> searchList(MemberDTO searchListMemberDTO) throws Exception {
+		return sqlSessionTemplate.selectList("admin.searchList", searchListMemberDTO); 
+	}
+	
+	
+	
 	
 		
 }

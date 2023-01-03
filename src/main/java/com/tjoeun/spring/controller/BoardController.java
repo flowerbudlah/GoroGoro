@@ -185,6 +185,15 @@ public class BoardController {
 	}
 	
 	
+	//게시글 신고 페이지로 이동한다.
+	@RequestMapping("/notWriter")
+	public String notWriter() {
+		return "board/notWriter";	
+	}
+		
+		
+	
+	
 
 
 }

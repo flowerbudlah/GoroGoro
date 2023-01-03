@@ -26,15 +26,22 @@ public class CheckWriterInterceptor implements HandlerInterceptor{
 	public boolean preHandle
 	(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
   
+		System.out.println("======================================================================="); 
+		
 		int postNo = Integer.parseInt(request.getParameter("postNo"));
   
 		PostDTO tmpPostDTO = boardService.read(postNo); 
-  	
-		if((tmpPostDTO.getWriter() != signInMemberDTO.getNick()) || (signInMemberDTO.getMemberNo() != 1)){
+		
+		
+		if( tmpPostDTO.getWriter().equalsIgnoreCase(signInMemberDTO.getNick()) ){
+
+			return true;
+			
+		}else {
 			String contextPath = request.getContextPath();
 			response.sendRedirect(contextPath + "/board/notWriter");
   			return false;
 		}
-			return true;
+			
 	}
 }

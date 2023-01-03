@@ -29,8 +29,9 @@ public class AdminInterceptor implements HandlerInterceptor{
 		}
 		
 		String contextPath = request.getContextPath();
-		response.sendRedirect(contextPath + "/etc/notAdmin");
+		response.sendRedirect(contextPath + "/etc/notAdmin");//관리자가 안들어온경우라면, 
 		return false;
 	      
 	}
 }
+

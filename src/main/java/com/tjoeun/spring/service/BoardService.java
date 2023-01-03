@@ -182,15 +182,10 @@ public class BoardService {
 		boardDAO.increasingViewCount(postNo); 	
 	}
 	
-	
 
-
-
-	
 	//게시글 검색 
 	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
-		return boardDAO.searchList(searchListPostDTO);
-		
+		return boardDAO.searchList(searchListPostDTO);		
 	}
 	
 	

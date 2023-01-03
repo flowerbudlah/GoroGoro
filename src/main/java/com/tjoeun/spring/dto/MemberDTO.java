@@ -21,11 +21,13 @@ public class MemberDTO {
 	private String result; //회원가입 성공여부를 할려주는 결과변수
 	
 	private boolean signIn; //로그인이 된상태면 이것이 true, 로그인이 안된상태면 false 
-		
-
 	
-
+	private int postCount; //특정한 회원이 쓴 글의 수
+	private int replyCount; //특정한 회원이 쓴 
+	private int reportCount; //이 회원이 신고당한 건수 
 	
+	private String keyword;//키워드 (관리자페이지) 
+	private String type; //검색종류 (관리자페이지)
 	
 	
 }

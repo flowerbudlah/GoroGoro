@@ -20,7 +20,7 @@ function signOut(){ //사인아웃
 		type     : "POST",    
 		success  : function(){
 			alert("로그아웃 되었습니다. ");
-			location.reload();
+			location.href="${root}main"; 
 		},           
 		error    : function(request,status,error){
 			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
@@ -43,6 +43,7 @@ function signOut(){ //사인아웃
 	<div class="collapse navbar-collapse" id="navMenu">
 	<!-- 게시판 메뉴 -->
 		<ul class="navbar-nav main"> 
+		
 		<c:forEach var="CategoryListDTO" items="${CategoryList}">
 			<li class="nav-item">${CategoryListDTO.boardCategoryName } <!-- 카테고리 나오는 부분 -->
 				<ul>
@@ -61,6 +62,8 @@ function signOut(){ //사인아웃
         		</ul>
 			</li> 
 		</c:forEach>
+	
+	
 		</ul>
 	    <!-- 게시판 메뉴의 끝 -->
 		<ul class="navbar-nav main">
