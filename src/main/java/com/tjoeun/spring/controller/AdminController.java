@@ -77,7 +77,7 @@ public class AdminController {
 		return "redirect:/admin/boardManagement";
 	}
 	
-	//게시물 검색(아작스 이용)
+	//회원 검색(아작스 이용)
 	@GetMapping("/searchList")
 	public @ResponseBody List<MemberDTO> searchList
 	(@RequestParam("type") String type, @RequestParam("keyword") String keyword, Model model) throws Exception{
@@ -85,11 +85,11 @@ public class AdminController {
 		MemberDTO searchListMemberDTO = new MemberDTO(); 
 		searchListMemberDTO.setType(type); 
 		searchListMemberDTO.setKeyword(keyword); 
-			
 		List<MemberDTO> searchList = adminService.searchList(searchListMemberDTO);  
 		model.addAttribute("searchList", searchList);
-			
-		return searchList;	
+		
+		return searchList;
+		
 	}
 	
 	

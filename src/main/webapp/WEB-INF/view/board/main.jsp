@@ -34,13 +34,14 @@ function searchList(){
 			if(result.length>=1){
 				result.forEach(function(item){
 					str='<tr>'
-					str+="<td><center>"+item.postNo+"</center></td>"; //글번호
-					str+="<td><a href='read?postNo=" +item.postNo+ "'>" + item.title + "<font color='red'>["+ item.replyCount+"]</font></a></td>"; //제목
-					str+="<td><center>"+item.writer+"</center></td>"; //작성자
-					str+="<td><center>"+item.reg_date+"</center></td>"; //작성날짜
-					str+="<td><center>"+item.viewCount+"</center></td>"; //조회수
-					str+="<td><center>"+item.sameThinking+"</center></td>"; //공감수
+						str+="<td><center>"+item.postNo+"</center></td>"; //글번호
+						str+="<td><a href='read?postNo=" +item.postNo+ "'>" + item.title + "<font color='red'>["+ item.replyCount+"]</font></a></td>"; //제목
+						str+="<td><center>"+item.writer+"</center></td>"; //작성자
+						str+="<td><center>"+item.reg_date+"</center></td>"; //작성날짜
+						str+="<td><center>"+item.viewCount+"</center></td>"; //조회수
+						str+="<td><center>"+item.sameThinking+"</center></td>"; //공감수
 					str+="</tr>"
+					
 					$('#boardtable').append(str);
         		})		
 			}else{
@@ -86,20 +87,15 @@ function searchList(){
 							<a href='read?postNo=${postDTO.postNo}' style="color:black">
 								${postDTO.title }
 								<!-- 업로드 파일이 있다면 -->
-								<!-- 업로드 파일이 있다면 -->
 								<c:if test="${postDTO.imageFileName != '' }">
 									<img src="/GoroGoroCommunity/image/uploadingPhoto.png" width=20px;>
 								</c:if>
-								<!-- 댓글이 있을경우, 댓글 수  -->
-						 		<font color="red">
-						 			[${postDTO.replyCount }]
-						 		</font>
+								<!-- 댓글이 있을경우, 댓글 수-->
+						 		<font color="red">[${postDTO.replyCount }]</font>
 						 	</a>
 						</td>
 						<td class="text-center d-none d-md-table-cell">${postDTO.writer }</td>
-						<td class="text-center d-none d-md-table-cell">
-							<fmt:formatDate value="${postDTO.regDate }" pattern="yyyy-MM-dd"/>
-						</td>
+						<td class="text-center d-none d-md-table-cell"><fmt:formatDate value="${postDTO.regDate }" pattern="yyyy-MM-dd"/></td>
 						<td class="text-center d-none d-md-table-cell">${postDTO.viewCount }</td>
                         <td class="text-center d-none d-md-table-cell">${postDTO.sameThinking }</td>
 					</tr>

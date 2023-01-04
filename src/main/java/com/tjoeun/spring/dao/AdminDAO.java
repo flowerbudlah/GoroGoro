@@ -55,6 +55,7 @@ public class AdminDAO {
 		return sqlSessionTemplate.selectOne("admin.postReply", writer); 
 	}
 	
+	
 	//아작스로 관리자 회원검색
 	public List<MemberDTO> searchList(MemberDTO searchListMemberDTO) throws Exception {
 		return sqlSessionTemplate.selectList("admin.searchList", searchListMemberDTO); 

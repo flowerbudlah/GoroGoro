@@ -86,7 +86,7 @@
 			<if test="type!=null and type == 'titleANDcontent'">
 				(title like CONCAT('%',#{keyword},'%') OR content like CONCAT('%',#{keyword},'%'))
 			</if>
-			order by postNo DESC 
+				order by postNo DESC 
 	</select>
 	
 </mapper>

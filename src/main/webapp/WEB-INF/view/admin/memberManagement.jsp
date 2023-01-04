@@ -14,7 +14,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">    
 function searchList(){
-
 	const keyword = $("#keyword").val(); //내용
 	if (keyword == ""){			
 		alert("검색어를 입력해주세요.");
@@ -24,22 +23,24 @@ function searchList(){
 			
 	$.ajax({
 		type: 'get',
-		url : 'searchList',
+		url : '${root}admin/searchList',
 		data : $("form[name=search-form]").serialize(), 
 		success : function(result){
 			$('#boardtable').empty(); 	//테이블 초기화
 			
-			if(result.length>=1){
+			if(result.length>=1){//검색결과가 있는경우, 
 				result.forEach(function(item){
 					str='<tr>'
-					str+="<td><center>"+item.postNo+"</center></td>"; //글번호
-					str+="<td><a href='read?postNo=" +item.postNo+ "'>" + item.title + "<font color='red'>["+ item.replyCount+"]</font></a></td>"; //제목
-					str+="<td><center>"+item.writer+"</center></td>"; //작성자
-					str+="<td><center>"+item.reg_date+"</center></td>"; //작성날짜
-					str+="<td><center>"+item.viewCount+"</center></td>"; //조회수
-					str+="<td><center>"+item.sameThinking+"</center></td>"; //공감수
-					str+="<td><center>"+item.sameThinking+"</center></td>"; //공감수
+						str+="<td><center>"+item.memberNo+"</center></td>"; //회원번호
+						str+="<td><center>"+item.email+"</center></td>"; //제목
+						str+="<td><center>"+item.nick+"</center></td>"; //작성자
+						str+="<td><center>"+item.postCount+"</center></td>"; //게시글 수
+						str+="<td><center>"+item.replyCount+"</center></td>"; //댓글 수 
+						str+="<td><center>"+item.reportCount+"</center></td>"; //신고당한 건수
+						str+="<td><center>"+item.signUpDate+"</center></td>"; //가입일 
+						str+="<td><center><a href=''>강제탈퇴시키기</a></center></td>"; 
 					str+="</tr>"
+						
 					$('#boardtable').append(str);
         		})		
 			}else{
@@ -69,13 +70,13 @@ td{text-align:center; border: 1px solid black;}
 <div class="container">
 <h4>관리자 전용 페이지(For the Administrator Only)</h4>
 	<%--Ajax 검색기능 시작--%>	
-	<form action="javascript:searchList()" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px; margin-bottom:30px;">
+	<form action="javascript:searchList()" name="search-form" autocomplete="off" style="margin-top:30px; margin-bottom:30px;">
 			<select name="type">
 				<option value="email">email</option>
 				<option value="nick">닉네임</option>
 			</select>			
-				<input type="text" value="" name="keyword" id="keyword" required="required"/> <!-- required="required"  -->
-				<input type="button" onclick="javascript:searchList()" class="btn btn-warning btn-sm" value="회원검색"/>
+			<input type="text" value="" name="keyword" id="keyword" required="required"/> <!-- required="required"  -->
+			<input type="button" onclick="javascript:searchList()" class="btn btn-warning btn-sm" value="회원검색"/>
 	</form>
 	<%--Ajax 검색기능 끝--%>	
 	<table style="width: 1100px; margin: auto;">
@@ -91,23 +92,17 @@ td{text-align:center; border: 1px solid black;}
 				<th style="text-align: center;"></th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="boardtable">
 		<c:forEach items="${allMemberList}" var="allMemberList">
 			<tr>
 				<td style="text-align: center;">${allMemberList.memberNo }</td>
 				<td style="text-align: center;">${allMemberList.email}</td>
-				<td style="text-align: center;">
-					<a href="">${allMemberList.nick }</a>
-				</td>
-				<td style="text-align: center;">
-					<a href="">${allMemberList.postCount}</a>
-				</td>
+				<td style="text-align: center;"><a href="">${allMemberList.nick }</a></td>
+				<td style="text-align: center;"><a href="">${allMemberList.postCount}</a></td>
 				<td style="text-align: center;">${allMemberList.replyCount}</td>
 				<td style="text-align: center;">${allMemberList.reportCount}</td>
-				<td style="text-align: center;">
-					<fmt:formatDate pattern="yyyy-MM-dd(E) hh시 mm분 ss초" value="${allMemberList.signUpDate }" />
-				</td>
-				<td style="text-align: center;">강제탈퇴시키기</td>
+				<td style="text-align: center;"><fmt:formatDate pattern="yyyy-MM-dd(E) hh시 mm분 ss초" value="${allMemberList.signUpDate }" /></td>
+				<td style="text-align: center;"><a href="">강제탈퇴시키기</a></td>
 			</tr>
 		</c:forEach>
 		</tbody>

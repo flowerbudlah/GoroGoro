@@ -73,6 +73,7 @@ public class BoardDAO {
 	public int deleteImageFile(PostDTO imageFilePostDTO) {
 		return sqlSessionTemplate.update("board.deleteImageFile", imageFilePostDTO);
 	}
+
 	
 	//게시판 글 검색
 	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
