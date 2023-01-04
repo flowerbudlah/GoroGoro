@@ -28,7 +28,7 @@ body{ background-color: white; }
 <div style="margin-top:50px; padding-top:0px; padding-bottom:30px">
 	<div class="container">
 		<h4>관리자 전용 페이지(For the Administrator Only)</h4>
-		<h5>	</h5>
+		<h5>관리자(Admin)에게 신고 접수된 게시물들을 보여줍니다.</h5>
 
 	
 	

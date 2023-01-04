@@ -101,7 +101,9 @@ td{text-align:center; border: 1px solid black;}
 				<td style="text-align: center;"><a href="">${allMemberList.postCount}</a></td>
 				<td style="text-align: center;">${allMemberList.replyCount}</td>
 				<td style="text-align: center;">${allMemberList.reportCount}</td>
-				<td style="text-align: center;"><fmt:formatDate pattern="yyyy-MM-dd(E) hh시 mm분 ss초" value="${allMemberList.signUpDate }" /></td>
+				<td style="text-align: center;">
+				<fmt:formatDate pattern="yyyy-MM-dd(E) hh시 mm분 ss초" value="${allMemberList.signUpDate }" />
+				</td>
 				<td style="text-align: center;"><a href="">강제탈퇴시키기</a></td>
 			</tr>
 		</c:forEach>

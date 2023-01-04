@@ -219,7 +219,14 @@ function afterRemove(obj){
 		</div>
 		<div class="form-group">
 			<label for="writer">작성자</label>
-			<input type="text" id="writer" name="writer" class="form-control" value="${readPostDTO.writer}" disabled="disabled"/>
+			<c:choose>
+				<c:when test="${readPostDTO.boardNo == 2 }">
+				 	<input type="text" id="writer" name="writer" class="form-control" value="익명" disabled="disabled"/> 
+				 </c:when>
+				<c:otherwise>
+					<input type="text" id="writer" name="writer" class="form-control" value="${readPostDTO.writer}" disabled="disabled"/>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div class="form-group">
 			<label for="regDate">최초 작성일</label>

@@ -45,7 +45,7 @@
 	
 	<!-- AJAX 게시글 검색 	-->
 	<select id="searchList" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
-		select m.memberNo, m.email, m.nick, DATE_FORMAT(m.signUpdate,'%Y-%m-%d') as signUpDate, 
+		select m.memberNo, m.email, m.nick, DATE_FORMAT(signUpDate,'%Y-%m-%d') as signUpDate, 
 		(select count(*) from freeboard f where f.writer =m.nick ) as 'postCount', 
 		(select count(*) from reply r where r.replyWriter =m.nick ) as 'replyCount'
 		from members m

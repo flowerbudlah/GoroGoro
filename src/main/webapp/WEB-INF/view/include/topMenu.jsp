@@ -42,8 +42,12 @@ function signOut(){ //사인아웃
 	<!-- "게시판 메뉴"와 마이페이지과 관리자전용페이지, 로그인, 회원가입 등장 -->
 	<div class="collapse navbar-collapse" id="navMenu">
 	<!-- 게시판 메뉴 -->
-		<ul class="navbar-nav main"> 
-		
+		<ul class="navbar-nav main">
+			<li>
+				<a href="${root }board/main?boardNo=1" style="color:black;'">
+        			공지사항
+        		</a>
+			</li> 
 		<c:forEach var="CategoryListDTO" items="${CategoryList}">
 			<li class="nav-item">${CategoryListDTO.boardCategoryName } <!-- 카테고리 나오는 부분 -->
 				<ul>
@@ -62,8 +66,9 @@ function signOut(){ //사인아웃
         		</ul>
 			</li> 
 		</c:forEach>
-	
-	
+			<li>
+				<a href="${root }board/main?boardNo=2" style="color:black;'">익명</a>
+			</li> 
 		</ul>
 	    <!-- 게시판 메뉴의 끝 -->
 		<ul class="navbar-nav main">
@@ -84,7 +89,7 @@ function signOut(){ //사인아웃
 				<c:choose>
       				<c:when test="${signInMemberDTO.signIn == true }"> <!-- 로그인을 해야지 보이는 관리자 페이지 -->
 						<li><a href="${root }admin/memberManagement" style="color:black;">회원 관리</a></li><br>
-						<li><a href="${root }admin/postManagement" style="color:black;">게시물 관리</a></li><br>
+						<li><a href="${root }admin/postManagement" style="color:black;'">게시물 관리</a></li><br>
 						<li><a href="${root }admin/boardManagement" style="color:black;">게시판 관리</a></li>
 					</c:when>
 				<c:otherwise></c:otherwise>     

@@ -136,7 +136,11 @@ public class MemberController {
 		return memberDTOAfter;
 	}
 	
-
+	//회원탈퇴 페이지로 간다. 
+	@RequestMapping("/getOut")
+	public String getOut() {
+		return "member/getOut";	
+	}
 	
 	
 	

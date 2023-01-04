@@ -7,8 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판</title>
-<link rel="icon" type="image/x-icon" href="image/favicon.png">
+<title>고로고로(ゴロゴロ)</title>
+<link rel="icon" type="image/x-icon" href="/GoroGoroCommunity/image/favicon.png">
 <!-- Bootstrap CDN -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -94,7 +94,12 @@ function searchList(){
 						 		<font color="red">[${postDTO.replyCount }]</font>
 						 	</a>
 						</td>
-						<td class="text-center d-none d-md-table-cell">${postDTO.writer }</td>
+						<td class="text-center d-none d-md-table-cell">
+							<c:choose>
+								<c:when test="${postDTO.boardNo == 2 }">익명</c:when>
+								<c:otherwise>${postDTO.writer}</c:otherwise>
+							</c:choose>
+						</td>
 						<td class="text-center d-none d-md-table-cell"><fmt:formatDate value="${postDTO.regDate }" pattern="yyyy-MM-dd"/></td>
 						<td class="text-center d-none d-md-table-cell">${postDTO.viewCount }</td>
                         <td class="text-center d-none d-md-table-cell">${postDTO.sameThinking }</td>
@@ -102,16 +107,35 @@ function searchList(){
 				</c:forEach>
 				</tbody>
 			</table>
-			<!-- 글쓰기 -->
+			<!-- 글쓰기버튼 -->
 			<c:choose>
 				<c:when test="${signInMemberDTO.signIn == true }"><!-- 글쓰기버튼은 로그인을 한 사람만 보인다. -->
-					<div class="text-right">
-						<a href="write?boardNo=${boardNo }" class="btn btn-warning">글쓰기</a>
-						<!-- http://localhost:8090/GoroGoroCommunity/board/write?boardNo=1 -->
-					</div>
+					<c:choose>
+						<%--즉, 관리자인경우, 관리자게시판에만 해당 --%>
+						<c:when test="${boardNo == 1 }">
+							<c:choose>
+								<c:when test="${signInMemberDTO.memberNo == 1}">
+									<div class="text-right">
+										<a href="write?boardNo=${boardNo }" class="btn btn-warning">글쓰기</a>
+										<!-- http://localhost:8090/GoroGoroCommunity/board/write?boardNo=1 -->
+									</div>
+								</c:when>
+								<c:otherwise></c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
+							<div class="text-right">
+							<a href="write?boardNo=${boardNo }" class="btn btn-warning">글쓰기</a>
+							<!-- http://localhost:8090/GoroGoroCommunity/board/write?boardNo=1 -->
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</c:when>	
 				<c:otherwise></c:otherwise>
 			</c:choose>
+			
+			
+			
 			
 			<!-- 페이징(Paging) -->			
 			<div class="d-none d-md-block">
@@ -178,7 +202,6 @@ function searchList(){
 				<input type="button" onclick="javascript:searchList()" class="btn btn-warning btn-sm" value="검색"/>
 			</form>
 			<!-- 검색기능끝 -->	
-				
 		</div>
 	</div>
 </div>
