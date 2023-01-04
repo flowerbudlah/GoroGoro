@@ -15,13 +15,12 @@ public class MainController {
 		return "main";
 	}
 	
-	
-	//4. 로그인을 한 뒤에 관리자가 아닌 사람이 관리자 페이지에 들어가는 경우, 
+
+	//4. 로그인을 한 뒤에 관리자가 아닌 사람이 관리자 페이지에 들어가는 경우, (Interceptor, 인터셉터)
 	@RequestMapping("/etc/notAdmin")
-	public String notAdmin() {
+	public String notAdmin(){
 		return "etc/notAdmin";
 	}
-	//http://localhost:8090/GoroGoroCommunity/etc/notAdmin	
 	
 	
 	

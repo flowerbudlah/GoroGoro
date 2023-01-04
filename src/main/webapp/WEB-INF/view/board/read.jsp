@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>게시글 읽기</title>
+<link rel="icon" type="image/x-icon" href="image/favicon.png">
 <!-- Bootstrap CDN -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -21,21 +22,20 @@ function goMain(){
 }
 
 //2. 1) 게시글 삭제
-function deleteBoard(){
+function deletePost(){
 	var postNo = $("#postNo").val();
+	
 	var yn = confirm("게시글을 삭제하시겠습니까?");        
     if(yn){
         
         $.ajax({    
-         	url      : "deleteBoard", 
+         	url      : "deletePost", // "deletePost"성공
             type     : "POST",    
             data : { postNo : postNo },
             dataType : "JSON",
-            success  : function(obj) {
-                deleteBoardCallback(obj);                
-            },           
+            success  : function(obj) { callback(obj);                },           
             error    : function(request, status, error) {
-            	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);	
+            	alert("해당글을 삭제할수 있는 권한이 없습니다. ");	
             }
             
          });
@@ -43,7 +43,7 @@ function deleteBoard(){
 } //deleteBoard
 
 //2. 2) 게시글 삭제 콜백함수
-function deleteBoardCallback(obj){
+function callback(obj){
 
     if(obj != null){        
         
@@ -212,7 +212,6 @@ function afterRemove(obj){
 	<div class="card shadow-none">
 	<div class="card-body">
 	<h4 class="card-title"></h4>
-	<form id="boardForm" name="boardForm">     
 		<div class="form-group">
 			<label for="postNo">글번호</label>
 			<input type="text" id="postNo" name="postNo" class="form-control" value="${readPostDTO.postNo}" disabled="disabled"/>
@@ -249,7 +248,7 @@ function afterRemove(obj){
 		<div class="form-group">
 			<label for="board_content">댓글 [${readPostDTO.replyCount }] </label>
 		</div>
-	</form>
+
 	<!--댓글 목록불러오기 -->
 	<div class="reply">
 		<ul>
@@ -308,12 +307,18 @@ function afterRemove(obj){
 	
 	<div class="form-group">
 		<div class="text-right">
-			<button type="button" class="btn btn-primary btn-sm" onclick="javascript:goMain();">글 목록으로</button>
+			<button type="button" class="btn btn-primary btn-sm" onclick="javascript:goMain();">목록으로</button>
 			<a href="modify?postNo=${postNo }" class="btn btn-info btn-sm">수정하기</a>
 			<!--http://localhost:8090/GoroGoroCommunity/board/modify?postNo=1  -->
-			<button type="button" class="btn btn-secondary btn-sm" onclick="javascript:deleteBoard();">삭제하기</button>
-			<a href="report?postNo=${postNo }" class="btn btn-danger btn-sm">게시글 신고</a>&emsp;&emsp; 
-				
+			<button type="button" class="btn btn-secondary btn-sm" onclick="javascript:deletePost();">삭제하기</button>
+			<c:choose>
+				<%--로그인을 한 회원에게만 보이는 게시글 신고버튼--%> 
+				<c:when test="${signInMemberDTO.signIn == true }">
+					<a href="report?postNo=${postNo }" class="btn btn-danger btn-sm">게시글 신고</a>
+				</c:when>
+				<c:otherwise></c:otherwise>
+			</c:choose>	
+			&emsp;&emsp; 	
 		</div>
 	</div>
           

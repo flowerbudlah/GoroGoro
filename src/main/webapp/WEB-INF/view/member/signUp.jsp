@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<link rel="icon" type="image/x-icon" href="image/favicon.png">
 <!-- Bootstrap CDN -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>

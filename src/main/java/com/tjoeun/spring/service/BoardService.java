@@ -139,18 +139,18 @@ public class BoardService {
 	}
 	
 	//4. 게시글 삭제
-	public PostDTO deleteBoard(int boardForm) throws Exception {
+	public PostDTO deletePost(int postNo) throws Exception {
 			
-			PostDTO boardDto = new PostDTO();
+			PostDTO postDTO = new PostDTO();
 	 
-	        int deleteCnt = boardDAO.deleteBoard(boardForm);
+	        int deleteCnt = boardDAO.deletePost(postNo);
 	 
 	        if (deleteCnt > 0) {
-	            boardDto.setResult("SUCCESS");
+	            postDTO.setResult("SUCCESS");
 	        } else {
-	            boardDto.setResult("FAIL");
+	            postDTO.setResult("FAIL");
 	        }
-	        return boardDto;
+	        return postDTO;
 	    }
 
 

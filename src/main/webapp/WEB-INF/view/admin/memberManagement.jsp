@@ -38,6 +38,7 @@ function searchList(){
 					str+="<td><center>"+item.reg_date+"</center></td>"; //작성날짜
 					str+="<td><center>"+item.viewCount+"</center></td>"; //조회수
 					str+="<td><center>"+item.sameThinking+"</center></td>"; //공감수
+					str+="<td><center>"+item.sameThinking+"</center></td>"; //공감수
 					str+="</tr>"
 					$('#boardtable').append(str);
         		})		
@@ -67,7 +68,7 @@ td{text-align:center; border: 1px solid black;}
 <div style="padding-top:50px; padding-bottom:100px">
 <div class="container">
 <h4>관리자 전용 페이지(For the Administrator Only)</h4>
-	<!-- 검색 기능 -->			
+	<%--Ajax 검색기능 시작--%>	
 	<form action="javascript:searchList()" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px; margin-bottom:30px;">
 			<select name="type">
 				<option value="email">email</option>
@@ -76,7 +77,7 @@ td{text-align:center; border: 1px solid black;}
 				<input type="text" value="" name="keyword" id="keyword" required="required"/> <!-- required="required"  -->
 				<input type="button" onclick="javascript:searchList()" class="btn btn-warning btn-sm" value="회원검색"/>
 	</form>
-	<!-- 검색기능끝 -->
+	<%--Ajax 검색기능 끝--%>	
 	<table style="width: 1100px; margin: auto;">
 		<thead>
 			<tr>

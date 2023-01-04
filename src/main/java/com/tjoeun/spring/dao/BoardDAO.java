@@ -44,8 +44,8 @@ public class BoardDAO {
 	}
 
 	//4. 특정 글 삭제하기
-	public int deleteBoard(int postNo) throws Exception { 
-		return sqlSessionTemplate.delete("board.deleteBoard", postNo);
+	public int deletePost(int postNo) throws Exception { 
+		return sqlSessionTemplate.delete("board.deletePost", postNo);
 	}
 		
 	//7. 좋아요 버튼
@@ -57,8 +57,6 @@ public class BoardDAO {
 	public String getBoardName(int boardNo) {
 		return sqlSessionTemplate.selectOne("board.getBoardName", boardNo);
 	}
-	
-	
 	
 	//6. 조회수 증가 
 	public void increasingViewCount(int postNo) {

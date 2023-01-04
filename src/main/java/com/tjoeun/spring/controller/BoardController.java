@@ -50,10 +50,9 @@ public class BoardController {
 		PageDTO pageDTO = boardService.getPostCnt(boardNo, page); 
 		model.addAttribute("pageDTO", pageDTO);
 		model.addAttribute("page", page);
-		
 		return "board/main";
-		
 	}
+	
 	
 	//게시물 검색(아작스 이용)
 	@GetMapping("/searchList")
@@ -146,10 +145,9 @@ public class BoardController {
 		
 	}
 		
-	//5. 글 삭제 Deleting
-	@RequestMapping("/deleteBoard")
+	@RequestMapping("/deletePost")
     public @ResponseBody PostDTO deleteBoard(HttpServletRequest request, HttpServletResponse response, int postNo) throws Exception{
-        PostDTO postDTO = boardService.deleteBoard(postNo); 
+        PostDTO postDTO = boardService.deletePost(postNo); 
         return postDTO;
     }
 	

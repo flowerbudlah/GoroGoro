@@ -31,9 +31,8 @@
 		where postNo = #{postNo} 	
 	</select>
 	
-	
 	<!-- 4. 글 삭제 deleting -->
-	<delete id="deleteBoard" parameterType="java.lang.Integer">
+	<delete id="deletePost" parameterType="java.lang.Integer">
     	delete from freeBoard where postNo = #{postNo}
     </delete>
     

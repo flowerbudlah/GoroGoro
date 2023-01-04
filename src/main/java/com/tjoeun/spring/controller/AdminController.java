@@ -58,15 +58,10 @@ public class AdminController {
 	//3. 회원 관리 페이지로 이동한다. 
 	@RequestMapping("/memberManagement")
 	public String memberManagement(Model model) {
-		
 		List<MemberDTO> allMemberList = adminService.takeMemberList(); 
 		model.addAttribute("allMemberList", allMemberList); 
-		
-		
 		return "admin/memberManagement";
 	}
-	
-	
 	
 	//카테고리 삭제
 	@RequestMapping("/boardManagement/deleteCategory")
@@ -75,7 +70,6 @@ public class AdminController {
 		return "redirect:/admin/boardManagement";
 	}
 	
-	
 	//게시판 삭제
 	@RequestMapping("/boardManagement/deleteBoard")
 	public String deleteBoard(int boardNo) {
@@ -83,7 +77,6 @@ public class AdminController {
 		return "redirect:/admin/boardManagement";
 	}
 	
-	//
 	//게시물 검색(아작스 이용)
 	@GetMapping("/searchList")
 	public @ResponseBody List<MemberDTO> searchList
@@ -96,11 +89,13 @@ public class AdminController {
 		List<MemberDTO> searchList = adminService.searchList(searchListMemberDTO);  
 		model.addAttribute("searchList", searchList);
 			
-		return searchList; 
-		
+		return searchList;	
 	}
 	
 	
+
 	
+	
+
 	
 }

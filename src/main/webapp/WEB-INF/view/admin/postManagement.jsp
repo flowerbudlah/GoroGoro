@@ -26,10 +26,9 @@ body{ background-color: white; }
 </article>
 <!--메인화면에 내용 들어가는 부분  -->
 <div style="margin-top:50px; padding-top:0px; padding-bottom:30px">
-<div class="container">
-	<h4>관리자 전용 페이지(For the Administrator Only)</h4>
-	<h5>
-	</h5>
+	<div class="container">
+		<h4>관리자 전용 페이지(For the Administrator Only)</h4>
+		<h5>	</h5>
 
 	
 	
@@ -38,7 +37,7 @@ body{ background-color: white; }
 	
 
 
-</div>
+	</div>
 </div>
 <!-- 하단 -->
 <c:import url="/WEB-INF/view/include/bottomInfo.jsp" />

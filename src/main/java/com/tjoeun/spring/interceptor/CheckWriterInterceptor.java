@@ -13,7 +13,7 @@ import com.tjoeun.spring.dto.MemberDTO;
 import com.tjoeun.spring.service.BoardService;
 
 //글쓴이만 자기가 쓴글의 삭제와 수정이 가능하다. 
-public class CheckWriterInterceptor implements HandlerInterceptor{
+public class CheckWriterInterceptor implements HandlerInterceptor {
 	
 	@Resource(name="signInMemberDTO")
 	private @Lazy MemberDTO signInMemberDTO;
@@ -27,16 +27,13 @@ public class CheckWriterInterceptor implements HandlerInterceptor{
 	(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
   
 		System.out.println("======================================================================="); 
-		
 		int postNo = Integer.parseInt(request.getParameter("postNo"));
-  
 		PostDTO tmpPostDTO = boardService.read(postNo); 
 		
-		
 		if( tmpPostDTO.getWriter().equalsIgnoreCase(signInMemberDTO.getNick()) ){
-
-			return true;
+			//글쓴사람이랑 로그인을 한 사람이 같으면, 
 			
+			return true;
 		}else {
 			String contextPath = request.getContextPath();
 			response.sendRedirect(contextPath + "/board/notWriter");
