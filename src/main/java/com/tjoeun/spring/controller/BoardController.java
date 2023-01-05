@@ -72,8 +72,6 @@ public class BoardController {
 		return searchList; 
 	} 
 	
-	
-	
 	//2. 글쓰기페이지로 이동 
 	@RequestMapping("/write") 
 	public String write(Model model, @RequestParam("boardNo") int boardNo){
@@ -178,16 +176,12 @@ public class BoardController {
 		return "board/report";	
 	}
 	
-	
 	//글쓴이가 아니면 수정페이지나 삭제페이지 입장불가 인터셉터
 	@RequestMapping("/notWriter")
 	public String notWriter() {
 		return "board/notWriter";	
 	}
 		
-		
-	
-	
 
 
 }

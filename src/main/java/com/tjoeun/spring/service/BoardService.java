@@ -13,6 +13,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tjoeun.spring.dao.AdminDAO;
 import com.tjoeun.spring.dao.BoardDAO;
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
@@ -34,6 +35,9 @@ public class BoardService {
 	@Autowired
 	private BoardDAO boardDAO; 
 
+	@Autowired
+	private AdminDAO adminDAO; 
+
 	//1. 게시판 메인 페이지로 이동(페이지 작업 완료)
 	public List<PostDTO> goMain(int boardNo, int page) {
 		
@@ -44,19 +48,34 @@ public class BoardService {
 		return postList;
 	}
 	
-
-	//2. 게시판 메인 페이지의 페이징과 관련있는 해당 게시판의 전체 글 수
-	public PageDTO getPostCnt(int boardNo, int currentPage) {
-		
-		int postCnt = boardDAO.getPostCnt(boardNo); //해당 게시판에 들어있는 게시글 수 
-		
-		PageDTO pageDTO = new PageDTO(postCnt, currentPage, page_listcnt, page_paginationcnt);
-		//page_listcnt: 한 페이지당 보여주는 글의 개수
-		//page_paginationcnt: 한 페이지당 보여주는 페이지 버튼 개수
-		
-		return pageDTO;
+	//1. 내가 쓴 게시물들 보기 
+	public List<PostDTO> goMyPosts(int memberNo, int page) {
+			
+		int start = (page - 1) * page_listcnt; //한 페이지 
+		RowBounds rowBounds = new RowBounds(start, page_listcnt);
+		List<PostDTO> myPostList = boardDAO.goMyPosts(memberNo, rowBounds);
+		return myPostList;
 	}
 	
+	//2. 게시판 메인 페이지의 페이징과 관련있는 해당 게시판의 전체 글 수
+	public PageDTO getPostCnt(String writer, int currentPage) {
+		int postCnt = adminDAO.postCount(writer); //해당 게시판에 들어있는 게시글 수 
+		PageDTO pageDTO = new PageDTO(postCnt, currentPage, page_listcnt, page_paginationcnt);
+		//page_listcnt: 한 페이지당 보여주는 글의 개수, page_paginationcnt: 한 페이지당 보여주는 페이지 버튼 개수
+			
+		return pageDTO;
+	}
+		
+	//2. 게시판 메인 페이지의 페이징과 관련있는 해당 게시판의 전체 글 수
+	public PageDTO getPostCnt(int boardNo, int currentPage) {
+			
+		int postCnt = boardDAO.getPostCnt(boardNo); 
+		PageDTO pageDTO = new PageDTO(postCnt, currentPage, page_listcnt, page_paginationcnt);
+		//page_listcnt: 한 페이지당 보여주는 글의 개수, page_paginationcnt: 한 페이지당 보여주는 페이지 버튼 개수
+			
+		return pageDTO;
+	}
+
 	//2-2. 글쓰기
 	public PostDTO writeProcess(PostDTO writePostDTO) throws Exception {
 		
@@ -77,6 +96,7 @@ public class BoardService {
 		return postDTO;		
 	}
 	
+	
 	//이미지 파일 첨부
 	private String saveUploadFile(MultipartFile imageFile) {
 			
@@ -92,6 +112,7 @@ public class BoardService {
 		
 		return imageFileName;
 	}
+	
 	
 	//8. 글수정
 	public PostDTO modify(PostDTO modifyPostDTO) {
@@ -115,6 +136,7 @@ public class BoardService {
 		}
 		return postDTO;
 	}
+	
 	
 	//글을 수정하는데,그냥 이미지 파일을 없애는 경우 
 	public PostDTO deleteImageFile(PostDTO imageFilePostDTO) {
@@ -151,7 +173,7 @@ public class BoardService {
 	            postDTO.setResult("FAIL");
 	        }
 	        return postDTO;
-	    }
+	}
 
 
 	//7. 좋아요 공감버튼 
@@ -170,8 +192,6 @@ public class BoardService {
 		}
 	
 	
-	
-	
 	//5. 게시판 이름 가져오기 
 	public String getBoardName(int boardNo) {
 		return boardDAO.getBoardName(boardNo);
@@ -182,7 +202,6 @@ public class BoardService {
 		boardDAO.increasingViewCount(postNo); 	
 	}
 	
-
 	//게시글 검색 
 	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
 		return boardDAO.searchList(searchListPostDTO);		
@@ -190,6 +209,6 @@ public class BoardService {
 	
 	
 	
-				
+	
 		
-	}
+}

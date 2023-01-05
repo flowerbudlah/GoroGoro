@@ -24,6 +24,13 @@ public class BoardDAO {
 		return postList;
 	}
 	
+	//마이페이지에서 내가 쓴 게시물
+	public List<PostDTO> goMyPosts(int memberNo, RowBounds rowBounds){
+		List<PostDTO> myPostList = sqlSessionTemplate.selectList("board.goMyPosts", memberNo, rowBounds); 
+		return myPostList;
+	}
+	
+	
 	//2. 해당 게시판에 있는 전체게시물 리스트(페이지 작업때문에 필요함.)
 	public int getPostCnt(int boardNo) {
 		int postCnt = sqlSessionTemplate.selectOne("board.getPostCnt", boardNo);

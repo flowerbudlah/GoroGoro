@@ -88,7 +88,7 @@ function searchList(){
 							<%--제목 부분--%>
 							<a href='read?postNo=${postDTO.postNo}' style="color:black">
 								<c:choose>
-									<c:when test="${boardNo == 1 or boardNo == 3 }">[${boardName }]</c:when>
+									<c:when test="${boardNo == 1 }">[${boardName }]</c:when>
 									<c:otherwise></c:otherwise>
 								</c:choose>
 								${postDTO.title }
