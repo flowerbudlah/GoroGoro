@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="root" value="${pageContext.request.contextPath }/" />
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="root" value="${pageContext.request.contextPath }/" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">    
 function searchList(){
-	const keyword = $("#keyword").val(); //내용
+	const keyword = $("#keyword").val(); 
 	if (keyword == ""){			
 		alert("검색어를 입력해주세요.");
 		$("#keyword").focus();
@@ -37,7 +38,7 @@ function searchList(){
 						str+="<td><center>"+item.postCount+"</center></td>"; //게시글 수
 						str+="<td><center>"+item.replyCount+"</center></td>"; //댓글 수 
 						str+="<td><center>"+item.reportCount+"</center></td>"; //신고당한 건수
-						str+="<td><center>"+item.signUpDate+"</center></td>"; //가입일 
+						str+="<td><center>"+item.signUp_Date+"</center></td>"; //가입일
 						str+="<td><center><a href=''>강제탈퇴시키기</a></center></td>"; 
 					str+="</tr>"
 						
@@ -102,11 +103,11 @@ td{text-align:center; border: 1px solid black;}
 				<td style="text-align: center;">${allMemberList.replyCount}</td>
 				<td style="text-align: center;">${allMemberList.reportCount}</td>
 				<td style="text-align: center;">
-				<fmt:formatDate pattern="yyyy-MM-dd(E) hh시 mm분 ss초" value="${allMemberList.signUpDate }" />
+					<fmt:formatDate pattern="yyyy-MM-dd(E) hh시 mm분 ss초" value="${allMemberList.signUpDate }"/>
 				</td>
 				<td style="text-align: center;"><a href="">강제탈퇴시키기</a></td>
 			</tr>
-		</c:forEach>
+		</c:forEach> 
 		</tbody>
 </table> 
 </div>

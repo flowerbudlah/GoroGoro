@@ -57,7 +57,7 @@ public class AdminService {
 		return adminDAO.replyCount(writer); 
 	}
 	
-	//게시글 검색 
+	//아작스 게시글 검색 
 	public List<MemberDTO> searchList(MemberDTO searchListMemberDTO) throws Exception {
 		return adminDAO.searchList(searchListMemberDTO);		
 	}

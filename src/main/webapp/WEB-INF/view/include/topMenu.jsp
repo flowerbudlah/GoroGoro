@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <c:set var="root" value="${pageContext.request.contextPath }/" />
-
 <style>
 .main{ text-align: center; margin: 0;  padding: 0; font-size:14px; }
 .main li {display: inline-block; font-weight: bolder; list-style: none; }
@@ -66,9 +65,7 @@ function signOut(){ //사인아웃
         		</ul>
 			</li> 
 		</c:forEach>
-			<li>
-				<a href="${root }board/main?boardNo=2" style="color:black;'">익명</a>
-			</li> 
+			<li><a href="${root }board/main?boardNo=2" style="color:black;'">익명</a></li> 
 		</ul>
 	    <!-- 게시판 메뉴의 끝 -->
 		<ul class="navbar-nav main">
@@ -76,9 +73,9 @@ function signOut(){ //사인아웃
 				<ul> 
 				<c:choose>
       			<c:when test="${signInMemberDTO.signIn == true }"> <!-- 로그인을 해야지 보이는 관리자 페이지 -->
-					<li><a href="" style="color:black;">내 프로필 보기</a></li><br>
+					<li><a href="${root }member/myProfile" style="color:black;">내 프로필 보기</a></li><br>
 					<li><a href="${root }member/modify" style="color:black;">회원정보수정</a></li><br>
-					<li><a href="" style="color:black;">나의 게시물</a></li>
+					<li><a href="${root }member/myPosts" style="color:black;">나의 게시물</a></li>
 				</c:when>
 				<c:otherwise></c:otherwise>
 				</c:choose>
@@ -92,7 +89,7 @@ function signOut(){ //사인아웃
 						<li><a href="${root }admin/postManagement" style="color:black;'">게시물 관리</a></li><br>
 						<li><a href="${root }admin/boardManagement" style="color:black;">게시판 관리</a></li>
 					</c:when>
-				<c:otherwise></c:otherwise>     
+					<c:otherwise></c:otherwise>     
 				</c:choose>
 				</ul>
 			</li>	

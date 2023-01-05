@@ -85,12 +85,14 @@ public class AdminController {
 		MemberDTO searchListMemberDTO = new MemberDTO(); 
 		searchListMemberDTO.setType(type); 
 		searchListMemberDTO.setKeyword(keyword); 
+		
 		List<MemberDTO> searchList = adminService.searchList(searchListMemberDTO);  
 		model.addAttribute("searchList", searchList);
-		
 		return searchList;
-		
 	}
+	
+	
+	
 	
 	
 

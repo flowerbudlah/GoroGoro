@@ -18,7 +18,12 @@ public class PostDTO {
 	private String writer; //작성자
 	
 	private Date regDate; //글 작성일
+	
 	private String reg_date; //글검색시 아작스
+	
+	
+	
+	
 	
 	private int viewCount; //조회수
 	private  int sameThinking; //좋아요 공감버튼! 

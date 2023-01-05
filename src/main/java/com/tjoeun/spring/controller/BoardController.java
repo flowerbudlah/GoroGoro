@@ -99,13 +99,10 @@ public class BoardController {
 		model.addAttribute("postNo", postNo);
 					
 		PostDTO PostDTOfromDB = boardService.read(postNo); 
-		model.addAttribute("PostDTOfromDB", PostDTOfromDB);
-		//수정하고자 하는 그 글! 
+		model.addAttribute("PostDTOfromDB", PostDTOfromDB); //수정하고자 하는 그 글! 
 					
-			return "board/modify";	
+		return "board/modify";	
 	}
-	
-	
 	
 	//게시판 수정과정
 	@RequestMapping("/modifyProcess")
@@ -114,7 +111,6 @@ public class BoardController {
 		
 		PostDTO postDTO = boardService.modify(modifyPostDTO); //수정하겠다고 하는 그 글들이 입력되어 고쳐쓴 새로운 PostDTO가 된다. 
 		return postDTO;
-	
 	}
 	
 	//9. 이미지 첨부파일 삭제
@@ -183,7 +179,7 @@ public class BoardController {
 	}
 	
 	
-	//게시글 신고 페이지로 이동한다.
+	//글쓴이가 아니면 수정페이지나 삭제페이지 입장불가 인터셉터
 	@RequestMapping("/notWriter")
 	public String notWriter() {
 		return "board/notWriter";	

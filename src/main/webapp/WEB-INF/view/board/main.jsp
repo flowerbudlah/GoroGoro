@@ -33,6 +33,7 @@ function searchList(){
 			
 			if(result.length>=1){
 				result.forEach(function(item){
+					
 					str='<tr>'
 						str+="<td><center>"+item.postNo+"</center></td>"; //글번호
 						str+="<td><a href='read?postNo=" +item.postNo+ "'>" + item.title + "<font color='red'>["+ item.replyCount+"]</font></a></td>"; //제목
@@ -84,7 +85,12 @@ function searchList(){
 					<tr>
 						<td class="text-center d-none d-md-table-cell">${postDTO.postNo }</td>
 						<td>
+							<%--제목 부분--%>
 							<a href='read?postNo=${postDTO.postNo}' style="color:black">
+								<c:choose>
+									<c:when test="${boardNo == 1 or boardNo == 3 }">[${boardName }]</c:when>
+									<c:otherwise></c:otherwise>
+								</c:choose>
 								${postDTO.title }
 								<!-- 업로드 파일이 있다면 -->
 								<c:if test="${postDTO.imageFileName != '' }">
@@ -123,20 +129,19 @@ function searchList(){
 								<c:otherwise></c:otherwise>
 							</c:choose>
 						</c:when>
+						<c:when test="${boardNo ==3 }">
+							
+						</c:when>
 						<c:otherwise>
 							<div class="text-right">
-							<a href="write?boardNo=${boardNo }" class="btn btn-warning">글쓰기</a>
-							<!-- http://localhost:8090/GoroGoroCommunity/board/write?boardNo=1 -->
+								<a href="write?boardNo=${boardNo }" class="btn btn-warning">글쓰기</a>
+								<!-- http://localhost:8090/GoroGoroCommunity/board/write?boardNo=1 -->
 							</div>
 						</c:otherwise>
 					</c:choose>
 				</c:when>	
 				<c:otherwise></c:otherwise>
 			</c:choose>
-			
-			
-			
-			
 			<!-- 페이징(Paging) -->			
 			<div class="d-none d-md-block">
 				<ul class="pagination justify-content-center">
@@ -170,7 +175,6 @@ function searchList(){
 					</c:otherwise>
 				</c:choose>
 				</c:forEach>  
-				
 				<!-- 다음 -->
 				<!--맨 마지막 페이지인 경우에는 다음 버튼이 안 보이도록 함 (최대페이지가 전체페이지개수보다 크면 다음이 안 보이도록 함) -->
 				<c:choose>
@@ -185,10 +189,8 @@ function searchList(){
 						</li>
 					</c:otherwise>
 				</c:choose>
-				
 				</ul>
 			</div>
-			
 			<!-- 검색 기능 -->			
 			<form action="javascript:searchList()" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px; margin-bottom:30px;">
 				<input type="hidden" name="boardNo" value="${boardNo }"/>

@@ -16,10 +16,11 @@ public class MemberDTO {
 	
 	private String question; //아이디 비밀번호 분실시 질문
 	private String answer; //아이디 비밀번호 분실시 답(위 질문에 대한 답)
+	
 	private Date signUpDate; //가입일
+	private String signUp_Date; 
 	
 	private String result; //회원가입 성공여부를 할려주는 결과변수
-	
 	private boolean signIn; //로그인이 된상태면 이것이 true, 로그인이 안된상태면 false 
 	
 	private int postCount; //특정한 회원이 쓴 글의 수
