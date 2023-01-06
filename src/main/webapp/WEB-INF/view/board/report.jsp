@@ -11,11 +11,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script type="text/javascript">
-	function submit(){
+	
+	$(document).ready(function(){	});
+
+	function reportProcess(){
+		
 		var postNo = ${"#postNo"}.val(); 
 		var reporter = $("#reporter").val(); //신고자
- 		var reportReason = $("#reportReason").val(); //신고사유(제목)
-		var detail = $("#detail").val(); //구체적인 신고내용
+ 		var reason = $("#reason").val(); //신고사유(제목)
+		var detail = $("#detail").val();
 	
 		var formData = new FormData($('#submitReportDTO')[0]);	
 	
@@ -30,7 +34,7 @@
 		if(yn){
 			
 			 $.ajax({   
-	                url      : "${root}board/submit", 
+	                url      : "${root}board/reportProcess", 
 	                enctype  : "multipart/form-data",
 	                data     : formData,
 	                cache    : false,
@@ -38,13 +42,15 @@
 	                contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
 	                processData: false, // 이것을 붙이고 업로드가 되었다. 
 	                type     : "POST",    
-	                success  : function(obj) {	insertBoardCallback(obj);	},           
+	                success  : function(obj) {
+	                	insertBoardCallback(obj);	
+	                },           
 	                error: function(request,status,error){
 	                	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	                }
 				}) //아작스 
 			};	//yn의 끝
-		} //writeProcess()의 끝
+		} //reportProcess()의 끝
 			
 	/** 게시판 - 작성 콜백 함수 */
 	function insertBoardCallback(obj){
@@ -73,7 +79,6 @@ body{ background-color: white; }
 <c:import url="/WEB-INF/view/include/topMenu.jsp" />
 <article class="slider">
 	<img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg">
-	<!-- http://localhost:8090/GoroGoroCommunity/           image/yamamotoshinji_sapporo_clockTower.jpg -->
 </article>
 <!-- 글쓰기 부분 시작 -->
 <div class="container" style="margin-top:100px; margin-bottom:100px">
@@ -83,9 +88,9 @@ body{ background-color: white; }
 			<div class="card shadow-sm">
 				<div class="card-body">
 				<h5 class="card-title">게시글 신고양식</h5>
-				<p>양식에 맞게 신고를 하시면 관리자에게 해당 글<strong>(글 번호:${postNo })</strong>의 신고접수가 됩니다.
+				<p>양식에 맞게 신고를 하시면 관리자에게 <strong>해당 글(글 번호:${postNo })</strong>의 신고접수가 됩니다.
 				<br>신고가 접수된 게시물은 관리자의 판단 하에 처리되며, 법적처벌을 받을 수도 있습니다. </p>
-				${signInMemberDTO.nick }
+				
 				<form id="submitReportDTO" name="submitReportDTO" method="post" enctype="multipart/form-data">
 					
 					<input type="hidden" id="postNo" name="postNo" value="${postNo }">
@@ -93,17 +98,17 @@ body{ background-color: white; }
 					
 					<div class="form-group">
 						<label for="reporter">신고자</label>
-						<input type="text" readonly value="${signInMemberDTO.nick } (${signInMemberDTO.email })" class="form-control"/>
+						<input type="text" value="${signInMemberDTO.nick }" class="form-control" disabled/>
 					</div>
 					
 					<div class="form-group">
 						<label>받는사람</label>
-						<input type="text" value="관리자" disabled class="form-control"/>
+						<input type="text" value="관리자" class="form-control" disabled/>
 					</div>
 					
 					<div class="form-group">
-						<label for="reportReason">신고사유</label>
-						<select name="reportReason" id="reportReason" class="form-control">
+						<label for="reason">신고사유</label>
+						<select name="reason" id="reason" class="form-control">
 							<option value="insult">명예훼손, 모욕, 비방, 허위사실 유포 등</option>
     						<option value="advertisement">광고, 도배 등</option>
     						<option value="porn">음란물</option>
@@ -112,6 +117,7 @@ body{ background-color: white; }
     						<option value="etc">기타(해당 게시판의 주제와 맞지않는내용 등)</option>
 						</select>
 					</div>
+					
 					<div class="form-group">
 						<label for="detail">구체적인 내용</label>
 						<textarea id="detail" name="detail" class="form-control" rows="10" style="resize:none"></textarea>
@@ -121,10 +127,11 @@ body{ background-color: white; }
 						<input type="file" id="imageFile" name="imageFile" class="form-control" accept="image/*">						
 					</div>
 				</form>
+				
 				<div class="form-group">
 					<div class="text-right">
 						<button type="button" class="btn btn-secondary btn-sm" onclick="javascript:history.back();">이전페이지로 돌아가기</button>
-						<button type="button" class="btn btn-info btn-sm" onClick="javascript:submit();">관리자에게 제출하기</button>
+						<button type="button" class="btn btn-info btn-sm" onClick="javascript:reportProcess();">관리자에게 제출하기</button>
 					</div>	
 				</div>
 				</div>

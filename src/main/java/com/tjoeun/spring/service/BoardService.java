@@ -98,10 +98,8 @@ public class BoardService {
 	}
 	
 	
-	
-	
 	//게시물 신고
-	public ReportDTO submit(ReportDTO submitReportDTO) throws Exception {
+	public ReportDTO reportProcess(ReportDTO submitReportDTO) throws Exception {
 			
 		ReportDTO reportDTO = new ReportDTO();
 			
@@ -109,7 +107,7 @@ public class BoardService {
 		String UploadingImageFileName = saveUploadFile(imageFile);
 		submitReportDTO.setImageFileName(UploadingImageFileName);
 					
-		int submitCount = boardDAO.submit(submitReportDTO); //제출
+		int submitCount = boardDAO.reportProcess(submitReportDTO); //제출
 			
 		if (submitCount > 0) {
 			reportDTO.setResult("SUCCESS");
@@ -119,9 +117,6 @@ public class BoardService {
 		return reportDTO;		
 	}
 
-	
-	
-	
 	//이미지 파일 첨부
 	private String saveUploadFile(MultipartFile imageFile) {
 			
@@ -176,7 +171,6 @@ public class BoardService {
 		}
 		return postDTO;
 	}
-	
 	
 	//3. 특정한 게시글 하나 읽기
 	public PostDTO read(int postNo){

@@ -112,6 +112,7 @@ body{ background-color: white; }
 				<form id="writePostDTO" name="writePostDTO" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="boardNo" id="boardNo" value="${boardNo }"> 
 					<input type="hidden" id="writer" name="writer" value="${signInMemberDTO.nick }"/>
+					
 					<div class="form-group">
 						<label for="title">제목</label>
 						<input type="text" id="title" name="title" class="form-control"/>

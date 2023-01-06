@@ -13,9 +13,7 @@ public class PostDTO {
 	
 	private int boardNo; //게시판 자체의 번호
 	private String boardName; 
-	
-	
-	
+
 	private int postNo; //글 번호
 	private String title; //글 제목
 	private String content; //글 내용

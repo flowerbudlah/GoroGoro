@@ -43,9 +43,8 @@ public class BoardDAO {
 	}
 	
 	
-	//신고하기 
-	public int submit(ReportDTO submitReportDTO) {
-		return sqlSessionTemplate.insert("board.submit" ,submitReportDTO);
+	public int reportProcess(ReportDTO submitReportDTO) {
+		return sqlSessionTemplate.insert("board.reportProcess", submitReportDTO); 
 	}
 	
 	

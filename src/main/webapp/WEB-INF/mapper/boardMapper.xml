@@ -34,20 +34,14 @@
 	</insert>
 	
 
-	<!-- 게시글 신고 -->
-	<insert id="submit" parameterType="com.tjoeun.spring.dto.ReportDTO" useGeneratedKeys="true" keyProperty="reportNo">
-		insert into reportBoard(postNo, reporter, reportReason, detail, reportDate, imageFileName) 
-					values(#{postNo}, #{reporter}, #{reportReason}, #{detail},  Now(), #{imageFileName}   )
-	</insert>
+	<!-- 게시글 신고 (이미지 파일 첨부기능포함)-->
+<insert id="reportProcess" parameterType="com.tjoeun.spring.dto.ReportDTO" useGeneratedKeys="true" keyProperty="reportNo">
+		insert into reportBoard(postNo, reason, detail, reporter, reportDate, imageFileName) 
+				values(#{postNo}, #{reason}, #{detail}, #{reporter}, Now(), #{imageFileName})
+</insert>
 	
 	
-	
-	
-	
-	
-	
-	
-	
+		
 	<!-- 4. 글 하나 읽기 Reading -->
 	<select id="read" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO" >
 		select postNo, title, content, writer, regDate, viewCount, sameThinking, boardNo, imageFileName,  

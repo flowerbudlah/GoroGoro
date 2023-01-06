@@ -84,21 +84,10 @@ public class BoardController {
 	@RequestMapping("/writeProcess")
     public  @ResponseBody PostDTO writeProcess
     (HttpServletRequest request, HttpServletResponse response, PostDTO writePostDTO, MultipartFile imageFile) throws Exception{	
-		
 		PostDTO postDTO = boardService.writeProcess(writePostDTO);
         return postDTO;
     }
 
-	
-	//3. 게시글 신고
-	@RequestMapping("/submit")
-	public @ResponseBody ReportDTO submit
-	(HttpServletRequest request, HttpServletResponse response, ReportDTO submitReportDTO, MultipartFile imageFile) throws Exception{	
-		
-		ReportDTO reportDTO = boardService.submit(submitReportDTO);
-		return reportDTO;
-	}
-	
 	//게시글 신고페이지로 이동! 
 	@RequestMapping("/report")
 	public String report(@RequestParam("postNo") int postNo, Model model) {
@@ -106,7 +95,13 @@ public class BoardController {
 		return "board/report";		
 	}
 	
-	
+	//3. 게시글 신고
+	@RequestMapping("/reportProcess")
+	public @ResponseBody ReportDTO reportProcess
+	(HttpServletRequest request, HttpServletResponse response, ReportDTO submitReportDTO, MultipartFile imageFile) throws Exception{	
+		ReportDTO reportDTO = boardService.reportProcess(submitReportDTO);
+		return reportDTO;
+	}
 	
 	//7. 글 수정 페이지로 이동
 	@RequestMapping("/modify")
