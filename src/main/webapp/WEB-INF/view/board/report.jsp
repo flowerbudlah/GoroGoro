@@ -14,14 +14,16 @@
 	
 	$(document).ready(function(){	});
 
+	/* 글 작성  */
 	function reportProcess(){
 		
-		var postNo = ${"#postNo"}.val(); 
-		var reporter = $("#reporter").val(); //신고자
- 		var reason = $("#reason").val(); //신고사유(제목)
-		var detail = $("#detail").val();
+		var postNo = $("#postNo").val(); //게시글 번호
+		var writer = $("#writer").val(); //작성자
+ 	
+		var detail = $("#detail").val(); //내용
 	
 		var formData = new FormData($('#submitReportDTO')[0]);	
+		
 	
 		if (detail == ""){			
 			alert("내용을 입력해주세요.");
@@ -35,22 +37,22 @@
 			
 			 $.ajax({   
 	                url      : "${root}board/reportProcess", 
-	                enctype  : "multipart/form-data",
+	                enctype  : "multipart/form-data",
 	                data     : formData,
 	                cache    : false,
 	                async    : true,
 	                contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
 	                processData: false, // 이것을 붙이고 업로드가 되었다. 
 	                type     : "POST",    
-	                success  : function(obj) {
-	                	insertBoardCallback(obj);	
+	                success  : function(obj) { 
+	                	insertBoardCallback(obj);
 	                },           
 	                error: function(request,status,error){
 	                	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	                }
 				}) //아작스 
 			};	//yn의 끝
-		} //reportProcess()의 끝
+		} //writeProcess()의 끝
 			
 	/** 게시판 - 작성 콜백 함수 */
 	function insertBoardCallback(obj){
@@ -60,15 +62,18 @@
 			var result = obj.result;
 			
 			if(result == "SUCCESS"){				
-				alert("해당게시글이 관리자에게 신고되었습니다. 영업일(월~금) 1~2일내에 관리자의 판단하에 처리(삭제 또는 보존)됩니다. ");				
-				return;
+				alert("게시글 등록을 성공하였습니다.");				
+				goMain();				 
 			} else {				
 				alert("게시글 등록을 실패하였습니다.");	
 				return;
 			}
 		}
-	} 
-</script>
+	}
+	
+	
+	
+</script>	
 <style>
 /* 슬라이더 영역 CSS */
 .slider img{ display:block; width:100%; max-width:100%; height:300px; }
@@ -97,8 +102,9 @@ body{ background-color: white; }
 					<input type="hidden" id="reporter" name="reporter" value="${signInMemberDTO.nick }">
 					
 					<div class="form-group">
-						<label for="reporter">신고자</label>
+						<label>신고자</label>
 						<input type="text" value="${signInMemberDTO.nick }" class="form-control" disabled/>
+						
 					</div>
 					
 					<div class="form-group">
@@ -121,13 +127,13 @@ body{ background-color: white; }
 					<div class="form-group">
 						<label for="detail">구체적인 내용</label>
 						<textarea id="detail" name="detail" class="form-control" rows="10" style="resize:none"></textarea>
-					</div>		
+					</div>
+							
 					<div class="form-group">
 						<label for="imageFile">첨부 이미지</label>
 						<input type="file" id="imageFile" name="imageFile" class="form-control" accept="image/*">						
 					</div>
 				</form>
-				
 				<div class="form-group">
 					<div class="text-right">
 						<button type="button" class="btn btn-secondary btn-sm" onclick="javascript:history.back();">이전페이지로 돌아가기</button>
