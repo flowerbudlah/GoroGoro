@@ -58,11 +58,7 @@
 		</if>
 			order by memberNo DESC 
 	</select>
-	
-	
-	
-	
-		
+
 	<!-- 특정한 한 회원이 쓴글의 수 -->
 	<select id="postCount" parameterType="java.lang.String" resultType="java.lang.Integer">
 		select count(*) from freeBoard where writer = #{writer}	
@@ -72,7 +68,9 @@
 	<select id="replyCount" parameterType="java.lang.String" resultType="java.lang.Integer">
 		select count(*) from reply where writer = #{writer}	
 	</select>		
-		
+
+
+
 
 		
 </mapper>

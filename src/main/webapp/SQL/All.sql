@@ -17,12 +17,12 @@ CREATE TABLE GoroGoroCommunity.boardInCategory (
 	boardNo	int not null auto_increment primary key, -- 게시판 자체의 인덱스
 	boardName varchar(50) not null,-- 게시판의 이름
 	CreationDate timestamp default now(), 
-	boardCategoryNo int, 
+	boardCategoryNo int not null, 
     foreign key(boardCategoryNo) references boardCategory(boardCategoryNo) on delete cascade-- 게시판이 속한 대분류 카테고리의 인덱스 
 ); 
 select * from boardInCategory; 
-
-insert into boardInCategory(boardName, boardCategoryNo) values('신고접수된 게시글(관리자 전용)', null); 
+alter table boardInCategory 
+modify column boardCategoryNo int not null; 
 
 -- 3. 자유게시판 만들기(자유게시판을 삭제하고자 한다면 먼저 댓글테이블부터 제거해야합니다. )
 drop table freeBoard; 
@@ -39,9 +39,13 @@ CREATE TABLE GoroGoroCommunity.freeBoard (
 	imageFileName varchar(100) default null, -- 업로드 하신 이미지 파일이 있는 경우, 이미지 파일의 이름  
     foreign key(boardNo) references boardInCategory(boardNo) on delete cascade
 ); 
-commit; 
 
-insert into boardInCategory(boardName, boardCategoryNo) values('공지사항', null); 
+commit; 
+select * from boardInCategory;
+insert into boardInCategory(boardNo, boardName, boardCategoryNo) values(1, '공지사항', null); 
+insert into boardInCategory(boardNo, boardName, boardCategoryNo) values(2, '익명', null); 
+insert into boardInCategory(boardNo, boardName, boardCategoryNo) values(3, '내가 쓴 게시물', null); 
+delete from boardInCategory where boardNo=3;
 
 
 -- 4. 댓글(게시판 삭제하실려면 먼저 댓글부터 삭제해야합니다. )
@@ -81,6 +85,20 @@ CREATE TABLE GoroGoroCommunity.freeBoard (
     boardNo	int not null, -- 이 게시판의 번호(index)
 	imageFileName varchar(100) default null, -- 업로드 하신 이미지 파일이 있는 경우, 이미지 파일의 이름  
     foreign key(boardNo) references boardInCategory(boardNo) on delete cascade
+); 
+select * from members;
+drop table reportBoard;
+CREATE TABLE GoroGoroCommunity.reportBoard (
+	respotNo int not null auto_increment primary key, -- 신고번호
+	reportReason varchar(50) not null, -- 신고사유(제목)
+	detail text not null, -- 신고 상세사유
+	reporter varchar(50) not null, -- 신고자
+    reported varchar(50) not null, -- 신고당한사람
+    reportDate timestamp default now(), 
+	postNo	int not null, -- 이 게시판의 번호(index)
+    fileName varchar(100), -- 업로드한 파일이 있는 경우, 파일이름
+	imageFileName varchar(100) default null, -- 업로드 하신 이미지 파일이 있는 경우, 이미지 파일의 이름  
+    foreign key(postNo) references freeboard(postNo) on delete cascade
 ); 
 
 

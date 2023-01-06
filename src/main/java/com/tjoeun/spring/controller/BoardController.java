@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
 import com.tjoeun.spring.dto.ReplyDTO;
+import com.tjoeun.spring.dto.ReportDTO;
 import com.tjoeun.spring.service.BoardService;
 import com.tjoeun.spring.service.ReplyService;
 
@@ -79,7 +80,6 @@ public class BoardController {
 		return "board/write";
 	}
 	
-	
 	//3. 게시글 등록 Creating 
 	@RequestMapping("/writeProcess")
     public  @ResponseBody PostDTO writeProcess
@@ -88,6 +88,24 @@ public class BoardController {
 		PostDTO postDTO = boardService.writeProcess(writePostDTO);
         return postDTO;
     }
+
+	
+	//3. 게시글 신고
+	@RequestMapping("/submit")
+	public @ResponseBody ReportDTO submit
+	(HttpServletRequest request, HttpServletResponse response, ReportDTO submitReportDTO, MultipartFile imageFile) throws Exception{	
+		
+		ReportDTO reportDTO = boardService.submit(submitReportDTO);
+		return reportDTO;
+	}
+	
+	//게시글 신고페이지로 이동! 
+	@RequestMapping("/report")
+	public String report(@RequestParam("postNo") int postNo, Model model) {
+		model.addAttribute("postNo", postNo);
+		return "board/report";		
+	}
+	
 	
 	
 	//7. 글 수정 페이지로 이동
@@ -95,7 +113,6 @@ public class BoardController {
 	public String modify(@RequestParam("postNo") int postNo, @ModelAttribute("modifyPostDTO") PostDTO modifyPostDTO, Model model) {
 				
 		model.addAttribute("postNo", postNo);
-					
 		PostDTO PostDTOfromDB = boardService.read(postNo); 
 		model.addAttribute("PostDTOfromDB", PostDTOfromDB); //수정하고자 하는 그 글! 
 					
@@ -106,7 +123,6 @@ public class BoardController {
 	@RequestMapping("/modifyProcess")
 	public @ResponseBody PostDTO modify
 	(HttpServletRequest request, HttpServletResponse response, PostDTO modifyPostDTO, MultipartFile imageFile) throws Exception{
-		
 		PostDTO postDTO = boardService.modify(modifyPostDTO); //수정하겠다고 하는 그 글들이 입력되어 고쳐쓴 새로운 PostDTO가 된다. 
 		return postDTO;
 	}
@@ -118,25 +134,18 @@ public class BoardController {
 		return afterDeletingImageFile;
 	}
 
-
 	//4. 글읽기 Reading (댓글 포함)
 	@RequestMapping("/read")
 	public String read(@RequestParam("postNo") int postNo, @ModelAttribute("readPostDTO") PostDTO postDTO, Model model) {
-		
 		PostDTO readPostDTO = boardService.read(postNo);
-		
 		model.addAttribute("readPostDTO", readPostDTO); 
 		model.addAttribute("postNo", postNo);
 				
-		//조회수 증가 
-		boardService.increasingViewCount(postNo);
+		boardService.increasingViewCount(postNo); //조회수 증가 
 		
-		//댓글출력 
-		List<ReplyDTO> replyList =  replyService.replyList(postNo);
+		List<ReplyDTO> replyList =  replyService.replyList(postNo); //댓글출력 
 		model.addAttribute("replyList", replyList); 
-		
 		return "board/read";
-		
 	}
 		
 	@RequestMapping("/deletePost")
@@ -151,7 +160,6 @@ public class BoardController {
 		ReplyDTO ReplyDTO = replyService.removeReply(replyNo); 
 		return ReplyDTO;
 	}
-	
 	
 	//6. 좋아요(추천, 공감)
 	@RequestMapping("/like") 
@@ -169,19 +177,10 @@ public class BoardController {
         return ReplyDTO;
     }
 	
-	//게시글 신고 페이지로 이동한다.
-	@RequestMapping("/report")
-	public String report(@RequestParam("postNo") int postNo, Model model) {
-		model.addAttribute("postNo", postNo);
-		return "board/report";	
-	}
-	
 	//글쓴이가 아니면 수정페이지나 삭제페이지 입장불가 인터셉터
 	@RequestMapping("/notWriter")
 	public String notWriter() {
 		return "board/notWriter";	
 	}
 		
-
-
 }

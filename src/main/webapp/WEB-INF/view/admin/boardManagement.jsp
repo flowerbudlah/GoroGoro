@@ -102,7 +102,6 @@
 				</c:forEach>	
 			</select>
 			<button type="submit" class="btn btn-warning btn-sm" style="text-align:right;">해당 게시판의 카테고리 변경하기</button><br> 
-		
 		</form>
 	</div>
 </div>

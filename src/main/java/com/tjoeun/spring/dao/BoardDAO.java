@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tjoeun.spring.dto.PostDTO;
-
+import com.tjoeun.spring.dto.ReportDTO;
 
 @Repository
 public class BoardDAO {
@@ -37,13 +37,19 @@ public class BoardDAO {
 		return postCnt;
 	}
 
-
 	//2. 글쓰기 Create
 	public int writeProcess(PostDTO writePostDTO) {
 		return sqlSessionTemplate.insert("board.writeProcess", writePostDTO); 
 	}
 	
-
+	
+	//신고하기 
+	public int submit(ReportDTO submitReportDTO) {
+		return sqlSessionTemplate.insert("board.submit" ,submitReportDTO);
+	}
+	
+	
+	
 	//3. 특정한 글 하나 읽기 Read
 	public PostDTO read(int postNo){
 		PostDTO readPostDTO = sqlSessionTemplate.selectOne("board.read", postNo);
@@ -70,7 +76,6 @@ public class BoardDAO {
 		sqlSessionTemplate.update("board.increasingViewCount", postNo); 
 	}
 	
-
 	//8. 글 수정
 	public int modify(PostDTO modifyPostDTO) {
 		return sqlSessionTemplate.update("board.modify", modifyPostDTO);
@@ -81,12 +86,16 @@ public class BoardDAO {
 		return sqlSessionTemplate.update("board.deleteImageFile", imageFilePostDTO);
 	}
 
-	
 	//게시판 글 검색
 	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
 		return sqlSessionTemplate.selectList("board.searchList", searchListPostDTO); 
 	}
 
+	
+	
 
+	
+	
+	
 	
 }

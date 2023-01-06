@@ -17,6 +17,7 @@ import com.tjoeun.spring.dao.AdminDAO;
 import com.tjoeun.spring.dao.BoardDAO;
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
+import com.tjoeun.spring.dto.ReportDTO;
 
 
 @Service
@@ -97,6 +98,30 @@ public class BoardService {
 	}
 	
 	
+	
+	
+	//게시물 신고
+	public ReportDTO submit(ReportDTO submitReportDTO) throws Exception {
+			
+		ReportDTO reportDTO = new ReportDTO();
+			
+		MultipartFile imageFile = submitReportDTO.getImageFile(); 
+		String UploadingImageFileName = saveUploadFile(imageFile);
+		submitReportDTO.setImageFileName(UploadingImageFileName);
+					
+		int submitCount = boardDAO.submit(submitReportDTO); //제출
+			
+		if (submitCount > 0) {
+			reportDTO.setResult("SUCCESS");
+		} else {
+			reportDTO.setResult("FAIL"); 
+		}
+		return reportDTO;		
+	}
+
+	
+	
+	
 	//이미지 파일 첨부
 	private String saveUploadFile(MultipartFile imageFile) {
 			
@@ -112,7 +137,6 @@ public class BoardService {
 		
 		return imageFileName;
 	}
-	
 	
 	//8. 글수정
 	public PostDTO modify(PostDTO modifyPostDTO) {
@@ -162,17 +186,15 @@ public class BoardService {
 	
 	//4. 게시글 삭제
 	public PostDTO deletePost(int postNo) throws Exception {
-			
-			PostDTO postDTO = new PostDTO();
-	 
-	        int deleteCnt = boardDAO.deletePost(postNo);
-	 
-	        if (deleteCnt > 0) {
-	            postDTO.setResult("SUCCESS");
-	        } else {
-	            postDTO.setResult("FAIL");
-	        }
-	        return postDTO;
+		PostDTO postDTO = new PostDTO();
+		int deleteCnt = boardDAO.deletePost(postNo);
+
+		if (deleteCnt > 0) {
+			postDTO.setResult("SUCCESS");
+		} else {
+			postDTO.setResult("FAIL");
+		}
+		return postDTO;
 	}
 
 
@@ -189,13 +211,13 @@ public class BoardService {
 			 likePostDTO.setResult("FAIL");
 		 }
 			return likePostDTO;
-		}
-	
+	}
 	
 	//5. 게시판 이름 가져오기 
 	public String getBoardName(int boardNo) {
 		return boardDAO.getBoardName(boardNo);
 	}
+	
 	
 	//6. 조회수 증가
 	public void increasingViewCount(int postNo) {
@@ -208,7 +230,6 @@ public class BoardService {
 	}
 	
 	
-	
-	
 		
+	
 }

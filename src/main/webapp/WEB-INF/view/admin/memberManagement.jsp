@@ -98,8 +98,13 @@ td{text-align:center; border: 1px solid black;}
 			<tr>
 				<td style="text-align: center;">${allMemberList.memberNo }</td>
 				<td style="text-align: center;">${allMemberList.email}</td>
-				<td style="text-align: center;"><a href="">${allMemberList.nick }</a></td>
-				<td style="text-align: center;"><a href="">${allMemberList.postCount}</a></td>
+				<td style="text-align: center;">
+					<a href="">${allMemberList.nick }</a>
+				</td>
+				<td style="text-align: center;">
+					<!-- http://localhost:8090/GoroGoroCommunity/myPage/myPosts?memberNo=1 -->
+					<a href="${root }myPage/myPosts?memberNo=${allMemberList.memberNo}">${allMemberList.postCount}</a>
+				</td>
 				<td style="text-align: center;">${allMemberList.replyCount}</td>
 				<td style="text-align: center;">${allMemberList.reportCount}</td>
 				<td style="text-align: center;">

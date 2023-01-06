@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +14,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">    
 function searchList(){
+	
 	const keyword = $("#keyword").val(); //내용
 	if (keyword == ""){			
 		alert("검색어를 입력해주세요.");
@@ -40,7 +40,6 @@ function searchList(){
 						str+="<td><center>"+item.viewCount+"</center></td>"; //조회수
 						str+="<td><center>"+item.sameThinking+"</center></td>"; //공감수
 					str+="</tr>"
-					
 					$('#boardtable').append(str);
         		})		
 			}else{
@@ -66,7 +65,7 @@ function searchList(){
 <div class="container" style="margin-top:100px; margin-bottom:100px;">
 	<div class="card shadow-none">
 		<div class="card-body">	
-			<h4 class="card-title">내가 쓴 게시물 리스트</h4>
+			<h4 class="card-title">내가 쓴 게시물들</h4>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -84,8 +83,6 @@ function searchList(){
 						<td class="text-center d-none d-md-table-cell">${postDTO.postNo }</td>
 						<td>
 							<a href='http://localhost:8090/GoroGoroCommunity/board/read?postNo=${postDTO.postNo}' style="color:black">
-							<!--       3 -->
-							
 								[${postDTO.boardName}]	${postDTO.title }
 								<!-- 업로드 파일이 있다면 -->
 								<c:if test="${postDTO.imageFileName != '' }">

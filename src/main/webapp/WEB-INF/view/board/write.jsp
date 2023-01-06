@@ -108,6 +108,7 @@ body{ background-color: white; }
 			<div class="card shadow-sm">
 				<div class="card-body">
 				<h4 class="card-title">글쓰기</h4>
+				
 				<form id="writePostDTO" name="writePostDTO" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="boardNo" id="boardNo" value="${boardNo }"> 
 					<input type="hidden" id="writer" name="writer" value="${signInMemberDTO.nick }"/>
@@ -117,7 +118,7 @@ body{ background-color: white; }
 					</div>
 					<div class="form-group">
 						<label for="content">내용</label>
-						<textarea id="content" name="content" class="form-control" rows="15" style="resize:none"></textarea>
+						<textarea id="content" name="content" class="form-control" rows="10" style="resize:none"></textarea>
 					</div>		
 					<!-- 첨부파일 시작-->
 					<div class="form-group">

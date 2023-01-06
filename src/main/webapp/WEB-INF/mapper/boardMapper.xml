@@ -26,11 +26,27 @@
 		select count(*) from freeBoard where boardNo = #{boardNo}
    </select>
    
+   
 	<!-- 3. 글쓰기 Create(이미지 파일 첨부기능포함)-->
 	<insert id="writeProcess" parameterType="com.tjoeun.spring.dto.PostDTO" useGeneratedKeys="true" keyProperty="postNo">
 		insert into freeBoard(boardNo, title, content, writer, regDate, imageFileName) 
-		values(#{boardNo}, #{title}, #{content}, #{writer}, Now(), #{imageFileName})
+					values(#{boardNo}, #{title}, #{content}, #{writer}, Now(), #{imageFileName})
 	</insert>
+	
+
+	<!-- 게시글 신고 -->
+	<insert id="submit" parameterType="com.tjoeun.spring.dto.ReportDTO" useGeneratedKeys="true" keyProperty="reportNo">
+		insert into reportBoard(postNo, reporter, reportReason, detail, reportDate, imageFileName) 
+					values(#{postNo}, #{reporter}, #{reportReason}, #{detail},  Now(), #{imageFileName}   )
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	<!-- 4. 글 하나 읽기 Reading -->
 	<select id="read" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO" >
@@ -76,6 +92,9 @@
 		set imageFileName = #{imageFileName}
 		where postNo = #{postNo}
 	</update>	
+	
+	
+	
 	
 	
 	<!-- AJAX 게시글 검색 	-->
