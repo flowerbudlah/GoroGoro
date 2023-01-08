@@ -55,6 +55,10 @@ function searchList(){
 </script>
 <style>
 .slider img{display:block; width:100%; max-width:100%; height:300px;} /* 슬라이더 영역 CSS */
+body{
+	 background-image: url(http://localhost:8090/GoroGoroCommunity/image/bottom-bg.jpg);
+	 background-repeat: no-repeat; background-position: center bottom; background-attachment: fixed; 
+}
 </style>
 </head>
 <body>
@@ -66,7 +70,7 @@ function searchList(){
 </article>
 <!--Post List(게시글 리스트)-->
 <div class="container" style="margin-top:100px; margin-bottom:100px;">
-	<div class="card shadow-none">
+	<!-- <div class="card shadow-none">-->
 		<div class="card-body">	
 			<h4 class="card-title">${boardName }</h4>
 			<table class="table table-hover">
@@ -106,7 +110,9 @@ function searchList(){
 								<c:otherwise>${postDTO.writer}</c:otherwise>
 							</c:choose>
 						</td>
-						<td class="text-center d-none d-md-table-cell"><fmt:formatDate value="${postDTO.regDate }" pattern="yyyy-MM-dd"/></td>
+						<td class="text-center d-none d-md-table-cell">
+							<fmt:formatDate value="${postDTO.regDate }" pattern="yyyy-MM-dd"/>
+						</td>
 						<td class="text-center d-none d-md-table-cell">${postDTO.viewCount }</td>
                         <td class="text-center d-none d-md-table-cell">${postDTO.sameThinking }</td>
 					</tr>
@@ -205,7 +211,6 @@ function searchList(){
 			</form>
 			<!-- 검색기능끝 -->	
 		</div>
-	</div>
 </div>
 <c:import url="/WEB-INF/view/include/bottomInfo.jsp" />
 </body>

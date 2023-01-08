@@ -37,7 +37,7 @@ public class AdminController {
 		return "redirect:/admin/boardManagement";
 	}
 	
-	//1.2) 게시판 관리 페이지 안에서 게시판(대분류 카테고리에 포함된)을 생성한다. 
+	//1.2) 게시판 관리 페이지 안에서 (대분류 카테고리에 포함된)게시판을 생성한다. 
 	@RequestMapping("/boardManagement/boardName")
 	public String makeBoard(BoardDTO BoardDTOinCategory) {
 		adminService.makeBoard(BoardDTOinCategory);
@@ -51,15 +51,22 @@ public class AdminController {
 		return "redirect:/admin/boardManagement";
 	}
 	
-	//3. 회원 관리 페이지로 이동한다. 
-	@RequestMapping("/memberManagement")
-	public String memberManagement(Model model) {
-		List<MemberDTO> allMemberList = adminService.takeMemberList(); 
-		model.addAttribute("allMemberList", allMemberList); 
-		return "admin/memberManagement";
+	//1.4) 카테고리 삭제
+	@RequestMapping("/boardManagement/deleteCategory")
+	public String deleteCategory(int boardCategoryNo) {
+		adminService.deleteCategory(boardCategoryNo); 
+		return "redirect:/admin/boardManagement";
+	}
+		
+	//1.5) 게시판 삭제
+	@RequestMapping("/boardManagement/deleteBoard")
+	public String deleteBoard(int boardNo) {
+		adminService.deleteBoard(boardNo); 
+		return "redirect:/admin/boardManagement";
 	}
 	
-	//2. 게시물 관리 페이지로 이동한다.  (신고된 게시글 리스트)
+	
+	//2. 게시물 관리 페이지로 이동한다. (관리자에게 보내진 신고된 게시글 리스트)
 	@RequestMapping("/postManagement")
 	public String postManagement(Model model) {
 		List<ReportDTO> reportedPostList = adminService.takeReportedPost(); 
@@ -67,7 +74,8 @@ public class AdminController {
 		return "admin/postManagement";
 	}
 	
-	//4. 신고내용 읽기 Reading (댓글 포함)
+
+	//2.1) 신고내용 읽기 Reading (댓글 포함)
 	@RequestMapping("/reportedPost")
 	public String readReportedPost
 	(@ModelAttribute("readReportDTO") ReportDTO reportDTO, @RequestParam("reportNo") int reportNo, Model model){
@@ -79,22 +87,16 @@ public class AdminController {
 		return "admin/reportedPost";
 	}
 	
-	
-	//카테고리 삭제
-	@RequestMapping("/boardManagement/deleteCategory")
-	public String deleteCategory(int boardCategoryNo) {
-		adminService.deleteCategory(boardCategoryNo); 
-		return "redirect:/admin/boardManagement";
+	//3. 회원 관리 페이지로 이동한다. 
+	@RequestMapping("/memberManagement")
+	public String memberManagement(Model model) {
+		List<MemberDTO> allMemberList = adminService.takeMemberList(); 
+		model.addAttribute("allMemberList", allMemberList); 
+		return "admin/memberManagement";
 	}
 	
-	//게시판 삭제
-	@RequestMapping("/boardManagement/deleteBoard")
-	public String deleteBoard(int boardNo) {
-		adminService.deleteBoard(boardNo); 
-		return "redirect:/admin/boardManagement";
-	}
 	
-	//회원 검색(아작스 이용)
+	//3.1) 회원관리페이지에서 회원 검색(with using ajax)
 	@GetMapping("/searchList")
 	public @ResponseBody List<MemberDTO> searchList
 	(@RequestParam("type") String type, @RequestParam("keyword") String keyword, Model model) throws Exception{
@@ -108,15 +110,5 @@ public class AdminController {
 		return searchList;
 	}
 	
-
-	
-	
-	
-	
-	
-
-	
-	
-
 	
 }

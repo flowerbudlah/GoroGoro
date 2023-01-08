@@ -16,7 +16,7 @@ public class TopMenuDAO {
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	
-	//1. 카테고리 가져오기
+	//1. 대분류 카테고리 가져오기
 	public List<CategoryDTO> getCategoryList(){
 		List<CategoryDTO> CategoryList = sqlSessionTemplate.selectList("topMenu.CategoryList");
 		return CategoryList;

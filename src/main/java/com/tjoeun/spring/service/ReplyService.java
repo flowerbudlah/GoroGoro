@@ -16,7 +16,7 @@ public class ReplyService {
 	@Autowired
 	private ReplyDAO replyDAO; 
 	
-	//1. 댓글 작성
+	//1. 댓글 작성 Create 
 	public ReplyDTO writeReplyProcess(ReplyDTO writeReplyDTO) {
 		
 		ReplyDTO replyDTO = new ReplyDTO();
@@ -33,14 +33,12 @@ public class ReplyService {
 		return replyDTO;				
 	}
 	
-	
-	//2. 댓글리스트 조회
+	//2. 댓글리스트 조회 Read
 	public List<ReplyDTO> replyList(int postNo){
 		return replyDAO.replyList(postNo);
 	}
 
-	
-	//3. 댓글삭제
+	//3. 댓글삭제 delete
 	public ReplyDTO removeReply(int replyNo) {
 		
 		ReplyDTO replyDTO = new ReplyDTO();
@@ -56,12 +54,6 @@ public class ReplyService {
 		return replyDTO;
 	}
 	
-	
-	
-	
-	
 
-	
-	
 	
 }

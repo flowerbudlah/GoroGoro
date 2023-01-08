@@ -32,11 +32,10 @@ public class CheckWriterInterceptor implements HandlerInterceptor {
 		
 		if( tmpPostDTO.getWriter().equalsIgnoreCase(signInMemberDTO.getNick()) ){
 			//글쓴사람이랑 로그인을 한 사람이 같으면, 
-			
 			return true;
 		}else {
 			String contextPath = request.getContextPath();
-			response.sendRedirect(contextPath + "/board/notWriter");
+			response.sendRedirect(contextPath + "/etc/notWriter");
   			return false;
 		}
 			

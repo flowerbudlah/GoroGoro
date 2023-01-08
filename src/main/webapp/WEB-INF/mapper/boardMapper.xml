@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  
 <mapper namespace="board">
 
-	<!-- 1. 메인페이지로 간다.(with 글목록) -->
+	<!-- 1. 1) 메인페이지로 간다.(with 글 목록) -->
 	<select id="goMain" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO">
 		select f.postNo, f.title, f.content, f.writer, f.regDate, f.viewCount, f.sameThinking, f.boardNo, f.imageFileName, 
 				(select count(*) from reply where postNo = f.postNo) as replyCount 
@@ -12,85 +11,18 @@
 		where f.writer = m.nick and f.boardNo = #{boardNo}
 		order by f.postNo desc
 	</select>
-
-	<!-- 2. 내가 쓴 글 목록(with ) -->
-	<select id="goMyPosts" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO">
-		select f.postNo, f.title, f.content, f.writer, f.regDate, f.viewCount, f.sameThinking, f.boardNo, f.imageFileName, 
-				(select count(*) from reply where postNo = f.postNo) as replyCount, b.boardName
-		from freeBoard f, members m, boardInCategory b
-		where f.writer = m.nick and f.boardNo = b.boardNo and m.memberNo = #{memberNo}
-		order by f.postNo desc
-	</select>
-
-	<!--2. 그 해당 게시판에 써져있는 게시글 수 가져오기(페이징 작업때문에 필요하다. ) -->
+	
+	<!-- 1. 2) 그 해당 게시판에 써져있는 게시글 수 가져오기(페이징 작업때문에 필요하다. ) -->
 	<select id="getPostCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		select count(*) from freeBoard where boardNo = #{boardNo}
-   </select>
-   
-	<!-- 3. 글쓰기 Create(이미지 파일 첨부기능포함)-->
-	<insert id="writeProcess" parameterType="com.tjoeun.spring.dto.PostDTO" useGeneratedKeys="true" keyProperty="postNo">
-		insert into freeBoard(boardNo, title, content, writer, regDate, imageFileName) 
-					values(#{boardNo}, #{title}, #{content}, #{writer}, Now(), #{imageFileName})
-	</insert>
-	
-
-	<!-- 게시글 신고 (이미지 파일 첨부기능포함)-->
-	<insert id="reportProcess" parameterType="com.tjoeun.spring.dto.ReportDTO" useGeneratedKeys="true" keyProperty="reportNo">
-		insert into reportBoard(postNo, reason, detail, reporter, reportDate, imageFileName) 
-				values(#{postNo}, #{reason}, #{detail}, #{reporter}, Now(), #{imageFileName})
-	</insert>
-		
-		
-	<!-- 4. 글 하나 읽기 Reading -->
-	<select id="read" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO" >
-		select postNo, title, content, writer, regDate, viewCount, sameThinking, boardNo, imageFileName,  
-				(select count(*) from reply where postNo = f.postNo) as replyCount 
-		from freeBoard f 
-		where postNo = #{postNo} 	
 	</select>
-	
-	<!-- 4. 글 삭제 deleting -->
-	<delete id="deletePost" parameterType="java.lang.Integer">
-    	delete from freeBoard where postNo = #{postNo}
-    </delete>
-    
-    <!-- 7. 좋아요 버튼 클릭 -->
-	<update id="like" parameterType="java.lang.Integer">
-		update freeBoard set sameThinking = sameThinking + 1 where postNo = #{postNo}
-	</update>
-	
-   
-    <!-- 5. 게시판 이름, 정보 가져오기 -->
+
+    <!-- 1. 3) 게시판 이름, 정보 가져오기 -->
     <select id="getBoardName" parameterType="java.lang.Integer" resultType="java.lang.String">
     	select boardName from boardInCategory where boardNo=#{boardNo}
     </select>
     
-    
-	<!-- 6. 조회수 증가 -->
-	<update id="increasingViewCount" parameterType="java.lang.Integer">
-		update freeBoard set viewCount = viewCount + 1 where postNo = #{postNo}
-	</update>
-	
-	<!-- 8. 글 수정하기 -->
-	<update id="modify" parameterType="com.tjoeun.spring.dto.PostDTO">
-		update freeBoard
-		set title = #{title}, content = #{content}, imageFileName = #{imageFileName, jdbcType=VARCHAR} 
-		where postNo = #{postNo}
-		<!-- 위의 file은 데이터베이스에 저장되어있는 이미지 파일이름을 저장하는 변수 -->
-	</update>
-	
-	
-	<update id="deleteImageFile" parameterType="com.tjoeun.spring.dto.PostDTO">
-		update freeBoard 
-		set imageFileName = #{imageFileName}
-		where postNo = #{postNo}
-	</update>	
-	
-	
-	
-	
-	
-	<!-- AJAX 게시글 검색 	-->
+	<!-- 1. 4) AJAX 게시글 검색 	-->
 	<select id="searchList" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="com.tjoeun.spring.dto.PostDTO">
 		select postNo, title, writer, DATE_FORMAT(regDate,'%Y-%m-%d') as reg_date, viewCount, sameThinking
 		from freeBoard
@@ -109,13 +41,63 @@
 			</if>
 				order by postNo DESC 
 	</select>
+   
+	<!-- 2. 글쓰기 Create(이미지 파일 첨부기능포함)-->
+	<insert id="writeProcess" parameterType="com.tjoeun.spring.dto.PostDTO" useGeneratedKeys="true" keyProperty="postNo">
+		insert into freeBoard(boardNo, title, content, writer, regDate, imageFileName) 
+					values(#{boardNo}, #{title}, #{content}, #{writer}, Now(), #{imageFileName})
+	</insert>
+
+	<!-- 3. 1) 글 하나 읽기 Reading -->
+	<select id="read" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO" >
+		select postNo, title, content, writer, regDate, viewCount, sameThinking, boardNo, imageFileName,  
+				(select count(*) from reply where postNo = f.postNo) as replyCount 
+		from freeBoard f 
+		where postNo = #{postNo} 	
+	</select>
+
+	<!-- 3. 2) 조회수 증가 -->
+	<update id="increasingViewCount" parameterType="java.lang.Integer">
+		update freeBoard set viewCount = viewCount + 1 where postNo = #{postNo}
+	</update>
+	  
+    <!-- 3. 3) 좋아요 버튼 클릭 -->
+	<update id="like" parameterType="java.lang.Integer">
+		update freeBoard set sameThinking = sameThinking + 1 where postNo = #{postNo}
+	</update>
 	
+	<!-- 3. 4) 게시글 신고 (이미지 파일 첨부기능포함)-->
+	<insert id="reportProcess" parameterType="com.tjoeun.spring.dto.ReportDTO" useGeneratedKeys="true" keyProperty="reportNo">
+		insert into reportBoard(postNo, reason, detail, reporter, reportDate, imageFileName) 
+				values(#{postNo}, #{reason}, #{detail}, #{reporter}, Now(), #{imageFileName})
+	</insert>
+
+	<!-- 4. 1) 글 수정하기 Updating-->
+	<update id="modify" parameterType="com.tjoeun.spring.dto.PostDTO">
+		update freeBoard
+		set title = #{title}, content = #{content}, imageFileName = #{imageFileName, jdbcType=VARCHAR} 
+		where postNo = #{postNo}
+		<!-- 위의 file은 데이터베이스에 저장되어있는 이미지 파일이름을 저장하는 변수 -->
+	</update>
 	
+	<!-- 4. 2) 글 수정 시 이미 업로드한 사진 파일도 삭제 -->
+	<update id="deleteImageFile" parameterType="com.tjoeun.spring.dto.PostDTO">
+		update freeBoard set imageFileName = #{imageFileName} where postNo = #{postNo}
+	</update>	
 	
-	
-	
-	
-	
+	<!-- 5. 글 삭제 deleting -->
+	<delete id="deletePost" parameterType="java.lang.Integer">
+    	delete from freeBoard where postNo = #{postNo}
+    </delete> 
+  	
+	<!-- 6. 내가 쓴 글 목록(마이페이지) -->
+	<select id="goMyPosts" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO">
+		select f.postNo, f.title, f.content, f.writer, f.regDate, f.viewCount, f.sameThinking, f.boardNo, f.imageFileName, 
+				(select count(*) from reply where postNo = f.postNo) as replyCount, b.boardName
+		from freeBoard f, members m, boardInCategory b
+		where f.writer = m.nick and f.boardNo = b.boardNo and m.memberNo = #{memberNo}
+		order by f.postNo desc
+	</select>
 	
 	
 	

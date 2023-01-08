@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,17 +47,71 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
 		<p class="text-center">
     	1. 게시글 삭제, 신고된 게시글 처리(관리자 페이지 만들기)<br><br>
     	2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(유효한 신고건수가 50이상인경우)
-    </p>
-  </div>
- 
-<br><br><br>
-  <div>
-    <h4>회원기능 & 첨부파일(이미지 뿐아니라)</h4>
-    <p class="text-center">
+    	</p>
+	</div>
+	<br><br>
+	<div>
+    	<h4>회원기능 & 첨부파일(이미지 뿐아니라)</h4>
+    	<p class="text-center">
     	4. 개인 프로필 기능(프로필누르면 새로운 팝업창이 뜨고 사진 업로드, 본인이 신고당한 건수)<br>
     	5. 게시글 신고(신고당한사람은 플래그가 증가한다. 더티지수증가)
-    </p>
-  </div>
+		</p>
+	</div>
+<!-- 공지사항 미리보기 부분 -->
+<div class="container" style="margin-top:0px; margin-bottom:0px">
+	<div class="row">
+		<div class="col-lg-12" style="margin-top:20px; ">
+			<div class="card-body">
+				<h4>공지사항</h4>
+					<table class="table table-hover">
+					<thead>
+						<tr>
+							<th class="text-center d-none d-md-table-cell" style="color:black">글번호</th>
+							<th class="w-25" style="color:black">제목</th>
+							<th class="text-center d-none d-md-table-cell" style="color:black">작성자</th>
+							<th class="text-center d-none d-md-table-cell" style="color:black">작성날짜</th>
+							<th class="text-center d-none d-md-table-cell" style="color:black">조회수</th>
+							<th class="text-center d-none d-md-table-cell" style="color:black">공감수</th>
+						</tr>
+					</thead>
+					
+					<tbody>
+					<c:forEach var="postDTO" items="${postList }">
+					<tr>
+						<td class="text-center">${postDTO.postNo }</td>
+						<td>
+							<!-- http://localhost:8090/GoroGoroCommunity/board/read?postNo=7 -->
+							<a href='${root }board/read?&postNo=${postDTO.postNo}' style="color:black">
+								${postDTO.title }
+								<!-- 업로드 파일이 있다면 -->
+								<c:if test="${postDTO.imageFileName != '' }">
+									<img src="/GoroGoroCommunity/image/uploadingPhoto.png" width=20px;>
+								</c:if>
+								<!-- 댓글이 있을경우, 댓글 수-->
+						 		<font color="red">[${postDTO.replyCount }]</font>
+							</a>
+						</td>
+						<td class="text-center">${postDTO.writer }</td> 
+						<td class="text-center">
+							<fmt:formatDate value="${postDTO.regDate }" pattern="yyyy-MM-dd"/>
+						</td>
+						<td class="text-center">${postDTO.viewCount }</td>
+						<td class="text-center">${postDTO.sameThinking }</td>
+					</tr>
+					</c:forEach>
+					</tbody>
+					</table>
+					
+					<div class="text-right">
+						<a href="${root }board/main?boardNo=1" class="btn btn-danger" style="color:white">
+							더 보기
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- 게시판 미리보기 부분 끝-->
 </div>
 </div>
 <!-- 하단 -->

@@ -3,37 +3,35 @@
 
 <mapper namespace="member">
 
-	<!-- 1. 회원가입 Create-->
+	<!-- 1. 1) 회원가입 Create-->
 	<insert id="signUpProcess" parameterType="com.tjoeun.spring.dto.MemberDTO" useGeneratedKeys="true" keyProperty="memberNo">
 		insert into members(email, passwords, nick, question, answer, signUpDate) 
 		values(#{email}, #{passwords}, #{nick}, #{question}, #{answer}, Now())
 	</insert>
 
-	<!-- 2. 이메일(아이디 용) 중복체크 -->
+	<!-- 1. 2) 이메일(아이디 용) 중복체크(회원가입시) -->
 	<select id="checkEmail" resultType="java.lang.String" parameterType="java.lang.String">
 		select email from members where email like CONCAT (#{email}, '%')
 	</select>
 		
-	<!-- 3. 대화명 중복체크 -->
+	<!-- 1. 3) 대화명 중복체크 (회원가입시)-->
 	<select id="checkNick" resultType="java.lang.String" parameterType = "java.lang.String">
 		select nick from members where nick = #{nick}
 	</select>
   	 
-	<!--4. 로그인(Sign In) -->
+	<!-- 2. 로그인(Sign In) -->
  	<select id="signIn" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
  		select * from members where email = #{email} and passwords = #{passwords}
 	</select>
 	
-	<!--5. 회원정보수정하기 위해서 정보수정 전 정보 가져오기 -->
+	<!-- 3. 1) 회원정보수정하기 위해서 정보수정 전 정보 가져오기 -->
   	<select id="takeMemberDTO" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.MemberDTO">
   		select * from members where memberNo = #{memberNo}
     </select>
   
-  
-  	<!--6. 회원정보수정하기 -->
+  	<!-- 3. 2) 회원정보수정하기 -->
 	<update id="modifyMemberDTO" parameterType="com.tjoeun.spring.dto.MemberDTO" >
-		update members
-		set passwords = #{passwords}, nick = #{nick}, question = #{question}, answer=#{answer}
+		update members set passwords = #{passwords}, nick = #{nick}, question = #{question}, answer=#{answer}
 		where memberNo = #{memberNo}     
 	</update>
 

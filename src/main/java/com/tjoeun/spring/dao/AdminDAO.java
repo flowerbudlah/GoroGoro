@@ -26,52 +26,54 @@ public class AdminDAO {
 		sqlSessionTemplate.insert("admin.makeBoard", BoardDTOinCategory); 
 	}
 
-	//3. 게시판 이름 변경
+	//3. 게시판 이름 변경 Updating
 	public void changeBoardName(BoardDTO boardDTOinCategory) {
 		sqlSessionTemplate.update("admin.changeBoardName", boardDTOinCategory); 
 	}
 	
-	//4. 회원목록 가져오기
-	public List<MemberDTO> takeMemberList() {
-		return sqlSessionTemplate.selectList("admin.takeMemberList");
-	}
-	
-	//카테고리 삭제
+	//4. 카테고리 삭제
 	public void deleteCategory(int boardCategoryNo) {
 		sqlSessionTemplate.delete("admin.deleteCategory", boardCategoryNo); 
 	}	
 
-	//카테고리에 속한 게시판 삭제
+	//5. 카테고리에 속한 게시판 삭제
 	public void deleteBoard(int boardNo) {
 		sqlSessionTemplate.delete("admin.deleteBoard", boardNo); 
 	}
+		
+	//6. 1) 회원목록 가져오기
+	public List<MemberDTO> takeMemberList() {
+		return sqlSessionTemplate.selectList("admin.takeMemberList");
+	}
 	
-	//특정한 한 회원이 쓴 글의 수 가져오기 
+	//6. 2) 특정한 한 회원이 쓴 글의 수 가져오기 
 	public int postCount(String writer) {
 		return sqlSessionTemplate.selectOne("admin.postCount", writer); 
 	}
 	
-	//특정한 한 회원이 쓴 댓글 수 가져오기 
+	//6. 3) 특정한 한 회원이 쓴 댓글 수 가져오기 
 	public int replyCount(String writer) {
 		return sqlSessionTemplate.selectOne("admin.postReply", writer); 
 	}
 	
-	
-	//아작스로 관리자 회원검색
+	//7. 관리자의 회원검색(with using a Ajax)
 	public List<MemberDTO> searchList(MemberDTO searchListMemberDTO) throws Exception {
 		return sqlSessionTemplate.selectList("admin.searchList", searchListMemberDTO); 
 	}
 	
-	//관리자가 신고된 게시물보기
+	//8. 1) 관리자가 신고된 게시물보기
 	public List<ReportDTO> takeReportedPost(){
 		return sqlSessionTemplate.selectList("admin.takeReportedPost");
 	}
 	
-	//신고된 게시글 상세보기
+	//8. 2) 신고된 게시글 상세보기
 	public ReportDTO readReportedPost(int reportNo) {
 		ReportDTO readReportDTO = sqlSessionTemplate.selectOne("admin.readReportedPost",reportNo);  
 		return readReportDTO; 
 	}
+	
+	
+	
 	
 		
 }
