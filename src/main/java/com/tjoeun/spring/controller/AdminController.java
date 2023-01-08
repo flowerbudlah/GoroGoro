@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tjoeun.spring.dto.BoardDTO;
 import com.tjoeun.spring.dto.MemberDTO;
+
+import com.tjoeun.spring.dto.ReportDTO;
 import com.tjoeun.spring.service.AdminService;
 
 @Controller
@@ -41,18 +44,11 @@ public class AdminController {
 		return "redirect:/admin/boardManagement";
 	}
 	
-	
 	//1.3)게시판 관리 페이지 안에서 게시판 이름 변경한다. 
 	@RequestMapping("/boardManagement/changeBoardName")
 	public String changeBoardName(BoardDTO BoardDTOinCategory) {
 		adminService.changeBoardName(BoardDTOinCategory);
 		return "redirect:/admin/boardManagement";
-	}
-	
-	//2. 게시물 관리 페이지로 이동한다. 
-	@RequestMapping("/postManagement")
-	public String postManagement() {
-		return "admin/postManagement";
 	}
 	
 	//3. 회원 관리 페이지로 이동한다. 
@@ -62,6 +58,27 @@ public class AdminController {
 		model.addAttribute("allMemberList", allMemberList); 
 		return "admin/memberManagement";
 	}
+	
+	//2. 게시물 관리 페이지로 이동한다.  (신고된 게시글 리스트)
+	@RequestMapping("/postManagement")
+	public String postManagement(Model model) {
+		List<ReportDTO> reportedPostList = adminService.takeReportedPost(); 
+		model.addAttribute("reportedPostList", reportedPostList); 
+		return "admin/postManagement";
+	}
+	
+	//4. 신고내용 읽기 Reading (댓글 포함)
+	@RequestMapping("/reportedPost")
+	public String readReportedPost
+	(@ModelAttribute("readReportDTO") ReportDTO reportDTO, @RequestParam("reportNo") int reportNo, Model model){
+		
+		ReportDTO readReportDTO = adminService.readReportedPost(reportNo); 
+		model.addAttribute("reportNo", reportNo);		
+		model.addAttribute("readReportDTO", readReportDTO); 
+		
+		return "admin/reportedPost";
+	}
+	
 	
 	//카테고리 삭제
 	@RequestMapping("/boardManagement/deleteCategory")
@@ -90,6 +107,8 @@ public class AdminController {
 		model.addAttribute("searchList", searchList);
 		return searchList;
 	}
+	
+
 	
 	
 	

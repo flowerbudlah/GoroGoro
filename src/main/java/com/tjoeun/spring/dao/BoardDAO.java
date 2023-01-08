@@ -80,21 +80,18 @@ public class BoardDAO {
 		return sqlSessionTemplate.update("board.modify", modifyPostDTO);
 	}
 
+	
 	//글 수정시 아예 이미지 파일을 없애는 쿼리
 	public int deleteImageFile(PostDTO imageFilePostDTO) {
 		return sqlSessionTemplate.update("board.deleteImageFile", imageFilePostDTO);
 	}
 
+	
 	//게시판 글 검색
 	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
 		return sqlSessionTemplate.selectList("board.searchList", searchListPostDTO); 
 	}
 
-	
-	
 
-	
-	
-	
 	
 }

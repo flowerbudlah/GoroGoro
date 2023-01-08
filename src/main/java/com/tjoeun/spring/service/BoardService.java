@@ -129,7 +129,6 @@ public class BoardService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		return imageFileName;
 	}
 	
@@ -155,7 +154,6 @@ public class BoardService {
 		}
 		return postDTO;
 	}
-	
 	
 	//글을 수정하는데,그냥 이미지 파일을 없애는 경우 
 	public PostDTO deleteImageFile(PostDTO imageFilePostDTO) {

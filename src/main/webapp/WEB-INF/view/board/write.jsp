@@ -24,18 +24,11 @@
 	/* 글 작성  */
 	function writeProcess(){
 		
-		var boardNo = $("#boardNo").val(); //게시판 번호
-		var writer = $("#writer").val(); //작성자
  		var title = $("#title").val(); //제목
 		var content = $("#content").val(); //내용
 	
 		var formData = new FormData($('#writePostDTO')[0]);	
 		
-		if (writer == ""){			
-			alert("작성자를 입력해주세요.");
-			$("#writer").focus();
-			return;
-		}
 			
 		if (title == ""){			
 			alert("제목을 입력해주세요.");
@@ -63,7 +56,17 @@
 	                processData: false, // 이것을 붙이고 업로드가 되었다. 
 	                type     : "POST",    
 	                success  : function(obj) { 
-	                	insertBoardCallback(obj);
+	                	if(obj != null){		
+	            			
+	            			var result = obj.result;
+	            			if(result == "SUCCESS"){				
+	            				alert("게시글 등록을 성공하였습니다.");				
+	            				goMain();				 
+	            			} else {				
+	            				alert("게시글 등록을 실패하였습니다.");	
+	            				return;
+	            			}
+	            		}
 	                },           
 	                error: function(request,status,error){
 	                	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -71,23 +74,6 @@
 				}) //아작스 
 			};	//yn의 끝
 		} //writeProcess()의 끝
-			
-	/** 게시판 - 작성 콜백 함수 */
-	function insertBoardCallback(obj){
-	
-		if(obj != null){		
-			
-			var result = obj.result;
-			
-			if(result == "SUCCESS"){				
-				alert("게시글 등록을 성공하였습니다.");				
-				goMain();				 
-			} else {				
-				alert("게시글 등록을 실패하였습니다.");	
-				return;
-			}
-		}
-	}
 </script>
 <style>
 /* 슬라이더 영역 CSS */

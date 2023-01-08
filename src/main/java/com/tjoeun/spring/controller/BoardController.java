@@ -10,9 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +19,7 @@ import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
 import com.tjoeun.spring.dto.ReplyDTO;
 import com.tjoeun.spring.dto.ReportDTO;
+
 import com.tjoeun.spring.service.BoardService;
 import com.tjoeun.spring.service.ReplyService;
 
@@ -131,8 +130,11 @@ public class BoardController {
 
 	//4. 글읽기 Reading (댓글 포함)
 	@RequestMapping("/read")
-	public String read(@RequestParam("postNo") int postNo, @ModelAttribute("readPostDTO") PostDTO postDTO, Model model) {
+	public String read
+	(@RequestParam("postNo") int postNo, @ModelAttribute("readPostDTO") PostDTO postDTO, Model model) {
+		
 		PostDTO readPostDTO = boardService.read(postNo);
+		
 		model.addAttribute("readPostDTO", readPostDTO); 
 		model.addAttribute("postNo", postNo);
 				
@@ -140,14 +142,17 @@ public class BoardController {
 		
 		List<ReplyDTO> replyList =  replyService.replyList(postNo); //댓글출력 
 		model.addAttribute("replyList", replyList); 
+		
 		return "board/read";
 	}
-		
+	
 	@RequestMapping("/deletePost")
     public @ResponseBody PostDTO deleteBoard(HttpServletRequest request, HttpServletResponse response, int postNo) throws Exception{
         PostDTO postDTO = boardService.deletePost(postNo); 
         return postDTO;
     }
+	
+	
 	
 	//9. 댓글삭제
 	@RequestMapping("/removeReply")
@@ -156,12 +161,15 @@ public class BoardController {
 		return ReplyDTO;
 	}
 	
+	
+	
 	//6. 좋아요(추천, 공감)
 	@RequestMapping("/like") 
 	public @ResponseBody PostDTO like(HttpServletRequest request, HttpServletResponse response, int postNo) throws Exception {
 		PostDTO likePostDTO = boardService.like(postNo);
 		return likePostDTO;
 	}
+	
 	
 	//8. 댓글등록 
 	@RequestMapping("/writeReplyProcess")
@@ -178,4 +186,7 @@ public class BoardController {
 		return "board/notWriter";	
 	}
 		
+	
+	
+	
 }

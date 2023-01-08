@@ -61,7 +61,7 @@ function searchList(){
 <article class="slider">
 	<img src="/GoroGoroCommunity/image/convenientStore.png"> 
 </article>
-<!--Post List(게시글 리스트)-->
+<!--Post List(내가 쓴 게시글 리스트)-->
 <div class="container" style="margin-top:100px; margin-bottom:100px;">
 	<div class="card shadow-none">
 		<div class="card-body">	
@@ -158,6 +158,110 @@ function searchList(){
 					<option value="title">제목</option>
 					<option value="content">내용</option>
 					<option value="writer">작성자</option>
+				</select>			
+				<input type="text" value="" name="keyword" id="keyword"/> <!-- required="required"  -->
+				<input type="button" onclick="javascript:searchList()" class="btn btn-warning btn-sm" value="검색"/>
+			</form>
+			<!-- 검색기능끝 -->	
+		</div>
+	</div>
+</div>
+<!--내가 쓴 게시글 리스트 끝 -->
+<!--내가 신고한 게시글 리스트 -->
+<div class="container" style="margin-bottom:100px;">
+	<div class="card shadow-none">
+		<div class="card-body">	
+			<h4 class="card-title">관리자에게 신고한 내역</h4>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th class="text-center d-none d-md-table-cell">신고번호</th>
+						<th class="w-50">신고사유</th>
+						<th class="text-center d-none d-md-table-cell">신고자</th>
+						<th class="text-center d-none d-md-table-cell">피신고인</th>
+						<th class="text-center d-none d-md-table-cell">신고일자</th>
+					
+					</tr>
+				</thead>
+				<tbody id="boardtable">
+				<c:forEach var="postDTO" items="${myPostList }" >
+					<tr>
+						<td class="text-center d-none d-md-table-cell">${postDTO.postNo }</td>
+						<td>
+							<a href='http://localhost:8090/GoroGoroCommunity/board/read?postNo=${postDTO.postNo}' style="color:black">
+								[${postDTO.boardName}]	${postDTO.title }
+								<!-- 업로드 파일이 있다면 -->
+								<c:if test="${postDTO.imageFileName != '' }">
+									<img src="/GoroGoroCommunity/image/uploadingPhoto.png" width=20px;>
+								</c:if>
+								<!-- 댓글이 있을경우, 댓글 수-->
+						 		<font color="red">[${postDTO.replyCount }]</font>
+						 	</a>
+						</td>
+						<td class="text-center d-none d-md-table-cell">${postDTO.writer}</td>
+						<td class="text-center d-none d-md-table-cell"><fmt:formatDate value="${postDTO.regDate }" pattern="yyyy-MM-dd"/></td>
+						<td class="text-center d-none d-md-table-cell">${postDTO.viewCount }</td>
+                      
+					</tr>
+				</c:forEach>
+				</tbody>
+			</table>
+		
+			<!-- 페이징(Paging) -->			
+			<div class="d-none d-md-block">
+				<ul class="pagination justify-content-center">
+				<!-- 이전 -->
+				<c:choose>
+					<c:when test="${pageDTO.prePage <= 0 }" >
+						<li class="page-item disabled">
+							<a href="#" class="page-link">이전</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item">
+							<a href="main?boardNo=${boardNo}&page=${pageDTO.prePage}" class="page-link">이전</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+				
+				<!-- 1 2 3 4 5 6 7 8 9 10 -->
+				<c:forEach var="idx" begin="${pageDTO.min }" end="${pageDTO.max }">
+				<c:choose>
+					<c:when test="${idx == pageDTO.currentPage }">
+						<li class="page-item active">
+							<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
+							<!-- http://localhost:8090/GoroGoroCommunity/board/      main?boardNo=1&page=1 -->
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item">
+							<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+				</c:forEach>  
+				<!-- 다음 -->
+				<!--맨 마지막 페이지인 경우에는 다음 버튼이 안 보이도록 함 (최대페이지가 전체페이지개수보다 크면 다음이 안 보이도록 함) -->
+				<c:choose>
+					<c:when test="${pageDTO.max >= pageDTO.pageCount }">
+						<li class="page-item disabled">
+							<a href="#" class="page-link">다음</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item">
+							<a href="main?boardNo=${boardNo}&page=${pageDTO.nextPage}" class="page-link">다음</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+				</ul>
+			</div>
+			<!-- 검색 기능 -->			
+			<form action="javascript:searchList()" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px; margin-bottom:30px;">
+				<input type="hidden" name="boardNo" value="${boardNo }"/>
+				<select name="type">
+					<option value="title">신고사유</option>
+					<option value="content">피신고인</option>
 				</select>			
 				<input type="text" value="" name="keyword" id="keyword"/> <!-- required="required"  -->
 				<input type="button" onclick="javascript:searchList()" class="btn btn-warning btn-sm" value="검색"/>

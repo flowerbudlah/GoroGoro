@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
+  
 <mapper namespace="board">
 
 	<!-- 1. 메인페이지로 간다.(with 글목록) -->
@@ -26,7 +27,6 @@
 		select count(*) from freeBoard where boardNo = #{boardNo}
    </select>
    
-   
 	<!-- 3. 글쓰기 Create(이미지 파일 첨부기능포함)-->
 	<insert id="writeProcess" parameterType="com.tjoeun.spring.dto.PostDTO" useGeneratedKeys="true" keyProperty="postNo">
 		insert into freeBoard(boardNo, title, content, writer, regDate, imageFileName) 
@@ -35,12 +35,11 @@
 	
 
 	<!-- 게시글 신고 (이미지 파일 첨부기능포함)-->
-<insert id="reportProcess" parameterType="com.tjoeun.spring.dto.ReportDTO" useGeneratedKeys="true" keyProperty="reportNo">
+	<insert id="reportProcess" parameterType="com.tjoeun.spring.dto.ReportDTO" useGeneratedKeys="true" keyProperty="reportNo">
 		insert into reportBoard(postNo, reason, detail, reporter, reportDate, imageFileName) 
 				values(#{postNo}, #{reason}, #{detail}, #{reporter}, Now(), #{imageFileName})
-</insert>
-	
-	
+	</insert>
+		
 		
 	<!-- 4. 글 하나 읽기 Reading -->
 	<select id="read" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO" >
@@ -110,6 +109,13 @@
 			</if>
 				order by postNo DESC 
 	</select>
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

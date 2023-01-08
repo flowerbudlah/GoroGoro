@@ -13,17 +13,11 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){	});
-
-	/* 글 작성  */
+	
 	function reportProcess(){
-		
-		var postNo = $("#postNo").val(); //게시글 번호
-		var writer = $("#writer").val(); //작성자
- 	
 		var detail = $("#detail").val(); //내용
 	
 		var formData = new FormData($('#submitReportDTO')[0]);	
-		
 	
 		if (detail == ""){			
 			alert("내용을 입력해주세요.");
@@ -31,7 +25,7 @@
 			return;
 		}
 			
-		var yn = confirm("게시글을 등록하시겠습니까?"); //작동
+		var yn = confirm("해당 게시글을 관리자에게 신고하시겠습니까? "); //작동
 		
 		if(yn){
 			
@@ -44,35 +38,24 @@
 	                contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
 	                processData: false, // 이것을 붙이고 업로드가 되었다. 
 	                type     : "POST",    
-	                success  : function(obj) { 
-	                	insertBoardCallback(obj);
+	                success  : function(obj) {	
+	                	if(obj != null){		
+	            			var result = obj.result;
+	            			if(result == "SUCCESS"){				
+	            				alert("신고 접수일로부터 1~2일 이내에 처리됩니다. 감사합니다.");				
+	            				goReported(); 			 
+	            			} else {				
+	            				alert("신고실패");	
+	            				return;
+	            			}
+	            		}
 	                },           
 	                error: function(request,status,error){
 	                	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	                }
 				}) //아작스 
 			};	//yn의 끝
-		} //writeProcess()의 끝
-			
-	/** 게시판 - 작성 콜백 함수 */
-	function insertBoardCallback(obj){
-	
-		if(obj != null){		
-			
-			var result = obj.result;
-			
-			if(result == "SUCCESS"){				
-				alert("게시글 등록을 성공하였습니다.");				
-				goMain();				 
-			} else {				
-				alert("게시글 등록을 실패하였습니다.");	
-				return;
-			}
-		}
-	}
-	
-	
-	
+		} //Process()의 끝
 </script>	
 <style>
 /* 슬라이더 영역 CSS */
@@ -97,7 +80,7 @@ body{ background-color: white; }
 				<br>신고가 접수된 게시물은 관리자의 판단 하에 처리되며, 법적처벌을 받을 수도 있습니다. </p>
 				
 				<form id="submitReportDTO" name="submitReportDTO" method="post" enctype="multipart/form-data">
-					
+				
 					<input type="hidden" id="postNo" name="postNo" value="${postNo }">
 					<input type="hidden" id="reporter" name="reporter" value="${signInMemberDTO.nick }">
 					
@@ -115,12 +98,12 @@ body{ background-color: white; }
 					<div class="form-group">
 						<label for="reason">신고사유</label>
 						<select name="reason" id="reason" class="form-control">
-							<option value="insult">명예훼손, 모욕, 비방, 허위사실 유포 등</option>
-    						<option value="advertisement">광고, 도배 등</option>
-    						<option value="porn">음란물</option>
-    						<option value="personalInformation">개인정보침해</option>
-    						<option value="copyright">저작권침해</option>
-    						<option value="etc">기타(해당 게시판의 주제와 맞지않는내용 등)</option>
+							<option value="명예훼손, 모욕, 비방, 허위사실 유포 등">명예훼손, 모욕, 비방, 허위사실 유포 등</option>
+    						<option value="광고, 도배 등">광고, 도배 등</option>
+    						<option value="음란물">음란물</option>
+    						<option value="개인정보침해">개인정보침해</option>
+    						<option value="저작권침해">저작권침해</option>
+    						<option value="기타(해당 게시판의 주제와 맞지않는내용 등)">기타(해당 게시판의 주제와 맞지않는내용 등)</option>
 						</select>
 					</div>
 					
@@ -133,6 +116,7 @@ body{ background-color: white; }
 						<label for="imageFile">첨부 이미지</label>
 						<input type="file" id="imageFile" name="imageFile" class="form-control" accept="image/*">						
 					</div>
+					
 				</form>
 				<div class="form-group">
 					<div class="text-right">

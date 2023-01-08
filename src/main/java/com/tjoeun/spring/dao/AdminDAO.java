@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tjoeun.spring.dto.BoardDTO;
 import com.tjoeun.spring.dto.MemberDTO;
+import com.tjoeun.spring.dto.ReportDTO;
 
 @Repository
 public class AdminDAO {
@@ -61,8 +62,16 @@ public class AdminDAO {
 		return sqlSessionTemplate.selectList("admin.searchList", searchListMemberDTO); 
 	}
 	
+	//관리자가 신고된 게시물보기
+	public List<ReportDTO> takeReportedPost(){
+		return sqlSessionTemplate.selectList("admin.takeReportedPost");
+	}
 	
-	
+	//신고된 게시글 상세보기
+	public ReportDTO readReportedPost(int reportNo) {
+		ReportDTO readReportDTO = sqlSessionTemplate.selectOne("admin.readReportedPost",reportNo);  
+		return readReportDTO; 
+	}
 	
 		
 }

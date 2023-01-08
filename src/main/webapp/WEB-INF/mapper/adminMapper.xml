@@ -69,8 +69,15 @@
 		select count(*) from reply where writer = #{writer}	
 	</select>		
 
-
-
-
-		
+	<!-- 신고된 게시글 보기 -->
+	<select id="takeReportedPost" resultType="com.tjoeun.spring.dto.ReportDTO">
+		select * from reportBoard order by reportNo desc
+	</select>
+	
+	<!--신고된 내용 자세히 보기-->
+	<select id="readReportedPost" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.ReportDTO">
+		select * from reportBoard where reportNo = #{reportNo}
+	</select>
+	
+	
 </mapper>

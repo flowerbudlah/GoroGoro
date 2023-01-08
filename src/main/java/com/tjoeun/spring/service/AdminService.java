@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.tjoeun.spring.dao.AdminDAO;
 import com.tjoeun.spring.dto.BoardDTO;
 import com.tjoeun.spring.dto.MemberDTO;
+import com.tjoeun.spring.dto.ReportDTO;
 
 @Service
 public class AdminService {
@@ -15,13 +16,11 @@ public class AdminService {
 	@Autowired
 	private AdminDAO adminDAO; 
 	
-	
 	//1.게시판 대분류 카테고리 생성 Create
 	public void makeCategory(String boardCategoryName) {
 		adminDAO.makeCategory(boardCategoryName);
 	}
-	
-	
+
 	//2.게시판 이름 생성
 	public void makeBoard(BoardDTO BoardDTOinCategory) {
 		adminDAO.makeBoard(BoardDTOinCategory);
@@ -62,10 +61,17 @@ public class AdminService {
 		return adminDAO.searchList(searchListMemberDTO);		
 	}
 	
+	//관리자가 신고된 게시판 글 보기 
+	public List<ReportDTO> takeReportedPost(){
+		return adminDAO.takeReportedPost();
+	} 
 	
 	
+	public ReportDTO readReportedPost(int reportNo) {
+		ReportDTO readReportDTO = adminDAO.readReportedPost(reportNo);
+		return readReportDTO; 
+	}
 	
 	
 
-	
 }
