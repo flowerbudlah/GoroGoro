@@ -47,16 +47,11 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
 		<p class="text-center">
     	1. 게시글 삭제, 신고된 게시글 처리(관리자 페이지 만들기)<br><br>
     	2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(유효한 신고건수가 50이상인경우)
+    	4. 개인 프로필 기능(프로필누르면 새로운 팝업창이 뜨고 사진 업로드, 본인이 신고당한 건수)<br>
+    	5. 게시글 신고(신고당한사람은 플래그가 증가한다. 더티지수증가)
     	</p>
 	</div>
 	<br><br>
-	<div>
-    	<h4>회원기능 & 첨부파일(이미지 뿐아니라)</h4>
-    	<p class="text-center">
-    	4. 개인 프로필 기능(프로필누르면 새로운 팝업창이 뜨고 사진 업로드, 본인이 신고당한 건수)<br>
-    	5. 게시글 신고(신고당한사람은 플래그가 증가한다. 더티지수증가)
-		</p>
-	</div>
 <!-- 공지사항 미리보기 부분 -->
 <div class="container" style="margin-top:0px; margin-bottom:0px">
 	<div class="row">
@@ -67,7 +62,7 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
 					<thead>
 						<tr>
 							<th class="text-center d-none d-md-table-cell" style="color:black">글번호</th>
-							<th class="w-25" style="color:black">제목</th>
+							<th class="w-50" style="color:black">제목</th>
 							<th class="text-center d-none d-md-table-cell" style="color:black">작성자</th>
 							<th class="text-center d-none d-md-table-cell" style="color:black">작성날짜</th>
 							<th class="text-center d-none d-md-table-cell" style="color:black">조회수</th>

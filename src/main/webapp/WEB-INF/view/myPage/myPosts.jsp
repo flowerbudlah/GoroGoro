@@ -65,8 +65,7 @@ function searchList(){
 <div class="container" style="margin-top:100px; margin-bottom:100px;">
 	<div class="card shadow-none">
 		<div class="card-body">	
-		${memberNo }
-			<h4 class="card-title">${memberNo.writer }가 쓴 게시물들</h4>
+			<h4 class="card-title">내가 쓴 게시물</h4>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -167,7 +166,6 @@ function searchList(){
 		</div>
 	</div>
 </div>
-
 <c:import url="/WEB-INF/view/include/bottomInfo.jsp" />
 </body>
 </html>

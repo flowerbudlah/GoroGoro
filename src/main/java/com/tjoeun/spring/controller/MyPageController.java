@@ -27,7 +27,6 @@ public class MyPageController {
 	@RequestMapping("/myPosts")
 	public String myPost
 	(Model model, @RequestParam("memberNo") int memberNo, String writer, 
-		
 			@RequestParam(value="page", defaultValue="1") int page){
 		
 		model.addAttribute("writer", writer); 
