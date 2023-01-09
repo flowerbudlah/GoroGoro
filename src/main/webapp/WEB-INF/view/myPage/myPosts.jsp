@@ -78,6 +78,8 @@ function searchList(){
 					</tr>
 				</thead>
 				<tbody id="boardtable">
+				
+				
 				<c:forEach var="postDTO" items="${myPostList }" >
 					<tr>
 						<td class="text-center d-none d-md-table-cell">${postDTO.postNo }</td>
@@ -100,7 +102,6 @@ function searchList(){
 				</c:forEach>
 				</tbody>
 			</table>
-		
 			<!-- 페이징(Paging) -->			
 			<div class="d-none d-md-block">
 				<ul class="pagination justify-content-center">
@@ -113,7 +114,7 @@ function searchList(){
 					</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a href="main?boardNo=${boardNo}&page=${pageDTO.prePage}" class="page-link">이전</a>
+							<a href="${root }myPosts?memberNo=${memberNo}&page=${pageDTO.prePage}" class="page-link">이전</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -123,13 +124,14 @@ function searchList(){
 				<c:choose>
 					<c:when test="${idx == pageDTO.currentPage }">
 						<li class="page-item active">
-							<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
+						
+							<a href="${root }myPosts?memberNo=${memberNo}&page=${idx}" class="page-link">${idx}</a>
 							<!-- http://localhost:8090/GoroGoroCommunity/board/      main?boardNo=1&page=1 -->
 						</li>
 					</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
+							<a href="${root }myPosts?memberNo=${memberNo }&page=${idx}" class="page-link">${idx}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -144,7 +146,7 @@ function searchList(){
 					</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a href="main?boardNo=${boardNo}&page=${pageDTO.nextPage}" class="page-link">다음</a>
+							<a href="${root }myPosts?memberNo=${memberNo}&page=${pageDTO.nextPage}" class="page-link">다음</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -152,7 +154,7 @@ function searchList(){
 			</div>
 			<!-- 검색 기능 -->			
 			<form action="javascript:searchList()" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px; margin-bottom:30px;">
-				<input type="hidden" name="boardNo" value="${boardNo }"/>
+				<input type="hidden" name="memberNo" value="${memberNo }"/>
 				<select name="type">
 					<option value="titleANDcontent">제목+내용</option>
 					<option value="title">제목</option>

@@ -2,6 +2,7 @@ package com.tjoeun.spring.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -61,10 +62,18 @@ public class AdminDAO {
 		return sqlSessionTemplate.selectList("admin.searchList", searchListMemberDTO); 
 	}
 	
+	
 	//8. 1) 관리자가 신고된 게시물보기
-	public List<ReportDTO> takeReportedPost(){
-		return sqlSessionTemplate.selectList("admin.takeReportedPost");
+	public List<ReportDTO> takeReportedPost(RowBounds rowBounds){
+		return sqlSessionTemplate.selectList("admin.takeReportedPost", rowBounds);
 	}
+	
+	//신고될 게시글의 수 
+	public int countOfReportedPost() {
+		return sqlSessionTemplate.selectOne("admin.countOfReportedPost"); 
+	}
+	
+	
 	
 	//8. 2) 신고된 게시글 상세보기
 	public ReportDTO readReportedPost(int reportNo) {

@@ -148,6 +148,7 @@ body{
 				</c:when>	
 				<c:otherwise></c:otherwise>
 			</c:choose>
+			
 			<!-- 페이징(Paging) -->			
 			<div class="d-none d-md-block">
 				<ul class="pagination justify-content-center">
@@ -171,7 +172,6 @@ body{
 					<c:when test="${idx == pageDTO.currentPage }">
 						<li class="page-item active">
 							<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
-							<!-- http://localhost:8090/GoroGoroCommunity/board/      main?boardNo=1&page=1 -->
 						</li>
 					</c:when>
 					<c:otherwise>

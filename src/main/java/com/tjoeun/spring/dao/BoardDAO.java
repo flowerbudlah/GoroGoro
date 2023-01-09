@@ -13,8 +13,10 @@ import com.tjoeun.spring.dto.ReportDTO;
 @Repository
 public class BoardDAO {
 	
+	
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
+	
 	
 	//1. 1) 전체게시물이 있는 게시판 메인화면(페이지 작업 수행 rowBounds)으로 간다. 
 	public List<PostDTO> goMain(int boardNo, RowBounds rowBounds){
@@ -78,14 +80,26 @@ public class BoardDAO {
 	public int like(int postNo) throws Exception {
 		return sqlSessionTemplate.update("board.like", postNo); 
 	}
-		
 	
-	//7. 마이페이지에서 내가 쓴 게시물보기
+	
+	
+	
+	
+	
+	
+	//7.1) 마이페이지에서 내가 쓴 게시물보기
 	public List<PostDTO> goMyPosts(int memberNo, RowBounds rowBounds){
 		List<PostDTO> myPostList = sqlSessionTemplate.selectList("board.goMyPosts", memberNo, rowBounds); 
 		return myPostList;
 	}
 	
+	//7. 2) 해당 게시판에 있는 전체게시물의 수(페이지 작업때문에 필요함.)
+	public int takeCountOfMyPost(int memberNo) {
+		int countOfMyPost = sqlSessionTemplate.selectOne("board.takeCountOfMyPost", memberNo);
+		return countOfMyPost;
+	}
+	
 
+	
 	
 }

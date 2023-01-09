@@ -33,6 +33,7 @@ public class BoardController {
 	@Autowired
 	private ReplyService replyService;
 	
+	
 	//1. 게시판 메인화면으로 간다. 
 	@RequestMapping("/main")
 	public String main
@@ -50,8 +51,11 @@ public class BoardController {
 		PageDTO pageDTO = boardService.getPostCnt(boardNo, page); 
 		model.addAttribute("pageDTO", pageDTO);
 		model.addAttribute("page", page);
+		
 		return "board/main";
 	}
+	
+	
 	
 	//1. 1) 게시판 메인화면에서 게시물 검색(with using The Ajax)
 	@GetMapping("/searchList")
@@ -89,6 +93,7 @@ public class BoardController {
 	public String modify(@RequestParam("postNo") int postNo, @ModelAttribute("modifyPostDTO") PostDTO modifyPostDTO, Model model) {
 				
 		model.addAttribute("postNo", postNo);
+		
 		PostDTO PostDTOfromDB = boardService.read(postNo); 
 		model.addAttribute("PostDTOfromDB", PostDTOfromDB); //수정하고자 하는 그 글! 
 					
@@ -121,6 +126,7 @@ public class BoardController {
 		return "board/read";
 	}
 	
+	
 	//5. 글삭제(Deleting)
 	@RequestMapping("/deletePost")
     public @ResponseBody PostDTO deleteBoard(HttpServletRequest request, HttpServletResponse response, int postNo) throws Exception{
@@ -131,7 +137,8 @@ public class BoardController {
 
 	//6.1) 댓글등록 
 	@RequestMapping("/writeReplyProcess")
-    public @ResponseBody ReplyDTO writeReplyProcess(HttpServletRequest request, HttpServletResponse response, ReplyDTO writeReplyDTO) {	
+    public @ResponseBody ReplyDTO writeReplyProcess
+    (HttpServletRequest request, HttpServletResponse response, ReplyDTO writeReplyDTO) {	
 		
 		ReplyDTO ReplyDTO = replyService.writeReplyProcess(writeReplyDTO);
 		

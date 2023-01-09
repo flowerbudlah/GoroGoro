@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tjoeun.spring.dto.BoardDTO;
 import com.tjoeun.spring.dto.MemberDTO;
-
+import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.ReportDTO;
 import com.tjoeun.spring.service.AdminService;
 
@@ -68,9 +68,17 @@ public class AdminController {
 	
 	//2. 게시물 관리 페이지로 이동한다. (관리자에게 보내진 신고된 게시글 리스트)
 	@RequestMapping("/postManagement")
-	public String postManagement(Model model) {
-		List<ReportDTO> reportedPostList = adminService.takeReportedPost(); 
+	public String postManagement
+	(Model model, @RequestParam(value="page", defaultValue="1") int page) {
+		
+		List<ReportDTO> reportedPostList = adminService.takeReportedPost(page); 
 		model.addAttribute("reportedPostList", reportedPostList); 
+		
+		//페이징
+		PageDTO pageDTO = adminService.reportedPost(page); 
+		model.addAttribute("pageDTO", pageDTO);
+		model.addAttribute("page", page);
+		
 		return "admin/postManagement";
 	}
 	
@@ -86,6 +94,9 @@ public class AdminController {
 		
 		return "admin/reportedPost";
 	}
+	
+	
+	
 	
 	//3. 회원 관리 페이지로 이동한다. 
 	@RequestMapping("/memberManagement")

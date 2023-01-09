@@ -75,5 +75,9 @@
 		select * from reportBoard where reportNo = #{reportNo}
 	</select>
 	
+	<!-- 3. 3) 신고된 게시글의 수(페이지작업으로 필요) -->
+	<select id="countOfReportedPost" resultType="java.lang.Integer">
+		select count(*) from reportBoard
+	</select>
 	
 </mapper>

@@ -1,6 +1,5 @@
 package com.tjoeun.spring.service;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -13,7 +12,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tjoeun.spring.dao.AdminDAO;
+
 import com.tjoeun.spring.dao.BoardDAO;
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
@@ -36,9 +35,7 @@ public class BoardService {
 	@Autowired
 	private BoardDAO boardDAO; 
 
-	@Autowired
-	private AdminDAO adminDAO; 
-
+	
 	//1. 1) 게시판 메인 페이지로 이동(페이지 작업 완료)
 	public List<PostDTO> goMain(int boardNo, int page) {
 		
@@ -46,8 +43,10 @@ public class BoardService {
 		RowBounds rowBounds = new RowBounds(start, page_listcnt);
 		
 		List<PostDTO> postList = boardDAO.goMain(boardNo, rowBounds);
+		
 		return postList;
 	}
+	
 	
 	//1. 2) 메인페이지의 페이징 작업  
 	public PageDTO getPostCnt(int boardNo, int currentPage) {
@@ -59,6 +58,7 @@ public class BoardService {
 				
 		return pageDTO;
 	}
+	
 	
 	//1. 3) 게시판 메인화면 게시글 검색 
 	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
@@ -191,6 +191,7 @@ public class BoardService {
 		return likePostDTO;
 	}
 			
+	
 	//5. 게시글 삭제 Delete
 	public PostDTO deletePost(int postNo) throws Exception {
 		PostDTO postDTO = new PostDTO();
@@ -204,24 +205,30 @@ public class BoardService {
 		return postDTO;
 	}
 
+	
 	//6. 1) 내가 쓴 게시물 리스트들 보기 (관리자 페이지에서 )
 	public List<PostDTO> goMyPosts(int memberNo, int page) {
 			
 		int start = (page - 1) * page_listcnt; //한 페이지 
 		RowBounds rowBounds = new RowBounds(start, page_listcnt);
 		List<PostDTO> myPostList = boardDAO.goMyPosts(memberNo, rowBounds);
+		
 		return myPostList;
 	}
 	
-	//6. 2) 게시판 메인 페이지의 페이징과 관련있는 해당 게시판의 전체 글 수
-	public PageDTO getPostCnt(String writer, int currentPage) {
-		int postCnt = adminDAO.postCount(writer); //해당 게시판에 들어있는 게시글 수 
-		PageDTO pageDTO = new PageDTO(postCnt, currentPage, page_listcnt, page_paginationcnt);
+	//6. 2) 메인페이지의 페이징 작업  
+	public PageDTO takeCountOfMyPost(int memberNo, int currentPage) {
+					
+		//게시판 메인 페이지의 페이징과 관련있는 해당 게시판의 전체 글 수
+		int countOfMyPost = boardDAO.takeCountOfMyPost(memberNo);
+		
+		PageDTO pageDTO = new PageDTO(countOfMyPost, currentPage, page_listcnt, page_paginationcnt);
 		//page_listcnt: 한 페이지당 보여주는 글의 개수, page_paginationcnt: 한 페이지당 보여주는 페이지 버튼 개수
-			
+					
 		return pageDTO;
 	}
 		
-	
+
+
 	
 }

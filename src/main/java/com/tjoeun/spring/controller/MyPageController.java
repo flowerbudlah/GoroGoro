@@ -26,22 +26,23 @@ public class MyPageController {
 	
 	@RequestMapping("/myPosts")
 	public String myPost
-	(Model model, @RequestParam("memberNo") int memberNo, String writer, 
-			@RequestParam(value="page", defaultValue="1") int page){
+	(Model model, @RequestParam("memberNo") int memberNo, @RequestParam(value="page", defaultValue="1") int page){
 		
-		model.addAttribute("writer", writer); 
 		model.addAttribute("memberNo", memberNo); //게시판 일련번호(인덱스)
 			
 		List<PostDTO> myPostList = boardService.goMyPosts(memberNo, page);
 		model.addAttribute("myPostList", myPostList); //글 목록
 		
 		//페이징
-		PageDTO pageDTO = boardService.getPostCnt(writer, page); 
+		PageDTO pageDTO = boardService.takeCountOfMyPost(memberNo, page); 
 		model.addAttribute("pageDTO", pageDTO);
 		model.addAttribute("page", page);
 		
 		return "myPage/myPosts";
 	}
+	
+	
+	
 	
 	
 }

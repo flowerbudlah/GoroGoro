@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="root" value="${pageContext.request.contextPath }/" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,12 +48,13 @@
 							</a>
 						</td>
 						<td class="text-center d-none d-md-table-cell">${reportDTO.reporter }</td>
-						<td class="text-center d-none d-md-table-cell"><fmt:formatDate value="${reportDTO.reportDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<td class="text-center d-none d-md-table-cell">
+							<fmt:formatDate value="${reportDTO.reportDate }" pattern="yyyy-MM-dd HH:mm:ss"/>
+						</td>
 					</tr>
 				</c:forEach>
 				</tbody>
 			</table>
-			
 			<!-- 페이징(Paging) -->			
 			<div class="d-none d-md-block">
 				<ul class="pagination justify-content-center">
@@ -65,7 +67,9 @@
 					</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a href="main?boardNo=${boardNo}&page=${pageDTO.prePage}" class="page-link">이전</a>
+							<a href="${root }admin/postManagement?page=${pageDTO.prePage}" class="page-link">
+								이전
+							</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -75,13 +79,15 @@
 				<c:choose>
 					<c:when test="${idx == pageDTO.currentPage }">
 						<li class="page-item active">
-							<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
+							<a href="${root }admin/postManagement?page=${idx}" class="page-link">
+								${idx}
+							</a>
 							<!-- http://localhost:8090/GoroGoroCommunity/board/      main?boardNo=1&page=1 -->
 						</li>
 					</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
+							<a href="${root }admin/postManagement?page=${idx}" class="page-link">${idx}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -96,7 +102,7 @@
 					</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a href="main?boardNo=${boardNo}&page=${pageDTO.nextPage}" class="page-link">다음</a>
+							<a href="${root }admin/postManagement?page=${pageDTO.nextPage}" class="page-link">다음</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
