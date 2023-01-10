@@ -73,16 +73,11 @@ public class AdminDAO {
 		return sqlSessionTemplate.selectOne("admin.countOfReportedPost"); 
 	}
 	
-	
-	
 	//8. 2) 신고된 게시글 상세보기
 	public ReportDTO readReportedPost(int reportNo) {
 		ReportDTO readReportDTO = sqlSessionTemplate.selectOne("admin.readReportedPost",reportNo);  
 		return readReportDTO; 
 	}
-	
-	
-	
 	
 		
 }

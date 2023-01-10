@@ -103,6 +103,7 @@ public class AdminController {
 	public String memberManagement(Model model) {
 		List<MemberDTO> allMemberList = adminService.takeMemberList(); 
 		model.addAttribute("allMemberList", allMemberList); 
+		
 		return "admin/memberManagement";
 	}
 	

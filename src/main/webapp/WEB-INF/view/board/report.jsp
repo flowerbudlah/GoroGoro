@@ -43,7 +43,8 @@
 	            			var result = obj.result;
 	            			if(result == "SUCCESS"){				
 	            				alert("신고 접수일로부터 1~2일 이내에 처리됩니다. 감사합니다.");				
-	            				goReported(); 			 
+	            				history.go(-2); 
+	            				return;
 	            			} else {				
 	            				alert("신고실패");	
 	            				return;

@@ -23,7 +23,8 @@ body{
 	 background-image: url(http://localhost:8090/GoroGoroCommunity/image/bottom-bg.jpg);
 	 background-repeat: no-repeat; background-position: center bottom; background-attachment: fixed; 
 	}
-h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
+h3{ background-color: #222; color: white; text-align: center; padding: 10px; font-family: 'Single Day', cursive; }
+
 </style>
 </head>
 <body>
@@ -40,24 +41,22 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
 <!-- 메뉴부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--메인화면에 내용 들어가는 부분  -->
-<div style="padding-top:50px; padding-bottom:100px">
-<div class="container">
-	<div>
-    	<h4>관리자 기능(관리자만 들어갈수있는 관리자페이지 만들기)</h4>
-		<p class="text-center">
-    	1. 게시글 삭제, 신고된 게시글 처리(관리자 페이지 만들기)<br><br>
-    	2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(유효한 신고건수가 50이상인경우)
-    	4. 개인 프로필 기능(프로필누르면 새로운 팝업창이 뜨고 사진 업로드, 본인이 신고당한 건수)<br>
-    	5. 게시글 신고(신고당한사람은 플래그가 증가한다. 더티지수증가)
-    	</p>
-	</div>
-	<br><br>
 <!-- 공지사항 미리보기 부분 -->
-<div class="container" style="margin-top:0px; margin-bottom:0px">
+<div class="container" style="margin-top:50px; margin-bottom:100px">
 	<div class="row">
-		<div class="col-lg-12" style="margin-top:20px; ">
+		<div class="col-lg-12">
 			<div class="card-body">
-				<h4>공지사항</h4>
+				<div>
+    			<h3>추가 예정 기능</h3>
+				<p class="text-center">
+    			2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(유효한 신고건수가 50이상인경우)<br>
+    			4. 개인 프로필 기능(프로필누르면 새로운 팝업창이 뜨고 사진 업로드, 본인이 신고당한 건수)<br>
+    			6. 게시판에서 아작스로 검색시 페이지가 그 겸색결과에 맞게 조정되는것. ㅠㅠ<br> 
+    			</p>
+				</div>
+				<br><br>
+
+				<h3>공지사항</h3>
 					<table class="table table-hover">
 					<thead>
 						<tr>
@@ -77,6 +76,10 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
 						<td>
 							<!-- http://localhost:8090/GoroGoroCommunity/board/read?postNo=7 -->
 							<a href='${root }board/read?&postNo=${postDTO.postNo}' style="color:black">
+								<c:choose>
+									<c:when test="${postDTO.boardNo == 1 }">[공지사항]</c:when>
+									<c:otherwise></c:otherwise>
+								</c:choose>
 								${postDTO.title }
 								<!-- 업로드 파일이 있다면 -->
 								<c:if test="${postDTO.imageFileName != '' }">
@@ -102,13 +105,12 @@ h4{ background-color: #222; color: white; text-align: center; padding: 10px; }
 							더 보기
 						</a>
 					</div>
-				</div>
+				</div><!-- 카드바디 -->
 			</div>
 		</div>
 	</div>
 <!-- 게시판 미리보기 부분 끝-->
-</div>
-</div>
+
 <!-- 하단 -->
 <c:import url="/WEB-INF/view/include/bottomInfo.jsp" />
 </body>

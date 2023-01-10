@@ -30,10 +30,10 @@ function searchList(){
 		data : $("form[name=search-form]").serialize(), 
 		success : function(result){
 			$('#boardtable').empty(); 	//테이블 초기화
-			
-			if(result.length>=1){
+			//result.length는 검색결과수
+			if(result.length>=1){//검색결과가 하나라도 있다.  
+				$("#resultLength").html("총"+result.length+'개의 글이 검색되었습니다.');
 				result.forEach(function(item){
-					
 					str='<tr>'
 						str+="<td><center>"+item.postNo+"</center></td>"; //글번호
 						str+="<td><a href='read?postNo=" +item.postNo+ "'>" + item.title + "<font color='red'>["+ item.replyCount+"]</font></a></td>"; //제목
@@ -42,9 +42,12 @@ function searchList(){
 						str+="<td><center>"+item.viewCount+"</center></td>"; //조회수
 						str+="<td><center>"+item.sameThinking+"</center></td>"; //공감수
 					str+="</tr>"
-					
 					$('#boardtable').append(str);
-        		})		
+					
+					$('#page').empty(); 	//페이지
+        		})//forEach의 끝
+        		
+        		
 			}else{
 					str='검색결과가 없습니다.'; 
 					$('#boardtable').append(str);
@@ -73,6 +76,7 @@ body{
 	<!-- <div class="card shadow-none">-->
 		<div class="card-body">	
 			<h4 class="card-title">${boardName }</h4>
+			<font id="resultLength" size="3"></font>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -152,6 +156,8 @@ body{
 			<!-- 페이징(Paging) -->			
 			<div class="d-none d-md-block">
 				<ul class="pagination justify-content-center">
+				
+				
 				<!-- 이전 -->
 				<c:choose>
 					<c:when test="${pageDTO.prePage <= 0 }" >
@@ -171,12 +177,12 @@ body{
 				<c:choose>
 					<c:when test="${idx == pageDTO.currentPage }">
 						<li class="page-item active">
-							<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
+							<a href="main?boardNo=${boardNo}&type=${type}&keyword=${keyword}&page=${idx}" class="page-link">${idx}</a>
 						</li>
 					</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
+							<a href="main?boardNo=${boardNo}&type=${type}&keyword=${keyword}&page=${idx}" class="page-link">${idx}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -195,8 +201,16 @@ body{
 						</li>
 					</c:otherwise>
 				</c:choose>
+				
+				
+				
 				</ul>
 			</div>
+			
+			
+			
+			
+			
 			<!-- 검색 기능 -->			
 			<form action="javascript:searchList()" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px; margin-bottom:30px;">
 				<input type="hidden" name="boardNo" value="${boardNo }"/>

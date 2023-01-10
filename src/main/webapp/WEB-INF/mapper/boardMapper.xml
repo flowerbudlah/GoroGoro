@@ -41,7 +41,9 @@
 			</if>
 				order by postNo DESC 
 	</select>
-   
+		
+	
+ 
 	<!-- 2. 글쓰기 Create(이미지 파일 첨부기능포함)-->
 	<insert id="writeProcess" parameterType="com.tjoeun.spring.dto.PostDTO" useGeneratedKeys="true" keyProperty="postNo">
 		insert into freeBoard(boardNo, title, content, writer, regDate, imageFileName) 

@@ -18,9 +18,9 @@ public class MainService {
 	
 	public List<PostDTO> getMainList() {
 		
-		RowBounds rowBounds = new RowBounds(0, 5);
+		RowBounds rowBounds = new RowBounds(0, 3);//게시물은 3개만 등장 
 		
-		List<PostDTO> postList = boardDAO.goMain(1, rowBounds);
+		List<PostDTO> postList = boardDAO.goMain(1, rowBounds);//즉, BoardNo=1이면 공지사항만 등장 
 		
 		return postList;
 	}

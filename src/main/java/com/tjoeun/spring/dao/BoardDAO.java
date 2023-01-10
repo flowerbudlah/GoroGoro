@@ -82,11 +82,7 @@ public class BoardDAO {
 	}
 	
 	
-	
-	
-	
-	
-	
+
 	//7.1) 마이페이지에서 내가 쓴 게시물보기
 	public List<PostDTO> goMyPosts(int memberNo, RowBounds rowBounds){
 		List<PostDTO> myPostList = sqlSessionTemplate.selectList("board.goMyPosts", memberNo, rowBounds); 
@@ -98,6 +94,8 @@ public class BoardDAO {
 		int countOfMyPost = sqlSessionTemplate.selectOne("board.takeCountOfMyPost", memberNo);
 		return countOfMyPost;
 	}
+	
+	
 	
 
 	

@@ -14,6 +14,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">    
 
 function goMain(){
@@ -191,6 +192,7 @@ function afterRemove(obj){
 }
 </script>
 <style>
+
 .reply{ font-size: 12px; }
 .replyWriter{ text-align:left; position: absolute; }
 .replyRegDate{ text-align:right;  position: relative; }
@@ -249,7 +251,7 @@ function afterRemove(obj){
 		</c:if>
 			<!-- 내용 -->
 			<label for="content">내용</label>
-			<textarea id="content" name="content" class="form-control" rows="20" style="resize:none" disabled="disabled">${readPostDTO.content}</textarea>
+			<textarea id="content" name="content" class="form-control" rows="15" style="resize:none" disabled="disabled">${readPostDTO.content}</textarea>
 		</div>
 		<!-- 첨부이미지와 내용 end -->
 		<div class="form-group">

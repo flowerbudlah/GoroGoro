@@ -98,14 +98,15 @@ public class AdminService {
 	}
 		
 	
-	
-	
 	//7. 2) 관리자가 신고된 특정한 글 하나 보기(신고의 구체적인 사유)
 	public ReportDTO readReportedPost(int reportNo) {
 		ReportDTO readReportDTO = adminDAO.readReportedPost(reportNo);
 		return readReportDTO; 
 	}
-
+	
+	
+	
+	
 	
 	
 
