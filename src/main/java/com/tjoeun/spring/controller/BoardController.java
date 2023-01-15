@@ -19,7 +19,6 @@ import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
 import com.tjoeun.spring.dto.ReplyDTO;
 import com.tjoeun.spring.dto.ReportDTO;
-
 import com.tjoeun.spring.service.BoardService;
 import com.tjoeun.spring.service.ReplyService;
 
@@ -33,11 +32,12 @@ public class BoardController {
 	@Autowired
 	private ReplyService replyService;
 	
-	
 	//1. 게시판 메인화면으로 간다. 
 	@RequestMapping("/main")
-	public String main
-	(Model model, @RequestParam("boardNo") int boardNo, @RequestParam(value="page", defaultValue="1") int page) {
+	public String main(
+	@RequestParam("boardNo") int boardNo, 
+	@RequestParam(value="page", defaultValue="1") int page, 
+	Model model) {
 		
 		model.addAttribute("boardNo", boardNo); //게시판 일련번호(인덱스)
 		
@@ -54,27 +54,39 @@ public class BoardController {
 		
 		return "board/main";
 	}
-	
-	
-	
+		
 	//1. 1) 게시판 메인화면에서 게시물 검색(with using The Ajax)
 	@GetMapping("/searchList")
-	public @ResponseBody List<PostDTO> searchList(
-	@RequestParam("type") String type, @RequestParam("keyword") String keyword, @RequestParam("boardNo") int boardNo, Model model) throws Exception{
-
+	public @ResponseBody List<PostDTO> searchList
+	(Model model, 
+	@RequestParam("type") String type, 
+	@RequestParam("keyword") String keyword, 
+	@RequestParam("boardNo") int boardNo, @RequestParam(value="page", defaultValue="1") int page//이거넣어도 작동됨. 
+	) throws Exception{
+		
 		PostDTO searchListPostDTO = new PostDTO(); 
+		
 		searchListPostDTO.setBoardNo(boardNo); 
 		searchListPostDTO.setType(type); 
 		searchListPostDTO.setKeyword(keyword); 
 		
+		//검색결과 리스트
 		List<PostDTO> searchList = boardService.searchList(searchListPostDTO);  
-	
 		model.addAttribute("searchList", searchList);
-		
-		
-		return searchList; 
+	
+		//페이징
+		//PageDTO pageDTO = boardService.pageDTOAfterSearch(searchListPostDTO, page); 
+		//model.addAttribute("pageDTO", pageDTO);
+		//model.addAttribute("page", page);
+		//model.addAttribute("type", type);
+		//model.addAttribute("keyword", keyword);
+		//model.addAttribute("boardNo", boardNo); 
+				
+		return searchList; 						
+	
 	} 
 	
+
 	//2. 글쓰기 페이지로 이동 
 	@RequestMapping("/write") 
 	public String write(Model model, @RequestParam("boardNo") int boardNo){
@@ -184,7 +196,5 @@ public class BoardController {
 		return reportDTO;
 	}
 	
-	
-		
 	
 }

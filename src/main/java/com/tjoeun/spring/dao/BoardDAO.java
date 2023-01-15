@@ -30,16 +30,15 @@ public class BoardDAO {
 		return postCnt;
 	}
 	
+	
+	
+	
+	
 	//1. 3) 게시판 이름 가져오기 
 	public String getBoardName(int boardNo) {
 		return sqlSessionTemplate.selectOne("board.getBoardName", boardNo);
 	}
 	
-	//1. 4) 메인 게시판에서 글 검색
-	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
-		return sqlSessionTemplate.selectList("board.searchList", searchListPostDTO); 
-	}
-		
 	//2. 1) 글쓰기 Create
 	public int writeProcess(PostDTO writePostDTO) {
 		return sqlSessionTemplate.insert("board.writeProcess", writePostDTO); 
@@ -89,11 +88,24 @@ public class BoardDAO {
 		return myPostList;
 	}
 	
-	//7. 2) 해당 게시판에 있는 전체게시물의 수(페이지 작업때문에 필요함.)
+	//7. 2) 마이페이지의 내가 쓴글 그 해당 게시판에 있는 전체게시물의 수(페이지 작업때문에 필요함.)
 	public int takeCountOfMyPost(int memberNo) {
 		int countOfMyPost = sqlSessionTemplate.selectOne("board.takeCountOfMyPost", memberNo);
 		return countOfMyPost;
 	}
+	
+	
+	
+	
+	//1. 4) 메인 게시판에서 글 검색(아작스)
+	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
+		return sqlSessionTemplate.selectList("board.searchList", searchListPostDTO); 
+	}	
+	//아작스로 검색 시 검색결과 수(아작스로 페이징 작업때문에 필요) 
+	public int searchCount(PostDTO searchListPostDTO) {
+		return sqlSessionTemplate.selectOne("board.searchCount", searchListPostDTO);
+	}
+	
 	
 	
 	

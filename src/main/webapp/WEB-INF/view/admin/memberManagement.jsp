@@ -26,31 +26,33 @@ function searchList(){
 		type: 'get',
 		url : '${root}admin/searchList',
 		data : $("form[name=search-form]").serialize(), 
-		success : function(result){
-			$('#boardtable').empty(); 	//테이블 초기화
-			
-			if(result.length>=1){//검색결과가 있는경우, 
-				result.forEach(function(item){
-					str='<tr>'
-						str+="<td><center>"+item.memberNo+"</center></td>"; //회원번호
-						str+="<td><center>"+item.email+"</center></td>"; //제목
-						str+="<td><center>"+item.nick+"</center></td>"; //작성자
-						str+="<td><center>"+item.postCount+"</center></td>"; //게시글 수
-						str+="<td><center>"+item.replyCount+"</center></td>"; //댓글 수 
-						str+="<td><center>"+item.reportCount+"</center></td>"; //신고당한 건수
-						str+="<td><center>"+item.signUp_Date+"</center></td>"; //가입일
-						str+="<td><center><a href=''>강제탈퇴시키기</a></center></td>"; 
-					str+="</tr>"
+		success : 
+			function(result){
+				$('#boardtable').empty(); 	//테이블 초기화
+				$("#resultLength").html("총"+result.length+'명의 회원이 검색되었습니다.');
+				if(result.length>=1){//검색결과가 있는경우, 
+					result.forEach(function(item){
 						
-					$('#boardtable').append(str);
-        		})		
-			}else{
-					str='검색결과가 없습니다.'; 
-					$('#boardtable').append(str);
-			}
-		}  //function의 끝
-	}) //ajax의 끝
-}//function의 끝	
+						str='<tr>'
+							str+="<td><center>"+item.memberNo+"</center></td>"; //회원번호
+							str+="<td><center>"+item.email+"</center></td>"; //제목
+							str+="<td><center>"+item.nick+"</center></td>"; //작성자
+							str+="<td><center>"+item.postCount+"</center></td>"; //게시글 수
+							str+="<td><center>"+item.replyCount+"</center></td>"; //댓글 수 
+							str+="<td><center>"+item.reportCount+"</center></td>"; //신고당한 건수
+							str+="<td><center>"+item.signUp_Date+"</center></td>"; //가입일
+							str+="<td><center><a href=''>강제탈퇴시키기</a></center></td>"; 
+						str+="</tr>"
+						
+						$('#boardtable').append(str);
+        			})		
+				}else{
+						str='검색결과가 없습니다.'; 
+						$('#boardtable').append(str);
+				}
+			}  //function의 끝
+		}) //ajax의 끝
+	}//function의 끝	
 </script>
 <style>
 /* 슬라이더 영역 CSS */
@@ -79,6 +81,7 @@ td{text-align:center; border: 1px solid black;}
 			<input type="text" value="" name="keyword" id="keyword" required="required"/> <!-- required="required"  -->
 			<input type="button" onclick="javascript:searchList()" class="btn btn-warning btn-sm" value="회원검색"/>
 	</form>
+	<font id="resultLength" size="3"></font>
 	<%--Ajax 검색기능 끝--%>	
 	<table style="width: 1100px; margin: auto;">
 		<thead>

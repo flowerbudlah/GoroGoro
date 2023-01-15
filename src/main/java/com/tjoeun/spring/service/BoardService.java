@@ -34,7 +34,6 @@ public class BoardService {
 	
 	@Autowired
 	private BoardDAO boardDAO; 
-
 	
 	//1. 1) 게시판 메인 페이지로 이동(페이지 작업 완료)
 	public List<PostDTO> goMain(int boardNo, int page) {
@@ -47,30 +46,46 @@ public class BoardService {
 		return postList;
 	}
 	
-	
 	//1. 2) 메인페이지의 페이징 작업  
 	public PageDTO getPostCnt(int boardNo, int currentPage) {
 				
 		//게시판 메인 페이지의 페이징과 관련있는 해당 게시판의 전체 글 수
 		int postCnt = boardDAO.getPostCnt(boardNo); 
-		PageDTO pageDTO = new PageDTO(postCnt, currentPage, page_listcnt, page_paginationcnt);
+		
 		//page_listcnt: 한 페이지당 보여주는 글의 개수, page_paginationcnt: 한 페이지당 보여주는 페이지 버튼 개수
-				
+		PageDTO pageDTO = new PageDTO(postCnt, currentPage, page_listcnt, page_paginationcnt);
+		
 		return pageDTO;
 	}
 	
 	
-	//1. 3) 게시판 메인화면 게시글 검색 
+
+	//1. 3) 게시판 메인화면 게시글 검색(아작스)
 	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
-		return boardDAO.searchList(searchListPostDTO);		
+		
+		//int start = (page - 1) * page_listcnt; //한 페이지 
+		//RowBounds rowBounds = new RowBounds(start, page_listcnt);
+		
+		List<PostDTO> searchList = boardDAO.searchList(searchListPostDTO);		
+		
+		return searchList; 
+	}
+		
+	//1. 2) 메인페이지의 페이징 작업  
+	public PageDTO pageDTOAfterSearch(PostDTO searchListPostDTO, int currentPage) {
+		
+		//검색 게시글의 수 
+		int searchCount = boardDAO.searchCount(searchListPostDTO);
+	
+		PageDTO pageDTO = new PageDTO(searchCount, currentPage, page_listcnt, page_paginationcnt);
+		
+		return pageDTO;
 	}
 	
-
 	//1. 4) 게시판 이름 가져오기 
 	public String getBoardName(int boardNo) {
 		return boardDAO.getBoardName(boardNo);
 	}
-	
 	
 	//2. 1) 글쓰기 
 	public PostDTO writeProcess(PostDTO writePostDTO) throws Exception {
@@ -228,9 +243,5 @@ public class BoardService {
 		return pageDTO;
 	}
 	
-
-		
-
-
 	
 }

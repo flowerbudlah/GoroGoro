@@ -16,7 +16,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">    
 function searchList(){
-
 	const keyword = $("#keyword").val(); //내용
 	if (keyword == ""){			
 		alert("검색어를 입력해주세요.");
@@ -70,6 +69,7 @@ body{
 <!-- 그 게시판 윗 부분 그림-->
 <article class="slider">
 	<img src="/GoroGoroCommunity/image/convenientStore.png"> 
+	<!-- http://localhost:8090				/GoroGoroCommunity/image/convenientStore.png -->
 </article>
 <!--Post List(게시글 리스트)-->
 <div class="container" style="margin-top:100px; margin-bottom:100px;">
@@ -155,7 +155,7 @@ body{
 			
 			<!-- 페이징(Paging) -->			
 			<div class="d-none d-md-block">
-				<ul class="pagination justify-content-center">
+				<ul class="pagination justify-content-center" id="page">
 				
 				
 				<!-- 이전 -->

@@ -23,7 +23,7 @@ body{ background-color: white; }
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
 <article class="slider">	
-	<img src="${root }image/yamamotoShinzi_food.jpg">
+	<img src="${root }image/sapporoStreet.png">
 </article>
 
 <div style="margin-top:50px; padding-top:0px; padding-bottom:30px">
@@ -33,7 +33,8 @@ body{ background-color: white; }
 
 
 
-
+<h3>해당 페이지는 지금 준비중입니다. 
+기다려주세요! </h3>
 
 
 

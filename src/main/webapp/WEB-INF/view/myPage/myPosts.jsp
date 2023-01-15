@@ -56,6 +56,7 @@ body{
 	 background-image: url(http://localhost:8090/GoroGoroCommunity/image/bottom-bg.jpg);
 	 background-repeat: no-repeat; background-position: center bottom; background-attachment: fixed; 
 }
+thead{background-color:gold; }
 </style>
 </head>
 <body>

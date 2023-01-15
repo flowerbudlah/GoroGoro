@@ -24,7 +24,7 @@ body{
 	 background-repeat: no-repeat; background-position: center bottom; background-attachment: fixed; 
 	}
 h3{ background-color: #222; color: white; text-align: center; padding: 10px; font-family: 'Single Day', cursive; }
-
+thead{background-color:gold;}
 </style>
 </head>
 <body>
@@ -48,14 +48,12 @@ h3{ background-color: #222; color: white; text-align: center; padding: 10px; fon
 			<div class="card-body">
 				<div>
     			<h3>추가 예정 기능</h3>
-				<p class="text-center">
+				<p class="text-center" style="margin-bottom:100px">>
     			2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(유효한 신고건수가 50이상인경우)<br>
     			4. 개인 프로필 기능(프로필누르면 새로운 팝업창이 뜨고 사진 업로드, 본인이 신고당한 건수)<br>
     			6. 게시판에서 아작스로 검색시 페이지가 그 겸색결과에 맞게 조정되는것. ㅠㅠ<br> 
     			</p>
 				</div>
-				<br><br>
-
 				<h3>공지사항</h3>
 					<table class="table table-hover">
 					<thead>
@@ -102,7 +100,7 @@ h3{ background-color: #222; color: white; text-align: center; padding: 10px; fon
 					
 					<div class="text-right">
 						<a href="${root }board/main?boardNo=1" class="btn btn-danger" style="color:white">
-							더 보기
+							more
 						</a>
 					</div>
 				</div><!-- 카드바디 -->

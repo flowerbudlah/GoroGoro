@@ -49,7 +49,11 @@
 	<select id="searchList" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
 		select m.memberNo, m.email, m.nick, DATE_FORMAT (m.signUpDate, '%Y년%m월%d일 %H시%i분%S초') as signUp_Date, 
 				(select count(*) from freeBoard f where f.writer =m.nick ) as 'postCount', 
-				(select count(*) from reply r where r.replyWriter =m.nick ) as 'replyCount'
+				(select count(*) from reply r where r.replyWriter =m.nick ) as 'replyCount', 
+				(select count(*) from (select f.postNo, f.title
+										from freeBoard f, reportBoard r, members mm 
+										where  (f.writer = mm.nick) and (r.postNo = f.postNo) and mm.memberNo = m.memberNo
+										group by f.postNo ) newBoard ) as 'reportCount'
 		from members m
 		where 
 		<if test="type!=null and type == 'email'">
@@ -88,11 +92,15 @@
 	
 	<!-- 신고당한 게시글 번호 -->
 	<select id="" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
-		select f.postNo	
+		select f.postNo
 		from freeBoard f, reportBoard r, members m 
 		where (f.writer = m.nick) and (r.postNo = f.postNo) and memberNo=#{memberNo}
 		group by f.postNo;  
 	</select>
+	
+	
+	
+	
 
 	
 
