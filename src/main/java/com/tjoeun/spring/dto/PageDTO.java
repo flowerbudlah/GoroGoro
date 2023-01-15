@@ -15,8 +15,6 @@ public class PageDTO {
 	
 	private int currentPage; // 현재 페이지 번호
 	
-	
-	
 	/*
 	  전체 게시글의 개수, 페이지당 게시글의 개수, 현재 페이지 번호 --> 이 값들을 가지고 위의 값들을 계산함
 	    
@@ -28,20 +26,22 @@ public class PageDTO {
 	  int paginationCnt  : 페이지 버튼의 개수
 	  를 선언함   
 	*/
-	// contentCnt    : database 에서 가져옴 (BoardMapper)
-	// currentPage   : page parameter로 전달함
-	// contentPageCnt, paginationCnt : option.properties 에 설정함
+	
 	public PageDTO(int contentCnt, int currentPage, int contentPageCnt, int paginationCnt) {
+		// contentCnt    : database 에서 가져옴 (BoardMapper)
+		// currentPage   : page parameter로 전달함
+		// contentPageCnt, paginationCnt : option.properties 에 설정함
+		
 		
 		this.currentPage = currentPage; // 현재 페이지 번호
 		
 		pageCount = contentCnt / contentPageCnt; //전체 페이지 개수 = 전체 글개수 / 페이지당 글개수
 		
-		if(contentCnt % contentPageCnt > 0) { pageCount++; }
+		if(contentCnt % contentPageCnt > 0) {
+			pageCount++; 
+		}
 	  
-
 		min = ((currentPage - 1) / contentPageCnt) * contentPageCnt + 1;
-	  
 		max = min + paginationCnt - 1;  //  최대페이지 번호 = 최소페이지 번호 + 페이지 버튼의 개수 - 1
     
 		if(max > pageCount) {

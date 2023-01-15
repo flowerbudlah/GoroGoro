@@ -61,26 +61,25 @@ public class BoardService {
 	
 
 	//1. 3) 게시판 메인화면 게시글 검색(아작스)
-	public List<PostDTO> searchList(PostDTO searchListPostDTO) throws Exception {
+	public List<PostDTO> searchList(PostDTO searchListPostDTO, int page) throws Exception {
 		
-		//int start = (page - 1) * page_listcnt; //한 페이지 
-		//RowBounds rowBounds = new RowBounds(start, page_listcnt);
+		int start = (page - 1) * page_listcnt; //한 페이지 
+		RowBounds rowBounds = new RowBounds(start, page_listcnt);
 		
-		List<PostDTO> searchList = boardDAO.searchList(searchListPostDTO);		
+		List<PostDTO> searchList = boardDAO.searchList(searchListPostDTO, rowBounds);		
 		
 		return searchList; 
 	}
 		
 	//1. 2) 메인페이지의 페이징 작업  
-	public PageDTO pageDTOAfterSearch(PostDTO searchListPostDTO, int currentPage) {
-		
-		//검색 게시글의 수 
+	public PageDTO searchPageDTO(PostDTO searchListPostDTO, int currentPage) {
 		int searchCount = boardDAO.searchCount(searchListPostDTO);
-	
 		PageDTO pageDTO = new PageDTO(searchCount, currentPage, page_listcnt, page_paginationcnt);
-		
 		return pageDTO;
 	}
+	
+	
+	
 	
 	//1. 4) 게시판 이름 가져오기 
 	public String getBoardName(int boardNo) {

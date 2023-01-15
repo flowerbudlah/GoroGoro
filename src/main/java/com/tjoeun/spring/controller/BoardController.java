@@ -61,8 +61,9 @@ public class BoardController {
 	(Model model, 
 	@RequestParam("type") String type, 
 	@RequestParam("keyword") String keyword, 
-	@RequestParam("boardNo") int boardNo, @RequestParam(value="page", defaultValue="1") int page//이거넣어도 작동됨. 
-	) throws Exception{
+	@RequestParam("boardNo") int boardNo, 
+	@RequestParam(value="page", defaultValue="1") int page//이거넣어도 작동됨. 
+	) throws Exception {
 		
 		PostDTO searchListPostDTO = new PostDTO(); 
 		
@@ -71,16 +72,16 @@ public class BoardController {
 		searchListPostDTO.setKeyword(keyword); 
 		
 		//검색결과 리스트
-		List<PostDTO> searchList = boardService.searchList(searchListPostDTO);  
+		List<PostDTO> searchList = boardService.searchList(searchListPostDTO, page);  
 		model.addAttribute("searchList", searchList);
 	
 		//페이징
-		//PageDTO pageDTO = boardService.pageDTOAfterSearch(searchListPostDTO, page); 
-		//model.addAttribute("pageDTO", pageDTO);
-		//model.addAttribute("page", page);
-		//model.addAttribute("type", type);
-		//model.addAttribute("keyword", keyword);
-		//model.addAttribute("boardNo", boardNo); 
+		PageDTO pageDTO = boardService.searchPageDTO(searchListPostDTO, page); 
+		model.addAttribute("pageDTO", pageDTO);
+		model.addAttribute("page", page);
+		model.addAttribute("type", type);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("boardNo", boardNo); 
 				
 		return searchList; 						
 	
