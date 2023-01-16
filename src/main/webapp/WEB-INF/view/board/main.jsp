@@ -19,6 +19,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
 <script type="text/javascript">    
 function searchList(){
+	
 	const boardNo = $("#boardNo").val(); //내용
 	const keyword = $("#keyword").val(); //내용
 	const type = $("#type").val();
@@ -48,62 +49,65 @@ function searchList(){
 						str+="</tr>"
 					
 						$('#boardtable').append(str);
-						$('#page').empty(); 	//페이지
-						Pagination();
-					
-					
+		
+						Pagination(); 
 					})//forEach의 끝
+					
+					
+					
         		}else{
 						str='검색결과가 없습니다.'; 
 						$('#boardtable').append(str);
-						$('#page').empty(); 	//페이지
-						Pagination();
+						
+					
 					
 				}//else의 끝
-			} //function의 끝
-		}) //ajax의 끝
-	}//searchList의 function의 끝	
-	
-	function Pagination(){ //페이지
-		
-		var boardNo =$("#boardNo").val(); //내용
-		var type = $("#type").val(); //내용
-		var keyword = $("#keyword").val(); //내용
-	
-		//페이지 관련변수
-		var pageDTOprePage = ${pageDTO.prePage};//이전
-		var pageDTOmax = ${pageDTO.max}; //다음
-		var pageDTOpageCount = ${pageDTO.pageCount}; //다음
-		var pageDTOnextPage = ${pageDTO.nextPage}; //
-		var pageDTOmin = ${pageDTO.min}; 
-		var pageDTOmax = ${pageDTO.max}; 
-		var pageDTOcurrentPage= ${pageDTO.currentPage}; 
-		
-		<!-- 이전 -->
-		if(pageDTOprePage <= 0){
-			str="<li class='page-item disabled'><a href='#' class='page-link'>이전</a></li>"; 
-		}else{
-			str+="<li class='page-item'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+pageDTOprePage+"' class='page-link'>이전</a></li>";	
-		}
-		<!--1 2 3 4 5 6 7 8 9 10-->
-		for( idx = pageDTOmin; idx <= pageDTOmax; idx++ ){
-			if(idx == pageDTOcurrentPage){
-				str+="<li class='page-item active'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>"; 
-			}else{
-				str+="<li class='page-item'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>"; 					
+			}, //성공 function의 끝
+			error: function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
-		}
-		
-		<!--다음-->
-		if(pageDTOmax >= pageDTOpageCount){
-			str+="<li class='page-item disabled'><a href='#' class='page-link'>다음</a></li>"; 
-		}else{
-			str+="<li class='page-item'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+pageDTOnextPage+"' class='page-link'>다음</a></li>"; 
-						<!--main?boardNo=  undefined &type=undefined  &keyword=test   &page=0-->
-		}
-		
-		$('#page').append(str);
-	}
+		}) //ajax의 끝
+
+	function Pagination(){ //페이지
+	
+		$.ajax({
+			type: 'get',
+			url : 'searchPage',
+			data : $("form[name=search-form]").serialize(), 
+			success : 
+				function(searchPageDTO){
+					$('#page').empty(); 
+					$("#resultLength").html("총"+searchPageDTO.length+'개의 글이 검색되었습니다.');	
+	        		
+					<!-- 이전 -->
+					if(searchPageDTO.prePage <= 0){
+						str="<li class='page-item disabled'><a href='#' class='page-link'>이전</a></li>"; 
+					}else{
+						str+="<li class='page-item'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+searchPageDTO.prePage+"' class='page-link'>이전</a></li>";	
+					}
+					
+					<!--1 2 3 4 5 6 7 8 9 10-->
+					for(var idx = searchPageDTO.min; idx <= searchPageDTO.max; idx++ ){
+						if(idx == searchPageDTO.currentPage){
+							str+="<li class='page-item active'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>"; 
+						}else{
+							str+="<li class='page-item'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>"; 					
+						}
+					}
+							
+					<!--다음-->
+					if(searchPageDTO.max >= searchPageDTO.pageCount){
+						str+="<li class='page-item disabled'><a href='#' class='page-link'>다음</a></li>"; 
+					}else{
+						str+="<li class='page-item'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+searchPageDTO.nextPage+"' class='page-link'>다음</a></li>"; 
+					}
+							
+					$('#page').append(str);
+				} //성공 function의 끝
+			}) //ajax의 끝
+	}//페이지 함수	
+	
+}//searchList의 function의 끝	
 </script>
 <style>
 .slider img{display:block; width:100%; max-width:100%; height:300px; } /* 슬라이더 영역 CSS */

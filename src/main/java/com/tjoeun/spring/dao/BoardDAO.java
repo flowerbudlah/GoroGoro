@@ -13,10 +13,8 @@ import com.tjoeun.spring.dto.ReportDTO;
 @Repository
 public class BoardDAO {
 	
-	
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
-	
 	
 	//1. 1) 전체게시물이 있는 게시판 메인화면(페이지 작업 수행 rowBounds)으로 간다. 
 	public List<PostDTO> goMain(int boardNo, RowBounds rowBounds){
@@ -29,9 +27,6 @@ public class BoardDAO {
 		int postCnt = sqlSessionTemplate.selectOne("board.getPostCnt", boardNo);
 		return postCnt;
 	}
-	
-	
-	
 	
 	
 	//1. 3) 게시판 이름 가져오기 

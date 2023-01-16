@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tjoeun.spring.dao.BoardDAO;
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
 import com.tjoeun.spring.dto.ReplyDTO;
@@ -28,6 +29,9 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private BoardDAO boardDAO;
 	
 	@Autowired
 	private ReplyService replyService;
@@ -47,7 +51,7 @@ public class BoardController {
 		model.addAttribute("postList", postList); //글 목록
 		
 		//페이징
-		PageDTO pageDTO = boardService.getPostCnt(boardNo, page); 
+		PageDTO pageDTO = boardService.mainPageDTO(boardNo, page); 
 		model.addAttribute("pageDTO", pageDTO);
 		model.addAttribute("page", page);
 		
@@ -61,31 +65,61 @@ public class BoardController {
 	@RequestParam("type") String type, 
 	@RequestParam("keyword") String keyword, 
 	@RequestParam("boardNo") int boardNo, 
-	@RequestParam(value="page", defaultValue="1") int page//이거넣어도 작동됨. 
-	) throws Exception {
+	@RequestParam(value="searchPage", defaultValue="1") int searchPage) throws Exception {
 		
 		PostDTO searchListPostDTO = new PostDTO(); 
-		
 		searchListPostDTO.setBoardNo(boardNo); 
 		searchListPostDTO.setType(type); 
 		searchListPostDTO.setKeyword(keyword); 
 		
 		//검색결과 리스트
-		List<PostDTO> searchList = boardService.searchList(searchListPostDTO, page);  
+		List<PostDTO> searchList = boardService.searchList(searchListPostDTO, searchPage);  
 		model.addAttribute("searchList", searchList);
 	
+		//검색결과 수 searchCount
+		int searchCount = boardDAO.searchCount(searchListPostDTO); 
+		model.addAttribute("searchCount", searchCount);
+		
 		//페이징
-		PageDTO pageDTO = boardService.searchPageDTO(searchListPostDTO, page); 
-		model.addAttribute("pageDTO", pageDTO);
-		model.addAttribute("page", page);
+		PageDTO searchPageDTO = boardService.searchPageDTO(searchListPostDTO, searchPage); 
+		model.addAttribute("searchPageDTO", searchPageDTO);
+		model.addAttribute("searchPage", searchPage);
 		
 		model.addAttribute("type", type);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("boardNo", boardNo); 
-				
-		return searchList; 						
-	
+		
+		return searchList; 			
 	} 
+	
+	
+		@GetMapping("/searchPage")
+		public @ResponseBody PageDTO searchPage
+		(Model model, 
+		@RequestParam("type") String type, 
+		@RequestParam("keyword") String keyword, 
+		@RequestParam("boardNo") int boardNo, 
+		@RequestParam(value="searchPage", defaultValue="1") int searchPage) throws Exception {
+			
+			PostDTO searchListPostDTO = new PostDTO(); 
+			searchListPostDTO.setBoardNo(boardNo); 
+			searchListPostDTO.setType(type); 
+			searchListPostDTO.setKeyword(keyword); 
+			
+			//페이징
+			PageDTO searchPageDTO = boardService.searchPageDTO(searchListPostDTO, searchPage); 
+			model.addAttribute("searchPageDTO", searchPageDTO);
+			model.addAttribute("searchPage", searchPage);
+			
+			model.addAttribute("type", type);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("boardNo", boardNo); 
+			
+			return searchPageDTO; 			
+		} 
+	
+	
+	
 	
 
 	//2. 글쓰기 페이지로 이동 

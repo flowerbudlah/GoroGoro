@@ -18,7 +18,6 @@ import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
 import com.tjoeun.spring.dto.ReportDTO;
 
-
 @Service
 @PropertySource("/WEB-INF/properties/option.properties")
 public class BoardService {
@@ -42,24 +41,24 @@ public class BoardService {
 		RowBounds rowBounds = new RowBounds(start, page_listcnt);
 		
 		List<PostDTO> postList = boardDAO.goMain(boardNo, rowBounds);
-		
 		return postList;
 	}
 	
 	//1. 2) 메인페이지의 페이징 작업  
-	public PageDTO getPostCnt(int boardNo, int currentPage) {
+	public PageDTO mainPageDTO(int boardNo, int currentPage) {
 				
 		//게시판 메인 페이지의 페이징과 관련있는 해당 게시판의 전체 글 수
 		int postCnt = boardDAO.getPostCnt(boardNo); 
 		
 		//page_listcnt: 한 페이지당 보여주는 글의 개수, page_paginationcnt: 한 페이지당 보여주는 페이지 버튼 개수
 		PageDTO pageDTO = new PageDTO(postCnt, currentPage, page_listcnt, page_paginationcnt);
-		
 		return pageDTO;
 	}
 	
 	
 
+	
+	
 	//1. 3) 게시판 메인화면 게시글 검색(아작스)
 	public List<PostDTO> searchList(PostDTO searchListPostDTO, int page) throws Exception {
 		
@@ -67,15 +66,15 @@ public class BoardService {
 		RowBounds rowBounds = new RowBounds(start, page_listcnt);
 		
 		List<PostDTO> searchList = boardDAO.searchList(searchListPostDTO, rowBounds);		
-		
 		return searchList; 
 	}
 		
 	//1. 2) 메인페이지의 페이징 작업  
 	public PageDTO searchPageDTO(PostDTO searchListPostDTO, int currentPage) {
+		//아작스로 검색을 했을 때 나오는 게시물 수 
 		int searchCount = boardDAO.searchCount(searchListPostDTO);
-		PageDTO pageDTO = new PageDTO(searchCount, currentPage, page_listcnt, page_paginationcnt);
-		return pageDTO;
+		PageDTO searchPageDTO = new PageDTO(searchCount, currentPage, page_listcnt, page_paginationcnt);
+		return searchPageDTO;
 	}
 	
 	

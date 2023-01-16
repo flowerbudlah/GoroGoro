@@ -12,7 +12,6 @@ public class PageDTO {
 	private int nextPage;   // 다음 버튼 누르면 이동하는 페이지 번호
 	
 	private int pageCount; 	// 전체 페이지 개수
-	
 	private int currentPage; // 현재 페이지 번호
 	
 	/*
