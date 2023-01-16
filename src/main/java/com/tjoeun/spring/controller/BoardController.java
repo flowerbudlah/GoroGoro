@@ -78,6 +78,7 @@ public class BoardController {
 		PageDTO pageDTO = boardService.searchPageDTO(searchListPostDTO, page); 
 		model.addAttribute("pageDTO", pageDTO);
 		model.addAttribute("page", page);
+		
 		model.addAttribute("type", type);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("boardNo", boardNo); 

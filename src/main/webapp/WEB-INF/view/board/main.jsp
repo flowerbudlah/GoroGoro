@@ -14,9 +14,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<!-- 폰트 -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
 <script type="text/javascript">    
 function searchList(){
-
 	const boardNo = $("#boardNo").val(); //내용
 	const keyword = $("#keyword").val(); //내용
 	const type = $("#type").val();
@@ -35,7 +37,6 @@ function searchList(){
 			function(result){
 				$('#boardtable').empty(); 	//테이블 초기화
 				if(result.length>=1){//검색결과가 하나라도 있다.  
-
 					result.forEach(function(item){
 						str="<tr>"
 							str+="<td><center>"+item.postNo+"</center></td>"; //글번호
@@ -49,8 +50,6 @@ function searchList(){
 						$('#boardtable').append(str);
 						$('#page').empty(); 	//페이지
 						Pagination();
-					
-					
 					
 					
 					})//forEach의 끝
@@ -70,7 +69,8 @@ function searchList(){
 		var boardNo =$("#boardNo").val(); //내용
 		var type = $("#type").val(); //내용
 		var keyword = $("#keyword").val(); //내용
-		
+	
+		//페이지 관련변수
 		var pageDTOprePage = ${pageDTO.prePage};//이전
 		var pageDTOmax = ${pageDTO.max}; //다음
 		var pageDTOpageCount = ${pageDTO.pageCount}; //다음
@@ -104,12 +104,14 @@ function searchList(){
 		
 		$('#page').append(str);
 	}
-
 </script>
 <style>
 .slider img{display:block; width:100%; max-width:100%; height:300px; } /* 슬라이더 영역 CSS */
-body{background-image: url(http://localhost:8090/GoroGoroCommunity/image/bottom-bg.jpg); background-repeat: no-repeat; background-position: center bottom; background-attachment: fixed; }
+body{
+	background-image: url(http://localhost:8090/GoroGoroCommunity/image/bottom-bg.jpg); 
+	background-repeat: no-repeat; background-position: center bottom; background-attachment: fixed; }
 thead{background-color:gold; }
+h1{ font-family: 'Single Day', cursive; }
 </style>
 </head>
 <body>
@@ -121,10 +123,10 @@ thead{background-color:gold; }
 	<img src="/GoroGoroCommunity/image/candy.png">
 </article>
 <!--Post List(게시글 리스트)-->
-<div class="container" style="margin-top:100px; margin-bottom:100px;">
+<div class="container" style="margin-top:30px; margin-bottom:30px;">
 	<!-- <div class="card shadow-none">-->
 		<div class="card-body">	
-			<h4 class="card-title">${boardName }</h4>
+			<h1 class="card-title">${boardName }</h1>
 			<font id="resultLength" size="3"></font>
 			<table class="table table-hover">
 				<thead>
@@ -248,19 +250,18 @@ thead{background-color:gold; }
 			</div>
 			
 			<!-- 검색 기능 -->			
-			<form action="javascript:searchList()" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px; margin-bottom:30px;">
-				<select name="type">
+			<form action="javascript:searchList()" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px;">
+				<select id="type" name="type">
 					<option value="titleANDcontent">제목+내용</option>
 					<option value="title">제목</option>
 					<option value="content">내용</option>
 					<option value="writer">작성자</option>
 				</select>			
-				<input type="text" value="" name="keyword" id="keyword"/> <!-- required="required"  -->
-				<input type="hidden" name="boardNo" value="${boardNo }"/>
+				<input type="text" value="" name="keyword" id="keyword" required="required"/>
+				<input type="hidden" id="boardNo" name="boardNo" value="${boardNo }"/>
 				<input type="button" onclick="javascript:searchList()" class="btn btn-warning btn-sm" value="검색"/>
 			</form>
 			<!-- 검색기능끝 -->	
-
 		</div>
 </div>
 <c:import url="/WEB-INF/view/include/bottomInfo.jsp" />
