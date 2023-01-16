@@ -36,8 +36,7 @@ public class BoardController {
 	@RequestMapping("/main")
 	public String main(
 	@RequestParam("boardNo") int boardNo, 
-	@RequestParam(value="page", defaultValue="1") int page, 
-	Model model) {
+	@RequestParam(value="page", defaultValue="1") int page, Model model) {
 		
 		model.addAttribute("boardNo", boardNo); //게시판 일련번호(인덱스)
 		
