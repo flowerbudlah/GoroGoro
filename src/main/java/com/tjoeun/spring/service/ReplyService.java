@@ -5,16 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.tjoeun.spring.dao.ReplyDAO;
-
 import com.tjoeun.spring.dto.ReplyDTO;
+
 
 @Service
 public class ReplyService {
 
 	@Autowired
 	private ReplyDAO replyDAO; 
+	
 	
 	//1. 댓글 작성 Create 
 	public ReplyDTO writeReplyProcess(ReplyDTO writeReplyDTO) {
@@ -33,11 +33,13 @@ public class ReplyService {
 		return replyDTO;				
 	}
 	
+	
 	//2. 댓글리스트 조회 Read
 	public List<ReplyDTO> replyList(int postNo){
 		return replyDAO.replyList(postNo);
 	}
 
+	
 	//3. 댓글삭제 delete
 	public ReplyDTO removeReply(int replyNo) {
 		
@@ -53,6 +55,17 @@ public class ReplyService {
 		
 		return replyDTO;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	

@@ -65,43 +65,58 @@
 			order by memberNo DESC 
 	</select>
 
+
 	<!--2. 3) 특정한 한 회원이 쓴글의 수 -->
 	<select id="postCount" parameterType="java.lang.String" resultType="java.lang.Integer">
 		select count(*) from freeBoard where writer = #{writer}	
 	</select>	
+
 		
 	<!--2. 4) 특정한 한 회원이 쓴글의 수 -->
 	<select id="replyCount" parameterType="java.lang.String" resultType="java.lang.Integer">
 		select count(*) from reply where writer = #{writer}	
 	</select>		
 
+
 	<!-- 3. 1) 신고된 게시글 보기 -->
 	<select id="takeReportedPost" resultType="com.tjoeun.spring.dto.ReportDTO">
 		select * from reportBoard order by reportNo desc
 	</select>
 	
-	<!--3. 2) 신고된 내용 자세히 보기-->
-	<select id="readReportedPost" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.ReportDTO">
-		select * from reportBoard where reportNo = #{reportNo}
-	</select>
+	
 	
 	<!-- 3. 3) 신고된 게시글의 수(관리자페이지에서 페이지작업으로 필요) -->
 	<select id="countOfReportedPost" resultType="java.lang.Integer">
 		select count(*) from reportBoard
 	</select>
 	
-	<!-- 신고당한 게시글 번호 -->
-	<select id="" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
-		select f.postNo
-		from freeBoard f, reportBoard r, members m 
-		where (f.writer = m.nick) and (r.postNo = f.postNo) and memberNo=#{memberNo}
-		group by f.postNo;  
-	</select>
+
+	<!--1. 관리자가 신고된 기록에 대한 댓글 달기 -->
+	<insert id="writeAdminReplyProcess" parameterType="com.tjoeun.spring.dto.AdminReplyDTO" useGeneratedKeys="true" keyProperty="replyNo">
+		insert into adminReply(reportNo, replyContent, replyWriter, replyRegDate) 
+						values(	#{reportNo}, #{replyContent}, #{replyWriter}, Now() )
+	</insert>
 	
 	
+	<!--2. 댓글 목록 가져오기 -->
+	<select id="adminReplyList" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.AdminReplyDTO">
+		select * from adminReply where reportNo = #{reportNo}        
+	</select>	
+	
+	
+	<!-- 3. 관리자가 본인이 쓴 댓글 삭제 -->
+	<delete id="removeAdminReply" parameterType="java.lang.Integer">
+		delete from adminReply where replyNo = #{replyNo}
+	</delete>
+
 	
 	
 
+
+	
+
+	
+	
 	
 
 </mapper>

@@ -78,6 +78,11 @@ public class BoardService {
 	}
 	
 	
+	public int searchCount(PostDTO searchListPostDTO) {
+		int searchCount = boardDAO.searchCount(searchListPostDTO);
+		return searchCount;
+	}
+	
 	
 	
 	//1. 4) 게시판 이름 가져오기 
@@ -240,6 +245,8 @@ public class BoardService {
 					
 		return pageDTO;
 	}
+
+	
 	
 	
 }

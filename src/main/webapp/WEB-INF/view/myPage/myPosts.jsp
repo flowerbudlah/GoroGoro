@@ -82,8 +82,6 @@ thead{background-color:gold; }
 					</tr>
 				</thead>
 				<tbody id="boardtable">
-				
-				
 				<c:forEach var="postDTO" items="${myPostList }" >
 					<tr>
 						<td class="text-center d-none d-md-table-cell">${postDTO.postNo }</td>

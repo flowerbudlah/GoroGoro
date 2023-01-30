@@ -33,7 +33,7 @@ public class DeleteInterceptor implements HandlerInterceptor {
 				(signInMemberDTO.getMemberNo() == 1) ){
 			//글쓴사람이랑 로그인을 한 사람이 같으면, 또는 관리자라면 
 			return true;
-		}else {
+		} else {
 			String contextPath = request.getContextPath();
 			response.sendRedirect(contextPath + "/etc/notWriter");
   			return false;

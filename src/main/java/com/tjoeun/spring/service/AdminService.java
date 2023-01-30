@@ -9,9 +9,11 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import com.tjoeun.spring.dao.AdminDAO;
+import com.tjoeun.spring.dto.AdminReplyDTO;
 import com.tjoeun.spring.dto.BoardDTO;
 import com.tjoeun.spring.dto.MemberDTO;
 import com.tjoeun.spring.dto.PageDTO;
+
 import com.tjoeun.spring.dto.ReportDTO;
 
 @Service
@@ -72,8 +74,7 @@ public class AdminService {
 	public List<MemberDTO> searchList(MemberDTO searchListMemberDTO) throws Exception {
 		return adminDAO.searchList(searchListMemberDTO);		
 	}
-	
-	
+
 	
 	//7. 1) 관리자가 신고된 글 모두 리스트로 보기 (at 게시물페이지) 
 	public List<ReportDTO> takeReportedPost(int page){
@@ -83,8 +84,6 @@ public class AdminService {
 		
 		return adminDAO.takeReportedPost(rowBounds);
 	} 
-	
-	
 	
 	// 관리자 페이지에서 본인에게 신고된 게시글 리스트에서 페이징 작업   
 	public PageDTO reportedPost(int currentPage) {
@@ -98,14 +97,50 @@ public class AdminService {
 	}
 		
 	
-	//7. 2) 관리자가 신고된 특정한 글 하나 보기(신고의 구체적인 사유)
-	public ReportDTO readReportedPost(int reportNo) {
-		ReportDTO readReportDTO = adminDAO.readReportedPost(reportNo);
-		return readReportDTO; 
+	//1. 댓글 작성 Create 
+	public AdminReplyDTO writeAdminReplyProcess(AdminReplyDTO writeReplyDTO) {
+				
+		AdminReplyDTO adminReplyDTO = new AdminReplyDTO();
+					
+		int writingCount =  adminDAO.writeAdminReplyProcess(writeReplyDTO); 
+					
+		if (writingCount > 0) {
+			adminReplyDTO.setResult("SUCCESS");
+		} else {
+			adminReplyDTO.setResult("FAIL"); 
+		}
+					
+		return adminReplyDTO;				
 	}
 	
 	
+	//2. 댓글리스트 조회 Read
+	public List<AdminReplyDTO> replyAdminList(int reportNo){
+		return adminDAO.adminReplyList(reportNo);
+	}
+
+			
+	//3. 댓글삭제 delete
+	public AdminReplyDTO removeAdminReply(int replyNo) {
+				
+		AdminReplyDTO adminReplyDTO = new AdminReplyDTO();
+				
+		int removeCount = adminDAO.removeAdminReply(replyNo); 
+				
+		if(removeCount > 0) { //댓글삭제 성공
+			adminReplyDTO.setResult("SUCCESS");
+		}else{ //댓글삭제 미성공
+			adminReplyDTO.setResult("FAIL"); //대소문자가 중요합니다. 
+		}
 	
+		return adminReplyDTO;
+	}
+			
+		
+		
+		
+		
+		
 	
 	
 	

@@ -97,7 +97,8 @@ public class MemberController {
 			}
 		}
 	}
-		
+	
+	
 	//4. 회원정보수정 완료 버튼 누르고, 진짜 회원정보 수정이 이뤄지는 그 과정
 	@RequestMapping("/modifyProcess")
 	public @ResponseBody MemberDTO modifyMemberDTO(MemberDTO modifyMemberDTO){
@@ -126,7 +127,6 @@ public class MemberController {
 			try {
 				response.getWriter().write("loginFail");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

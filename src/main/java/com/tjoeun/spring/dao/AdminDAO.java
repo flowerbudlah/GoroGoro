@@ -7,8 +7,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.tjoeun.spring.dto.AdminReplyDTO;
 import com.tjoeun.spring.dto.BoardDTO;
 import com.tjoeun.spring.dto.MemberDTO;
+
 import com.tjoeun.spring.dto.ReportDTO;
 
 @Repository
@@ -73,11 +75,23 @@ public class AdminDAO {
 		return sqlSessionTemplate.selectOne("admin.countOfReportedPost"); 
 	}
 	
-	//8. 2) 신고된 게시글 상세보기
-	public ReportDTO readReportedPost(int reportNo) {
-		ReportDTO readReportDTO = sqlSessionTemplate.selectOne("admin.readReportedPost",reportNo);  
-		return readReportDTO; 
+	//관리자가 해당 신고글에 답변다는
+	public int writeAdminReplyProcess(AdminReplyDTO writeAdminReplyDTO) {
+		return sqlSessionTemplate.insert("admin.writeAdminReplyProcess", writeAdminReplyDTO);	
+	}
+	
+	//2. 댓글 목록 가져오기
+	public List<AdminReplyDTO> adminReplyList(int reportNo){
+	    return sqlSessionTemplate.selectList("admin.adminReplyList", reportNo);
+	}
+	
+	//3. 댓글삭제
+	public int removeAdminReply(int reportNo) {
+		return sqlSessionTemplate.delete("admin.removeAdminReply", reportNo);
 	}
 	
 		
+	
+	
+	
 }

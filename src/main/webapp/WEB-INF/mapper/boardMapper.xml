@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
+<!-- 게시판 -->  
 <mapper namespace="board">
 
 	<!-- 1. 1) 메인페이지로 간다.(with 글 목록) -->
@@ -22,9 +23,6 @@
     	select boardName from boardInCategory where boardNo=#{boardNo}
     </select>
     
-	
- 
- 
 	<!-- 2. 글쓰기 Create(이미지 파일 첨부기능포함)-->
 	<insert id="writeProcess" parameterType="com.tjoeun.spring.dto.PostDTO" useGeneratedKeys="true" keyProperty="postNo">
 		insert into freeBoard(boardNo, title, content, writer, regDate, imageFileName) 
@@ -88,9 +86,7 @@
 	<select id="takeCountOfMyPost" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		select count(*) from freeBoard f, members m where f.writer = m.nick and memberNo = #{memberNo}
 	</select>
-
-
-
+	
 	
 	<!-- 1. 4) AJAX 게시글 검색 	-->
 	<select id="searchList" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="com.tjoeun.spring.dto.PostDTO">
@@ -131,6 +127,9 @@
 				(title like CONCAT('%',#{keyword},'%') OR content like CONCAT('%',#{keyword},'%'))
 			</if>
 	</select>
+	
+	
+	
 
 
 

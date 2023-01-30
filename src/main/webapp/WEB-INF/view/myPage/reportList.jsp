@@ -24,30 +24,40 @@ thead{background-color: gold; }
 <!-- 상단 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!-- 그 게시판 윗 부분 그림-->
-<article class="slider"><img src="/GoroGoroCommunity/image/convenientStore.png"></article>
+<article class="slider">
+	<img src="/GoroGoroCommunity/image/convenientStore.png">
+</article>
 <!--Post List(게시글 리스트)-->
 <div class="container" style="margin-top:50px; margin-bottom:50px;">
 	<div class="card shadow-none">
 		<div class="card-body">	
-			<h4 class="card-title">관리자 전용 페이지(For the Administrator Only)</h4>
-			<p>관리자에게 신고 접수된 게시물들을 보여줍니다.</p><br>
+			<h4 class="card-title">내가 신고한 내역</h4>
+			<p>${signInMemberDTO.nick }님께서 관리자에게 신고 접수한 게시물들을 보여줍니다.</p><br>
 			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th class="text-center d-none d-md-table-cell">신고번호</th>
 						<th class="w-50">신고사유</th>
 						<th class="text-center d-none d-md-table-cell">신고자</th>
-						
 						<th class="text-center d-none d-md-table-cell">신고일짜</th>
 					</tr>
 				</thead>
 				<tbody id="boardtable">
-				<c:forEach var="reportDTO" items="${reportedPostList }" >
+				<c:forEach var="reportDTO" items="${myReportList }" >
 					<tr>
 						<td class="text-center d-none d-md-table-cell">${reportDTO.reportNo }</td>
 						<td>
-							<a href='http://localhost:8090/GoroGoroCommunity/myPage/reportedPost?reportNo=${reportDTO.reportNo }' style="color:black">
+							<a href="http://localhost:8090/GoroGoroCommunity/myPage/reportedPost?reportNo=${reportDTO.reportNo }" style="color:black">
 								${reportDTO.reason}	(게시글 번호: ${reportDTO.postNo })
+								<br>
+								<c:choose>
+									<c:when test="${reportDTO.replyCount == 0 }">
+									</c:when>
+									<c:otherwise>
+										<font color="red">관리자의 답글이 도착했습니다.</font>
+									</c:otherwise>
+								</c:choose>
+							
 							</a>
 						</td>
 						<td class="text-center d-none d-md-table-cell">${reportDTO.reporter }</td>
@@ -58,6 +68,7 @@ thead{background-color: gold; }
 				</c:forEach>
 				</tbody>
 			</table>
+			
 			<!-- 페이징(Paging) -->			
 			<div class="d-none d-md-block">
 				<ul class="pagination justify-content-center">

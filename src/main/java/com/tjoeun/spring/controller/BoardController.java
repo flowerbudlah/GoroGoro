@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tjoeun.spring.dao.BoardDAO;
+
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
 import com.tjoeun.spring.dto.ReplyDTO;
@@ -29,12 +29,10 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
-	
-	@Autowired
-	private BoardDAO boardDAO;
-	
+
 	@Autowired
 	private ReplyService replyService;
+	
 	
 	//1. 게시판 메인화면으로 간다. 
 	@RequestMapping("/main")
@@ -77,7 +75,7 @@ public class BoardController {
 		model.addAttribute("searchList", searchList);
 	
 		//검색결과 수 searchCount
-		int searchCount = boardDAO.searchCount(searchListPostDTO); 
+		int searchCount = boardService.searchCount(searchListPostDTO); 
 		model.addAttribute("searchCount", searchCount);
 		
 		//페이징
@@ -93,33 +91,6 @@ public class BoardController {
 	} 
 	
 	
-		@GetMapping("/searchPage")
-		public @ResponseBody PageDTO searchPage
-		(Model model, 
-		@RequestParam("type") String type, 
-		@RequestParam("keyword") String keyword, 
-		@RequestParam("boardNo") int boardNo, 
-		@RequestParam(value="searchPage", defaultValue="1") int searchPage) throws Exception {
-			
-			PostDTO searchListPostDTO = new PostDTO(); 
-			searchListPostDTO.setBoardNo(boardNo); 
-			searchListPostDTO.setType(type); 
-			searchListPostDTO.setKeyword(keyword); 
-			
-			//페이징
-			PageDTO searchPageDTO = boardService.searchPageDTO(searchListPostDTO, searchPage); 
-			model.addAttribute("searchPageDTO", searchPageDTO);
-			model.addAttribute("searchPage", searchPage);
-			
-			model.addAttribute("type", type);
-			model.addAttribute("keyword", keyword);
-			model.addAttribute("boardNo", boardNo); 
-			
-			return searchPageDTO; 			
-		} 
-	
-	
-	
 	
 
 	//2. 글쓰기 페이지로 이동 
@@ -129,6 +100,7 @@ public class BoardController {
 		return "board/write";
 	}
 	
+	
 	//2.1) 게시글 등록 Creating 
 	@RequestMapping("/writeProcess")
     public  @ResponseBody PostDTO writeProcess
@@ -137,6 +109,7 @@ public class BoardController {
         return postDTO;
     }
 
+	
 	//3.글 수정 페이지로 이동(Updating)
 	@RequestMapping("/modify")
 	public String modify(@RequestParam("postNo") int postNo, @ModelAttribute("modifyPostDTO") PostDTO modifyPostDTO, Model model) {
@@ -149,6 +122,7 @@ public class BoardController {
 		return "board/modify";	
 	}
 	
+	
 	//3.1) 게시판 수정완료(Complete Updating)
 	@RequestMapping("/modifyProcess")
 	public @ResponseBody PostDTO modifyProcess
@@ -156,6 +130,7 @@ public class BoardController {
 		PostDTO postDTO = boardService.modify(modifyPostDTO); //수정하겠다고 하는 그 글들이 입력되어 고쳐쓴 새로운 PostDTO가 된다. 
 		return postDTO;
 	}
+	
 	
 	//4. 글읽기 Reading (댓글 포함)
 	@RequestMapping("/read")
@@ -178,7 +153,8 @@ public class BoardController {
 	
 	//5. 글삭제(Deleting)
 	@RequestMapping("/deletePost")
-    public @ResponseBody PostDTO deleteBoard(HttpServletRequest request, HttpServletResponse response, int postNo) throws Exception{
+    public @ResponseBody PostDTO deleteBoard
+    (HttpServletRequest request, HttpServletResponse response, int postNo) throws Exception{
         PostDTO postDTO = boardService.deletePost(postNo); 
         return postDTO;
     }
@@ -194,13 +170,18 @@ public class BoardController {
         return ReplyDTO;
     }
 	
+	
 	//6.2) 댓글삭제
 	@RequestMapping("/removeReply")
-	public @ResponseBody ReplyDTO removeReply(HttpServletRequest request, HttpServletResponse response, int replyNo) {
+	public @ResponseBody ReplyDTO removeReply
+	(HttpServletRequest request, HttpServletResponse response, int replyNo) {
 	
 		ReplyDTO ReplyDTO = replyService.removeReply(replyNo); 
 		return ReplyDTO;
+		
 	}
+	
+	
 	
 	//7. 이미지 첨부파일 삭제
 	@RequestMapping("/deleteImageFile")
@@ -230,6 +211,40 @@ public class BoardController {
 		ReportDTO reportDTO = boardService.reportProcess(submitReportDTO);
 		return reportDTO;
 	}
+	
+	
+	//페이지
+	@GetMapping("/searchPage")
+	public @ResponseBody PageDTO searchPage
+	(Model model, 
+	@RequestParam("type") String type, 
+	@RequestParam("keyword") String keyword, 
+	@RequestParam("boardNo") int boardNo, 
+	@RequestParam(value="searchPage", defaultValue="1") int searchPage) throws Exception {
+			
+		PostDTO searchListPostDTO = new PostDTO(); 
+		searchListPostDTO.setBoardNo(boardNo); 
+		searchListPostDTO.setType(type); 
+		searchListPostDTO.setKeyword(keyword); 
+			
+		//검색결과 리스트
+		List<PostDTO> searchList = boardService.searchList(searchListPostDTO, searchPage);  
+		model.addAttribute("searchList", searchList);
+		
+		//검색결과 수 searchCount
+		int searchCount = boardService.searchCount(searchListPostDTO); 
+		model.addAttribute("searchCount", searchCount);
+			
+		//페이징
+		PageDTO searchPageDTO = boardService.searchPageDTO(searchListPostDTO, searchPage); 
+		model.addAttribute("searchPageDTO", searchPageDTO);
+		model.addAttribute("searchPage", searchPage);
+		model.addAttribute("type", type);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("boardNo", boardNo); 
+			
+		return searchPageDTO; 			
+	} 
 	
 	
 }

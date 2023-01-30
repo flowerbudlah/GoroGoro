@@ -34,7 +34,21 @@ function deletePost(){
             type     : "POST",    
             data : { postNo : postNo },
             dataType : "JSON",
-            success  : function(obj) { callback(obj);                },           
+            success  : function(obj) { 
+            	
+            	 if(obj != null){        
+            	        
+            	        var result = obj.result;
+            	        
+            	        if(result == "SUCCESS"){  
+            	            alert("게시글 삭제를 성공하였습니다.");                
+            	            goMain(); 
+            	        } else {     
+            	            alert("게시글 삭제를 실패하였습니다.");    
+            	            return;
+            	        }
+            	    }
+            },           
             error    : function(request, status, error) {
             	alert("해당글을 삭제할수 있는 권한이 없습니다. ");	
             }
@@ -42,23 +56,6 @@ function deletePost(){
          });
     } //yn 끝        
 } //deleteBoard
-
-//2. 2) 게시글 삭제 콜백함수
-function callback(obj){
-
-    if(obj != null){        
-        
-        var result = obj.result;
-        
-        if(result == "SUCCESS"){  
-            alert("게시글 삭제를 성공하였습니다.");                
-            goMain(); 
-        } else {     
-            alert("게시글 삭제를 실패하였습니다.");    
-            return;
-        }
-    }
-}
 
 //4. 신고하기
 function report(){
@@ -102,16 +99,8 @@ function like(){
 
 //6. 댓글 작성
 function writeReplyProcess(){
-	var postNo = $("#postNo").val(); //게시물 번호 
-	var replyWriter = $("#replyWriter").val(); //작성자
+	
 	var replyContent = $("#replyContent").val(); //내용
-	
-	if (replyWriter == ""){			
-		alert("댓글의 작성자를 입력해주세요.");
-		$("#replyWriter").focus();
-		return;
-	}
-	
 	if (replyContent == ""){			
 		alert("내용을 입력해주세요.");
 		$("#replyContent").focus();
@@ -169,27 +158,26 @@ function removeReply(){
 			cache    : false,
 			async    : true,
 			type     : "POST",    
-			success  : function(obj) { afterRemove(obj); },           
+			success  : 
+				function(obj) { 
+					if(obj != null){        
+					
+					var result = obj.result;
+					
+					if(result == "SUCCESS"){  
+						alert("댓글 삭제를 성공하였습니다.");   
+						location.href = "read?postNo=${postNo}";  
+					} else {     
+						alert("댓글 삭제를 실패하였습니다.");    
+						return;
+					}
+				}
+			},           
 			error	 : function(request,status,error){ alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
 				}) //아작스 
 			};	//yn의 끝
 		}
-	
-//9. 댓글 삭제 콜백 함수	
-function afterRemove(obj){
-	if(obj != null){        
-		
-		var result = obj.result;
-		
-		if(result == "SUCCESS"){  
-			alert("댓글 삭제를 성공하였습니다.");   
-			location.href = "read?postNo=${postNo}";  
-		} else {     
-			alert("댓글 삭제를 실패하였습니다.");    
-			return;
-		}
-	}
-}
+
 </script>
 <style>
 
@@ -320,6 +308,7 @@ function afterRemove(obj){
 			<a href="modify?postNo=${postNo }" class="btn btn-info btn-sm">수정하기</a>
 			<!--http://localhost:8090/GoroGoroCommunity/board/modify?postNo=1  -->
 			<button type="button" class="btn btn-secondary btn-sm" onclick="javascript:deletePost();">삭제하기</button>
+			
 			<c:choose>
 				<%--로그인을 한 회원에게만 보이는 게시글 신고버튼--%> 
 				<c:when test="${signInMemberDTO.signIn == true }">

@@ -48,18 +48,19 @@
 				cache    : false,
 				async    : true,
 				type     : "POST",    
-				success  : function(obj){ 
-					if(obj != null){        
-						var result = obj.result;
-			            if(result == "success"){                
-							alert("수정을 성공하였습니다."); 
-							location.href = "${root}main";
-			            } else {                
-			            	alert("수정을 실패하였습니다.");    
-			                return;
-			            }
-			        }
-				},           
+				success  : 
+					function(obj){ 
+						if(obj != null){        
+							var result = obj.result;
+				            if(result == "success"){                
+								alert("수정을 성공하였습니다."); 
+								location.href = "${root}main";
+				            } else {                
+				            	alert("수정을 실패하였습니다.");    
+				                return;
+				            }
+				        }
+					},           
 				error	 : function(request,status,error){	
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
@@ -116,18 +117,21 @@ body{ background-color: white; }
 				<tr>
 					<td>이메일 또는 비밀번호 분실시 질문&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td>
-						<select name="question" id="question" class="form-control" value="${modifyMemberDTO.question }">
-							<option value="hometown">당신의 고향은 어디입니까?</option>
-    						<option value="nickname">별명은 무엇인가요? </option>
-    						<option value="firstlove">첫사랑은 누구인가요?</option>
-    						<option value="pet">애완동물의 이름은?</option>
-    						<option value="treasure">당신의 보물1호는 무엇인가요?</option>
+						<select name="question" id="question" class="form-control">
+							<!-- <option value="${modifyMemberDTO.question }">${modifyMemberDTO.question }</option> -->
+							<option value="당신의 고향은 어디입니까?">당신의 고향은 어디입니까?</option>
+    						<option value="별명은 무엇인가요?">별명은 무엇인가요? </option>
+    						<option value="첫 사랑은 누구인가요?">첫 사랑은 누구인가요?</option>
+    						<option value="애완동물의 이름은?">애완동물의 이름은?</option>
+    						<option value="당신의 보물1호는 무엇인가요?">당신의 보물1호는 무엇인가요?</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>↑ 위 질문에 대한 답</td>
-					<td><input type="text" name="answer" id="answer" class="form-control" value="${modifyMemberDTO.answer }"/></td>
+					<td>
+						<input type="text" name="answer" id="answer" class="form-control" value="${modifyMemberDTO.answer }"/>
+					</td>
 				</tr>
 				<tr>
 	  				<td colspan = "2" align = "center">
@@ -141,6 +145,7 @@ body{ background-color: white; }
 			</table>
 			</form>
 <script>
+$("#question").val("${modifyMemberDTO.question }"); 
 $('.pw').focusout(function(){
 	
 	let isPassOk = false;
@@ -181,6 +186,10 @@ $("#nick").blur(function(){
 		}
 	});
 });
+
+
+
+
 </script>
 		</div>
 		</div>

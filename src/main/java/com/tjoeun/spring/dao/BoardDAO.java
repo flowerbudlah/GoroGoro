@@ -75,8 +75,6 @@ public class BoardDAO {
 		return sqlSessionTemplate.update("board.like", postNo); 
 	}
 	
-	
-
 	//7.1) 마이페이지에서 내가 쓴 게시물보기
 	public List<PostDTO> goMyPosts(int memberNo, RowBounds rowBounds){
 		List<PostDTO> myPostList = sqlSessionTemplate.selectList("board.goMyPosts", memberNo, rowBounds); 
@@ -89,15 +87,18 @@ public class BoardDAO {
 		return countOfMyPost;
 	}
 	
-
 	//1. 4) 메인 게시판에서 글 검색(아작스)
 	public List<PostDTO> searchList(PostDTO searchListPostDTO, RowBounds rowBounds) throws Exception {
-		return sqlSessionTemplate.selectList("board.searchList", searchListPostDTO, rowBounds); 
+		
+		List<PostDTO> searchList = sqlSessionTemplate.selectList("board.searchList", searchListPostDTO, rowBounds);
+		return searchList; 
+	
 	}	
 	
 	//아작스로 검색 시 검색결과 수(아작스로 페이징 작업때문에 필요) 
 	public int searchCount(PostDTO searchListPostDTO) {
-		return sqlSessionTemplate.selectOne("board.searchCount", searchListPostDTO);
+		int searchCount = sqlSessionTemplate.selectOne("board.searchCount", searchListPostDTO);
+		return searchCount; 
 	}
 	
 	

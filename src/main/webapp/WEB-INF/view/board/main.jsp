@@ -34,11 +34,20 @@ function searchList(){
 		type: 'get',
 		url : 'searchList',
 		data : $("form[name=search-form]").serialize(), 
+	      cache    : false,
+          async    : true,
+          contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
+          processData: false, // 이것을 붙이고 업로드가 되었다. 
 		success : 
 			function(result){
 				$('#boardtable').empty(); 	//테이블 초기화
+						
 				if(result.length>=1){//검색결과가 하나라도 있다.  
+					
 					result.forEach(function(item){
+						
+						$("#resultLength").html("총 개의"+result.length+"글이 검색되었습니다.");
+						
 						str="<tr>"
 							str+="<td><center>"+item.postNo+"</center></td>"; //글번호
 							str+="<td><a href='read?postNo=" +item.postNo+ "'>" + item.title + "<font color='red'>["+ item.replyCount+"]</font></a></td>"; //제목
@@ -52,15 +61,11 @@ function searchList(){
 		
 						Pagination(); 
 					})//forEach의 끝
-					
-					
-					
         		}else{
 						str='검색결과가 없습니다.'; 
 						$('#boardtable').append(str);
-						
-					
-					
+						Pagination(); 
+	
 				}//else의 끝
 			}, //성공 function의 끝
 			error: function(request,status,error){
@@ -74,24 +79,24 @@ function searchList(){
 			type: 'get',
 			url : 'searchPage',
 			data : $("form[name=search-form]").serialize(), 
+			
 			success : 
 				function(searchPageDTO){
 					$('#page').empty(); 
-					$("#resultLength").html("총"+searchPageDTO.length+'개의 글이 검색되었습니다.');	
-	        		
+				
 					<!-- 이전 -->
 					if(searchPageDTO.prePage <= 0){
 						str="<li class='page-item disabled'><a href='#' class='page-link'>이전</a></li>"; 
 					}else{
-						str+="<li class='page-item'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+searchPageDTO.prePage+"' class='page-link'>이전</a></li>";	
+						str+="<li class='page-item'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&searchPage="+searchPageDTO.prePage+"' class='page-link'>이전</a></li>";	
 					}
 					
 					<!--1 2 3 4 5 6 7 8 9 10-->
 					for(var idx = searchPageDTO.min; idx <= searchPageDTO.max; idx++ ){
 						if(idx == searchPageDTO.currentPage){
-							str+="<li class='page-item active'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>"; 
+							str+="<li class='page-item active'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&searchPage="+idx+"' class='page-link'>"+idx+"</a></li>"; 
 						}else{
-							str+="<li class='page-item'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>"; 					
+							str+="<li class='page-item'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&searchPage="+idx+"' class='page-link'>"+idx+"</a></li>"; 					
 						}
 					}
 							
@@ -99,10 +104,13 @@ function searchList(){
 					if(searchPageDTO.max >= searchPageDTO.pageCount){
 						str+="<li class='page-item disabled'><a href='#' class='page-link'>다음</a></li>"; 
 					}else{
-						str+="<li class='page-item'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+searchPageDTO.nextPage+"' class='page-link'>다음</a></li>"; 
+						str+="<li class='page-item'><a href='main?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&searchPage="+searchPageDTO.nextPage+"' class='page-link'>다음</a></li>"; 
 					}
 							
 					$('#page').append(str);
+					
+					
+					
 				} //성공 function의 끝
 			}) //ajax의 끝
 	}//페이지 함수	

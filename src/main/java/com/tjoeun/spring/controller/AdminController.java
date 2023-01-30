@@ -2,20 +2,26 @@ package com.tjoeun.spring.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tjoeun.spring.dto.AdminReplyDTO;
 import com.tjoeun.spring.dto.BoardDTO;
 import com.tjoeun.spring.dto.MemberDTO;
 import com.tjoeun.spring.dto.PageDTO;
+
 import com.tjoeun.spring.dto.ReportDTO;
 import com.tjoeun.spring.service.AdminService;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -23,7 +29,7 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
-	
+		
 	//1. 게시판 관리 페이지로 이동한다. 
 	@RequestMapping("/boardManagement")
 	public String boardManagement() {
@@ -83,19 +89,6 @@ public class AdminController {
 	}
 	
 
-	//2.1) 신고내용 읽기 Reading (댓글 포함)
-	@RequestMapping("/reportedPost")
-	public String readReportedPost
-	(@ModelAttribute("readReportDTO") ReportDTO reportDTO, @RequestParam("reportNo") int reportNo, Model model){
-		
-		ReportDTO readReportDTO = adminService.readReportedPost(reportNo); 
-		model.addAttribute("reportNo", reportNo);		
-		model.addAttribute("readReportDTO", readReportDTO); 
-		
-		return "admin/reportedPost";
-	}
-	
-	
 	
 	
 	//3. 회원 관리 페이지로 이동한다. 
@@ -120,6 +113,27 @@ public class AdminController {
 		List<MemberDTO> searchList = adminService.searchList(searchListMemberDTO);  
 		model.addAttribute("searchList", searchList);
 		return searchList;
+	}
+	
+	
+
+	//6.1) 관리자가 신고된 글에대한 답글을 다는것 
+	@RequestMapping("/writeAdminReplyProcess")
+	public @ResponseBody AdminReplyDTO writeReplyProcess(HttpServletRequest request, HttpServletResponse response, AdminReplyDTO writeAdminReplyDTO) {	
+			
+		AdminReplyDTO adminReplyDTO =  adminService.writeAdminReplyProcess(writeAdminReplyDTO);
+		return adminReplyDTO;
+		
+	}
+	
+	
+
+	//6.2) 관리자의 신고된 글에 대한 댓글삭제
+	@RequestMapping("/removeAdminReply")
+	public @ResponseBody AdminReplyDTO removeAdminReply(HttpServletRequest request, HttpServletResponse response, int replyNo) {
+	
+		AdminReplyDTO ReplyDTO = adminService.removeAdminReply(replyNo); 
+		return ReplyDTO;
 	}
 	
 	
