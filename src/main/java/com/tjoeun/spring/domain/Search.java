@@ -1,6 +1,6 @@
 package com.tjoeun.spring.domain;
 
-public class Search extends Pagination{
+public class Search extends Pagination {
 
 	private String searchType;
 	private String keyword;	

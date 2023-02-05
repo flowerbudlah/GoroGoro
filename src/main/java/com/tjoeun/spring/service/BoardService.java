@@ -54,10 +54,7 @@ public class BoardService {
 		PageDTO pageDTO = new PageDTO(postCnt, currentPage, page_listcnt, page_paginationcnt);
 		return pageDTO;
 	}
-	
-	
 
-	
 	
 	//1. 3) 게시판 메인화면 게시글 검색(아작스)
 	public List<PostDTO> searchList(PostDTO searchListPostDTO, int page) throws Exception {
@@ -68,7 +65,8 @@ public class BoardService {
 		List<PostDTO> searchList = boardDAO.searchList(searchListPostDTO, rowBounds);		
 		return searchList; 
 	}
-		
+
+	
 	//1. 2) 메인페이지의 페이징 작업  
 	public PageDTO searchPageDTO(PostDTO searchListPostDTO, int currentPage) {
 		//아작스로 검색을 했을 때 나오는 게시물 수 

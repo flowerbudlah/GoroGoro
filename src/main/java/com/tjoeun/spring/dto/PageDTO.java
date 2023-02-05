@@ -46,10 +46,10 @@ public class PageDTO {
 		if(max > pageCount) {
 			max = pageCount;
 		}
+
 		prePage = min - 1;
 		nextPage = max + 1;
     
-		
 		//다음페이지버튼 번호가 전체페이지 개수를 넘어가지 않도록 함
 		if(nextPage > pageCount) {
 			nextPage = pageCount; 
@@ -60,4 +60,6 @@ public class PageDTO {
 	
 	
 	
+	
+
 }
