@@ -87,7 +87,7 @@ body{ background-color: white; }
 						</div>
 						<br>
 						<div class="text-right">
-							<input type="button" class="btn btn-danger" onclick="javascript:signIn()" value="로그인"/>
+							<button class="btn btn-danger" onclick="javascript:signIn()">로그인</button>
 						</div>
 					</div>
 				</form>

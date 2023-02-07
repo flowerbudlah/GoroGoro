@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+
 <!-- 게시판 -->  
 <mapper namespace="board">
 
@@ -90,7 +91,7 @@
 	
 	<!-- 1. 4) AJAX 게시글 검색 	-->
 	<select id="searchList" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="com.tjoeun.spring.dto.PostDTO">
-		select postNo, title, writer, DATE_FORMAT(regDate,'%Y-%m-%d') as reg_date, viewCount, sameThinking
+		select postNo, title, writer, DATE_FORMAT(regDate,'%Y-%m-%d') as regDate, viewCount, sameThinking
 		from freeBoard
 		where boardNo = #{boardNo} and 
 			<if test="type!=null and type == 'title'">
@@ -128,11 +129,6 @@
 			</if>
 	</select>
 	
-	
-	
 
 
-
-
- 	
 </mapper>

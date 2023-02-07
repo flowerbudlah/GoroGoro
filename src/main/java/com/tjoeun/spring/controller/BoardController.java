@@ -90,13 +90,11 @@ public class BoardController {
 	} 
 	*/
 	
-	
 	//검색과 페이지(아작스)
 	@RequestMapping("/searchList")
 	public @ResponseBody ResponseEntity< HashMap<String, Object> > searchList
-	(
-	@RequestParam("type") String type, 
-	@RequestParam("keyword") String keyword, 
+	(Model model, 
+	@RequestParam("type") String type, @RequestParam("keyword") String keyword, 
 	@RequestParam("boardNo") int boardNo, 
 	@RequestParam(value="page", defaultValue="1") int page 
 	) throws Exception {
@@ -116,6 +114,7 @@ public class BoardController {
 		//검색결과 수 searchCount
 		int searchCount = boardService.searchCount(searchListPostDTO); 
 		result.put("searchCount", searchCount); 
+		model.addAttribute("searchCount", searchCount); 
 		
 		//페이징
 		PageDTO searchPageDTO = boardService.searchPageDTO(searchListPostDTO, page); 
@@ -128,23 +127,22 @@ public class BoardController {
 	 
 		return ResponseEntity.ok(result);		
 	
-		
 	} 
-
 	
 	//검색과 페이지(페이지 1 2 3 4 5 6 7 8 9 10)
 	@RequestMapping("/searchResult")
 	public String searchResult
-	//ResponseEntity< HashMap<String, Object> >  searchResult
 	(
 	Model model, 
+	@RequestParam("boardNo") int boardNo, 
 	@RequestParam("type") String type, 
 	@RequestParam("keyword") String keyword, 
-	@RequestParam("boardNo") int boardNo, 
-	@RequestParam(value="page", defaultValue="1") int page 
-	) throws Exception {
+	@RequestParam(value="page", defaultValue="1") int page ) throws Exception {
 		
-		HashMap<String, Object> result = new HashMap<>();
+		//HashMap<String, Object> result = new HashMap<>();
+		
+		String boardName = boardService.getBoardName(boardNo); 
+		model.addAttribute("boardName", boardName);//게시판 이름
 			
 		PostDTO searchListPostDTO = new PostDTO(); 
 				
@@ -155,37 +153,36 @@ public class BoardController {
 		//검색결과 리스트
 		List<PostDTO> searchList = boardService.searchList(searchListPostDTO, page); 
 		model.addAttribute("searchList", searchList); 
-		result.put("searchList", searchList);	
+		//result.put("searchList", searchList);	
 			
 		//검색결과 수 searchCount
 		int searchCount = boardService.searchCount(searchListPostDTO); 
-		result.put("searchCount", searchCount); 
+		model.addAttribute("searchCount", searchCount);
+		//result.put("searchCount", searchCount); 
 			
 		//페이징
 		PageDTO searchListPageDTO = boardService.searchPageDTO(searchListPostDTO, page); 
-			
-		result.put("searchListPageDTO", searchListPageDTO); // 페이징
-		model.addAttribute("searchListPageDTO", searchListPageDTO);
 		
-		result.put("page", page);
-		model.addAttribute("page", page);
-		
-		result.put("type", type);
-		model.addAttribute("type", type);
-		
-		result.put("keyword", keyword);
-		model.addAttribute("keyword", keyword);
-		
-		result.put("boardNo", boardNo);
 		model.addAttribute("boardNo", boardNo); //게시판 일련번호(인덱스)
 		
+		//result.put("searchListPageDTO", searchListPageDTO); // 페이징
+		model.addAttribute("searchListPageDTO", searchListPageDTO);
 		
-		//http://localhost:8090/GoroGoroCommunity/board/searchList?boardNo=2&type=titleANDcontent&keyword=test&page=2
-		ResponseEntity.ok(result); 
+		//result.put("page", page);
+		model.addAttribute("page", page);
 		
+		//result.put("type", type);
+		model.addAttribute("type", type);
+		
+		//result.put("keyword", keyword);
+		model.addAttribute("keyword", keyword);
+		
+		//result.put("boardNo", boardNo); 
+		//ResponseEntity.ok(result); 
 		return "board/main";
-		
 	} 
+	
+	
 	
 	
 	//2. 글쓰기 페이지로 이동 
@@ -194,6 +191,7 @@ public class BoardController {
 		model.addAttribute("boardNo", boardNo); //게시판 일련번호(인덱스)
 		return "board/write";
 	}
+	
 	
 	//2.1) 게시글 등록 Creating 
 	@RequestMapping("/writeProcess")

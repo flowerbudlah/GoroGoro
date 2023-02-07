@@ -3,15 +3,12 @@ package com.tjoeun.spring.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 
 import com.tjoeun.spring.dao.BoardDAO;
 import com.tjoeun.spring.dto.PageDTO;
@@ -55,10 +52,6 @@ public class BoardService {
 		return pageDTO;
 	}
 
-
-	
-	
-	
 	
 	//1. 3) 게시판 메인화면 게시글 검색(아작스)
 	public List<PostDTO> searchList(PostDTO searchListPostDTO, int page) throws Exception {
@@ -78,15 +71,10 @@ public class BoardService {
 		return searchPageDTO;
 	}
 	
-	
-	
-	
-	
 	public int searchCount(PostDTO searchListPostDTO) {
 		int searchCount = boardDAO.searchCount(searchListPostDTO);
 		return searchCount;
 	}
-	
 	
 	
 	//1. 4) 게시판 이름 가져오기 

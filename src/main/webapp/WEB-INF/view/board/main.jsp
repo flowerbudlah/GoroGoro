@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
 <script type="text/javascript">    
-function searchList(){
+function search(){
 	
 	const boardNo = $("#boardNo").val(); //내용
 	const keyword = $("#keyword").val(); //내용
@@ -34,6 +34,7 @@ function searchList(){
 		url : 'searchList',
 		data : $("form[name=search-form]").serialize(), 
 		success : 	
+			
 			function(result){
 	
 				const searchPageDTO = result['searchPageDTO'];
@@ -70,49 +71,49 @@ function searchList(){
 					
 					<!-- 이전 -->
 					if(searchPageDTO.prePage <= 0){
-str="<li class='page-item disabled'><a href='#' class='page-link'>이전</a></li>"; 
+						str="<li class='page-item disabled'><a href='#' class='page-link'>이전</a></li>"; 
 					}else{
-str+="<li class='page-item'><a href='searchResult?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+searchPageDTO.prePage+"'class='page-link'>이전</a></li>";	
+						str+="<li class='page-item'><a href='searchResult?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+searchPageDTO.prePage+"'class='page-link'>이전</a></li>";	
 					}
 					
 					<!--1 2 3 4 5 6 7 8 9 10-->
 					for(var idx = searchPageDTO.min; idx <= searchPageDTO.max; idx++ ){
 						if(idx == searchPageDTO.currentPage){
-								
-//str+="<li class='page-item active'><a href='searchResult/boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>";
-str+="<li class='page-item active'><a href='searchResult?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>";	
+							//str+="<li class='page-item active'><a href='searchResult/boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>";
+							str+="<li class='page-item active'><a href='searchResult?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>";	
 						}else{
-							
-str+="<li class='page-item'><a href='searchResult?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>"; 					
-						
+							str+="<li class='page-item'><a href='searchResult?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>"; 					
 						}
 					}		
-						<!--다음-->
-						if(searchPageDTO.max >= searchPageDTO.pageCount){
-str+="<li class='page-item disabled'><a href='#' class='page-link'>다음</a></li>"; 
-						}else{
-str+="<li class='page-item'><a href='searchResult?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+searchPageDTO.nextPage+"' class='page-link'>다음</a></li>"; 
-						}
-						
-						$('#page').html(str);
-						
-				}else{
-						str='검색결과가 없습니다.'; 
-						$('#boardtable').append(str);
-						
-						$('#page').empty(); 
 					
+					<!--다음-->
+					if(searchPageDTO.max >= searchPageDTO.pageCount){
+						str+="<li class='page-item disabled'><a href='#' class='page-link'>다음</a></li>"; 
+					}else{
+						str+="<li class='page-item'><a href='searchResult?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+searchPageDTO.nextPage+"' class='page-link'>다음</a></li>"; 
+					}
+				
+					$('#page').html(str);
+			
+				}else{
+					str='검색결과가 없습니다.'; 
+					$('#boardtable').append(str);
+					$('#page').empty(); 
+					
+					<!-- 이전 -->
+					str="<li class='page-item disabled'><a href='#' class='page-link'>이전</a></li>"; 
+					str+="<li class='page-item disabled'><a href='#' class='page-link'>다음</a></li>"; 
+							
+					$('#page').html(str);
+			
 				}//else의 끝
 			}, //성공 function의 끝
 			error: function(request,status,error){
 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 			
-			
-			
 		}) //ajax의 끝
 }//searchList의 function의 끝	
-
 </script>
 <style>
 .slider img{display:block; width:100%; max-width:100%; height:300px; } /* 슬라이더 영역 CSS */
@@ -132,26 +133,17 @@ h1{ font-family: 'Single Day', cursive; }
 	<img src="/GoroGoroCommunity/image/candy.png">
 </article>
 <!--Post List(게시글 리스트)-->
-<div class="container" style="margin-top:30px; margin-bottom:30px;">
+<div class="container" style="margin-top:50px; margin-bottom:100px;">
 	<!-- <div class="card shadow-none">-->
-	
-		<!-- 검색 기능 -->			
-		<form action="javascript:searchList()" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px;">
-			<select id="type" name="type">
-				<option value="titleANDcontent">제목+내용</option>
-				<option value="title">제목</option>
-				<option value="content">내용</option>
-				<option value="writer">작성자</option>
-			</select>			
-			<input type="text" value="" name="keyword" id="keyword" required="required"/>
-			<input type="hidden" id="boardNo" name="boardNo" value="${boardNo }"/>
-			<input type="button" onclick="javascript:searchList()" class="btn btn-warning btn-sm" value="검색"/>
-		</form>
-		<!-- 검색기능끝 -->	
-	
-	
 		<div class="card-body">	
 			<h1 class="card-title">${boardName }</h1>
+			<c:choose>
+				<c:when test="${searchCount == null}">
+				</c:when>
+				<c:otherwise>
+					총 ${searchCount} 검색되었습니다. 
+				</c:otherwise>
+			</c:choose>
 			<font id="resultLength" size="3"></font>
 			<table class="table table-hover">
 				<thead>
@@ -197,9 +189,6 @@ h1{ font-family: 'Single Day', cursive; }
                         <td class="text-center d-none d-md-table-cell">${postDTO.sameThinking }</td>
 					</tr>
 				</c:forEach>
-				
-				
-				
 				<!-- 검색결과 -->
 				<c:forEach var="postDTO" items="${searchList }" >
 					<tr>
@@ -261,75 +250,11 @@ h1{ font-family: 'Single Day', cursive; }
 				</c:when>	
 				<c:otherwise></c:otherwise>
 			</c:choose>
-			
-			
 			<c:choose>
-			
 				<c:when test="${searchListPageDTO.prePage >= 0 }">
-				</c:when>
-				<c:otherwise>
-						<!-- 메인 게시판의 그 페이징(Paging) -->			
-			<div class="d-none d-md-block">
-				<ul class="pagination justify-content-center" id="page">
-				<!-- 이전 -->
-				<c:choose>
-					<c:when test="${pageDTO.prePage <= 0 }" >
-						<li class="page-item disabled">
-							<a href="#" class="page-link">이전</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item">
-							<a href="main?boardNo=${boardNo}&page=${pageDTO.prePage}" class="page-link">이전</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-				<!-- 1 2 3 4 5 6 7 8 9 10 -->
-				<c:forEach var="idx" begin="${pageDTO.min }" end="${pageDTO.max }">
-					<c:choose>
-						<c:when test="${idx == pageDTO.currentPage }">
-							<li class="page-item active">
-								<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
-								<!-- http://localhost:8090/GoroGoroCommunity/board/      main?boardNo=2&page=1 -->
-							</li>
-						</c:when>
-						<c:otherwise>
-							<li class="page-item">
-								<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
-							</li>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>  
-				<!-- 다음 -->
-				<c:choose>
-					<c:when test="${pageDTO.max >= pageDTO.pageCount }">
-						<!--맨 마지막 페이지인 경우에는 다음 버튼이 안 보이도록 함 (최대페이지가 전체페이지개수보다 크면 다음이 안 보이도록 함) -->
-						<li class="page-item disabled">
-							<a href="#" class="page-link">다음</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item">
-							<a href="main?boardNo=${boardNo}&type=${type }&keyword=${keyword }&page=${pageDTO.nextPage}" class="page-link">다음</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-				<!-- 리셋해야할 부분 -->	
-				</ul>
-			</div>
-				</c:otherwise>
-			</c:choose>
-			
-			
-			
-		
-			
-		<!-- 검색 페이징(Paging) -->		
-		<c:choose>
-			
-			<c:when test="${searchListPageDTO.prePage >= 0 }">
-			<div class="d-none d-md-block">
-				<ul class="pagination justify-content-center">
+					<!-- 검색을 한 경우 -->
+				<div class="d-none d-md-block">
+					<ul class="pagination justify-content-center" id="page">
 				<!-- 이전 -->
 				<c:choose>
 					<c:when test="${searchListPageDTO.prePage <= 0 }" >
@@ -376,14 +301,80 @@ h1{ font-family: 'Single Day', cursive; }
 				<!-- 리셋해야할 부분 -->	
 				</ul>
 			</div>
-			</c:when>
-			<c:otherwise></c:otherwise>
-		</c:choose>	
-			
-			
-
-
+					
+					
+				</c:when>
+				<c:otherwise>
+			<!-- 메인 게시판의 그 페이징(Paging) -->			
+			<div class="d-none d-md-block">
+				<ul class="pagination justify-content-center" id="page">
+				<!-- 이전 -->
+				<c:choose>
+					<c:when test="${pageDTO.prePage <= 0 }" >
+						<li class="page-item disabled">
+							<a href="#" class="page-link">이전</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item">
+							<a href="main?boardNo=${boardNo}&page=${pageDTO.prePage}" class="page-link">이전</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+				<!-- 1 2 3 4 5 6 7 8 9 10 -->
+				<c:forEach var="idx" begin="${pageDTO.min }" end="${pageDTO.max }">
+					<c:choose>
+						<c:when test="${idx == pageDTO.currentPage }">
+							<li class="page-item active">
+								<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
+								<!-- http://localhost:8090/GoroGoroCommunity/board/      main?boardNo=2&page=1 -->
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item">
+								<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>  
+				<!-- 다음 -->
+				<c:choose>
+					<c:when test="${pageDTO.max >= pageDTO.pageCount }">
+						<!--맨 마지막 페이지인 경우에는 다음 버튼이 안 보이도록 함 (최대페이지가 전체페이지개수보다 크면 다음이 안 보이도록 함) -->
+						<li class="page-item disabled">
+							<a href="#" class="page-link">다음</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item">
+							<a href="main?boardNo=${boardNo}&type=${type }&keyword=${keyword }&page=${pageDTO.nextPage}" class="page-link">다음</a>
+							<!-- http://localhost:8090/GoroGoroCommunity/board/     main?boardNo=2 &page=2 -->
+						</li>
+					</c:otherwise>
+				</c:choose>
+				<!-- 리셋해야할 부분 -->	
+				</ul>
+			</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
+		
+		<!-- 검색 기능 -->			
+		<form action="javascript:search()" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px;">
+			<select id="type" name="type">
+				<option value="titleANDcontent">제목+내용</option>
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+				<option value="writer">작성자</option>
+			</select>			
+			<input type="text" value="" name="keyword" id="keyword" required="required"/>
+			<input type="hidden" id="boardNo" name="boardNo" value="${boardNo }"/>
+			<input type="button" onclick="javascript:search()" class="btn btn-warning btn-sm" value="검색"/>
+		</form>
+		<!-- 검색기능끝 -->
+	
+	
+	
 </div>
 <c:import url="/WEB-INF/view/include/bottomInfo.jsp" />
 </body>
