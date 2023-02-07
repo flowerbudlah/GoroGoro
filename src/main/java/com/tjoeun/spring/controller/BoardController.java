@@ -1,6 +1,5 @@
 package com.tjoeun.spring.controller;
 
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,10 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,13 +34,12 @@ public class BoardController {
 
 	@Autowired
 	private ReplyService replyService;
-	
+		
 	//1. 게시판 메인화면으로 간다. 
 	@RequestMapping("/main")
 	public String main(
 	@RequestParam("boardNo") int boardNo, 
-	@RequestParam(value="page", defaultValue="1") int page, 
-	Model model) {
+	@RequestParam(value="page", defaultValue="1") int page, Model model) {
 		
 		model.addAttribute("boardNo", boardNo); //게시판 일련번호(인덱스)
 		
@@ -91,14 +90,16 @@ public class BoardController {
 	} 
 	*/
 	
-	//검색과 페이지
-	@GetMapping("/searchList")
-	public @ResponseBody ResponseEntity<HashMap<String, Object>> searchList
-	(Model model, 
+	
+	//검색과 페이지(아작스)
+	@RequestMapping("/searchList")
+	public @ResponseBody ResponseEntity< HashMap<String, Object> > searchList
+	(
 	@RequestParam("type") String type, 
 	@RequestParam("keyword") String keyword, 
 	@RequestParam("boardNo") int boardNo, 
-	@RequestParam(value="page", defaultValue="1") int page ) throws Exception {
+	@RequestParam(value="page", defaultValue="1") int page 
+	) throws Exception {
 	
 		HashMap<String, Object> result = new HashMap<>();
 		
@@ -109,33 +110,80 @@ public class BoardController {
 		searchListPostDTO.setKeyword(keyword); 
 		
 		//검색결과 리스트
-		List<PostDTO> searchList = boardService.searchList(searchListPostDTO, page);  
-		model.addAttribute("searchList", searchList);
-			
+		List<PostDTO> searchList = boardService.searchList(searchListPostDTO, page); 
+		result.put("searchList", searchList);	
 		
 		//검색결과 수 searchCount
 		int searchCount = boardService.searchCount(searchListPostDTO); 
-		model.addAttribute("searchCount", searchCount);
-		
+		result.put("searchCount", searchCount); 
 		
 		//페이징
 		PageDTO searchPageDTO = boardService.searchPageDTO(searchListPostDTO, page); 
 		
-		model.addAttribute("searchPageDTO", searchPageDTO);
-		model.addAttribute("searchPage", page);
-		model.addAttribute("type", type);
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("boardNo", boardNo); 
-				
-		// 페이징
-		result.put("searchPageDTO", searchPageDTO);
+		result.put("searchPageDTO", searchPageDTO); // 페이징
+		result.put("page", page);
+		result.put("type", type);
+		result.put("keyword", keyword);
+		result.put("boardNo", boardNo); 
+	 
+		return ResponseEntity.ok(result);		
+	
+		
+	} 
 
-		// 게시글 화면 출력
-		result.put("searchList", searchList);
+	
+	//검색과 페이지(페이지 1 2 3 4 5 6 7 8 9 10)
+	@RequestMapping("/searchResult")
+	public String searchResult
+	//ResponseEntity< HashMap<String, Object> >  searchResult
+	(
+	Model model, 
+	@RequestParam("type") String type, 
+	@RequestParam("keyword") String keyword, 
+	@RequestParam("boardNo") int boardNo, 
+	@RequestParam(value="page", defaultValue="1") int page 
+	) throws Exception {
 		
+		HashMap<String, Object> result = new HashMap<>();
+			
+		PostDTO searchListPostDTO = new PostDTO(); 
+				
+		searchListPostDTO.setBoardNo(boardNo); 
+		searchListPostDTO.setType(type); 
+		searchListPostDTO.setKeyword(keyword); 
+			
+		//검색결과 리스트
+		List<PostDTO> searchList = boardService.searchList(searchListPostDTO, page); 
+		model.addAttribute("searchList", searchList); 
+		result.put("searchList", searchList);	
+			
+		//검색결과 수 searchCount
+		int searchCount = boardService.searchCount(searchListPostDTO); 
 		result.put("searchCount", searchCount); 
+			
+		//페이징
+		PageDTO searchListPageDTO = boardService.searchPageDTO(searchListPostDTO, page); 
+			
+		result.put("searchListPageDTO", searchListPageDTO); // 페이징
+		model.addAttribute("searchListPageDTO", searchListPageDTO);
 		
-		return ResponseEntity.ok(result);
+		result.put("page", page);
+		model.addAttribute("page", page);
+		
+		result.put("type", type);
+		model.addAttribute("type", type);
+		
+		result.put("keyword", keyword);
+		model.addAttribute("keyword", keyword);
+		
+		result.put("boardNo", boardNo);
+		model.addAttribute("boardNo", boardNo); //게시판 일련번호(인덱스)
+		
+		
+		//http://localhost:8090/GoroGoroCommunity/board/searchList?boardNo=2&type=titleANDcontent&keyword=test&page=2
+		ResponseEntity.ok(result); 
+		
+		return "board/main";
 		
 	} 
 	
@@ -218,7 +266,6 @@ public class BoardController {
         return ReplyDTO;
     }
 	
-	
 	//6.2) 댓글삭제
 	@RequestMapping("/removeReply")
 	public @ResponseBody ReplyDTO removeReply
@@ -228,8 +275,6 @@ public class BoardController {
 		return ReplyDTO;
 		
 	}
-	
-	
 	
 	//7. 이미지 첨부파일 삭제
 	@RequestMapping("/deleteImageFile")
@@ -251,7 +296,6 @@ public class BoardController {
 		model.addAttribute("postNo", postNo);
 		return "board/report";		
 	}
-	
 	
 	//9.2) 게시글 신고
 	@RequestMapping("/reportProcess")

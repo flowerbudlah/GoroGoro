@@ -88,16 +88,16 @@ public class BoardDAO {
 	}
 	
 
-	
-	
-	
 	//1. 4) 메인 게시판에서 글 검색(아작스)
 	public List<PostDTO> searchList(PostDTO searchListPostDTO, RowBounds rowBounds) throws Exception {
 			
 		List<PostDTO> searchList = sqlSessionTemplate.selectList("board.searchList", searchListPostDTO, rowBounds);
 		return searchList; 
 		
-		}	
+	}	
+	
+	
+	
 	
 	
 	//아작스로 검색 시 검색결과 수(아작스로 페이징 작업때문에 필요) 
