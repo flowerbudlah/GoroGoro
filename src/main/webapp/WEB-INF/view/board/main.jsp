@@ -17,103 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
 <script type="text/javascript">    
-function search(){
-	
-	const boardNo = $("#boardNo").val(); //내용
-	const keyword = $("#keyword").val(); //내용
-	const type = $("#type").val();
-	
-	if (keyword == ""){			
-		alert("검색어를 입력해주세요.");
-		$("#keyword").focus();
-		return;
-	}
-			
-	$.ajax({
-		type: 'get',
-		url : 'searchList',
-		data : $("form[name=search-form]").serialize(), 
-		success : 	
-			
-			function(result){
-	
-				const searchPageDTO = result['searchPageDTO'];
-				const searchList = result['searchList'];
-				const searchCount = result['searchCount']; 
-	
-				const type = result['type'];
-				const keyword = result['keyword'];
-				const boardNo = result['boardNo']; 
-				
-				<!-- http://localhost:8090/GoroGoroCommunity/board/ -->
-				
-				$("#resultLength").html("총"+searchCount+"개의 글이 검색되었습니다.");
-				$('#boardtable').empty(); 	//테이블 초기화
-				
-				if(searchList.length>=1){//검색결과가 하나라도 있다.  
-					
-					searchList.forEach(function(item){
-					
-						str="<tr>"
-							str+="<td><center>"+item.postNo+"</center></td>"; //글번호
-							str+="<td><a href='read?postNo=" +item.postNo+ "'>" + item.title + "<font color='red'>["+ item.replyCount+"]</font></a></td>"; //제목
-							str+="<td><center>"+item.writer+"</center></td>"; //작성자
-							str+="<td><center>"+item.reg_date+"</center></td>"; //작성날짜
-							str+="<td><center>"+item.viewCount+"</center></td>"; //조회수
-							str+="<td><center>"+item.sameThinking+"</center></td>"; //공감수
-						str+="</tr>"
-					
-						$('#boardtable').append(str);
-			  
-					})//forEach의 끝
-        	
-					$('#page').empty(); 
-					
-					<!-- 이전 -->
-					if(searchPageDTO.prePage <= 0){
-						str="<li class='page-item disabled'><a href='#' class='page-link'>이전</a></li>"; 
-					}else{
-						str+="<li class='page-item'><a href='searchResult?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+searchPageDTO.prePage+"'class='page-link'>이전</a></li>";	
-					}
-					
-					<!--1 2 3 4 5 6 7 8 9 10-->
-					for(var idx = searchPageDTO.min; idx <= searchPageDTO.max; idx++ ){
-						if(idx == searchPageDTO.currentPage){
-							//str+="<li class='page-item active'><a href='searchResult/boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>";
-							str+="<li class='page-item active'><a href='searchResult?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>";	
-						}else{
-							str+="<li class='page-item'><a href='searchResult?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+idx+"' class='page-link'>"+idx+"</a></li>"; 					
-						}
-					}		
-					
-					<!--다음-->
-					if(searchPageDTO.max >= searchPageDTO.pageCount){
-						str+="<li class='page-item disabled'><a href='#' class='page-link'>다음</a></li>"; 
-					}else{
-						str+="<li class='page-item'><a href='searchResult?boardNo="+boardNo+"&type="+type+"&keyword="+keyword+"&page="+searchPageDTO.nextPage+"' class='page-link'>다음</a></li>"; 
-					}
-				
-					$('#page').html(str);
-			
-				}else{
-					str='검색결과가 없습니다.'; 
-					$('#boardtable').append(str);
-					$('#page').empty(); 
-					
-					<!-- 이전 -->
-					str="<li class='page-item disabled'><a href='#' class='page-link'>이전</a></li>"; 
-					str+="<li class='page-item disabled'><a href='#' class='page-link'>다음</a></li>"; 
-							
-					$('#page').html(str);
-			
-				}//else의 끝
-			}, //성공 function의 끝
-			error: function(request,status,error){
-				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			}
-			
-		}) //ajax의 끝
-}//searchList의 function의 끝	
+
 </script>
 <style>
 .slider img{display:block; width:100%; max-width:100%; height:300px; } /* 슬라이더 영역 CSS */
@@ -141,10 +45,9 @@ h1{ font-family: 'Single Day', cursive; }
 				<c:when test="${searchCount == null}">
 				</c:when>
 				<c:otherwise>
-					총 ${searchCount} 검색되었습니다. 
+					총 ${searchCount}의 글이 검색되었습니다. 
 				</c:otherwise>
 			</c:choose>
-			<font id="resultLength" size="3"></font>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -359,8 +262,9 @@ h1{ font-family: 'Single Day', cursive; }
 			</c:choose>
 		</div>
 		
-		<!-- 검색 기능 -->			
-		<form action="javascript:search()" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px;">
+		<!-- 검색 기능 -->		
+		<!-- http://localhost:8090/GoroGoroCommunity/GoroGoroCommunity/searchResult?type=titleANDcontent&keyword=test&boardNo=2 -->	
+		<form action="searchResult" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px;">
 			<select id="type" name="type">
 				<option value="titleANDcontent">제목+내용</option>
 				<option value="title">제목</option>
@@ -369,7 +273,8 @@ h1{ font-family: 'Single Day', cursive; }
 			</select>			
 			<input type="text" value="" name="keyword" id="keyword" required="required"/>
 			<input type="hidden" id="boardNo" name="boardNo" value="${boardNo }"/>
-			<input type="button" onclick="javascript:search()" class="btn btn-warning btn-sm" value="검색"/>
+			<button onclick="searchResult" class="btn btn-warning btn-sm">검색</button>
+			
 		</form>
 		<!-- 검색기능끝 -->
 	

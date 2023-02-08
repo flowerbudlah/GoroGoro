@@ -94,7 +94,8 @@ public class BoardController {
 	@RequestMapping("/searchList")
 	public @ResponseBody ResponseEntity< HashMap<String, Object> > searchList
 	(Model model, 
-	@RequestParam("type") String type, @RequestParam("keyword") String keyword, 
+	@RequestParam("type") String type, 
+	@RequestParam("keyword") String keyword, 
 	@RequestParam("boardNo") int boardNo, 
 	@RequestParam(value="page", defaultValue="1") int page 
 	) throws Exception {
