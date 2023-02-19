@@ -17,17 +17,6 @@
 	<delete id="removeReply" parameterType="java.lang.Integer">
 		delete from reply where replyNo = #{replyNo}
 	</delete>
-	
-	
-
-
-
-	
-	
-	
-	
-	
-
 
 </mapper>
 

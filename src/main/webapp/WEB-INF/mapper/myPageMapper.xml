@@ -3,8 +3,8 @@
 
 <mapper namespace="myPage">
 	
-	<!-- 내가 신고한 게시글 리스트 보기 -->
-	<select id="takeMyReportedPost" parameterType="java.lang.String" resultType="com.tjoeun.spring.dto.ReportDTO">
+	<!-- 1. 내가 신고한 게시글 리스트 보기 -->
+	<select id="takeMyReportDTO" parameterType="java.lang.String" resultType="com.tjoeun.spring.dto.ReportDTO">
 		select *, (select count(*) from adminReply where reportNo = r.reportNo) as replyCount 
 		from reportBoard r
 		where r.reporter = #{reporter}
@@ -12,21 +12,53 @@
 	</select>
 	
 	
-	<!--3. 2) 신고된 내용 자세히 보기-->
+	<!-- 2. 내가 신고한 내용 자세히 보기-->
 	<select id="readReportDTO" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.ReportDTO">
-		select * from reportBoard where reportNo = #{reportNo}
+		select * 
+		from reportBoard 
+		where reportNo = #{reportNo}
 	</select>
 	
 	
-	<!-- 신고내역 자체를 삭제한다. -->
+	<!-- 3. 신고내역 자체를 삭제한다.(이 신고철회는 신고자만 가능하다. ) -->
 	<delete id="deleteReportDTO" parameterType="java.lang.Integer">
     	delete 
     	from reportBoard 
     	where reportNo = #{reportNo}
     </delete> 
-	
-	
+    
+	<!-- 4. 내가 쓴 게시글의 조건별 검색 -->
+	<select id="searchList" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="com.tjoeun.spring.dto.PostDTO">
+		select f.postNo, f.title, f.writer, DATE_FORMAT(f.regDate,'%Y-%m-%d') as regDate, f.viewCount, f.sameThinking, f.boardNo, b.boardName
+		from freeBoard f, boardInCategory b
+		where f.boardNo = b.boardNo and f.writer = #{writer} and
+			<if test="type!=null and type == 'title'">
+				f.title like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type!=null and type == 'content'">
+				f.content like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type!=null and type == 'titleANDcontent'">
+				(      f.title like CONCAT('%',#{keyword},'%') OR f.content like CONCAT('%',#{keyword},'%')		)
+			</if>
+				order by f.postNo DESC 
+	</select>
 
 
-
+	<!-- 1. 4) AJAX 게시글 검색후, "검색결과 수"  페이징 작업 -->
+	<select id="searchCount" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="java.lang.Integer">
+		select count(*)
+		from freeBoard f, boardInCategory b
+		where f.boardNo = b.boardNo and f.writer = #{writer} and
+			<if test="type!=null and type == 'title'">
+				f.title like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type!=null and type == 'content'">
+				f.content like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type!=null and type == 'titleANDcontent'">
+				(      f.title like CONCAT('%',#{keyword},'%') OR f.content like CONCAT('%',#{keyword},'%')		)
+			</if>
+	</select>
+	   
 </mapper>

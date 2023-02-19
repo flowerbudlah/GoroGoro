@@ -20,8 +20,7 @@ public class PostDTO {
 	private String writer; //작성자
 	
 	private Date regDate; //글 작성일
-	
-	private String reg_date; //글검색시 아작스
+
 	
 	private int viewCount; //조회수
 	private  int sameThinking; //좋아요 공감버튼! 
@@ -31,10 +30,9 @@ public class PostDTO {
 		
 	private String keyword;//키워드 
 	private String type; //검색종류
+
 	
 	private String imageFileName; //업로드한 사진의 이름
 	private MultipartFile imageFile; //업로드한 사진파일 
-	
-	
-	
+
 }

@@ -1,6 +1,6 @@
 package com.tjoeun.spring.controller;
 
-import java.util.HashMap;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -90,6 +89,7 @@ public class BoardController {
 	} 
 	*/
 	
+	/*
 	//검색과 페이지(아작스)
 	@RequestMapping("/searchList")
 	public @ResponseBody ResponseEntity< HashMap<String, Object> > searchList
@@ -129,6 +129,7 @@ public class BoardController {
 		return ResponseEntity.ok(result);		
 	
 	} 
+	*/
 	
 	//검색과 페이지(페이지 1 2 3 4 5 6 7 8 9 10)
 	@RequestMapping("/searchResult")
@@ -138,7 +139,8 @@ public class BoardController {
 	@RequestParam("boardNo") int boardNo, 
 	@RequestParam("type") String type, 
 	@RequestParam("keyword") String keyword, 
-	@RequestParam(value="page", defaultValue="1") int page ) throws Exception {
+	@RequestParam(value="page", defaultValue="1") int page 
+	) throws Exception {
 		
 		//HashMap<String, Object> result = new HashMap<>();
 		
@@ -182,10 +184,7 @@ public class BoardController {
 		//ResponseEntity.ok(result); 
 		return "board/main";
 	} 
-	
-	
-	
-	
+		
 	//2. 글쓰기 페이지로 이동 
 	@RequestMapping("/write") 
 	public String write(Model model, @RequestParam("boardNo") int boardNo){
@@ -296,6 +295,10 @@ public class BoardController {
 		return "board/report";		
 	}
 	
+	
+	
+	
+	
 	//9.2) 게시글 신고
 	@RequestMapping("/reportProcess")
 	public @ResponseBody ReportDTO reportProcess
@@ -304,5 +307,5 @@ public class BoardController {
 		return reportDTO;
 	}
 	
-
+	
 }

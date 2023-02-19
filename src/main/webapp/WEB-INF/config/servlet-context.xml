@@ -75,7 +75,7 @@
 			<!-- 게시글(글 삭제, 수정은 글쓴이만 할수있다.) -->	
 			<interceptor>
 				<mapping path="/board/modify" /> <!-- 게시글 수정 -->
-				<mapping path="/myPage/deleteReportDTO" /> <!-- 신고내용 삭제 -->
+			 <!--	<mapping path="/myPage/deleteReportDTO" /> 신고내용 삭제 -->
 				<beans:bean class="com.tjoeun.spring.interceptor.CheckWriterInterceptor"/>
 			</interceptor>
 			<!-- 게시글삭제는 관리자와 글쓴이만 할수있는걸로 한다.  -->
@@ -96,21 +96,7 @@
 		</beans:bean> 
 		
 		
-		<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-    <beans:property name="messageConverters">
-    <beans:list>    
-        <beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-            <beans:property name="supportedMediaTypes">
-                <beans:list>
-                    <beans:value>text/html;charset=UTF-8</beans:value>
-                    <beans:value>application/json;charset=UTF-8</beans:value>
-                </beans:list>
-            </beans:property>
-        </beans:bean>            
-    </beans:list>
-    </beans:property>                        
-	</beans:bean>    
-		
+
 	
 		<!-- Message 에 접근하기 위한 Accessor 등록하기 -->
 		<beans:bean class="org.springframework.context.support.MessageSourceAccessor">

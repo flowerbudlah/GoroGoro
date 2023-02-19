@@ -17,10 +17,9 @@ public class ReportDTO {
 	private int postNo; //신고대상 글번호
 	
 	private String imageFileName; //증거자료 이름(첨부파일 이름)
-	
 	private MultipartFile imageFile; //업로드한 사진파일 
 	
-	private String result; //
+	private String result; 
 		
 	private int replyCount; 
 

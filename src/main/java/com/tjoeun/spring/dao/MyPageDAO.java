@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
+import com.tjoeun.spring.dto.PostDTO;
 import com.tjoeun.spring.dto.ReportDTO;
 
 @Repository
@@ -20,7 +20,7 @@ public class MyPageDAO {
 	
 	//8. 1) 관리자가 신고된 게시물보기
 	public List<ReportDTO> takeMyReportedPost(String reporter, RowBounds rowBounds){
-		return sqlSessionTemplate.selectList("myPage.takeMyReportedPost", reporter, rowBounds);
+		return sqlSessionTemplate.selectList("myPage.takeMyReportDTO", reporter, rowBounds);
 	}
 	
 	
@@ -36,8 +36,22 @@ public class MyPageDAO {
 		return sqlSessionTemplate.delete("myPage.deleteReportDTO", reportNo); 
 	}
 
-
 	
+	//5. 내가 쓴 글 검색
+	public List<PostDTO> searchList(PostDTO searchListPostDTO, RowBounds rowBounds) throws Exception {
+				
+		List<PostDTO> searchList = sqlSessionTemplate.selectList("myPage.searchList", searchListPostDTO, rowBounds);
+		
+		return searchList; 
+			
+	}	
+	
+	//아작스로 검색 시 검색결과 수(아작스로 페이징 작업때문에 필요) 
+	public int searchCount(PostDTO searchListPostDTO) {
+		int searchCount = sqlSessionTemplate.selectOne("myPage.searchCount", searchListPostDTO);
+		return searchCount; 
+	}
+		
 	
 	
 	

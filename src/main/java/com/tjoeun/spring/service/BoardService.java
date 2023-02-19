@@ -226,6 +226,7 @@ public class BoardService {
 		return myPostList;
 	}
 	
+	
 	//6. 2) 메인페이지의 페이징 작업  
 	public PageDTO takeCountOfMyPost(int memberNo, int currentPage) {
 					
