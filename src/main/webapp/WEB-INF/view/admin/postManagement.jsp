@@ -37,7 +37,6 @@ thead{background-color: gold; }
 						<th class="text-center d-none d-md-table-cell">신고번호</th>
 						<th class="w-50">신고사유</th>
 						<th class="text-center d-none d-md-table-cell">신고자</th>
-						
 						<th class="text-center d-none d-md-table-cell">신고일짜</th>
 					</tr>
 				</thead>
@@ -48,6 +47,15 @@ thead{background-color: gold; }
 						<td>
 							<a href='http://localhost:8090/GoroGoroCommunity/myPage/reportedPost?reportNo=${reportDTO.reportNo }' style="color:black">
 								${reportDTO.reason}	(게시글 번호: ${reportDTO.postNo })
+								
+									<br>
+								<c:choose>
+									<c:when test="${reportDTO.replyCount == 0 }"></c:when>
+									<c:otherwise><font color="red">답변완료</font></c:otherwise>
+								</c:choose>
+								
+								
+								
 							</a>
 						</td>
 						<td class="text-center d-none d-md-table-cell">${reportDTO.reporter }</td>
@@ -113,10 +121,10 @@ thead{background-color: gold; }
 			</div>
 			<!-- 검색 기능 -->			
 			<form action="javascript:searchList()" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px; margin-bottom:30px;">
-				
 				<select name="type">
 					<option value="reason">신고사유</option>
 					<option value="reporter">신고자</option>
+					<option value="postNo">신고대상(글번호)</option>
 				</select>			
 				<input type="text" value="" name="keyword" id="keyword"/> <!-- required="required"  -->
 				<input type="button" onclick="javascript:searchList()" class="btn btn-warning btn-sm" value="검색"/>

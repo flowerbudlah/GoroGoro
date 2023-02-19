@@ -43,8 +43,8 @@ function writeAdminReplyProcess(){
 	                				
 	                		if(result == "SUCCESS"){				
 	                			alert("댓글 등록을 성공하였습니다.");				
+	                			location.reload();
 	                			return;
-	                			
 	                		} else {				
 	                			alert("댓글 등록을 실패하였습니다.");	
 	                			return;
@@ -142,12 +142,7 @@ function deleteReportDTO(){
 <!-- 상단 메뉴 부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp" />
 <!-- 그 게시판 윗 부분 그림-->  
-<article class="slider">
-	<img src="${root }image/convenientStore.png">
-	<!-- http://localhost:8090/GoroGoroCommunity/         image/convenientStore.png -->
-	<!-- <img src="/GoroGoroCommunity/image/convenientStore.png"> -->
-	<!-- http://localhost:8090   /GoroGoroCommunity/image/convenientStore.png -->
-</article>
+<article class="slider"><img src="${root }image/convenientStore.png"></article>
 <!-- 본문 -->
 <div class="container" style="margin-top:100px; margin-bottom:100px;">
 	<div class="row">
@@ -240,12 +235,13 @@ function deleteReportDTO(){
 		</div><!-- <div class="card-body"> -->
 		<div class="form-group" style="margin-bottom:30px;">
 			<div class="text-right">
-				<button type="button" class="btn btn-primary btn-sm" onclick="javascript:history.back();">이전으로</button>
-				<a href="modify?postNo=${postNo }" class="btn btn-info btn-sm">신고내용 수정하기</a>
-				<%--신고철회는 신고를 한 사람만 볼수있게 한다. --%>
+				<button type="button" class="btn btn-primary" onclick="javascript:history.back();">이전으로</button>
+			
+				<%--신고철회, 신고내용수정하기 신고를 한 사람만 볼수있게 한다. --%>
 				<c:choose>
 					<c:when test="${readReportDTO.reporter == signInMemberDTO.nick }">
-						<button class="btn btn-secondary btn-sm" onclick="javascript:deleteReportDTO();">신고철회</button>
+						<a href="modify?postNo=${postNo }" class="btn btn-info">신고내용 수정하기</a>
+						<button class="btn btn-secondary" onclick="javascript:deleteReportDTO();">신고철회</button>
 					</c:when>
 					<c:otherwise></c:otherwise>
 				</c:choose>

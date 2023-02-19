@@ -91,15 +91,8 @@ h2{ font-family: 'Single Day', cursive; }
 							<font color="red">[${postDTO.replyCount }]</font>
 						</a>
 					</td>
-					<td class="text-center d-none d-md-table-cell">
-						<c:choose>
-							<c:when test="${postDTO.boardNo == 2 }">익명</c:when>
-							<c:otherwise>${postDTO.writer}</c:otherwise>
-						</c:choose>
-					</td>
-					<td class="text-center d-none d-md-table-cell">
-						<fmt:formatDate value="${postDTO.regDate }" pattern="yyyy-MM-dd"/>
-					</td>
+					<td class="text-center d-none d-md-table-cell">${postDTO.writer}</td>
+					<td class="text-center d-none d-md-table-cell"><fmt:formatDate value="${postDTO.regDate }" pattern="yyyy-MM-dd"/></td>
 					<td class="text-center d-none d-md-table-cell">${postDTO.viewCount }</td>
 					<td class="text-center d-none d-md-table-cell">${postDTO.sameThinking }</td>
 				</tr>
@@ -131,22 +124,16 @@ h2{ font-family: 'Single Day', cursive; }
 				<c:choose>
 					<c:when test="${idx == searchListPageDTO.currentPage }">
 						<li class="page-item active">
-							<a href="searchResult?writer=${signInMemberDTO.nick }&type=${type }&keyword=${keyword}&page=${idx}" class="page-link">
-								${idx}
-							</a>
+							<a href="searchResult?writer=${signInMemberDTO.nick }&type=${type }&keyword=${keyword}&page=${idx}" class="page-link">${idx}</a>
 						</li>
 					</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a href="searchResult?writer=${signInMemberDTO.nick }&type=${type }&keyword=${keyword}&page=${idx}" class="page-link">
-								${idx}
-							</a>
+							<a href="searchResult?writer=${signInMemberDTO.nick }&type=${type }&keyword=${keyword}&page=${idx}" class="page-link">${idx}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
 				</c:forEach>  
-				
-				
 				<!-- 다음 -->
 				<c:choose>
 					<c:when test="${searchListPageDTO.max >= searchListPageDTO.pageCount }">
@@ -178,10 +165,7 @@ h2{ font-family: 'Single Day', cursive; }
 					</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a href="myPosts?memberNo=${memberNo }&page=${pageDTO.prePage}" class="page-link">
-								이전
-							</a>
-							
+							<a href="myPosts?memberNo=${memberNo }&page=${pageDTO.prePage}" class="page-link">이전</a>
 						</li>
 					</c:otherwise>
 				</c:choose>

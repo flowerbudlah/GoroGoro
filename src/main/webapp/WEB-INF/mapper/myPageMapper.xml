@@ -11,14 +11,47 @@
 		order by r.reportNo desc
 	</select>
 	
+	<!-- 1. 2) 그 해당 신고 게시판에 올라온 신고글 수 가져오기(페이징 작업때문에 필요하다. ) -->
+	<select id="getReportCnt" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(*) 
+		from reportBoard  
+		where reporter = #{reporter}
+	</select>
 	
+	<!-- 4. 관리자에게 신고한 내역 검색 -->
+	<select id="searchReportList" parameterType="com.tjoeun.spring.dto.ReportDTO" resultType="com.tjoeun.spring.dto.ReportDTO">
+		select * 
+		from  reportBoard 
+		where reporter = #{reporter} and
+			<if test="type!=null and type == 'reason'">
+				reason like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type!=null and type == 'postNo'">
+				postNo like CONCAT('%',#{keyword},'%') 	
+			</if>
+				order by reportNo DESC 
+	</select>
+	
+	<!-- 4. 관리자에게 신고한 내역의 수-->
+	<select id="searchReportCount" parameterType="com.tjoeun.spring.dto.ReportDTO" resultType="java.lang.Integer">
+		select count(*)
+		from  reportBoard 
+		where reporter = #{reporter} and
+		<if test="type!=null and type == 'reason'">
+			reason like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="type!=null and type == 'postNo'">
+			postNo like CONCAT('%',#{keyword},'%') 	
+		</if>
+	</select>
+
+
 	<!-- 2. 내가 신고한 내용 자세히 보기-->
 	<select id="readReportDTO" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.ReportDTO">
 		select * 
 		from reportBoard 
 		where reportNo = #{reportNo}
 	</select>
-	
 	
 	<!-- 3. 신고내역 자체를 삭제한다.(이 신고철회는 신고자만 가능하다. ) -->
 	<delete id="deleteReportDTO" parameterType="java.lang.Integer">
@@ -27,6 +60,25 @@
     	where reportNo = #{reportNo}
     </delete> 
     
+    
+    <!-- 6. 1) 내가 쓴 글 목록(in 마이페이지) -->
+	<select id="goMyPosts" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO">
+		select f.postNo, f.title, f.content, f.writer, f.regDate, f.viewCount, f.sameThinking, f.boardNo, f.imageFileName, 
+				(select count(*) from reply where postNo = f.postNo) as replyCount, b.boardName
+		from freeBoard f, members m, boardInCategory b
+		where f.writer = m.nick and f.boardNo = b.boardNo and m.memberNo = #{memberNo}
+		order by f.postNo desc
+	</select>
+	
+	<!-- 6. 2) 그 해당 게시판에 써져있는 게시글 수 가져오기(페이징 작업때문에 필요하다. ) -->
+	<select id="takeCountOfMyPost" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) 
+		from freeBoard f, members m 
+		where f.writer = m.nick and memberNo = #{memberNo}
+	</select>
+    
+    
+   
 	<!-- 4. 내가 쓴 게시글의 조건별 검색 -->
 	<select id="searchList" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="com.tjoeun.spring.dto.PostDTO">
 		select f.postNo, f.title, f.writer, DATE_FORMAT(f.regDate,'%Y-%m-%d') as regDate, f.viewCount, f.sameThinking, f.boardNo, b.boardName
@@ -44,7 +96,6 @@
 				order by f.postNo DESC 
 	</select>
 
-
 	<!-- 1. 4) AJAX 게시글 검색후, "검색결과 수"  페이징 작업 -->
 	<select id="searchCount" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="java.lang.Integer">
 		select count(*)
@@ -60,5 +111,5 @@
 				(      f.title like CONCAT('%',#{keyword},'%') OR f.content like CONCAT('%',#{keyword},'%')		)
 			</if>
 	</select>
-	   
+		   
 </mapper>

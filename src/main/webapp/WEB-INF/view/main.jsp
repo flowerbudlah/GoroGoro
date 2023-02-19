@@ -50,8 +50,9 @@ thead{background-color:gold;}
 				<div>
     			<h3>추가 예정 기능</h3>
 				<p class="text-center" style="margin-bottom:100px">>
+				관리자 전용 페이지(For the Administrator Only)의 게시물관리 페이지에서 검색과 페이지처리 
     			2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(유효한 신고건수가 50이상인경우)<br>
-    			4. 개인 프로필 기능(프로필누르면 새로운 팝업창이 뜨고 사진 업로드, 본인이 신고당한 건수)
+    			4. 개인 프로필 기능(본인이 신고당한 건수)
     			</p>
 				</div>
 				<h3>공지사항</h3>
@@ -99,9 +100,7 @@ thead{background-color:gold;}
 					</table>
 					
 					<div class="text-right">
-						<a href="${root }board/main?boardNo=1" class="btn btn-danger" style="color:white">
-							more
-						</a>
+						<a href="${root }board/main?boardNo=1" class="btn btn-danger" style="color:white">More...</a>
 					</div>
 				</div><!-- 카드바디 -->
 			</div>

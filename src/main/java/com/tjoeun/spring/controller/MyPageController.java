@@ -19,7 +19,7 @@ import com.tjoeun.spring.dto.PostDTO;
 
 import com.tjoeun.spring.dto.ReportDTO;
 import com.tjoeun.spring.service.AdminService;
-import com.tjoeun.spring.service.BoardService;
+
 import com.tjoeun.spring.service.MyPageService;
 
 
@@ -28,25 +28,66 @@ import com.tjoeun.spring.service.MyPageService;
 public class MyPageController {
 	
 	@Autowired
-	private BoardService boardService;
-	
-	@Autowired
 	private MyPageService myPageService; 
 	
 	@Autowired
 	private AdminService adminService;
 	
-	
+	//내가 신고한 내역보기 
 	@RequestMapping("/reportList")
 	public String myProfile
-	(@RequestParam("nick") String nick, @RequestParam(value="page", defaultValue="1") int page, Model model){
+	(@RequestParam("reporter") String reporter, 
+	@RequestParam(value="page", defaultValue="1") int page, Model model){
+		model.addAttribute("reporter", reporter); //게시판 일련번호(인덱스)
 		
-		List<ReportDTO> myReportList = myPageService.takeMyReportedPost(nick, page); 
+		List<ReportDTO> myReportList = myPageService.takeMyReportedPost(reporter, page); 
 		model.addAttribute("myReportList", myReportList);//게시판 이름
+		
+		//페이징
+		PageDTO pageDTO = myPageService.mainPageDTO(reporter, page); 
+		model.addAttribute("pageDTO", pageDTO);
+		model.addAttribute("page", page);
 		
 		return "myPage/reportList";
 		
 	}
+	
+	//검색과 페이지(페이지 [이전] 1 2 3 4 5 6 7 8 9 10 [다음])
+	//"내가 쓴 게시글" (In My Page)
+	@RequestMapping("/searchReport")
+	public String searchReport
+	(Model model, 
+	@RequestParam("type") String type, 
+	@RequestParam("keyword") String keyword, 
+	@RequestParam("reporter") String reporter, 
+	@RequestParam(value="page", defaultValue="1") int page ) throws Exception {
+								
+		ReportDTO searchListReportDTO = new ReportDTO(); 
+						
+		searchListReportDTO.setType(type); 
+		searchListReportDTO.setKeyword(keyword); 
+		searchListReportDTO.setReporter(reporter); 
+					
+		//내가 쓴 글 검색결과 리스트
+		List<PostDTO> searchReportList = myPageService.searchReportList(searchListReportDTO, page); 
+		model.addAttribute("searchReportList", searchReportList); 
+					
+		//검색결과 수 searchCount
+		int searchReportCount = myPageService.searchReportCount(searchListReportDTO); 
+		model.addAttribute("searchReportCount", searchReportCount);
+
+		//페이징(검색 이후의 )
+		PageDTO searchReportPageDTO = myPageService.searchReportPageDTO(searchListReportDTO, page);			
+		model.addAttribute("searchReportPageDTO", searchReportPageDTO);
+		model.addAttribute("page", page);
+		model.addAttribute("type", type);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("reporter", reporter);
+			
+		return "myPage/reportList";
+		
+	} 
+	
 	
 	
 	//2.1) 신고내용 읽기 Reading (댓글 포함)
@@ -64,29 +105,7 @@ public class MyPageController {
 				
 		return "myPage/reportedPost";		
 	}
-	
-	
-	//신고게시판
-	@RequestMapping("/myPosts")
-	public String myPost
-	(Model model, 
-	@RequestParam("memberNo") int memberNo, 
-	@RequestParam(value="page", defaultValue="1") int page){
 		
-		model.addAttribute("memberNo", memberNo); //게시판 일련번호(인덱스)
-			
-		List<PostDTO> myPostList = boardService.goMyPosts(memberNo, page);
-		model.addAttribute("myPostList", myPostList); //내가 쓴 글의 목록
-		
-		//페이징
-		PageDTO pageDTO = boardService.takeCountOfMyPost(memberNo, page); 
-		model.addAttribute("pageDTO", pageDTO);
-		model.addAttribute("page", page);
-		
-		return "myPage/myPosts";
-	}
-
-	
 	//5. 신고내용 삭제(Deleting)
 	@RequestMapping("/deleteReportDTO")
 	public @ResponseBody ReportDTO deleteReportDTO(
@@ -98,7 +117,29 @@ public class MyPageController {
 		
 	}
 
-	//검색과 페이지(페이지 1 2 3 4 5 6 7 8 9 10)
+	
+	//내가 쓴 게시물 
+	@RequestMapping("/myPosts")
+	public String myPost
+	(Model model, 
+	@RequestParam("memberNo") int memberNo, 
+	@RequestParam(value="page", defaultValue="1") int page){
+		
+		model.addAttribute("memberNo", memberNo); //게시판 일련번호(인덱스)
+			
+		List<PostDTO> myPostList = myPageService.goMyPosts(memberNo, page);
+		model.addAttribute("myPostList", myPostList); //내가 쓴 글의 목록
+		
+		//페이징
+		PageDTO pageDTO = myPageService.takeCountOfMyPost(memberNo, page); 
+		model.addAttribute("pageDTO", pageDTO);
+		model.addAttribute("page", page);
+		
+		return "myPage/myPosts";
+	}
+	
+	//검색과 페이지(페이지 [이전] 1 2 3 4 5 6 7 8 9 10 [다음])
+	//"내가 쓴 게시글" (In My Page)
 	@RequestMapping("/searchResult")
 	public String searchResult
 	(Model model, 
@@ -131,8 +172,6 @@ public class MyPageController {
 		
 		return "myPage/myPosts";
 	} 
-	
-	
-	
+
 	
 }

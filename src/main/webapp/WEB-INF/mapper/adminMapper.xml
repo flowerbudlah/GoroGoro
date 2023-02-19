@@ -80,10 +80,10 @@
 
 	<!-- 3. 1) 신고된 게시글 보기 -->
 	<select id="takeReportedPost" resultType="com.tjoeun.spring.dto.ReportDTO">
-		select * from reportBoard order by reportNo desc
+		select *,  (select count(*) from adminReply where reportNo = r.reportNo) as replyCount 
+		from reportBoard r 
+		order by reportNo desc
 	</select>
-	
-	
 	
 	<!-- 3. 3) 신고된 게시글의 수(관리자페이지에서 페이지작업으로 필요) -->
 	<select id="countOfReportedPost" resultType="java.lang.Integer">

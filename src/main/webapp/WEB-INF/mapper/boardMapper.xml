@@ -115,21 +115,7 @@
     	delete from freeBoard where postNo = #{postNo}
     </delete> 
  
-	<!-- 6. 1) 내가 쓴 글 목록(in 마이페이지) -->
-	<select id="goMyPosts" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO">
-		select f.postNo, f.title, f.content, f.writer, f.regDate, f.viewCount, f.sameThinking, f.boardNo, f.imageFileName, 
-				(select count(*) from reply where postNo = f.postNo) as replyCount, b.boardName
-		from freeBoard f, members m, boardInCategory b
-		where f.writer = m.nick and f.boardNo = b.boardNo and m.memberNo = #{memberNo}
-		order by f.postNo desc
-	</select>
 	
-	<!-- 6. 2) 그 해당 게시판에 써져있는 게시글 수 가져오기(페이징 작업때문에 필요하다. ) -->
-	<select id="takeCountOfMyPost" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-		select count(*) 
-		from freeBoard f, members m 
-		where f.writer = m.nick and memberNo = #{memberNo}
-	</select>
 	
 	
 

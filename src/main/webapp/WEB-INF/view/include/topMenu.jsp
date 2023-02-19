@@ -75,7 +75,7 @@ function signOut(){ //사인아웃
       			<c:when test="${signInMemberDTO.signIn == true }"> <!-- 로그인을 해야지 보이는 관리자 페이지 -->
 					<li><a href="${root }member/modify" style="color:black;">회원정보수정</a></li><br>
 					<li><a href="${root }myPage/myPosts?memberNo=${signInMemberDTO.memberNo}" style="color:black;">나의 게시물</a></li><br>
-					<li><a href="${root }myPage/reportList?nick=${signInMemberDTO.nick}" style="color:black;">나의 신고내역</a></li>
+					<li><a href="${root }myPage/reportList?reporter=${signInMemberDTO.nick}" style="color:black;">나의 신고내역</a></li>
 				</c:when>
 				<c:otherwise></c:otherwise>
 				</c:choose>

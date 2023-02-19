@@ -166,7 +166,7 @@ h1{ font-family: 'Single Day', cursive; }
 					</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a href="searchLst?boardNo=${boardNo}&type=${type }&keyword=${keyword }&page=${pageDTO.prePage}" class="page-link">이전</a>
+							<a href="searchResult?boardNo=${boardNo}&type=${type }&keyword=${keyword }&page=${pageDTO.prePage}" class="page-link">이전</a>
 						</li>
 					</c:otherwise>
 				</c:choose>

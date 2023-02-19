@@ -216,29 +216,7 @@ public class BoardService {
 	}
 
 	
-	//6. 1) 내가 쓴 게시물 리스트들 보기 (관리자 페이지에서 )
-	public List<PostDTO> goMyPosts(int memberNo, int page) {
-			
-		int start = (page - 1) * page_listcnt; //한 페이지 
-		RowBounds rowBounds = new RowBounds(start, page_listcnt);
-		List<PostDTO> myPostList = boardDAO.goMyPosts(memberNo, rowBounds);
-		
-		return myPostList;
-	}
 	
-	
-	//6. 2) 메인페이지의 페이징 작업  
-	public PageDTO takeCountOfMyPost(int memberNo, int currentPage) {
-					
-		//게시판 메인 페이지의 페이징과 관련있는 해당 게시판의 전체 글 수
-		int countOfMyPost = boardDAO.takeCountOfMyPost(memberNo);
-		
-		PageDTO pageDTO = new PageDTO(countOfMyPost, currentPage, page_listcnt, page_paginationcnt);
-		//page_listcnt: 한 페이지당 보여주는 글의 개수, page_paginationcnt: 한 페이지당 보여주는 페이지 버튼 개수
-					
-		return pageDTO;
-	}
-
 	
 	
 	

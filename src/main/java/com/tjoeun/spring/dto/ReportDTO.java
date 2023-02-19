@@ -22,6 +22,10 @@ public class ReportDTO {
 	private String result; 
 		
 	private int replyCount; 
+	
+	
+	private String keyword;//키워드 
+	private String type; //검색종류
 
 	
 	

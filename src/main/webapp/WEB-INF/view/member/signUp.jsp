@@ -165,9 +165,7 @@ body{ background-color: white; }
 				<tr>
 	  				<td colspan = "2" align = "center">
 	  					<div class="text-right" style="margin-top:50px; margin-bottom:50px;">
-							<button type="button" class="btn btn-danger" onclick="javascript:signUpProcess();">
-							 회원가입 완료
-							 </button>
+							<button type="button" class="btn btn-danger" onclick="javascript:signUpProcess();">회원가입 완료</button>
 						</div>
 	  				</td>
 				</tr>

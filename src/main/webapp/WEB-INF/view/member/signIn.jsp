@@ -40,13 +40,18 @@ function signIn(){ //로그인
     	contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
     	processData: false, // 이것을 붙이고 업로드가 되었다. 
     	type     : "post",    
-    	success  : function(data, textStatus, xhr) {
-           if (data == 'loginFail') {
-        	  alert('아이디와 비밀번호는 다시한번 확인해주세요. '); 
-            } else {
-           	  alert('로그인에 성공하였습니다.'); 
-           	  location.href = "${root}";
-            }
+    	success  : 
+			function(data, textStatus, xhr) {
+    		
+    			if (data == 'loginFail') {
+	        	  alert('아이디와 비밀번호는 다시한번 확인해주세요. '); 
+	        	  return; 
+	        	  
+	            } else {
+	           	  alert('로그인에 성공하였습니다.'); 
+	           	  location.href = "${root}";
+	           	  return; 
+	            }
         },          
     	error: function(request,status,error){ 
     		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);   
@@ -71,7 +76,7 @@ body{ background-color: white; }
 			<div class="card shadow-none">
 				<div class="card-body">
 							
-				<form action="javascript:signIn()" method="post" name="tmpSignInMemberDTO" id="tmpSignInMemberDTO" >
+				<form method="post" name="tmpSignInMemberDTO" id="tmpSignInMemberDTO" >
 					<div class="form-group">
 						<label for="email">이메일(아이디)</label>
 						<input type="email" name="email" id="email" class="form-control"/>
@@ -82,8 +87,8 @@ body{ background-color: white; }
 					</div>
 					<div class="form-group ">
 						<div class="text-left">
-							<a href="${root }member/find_id_form" style="">이메일(아이디)</a>또는 
-							<a href="${root }member/find_password_question" style="">비밀번호</a>를 잊으셨습니까? 
+							<a href="${root }member/findEmail" style="">이메일(아이디)</a>또는 
+							<a href="${root }member/findPasswords" style="">비밀번호</a>를 잊으셨습니까? 
 						</div>
 						<br>
 						<div class="text-right">
