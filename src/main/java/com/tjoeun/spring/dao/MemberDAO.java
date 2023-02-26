@@ -42,6 +42,12 @@ public class MemberDAO {
 		return sqlSessionTemplate.update("member.modifyMemberDTO", modifyMemberDTO);
 	}
 	
+	//회원 본인이 원해서 회원탈퇴
+	public int leave(MemberDTO MemberDTOIsLeaving) {
+		return sqlSessionTemplate.delete("member.leave", MemberDTOIsLeaving);
+
+	}
+	
 
 
 }

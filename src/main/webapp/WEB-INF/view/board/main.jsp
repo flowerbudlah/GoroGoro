@@ -32,7 +32,9 @@ h1{ font-family: 'Single Day', cursive; }
 <!-- 상단 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!-- 그 게시판 윗 부분 그림-->
-<article class="slider"><img src="/GoroGoroCommunity/image/candy.png"></article>
+<article class="slider">
+	<img src="/GoroGoroCommunity/image/candy.png">
+</article>
 <!--Post List(게시글 리스트)-->
 <div class="container" style="margin-top:50px; margin-bottom:100px;">
 	<!-- <div class="card shadow-none">-->
@@ -160,9 +162,7 @@ h1{ font-family: 'Single Day', cursive; }
 				<!-- 이전 -->
 				<c:choose>
 					<c:when test="${searchListPageDTO.prePage <= 0 }" >
-						<li class="page-item disabled">
-							<a href="#" class="page-link">이전</a>
-						</li>
+						<li class="page-item disabled"><a href="#" class="page-link">이전</a></li>
 					</c:when>
 					<c:otherwise>
 						<li class="page-item">
@@ -247,7 +247,6 @@ h1{ font-family: 'Single Day', cursive; }
 					<c:otherwise>
 						<li class="page-item">
 							<a href="main?boardNo=${boardNo}&type=${type }&keyword=${keyword }&page=${pageDTO.nextPage}" class="page-link">다음</a>
-							<!-- http://localhost:8090/GoroGoroCommunity/board/     main?boardNo=2 &page=2 -->
 						</li>
 					</c:otherwise>
 				</c:choose>

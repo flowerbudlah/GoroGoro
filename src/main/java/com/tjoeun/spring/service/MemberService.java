@@ -92,9 +92,25 @@ public class MemberService {
 	}
 	
 	
-	
-	
-	
+	//회원본인이 원해서 탈퇴하기 
+	public MemberDTO leave(MemberDTO memberDTOisLeaving) throws Exception {
+		
+		MemberDTO memberDTO = new MemberDTO();
+		
+		int leaveCount = memberDAO.leave(memberDTOisLeaving);
 
-
+		if (leaveCount > 0) {
+			memberDTO.setResult("SUCCESS");
+		} else {
+			memberDTO.setResult("FAIL");
+		}
+			return memberDTO;
+	}
+	
+	
+	
+	
+	
+	
+	
 }

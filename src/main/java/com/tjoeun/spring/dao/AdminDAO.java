@@ -60,8 +60,8 @@ public class AdminDAO {
 	}
 	
 	//7. 관리자의 회원검색(with using a Ajax)
-	public List<MemberDTO> searchList(MemberDTO searchListMemberDTO) throws Exception {
-		return sqlSessionTemplate.selectList("admin.searchList", searchListMemberDTO); 
+	public List<MemberDTO> searchMemberList(MemberDTO searchListMemberDTO) throws Exception {
+		return sqlSessionTemplate.selectList("admin.searchMemberList", searchListMemberDTO); 
 	}
 	
 	
@@ -90,7 +90,27 @@ public class AdminDAO {
 		return sqlSessionTemplate.delete("admin.removeAdminReply", reportNo);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	//1. 4) 메인 게시판에서 글 검색
+	public List<ReportDTO> searchList(ReportDTO searchListReportDTO, RowBounds rowBounds) throws Exception {
+				
+		List<ReportDTO> searchList = sqlSessionTemplate.selectList("admin.searchList", searchListReportDTO, rowBounds);
+		return searchList; 
+			
+	}	
 		
+	//아작스로 검색 시 검색결과 수(아작스로 페이징 작업때문에 필요) 
+	public int searchCount(ReportDTO searchListReportDTO){
+		int searchCount = sqlSessionTemplate.selectOne("admin.searchCount", searchListReportDTO);
+		return searchCount; 
+	}	
+	
 	
 	
 	

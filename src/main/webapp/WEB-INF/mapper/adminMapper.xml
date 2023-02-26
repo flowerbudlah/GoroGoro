@@ -45,7 +45,7 @@
 	</select>
 	
 	<!-- 2. 2) 회원정보 검색(at 관리자페이지)	-->
-	<select id="searchList" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
+	<select id="searchMemberList" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
 		select m.memberNo, m.email, m.nick, DATE_FORMAT (m.signUpDate, '%Y년%m월%d일 %H시%i분%S초') as signUp_Date, 
 				(select count(*) from freeBoard f where f.writer =m.nick ) as 'postCount', 
 				(select count(*) from reply r where r.replyWriter =m.nick ) as 'replyCount', 
@@ -70,13 +70,10 @@
 		select count(*) from freeBoard where writer = #{writer}	
 	</select>	
 
-		
 	<!--2. 4) 특정한 한 회원이 쓴 댓글의 수 -->
 	<select id="replyCount" parameterType="java.lang.String" resultType="java.lang.Integer">
 		select count(*) from reply where writer = #{writer}	
 	</select>		
-
-
 
 	<!-- 3. 1) 신고된 게시글 보기 -->
 	<select id="takeReportedPost" resultType="com.tjoeun.spring.dto.ReportDTO">
@@ -100,23 +97,53 @@
 	
 	<!--4. 2) 관리자가 신고게시글에 답변한 댓글 목록 가져오기 -->
 	<select id="adminReplyList" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.AdminReplyDTO">
-		select * from adminReply where reportNo = #{reportNo}        
+		select * 
+		from adminReply 
+		where reportNo = #{reportNo}        
 	</select>	
 	
 	
 	<!-- 4. 3) 관리자가 본인이 쓴 댓글 삭제 -->
 	<delete id="removeAdminReply" parameterType="java.lang.Integer">
-		delete from adminReply where replyNo = #{replyNo}
+		delete 
+		from adminReply 
+		where replyNo = #{replyNo}
 	</delete>
+	
+	
+	<!-- 1. 4) 관리자에게 신고 접수된 게시물 검색 -->
+	<select id="searchList" parameterType="com.tjoeun.spring.dto.ReportDTO" resultType="com.tjoeun.spring.dto.ReportDTO">
+		select *
+		from reportBoard
+		where 
+			<if test="type!=null and type == 'reason'">
+				reason like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type!=null and type == 'reporter'">
+				reporter like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type!=null and type == 'postNo'">
+				postNo like CONCAT('%',#{keyword},'%')
+			</if>
+				order by reportNo DESC 
+	</select>
 
-	
-	
 
-
-	
-
-	
-	
+	<!-- 1. 4) 관리자에게 신고 접수된 게시물 검색후, "검색결과 수"  페이징 작업때문에 필효 -->
+	<select id="searchCount" parameterType="com.tjoeun.spring.dto.ReportDTO" resultType="java.lang.Integer">
+		select count(*)
+		from reportBoard
+		where
+			<if test="type!=null and type == 'reason'">
+				reason like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type!=null and type == 'reporter'">
+				reporter like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type!=null and type == 'postNo'">
+				postNo like CONCAT('%',#{keyword},'%')
+			</if>
+	</select>
 	
 
 </mapper>

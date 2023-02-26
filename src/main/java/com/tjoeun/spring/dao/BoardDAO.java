@@ -34,6 +34,24 @@ public class BoardDAO {
 		return sqlSessionTemplate.selectOne("board.getBoardName", boardNo);
 	}
 	
+	
+	//1. 4) 메인 게시판에서 글 검색
+	public List<PostDTO> searchList(PostDTO searchListPostDTO, RowBounds rowBounds) throws Exception {
+				
+		List<PostDTO> searchList = sqlSessionTemplate.selectList("board.searchList", searchListPostDTO, rowBounds);
+		return searchList; 
+			
+	}	
+		
+
+	//아작스로 검색 시 검색결과 수(아작스로 페이징 작업때문에 필요) 
+	public int searchCount(PostDTO searchListPostDTO) {
+		int searchCount = sqlSessionTemplate.selectOne("board.searchCount", searchListPostDTO);
+		return searchCount; 
+	}
+	
+	
+
 	//2. 1) 글쓰기 Create
 	public int writeProcess(PostDTO writePostDTO) {
 		return sqlSessionTemplate.insert("board.writeProcess", writePostDTO); 
@@ -77,24 +95,8 @@ public class BoardDAO {
 	
 	
 	
-	
-	
-	
 
-	//1. 4) 메인 게시판에서 글 검색
-	public List<PostDTO> searchList(PostDTO searchListPostDTO, RowBounds rowBounds) throws Exception {
-			
-		List<PostDTO> searchList = sqlSessionTemplate.selectList("board.searchList", searchListPostDTO, rowBounds);
-		return searchList; 
-		
-	}	
 	
-
-	//아작스로 검색 시 검색결과 수(아작스로 페이징 작업때문에 필요) 
-	public int searchCount(PostDTO searchListPostDTO) {
-		int searchCount = sqlSessionTemplate.selectOne("board.searchCount", searchListPostDTO);
-		return searchCount; 
-	}
 	
 	
 	

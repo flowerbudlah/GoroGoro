@@ -91,12 +91,12 @@
 				f.content like CONCAT('%',#{keyword},'%')
 			</if>
 			<if test="type!=null and type == 'titleANDcontent'">
-				(      f.title like CONCAT('%',#{keyword},'%') OR f.content like CONCAT('%',#{keyword},'%')		)
+				(f.title like CONCAT('%',#{keyword},'%') OR f.content like CONCAT('%',#{keyword},'%'))
 			</if>
 				order by f.postNo DESC 
 	</select>
 
-	<!-- 1. 4) AJAX 게시글 검색후, "검색결과 수"  페이징 작업 -->
+	<!-- 1. 4) 게시글 검색후, "검색결과 수"  페이징 작업 -->
 	<select id="searchCount" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="java.lang.Integer">
 		select count(*)
 		from freeBoard f, boardInCategory b
@@ -108,8 +108,13 @@
 				f.content like CONCAT('%',#{keyword},'%')
 			</if>
 			<if test="type!=null and type == 'titleANDcontent'">
-				(      f.title like CONCAT('%',#{keyword},'%') OR f.content like CONCAT('%',#{keyword},'%')		)
+				(f.title like CONCAT('%',#{keyword},'%') OR f.content like CONCAT('%',#{keyword},'%'))
 			</if>
 	</select>
+	
+	
+	
+	
+	
 		   
 </mapper>

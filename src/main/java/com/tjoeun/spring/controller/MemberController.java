@@ -148,5 +148,19 @@ public class MemberController {
 	}
 	
 	
+	//회원본인이 원해서 회원탈퇴한다.(아작스)
+	@RequestMapping("/leave")
+	public @ResponseBody MemberDTO leave(MemberDTO memberDTOisLeaving) throws Exception{
+		
+		MemberDTO memberDTO = memberService.leave(memberDTOisLeaving); 
+		return memberDTO;
+
+	}
+		
+	
+	
+	
+	
+	
 	
 }

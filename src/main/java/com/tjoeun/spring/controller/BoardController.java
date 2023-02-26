@@ -295,10 +295,7 @@ public class BoardController {
 		return "board/report";		
 	}
 	
-	
-	
-	
-	
+
 	//9.2) 게시글 신고
 	@RequestMapping("/reportProcess")
 	public @ResponseBody ReportDTO reportProcess
@@ -306,6 +303,5 @@ public class BoardController {
 		ReportDTO reportDTO = boardService.reportProcess(submitReportDTO);
 		return reportDTO;
 	}
-	
 	
 }

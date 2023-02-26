@@ -55,7 +55,9 @@ function deletePost(){
             
          });
     } //yn 끝        
-} //deleteBoard
+} //deletePost
+
+
 
 //4. 신고하기
 function report(){
@@ -306,8 +308,8 @@ function removeReply(){
 		<div class="text-right">
 			<button type="button" class="btn btn-primary btn-sm" onclick="javascript:goMain();">목록으로</button>
 			<a href="modify?postNo=${postNo }" class="btn btn-info btn-sm">수정하기</a>
-			<!--http://localhost:8090/GoroGoroCommunity/board/modify?postNo=1  -->
 			<button type="button" class="btn btn-secondary btn-sm" onclick="javascript:deletePost();">삭제하기</button>
+			
 			
 			<c:choose>
 				<%--로그인을 한 회원에게만 보이는 게시글 신고버튼--%> 
@@ -315,8 +317,9 @@ function removeReply(){
 					<a href="report?postNo=${postNo }" class="btn btn-danger btn-sm">게시글 신고</a>
 				</c:when>
 				<c:otherwise></c:otherwise>
-			</c:choose>	
-			&emsp;&emsp; 	
+			</c:choose>&emsp;&emsp; 	
+			
+			
 		</div>
 	</div>
           

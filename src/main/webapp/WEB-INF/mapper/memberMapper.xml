@@ -22,21 +22,36 @@
 	
 	<!-- 2. 로그인(Sign In) -->
  	<select id="signIn" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
- 		select * from members where email = #{email} and passwords = #{passwords}
+ 		select * 
+ 		from members 
+ 		where email = #{email} and passwords = #{passwords}
 	</select>
 	
 	
 	<!-- 3. 1) 회원정보수정하기 위해서 정보수정 전 정보 가져오기 -->
   	<select id="takeMemberDTO" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.MemberDTO">
-  		select * from members where memberNo = #{memberNo}
+  		select * 
+  		from members 
+  		where memberNo = #{memberNo}
     </select>
   
   
   	<!-- 3. 2) 회원정보수정하기 -->
 	<update id="modifyMemberDTO" parameterType="com.tjoeun.spring.dto.MemberDTO" >
-		update members set passwords = #{passwords}, nick = #{nick}, question = #{question}, answer=#{answer}
+		update members 
+		set passwords = #{passwords}, nick = #{nick}, question = #{question}, answer=#{answer}
 		where memberNo = #{memberNo}     
 	</update>
+
+
+	<!-- 회원이 원해서 회원탈퇴(본인의 비밀번호를 입력하여 탈퇴) -->
+	<delete id="leave" parameterType="com.tjoeun.spring.dto.MemberDTO">
+		delete 
+		from members 
+		where email=#{email} and passwords=#{passwords}
+	</delete> 
+
+
 
 
 

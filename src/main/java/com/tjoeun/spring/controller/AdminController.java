@@ -22,7 +22,6 @@ import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.ReportDTO;
 import com.tjoeun.spring.service.AdminService;
 
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -102,17 +101,18 @@ public class AdminController {
 	
 	
 	//3.1) 회원관리페이지에서 회원 검색(with using ajax)
-	@GetMapping("/searchList")
-	public @ResponseBody List<MemberDTO> searchList
+	@GetMapping("/searchMemberList")
+	public @ResponseBody List<MemberDTO> searchMemberList
 	(@RequestParam("type") String type, @RequestParam("keyword") String keyword, Model model) throws Exception{
 
 		MemberDTO searchListMemberDTO = new MemberDTO(); 
 		searchListMemberDTO.setType(type); 
 		searchListMemberDTO.setKeyword(keyword); 
 		
-		List<MemberDTO> searchList = adminService.searchList(searchListMemberDTO);  
-		model.addAttribute("searchList", searchList);
-		return searchList;
+		List<MemberDTO> searchMemberList = adminService.searchMemberList(searchListMemberDTO);  
+		model.addAttribute("searchMemberList", searchMemberList);
+		return searchMemberList;
+		
 	}
 	
 	
@@ -135,6 +135,67 @@ public class AdminController {
 		AdminReplyDTO ReplyDTO = adminService.removeAdminReply(replyNo); 
 		return ReplyDTO;
 	}
+	
+	
+	
+	//관리자의 신고된 글에 대한 검색과 페이지(페이지 1 2 3 4 5 6 7 8 9 10)
+	@RequestMapping("/searchResult")
+	public String searchResult(
+	Model model, 
+	@RequestParam("type") String type, 
+	@RequestParam("keyword") String keyword, 
+	@RequestParam(value="page", defaultValue="1") int page 
+	) throws Exception {
+	
+		ReportDTO searchListReportDTO = new ReportDTO(); 
+		searchListReportDTO.setType(type); 
+		searchListReportDTO.setKeyword(keyword); 
+			
+		//검색결과 리스트
+		List<ReportDTO> searchList = adminService.searchList(searchListReportDTO, page); 
+		model.addAttribute("searchList", searchList); 
+		//result.put("searchList", searchList);	
+			
+		//검색결과 수 searchCount
+		int searchCount = adminService.searchCount(searchListReportDTO); 
+		model.addAttribute("searchCount", searchCount);
+		//result.put("searchCount", searchCount); 
+			
+		//페이징
+		PageDTO searchListPageDTO = adminService.searchPageDTO(searchListReportDTO, page); 
+		
+		//result.put("searchListPageDTO", searchListPageDTO); // 페이징
+		model.addAttribute("searchListPageDTO", searchListPageDTO);
+		
+		//result.put("page", page);
+		model.addAttribute("page", page);
+		
+		//result.put("type", type);
+		model.addAttribute("type", type);
+		
+		//result.put("keyword", keyword);
+		model.addAttribute("keyword", keyword);
+		
+		
+		//result.put("boardNo", boardNo); 
+		//ResponseEntity.ok(result); 
+		return "admin/postManagement";
+	} 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

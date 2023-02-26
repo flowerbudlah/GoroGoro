@@ -49,10 +49,8 @@ thead{background-color:gold;}
 			<div class="card-body">
 				<div>
     			<h3>추가 예정 기능</h3>
-				<p class="text-center" style="margin-bottom:100px">>
-				관리자 전용 페이지(For the Administrator Only)의 게시물관리 페이지에서 검색과 페이지처리 
-    			2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(유효한 신고건수가 50이상인경우)<br>
-    			4. 개인 프로필 기능(본인이 신고당한 건수)
+				<p class="text-center" style="margin-bottom:100px">
+					2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(유효한 신고건수가 50이상인경우)<br>
     			</p>
 				</div>
 				<h3>공지사항</h3>

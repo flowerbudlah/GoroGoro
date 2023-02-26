@@ -24,7 +24,7 @@ function searchList(){
 			
 	$.ajax({
 		type: 'get',
-		url : '${root}admin/searchList',
+		url : '${root}admin/searchMemberList',
 		data : $("form[name=search-form]").serialize(), 
 		success : 
 			function(result){

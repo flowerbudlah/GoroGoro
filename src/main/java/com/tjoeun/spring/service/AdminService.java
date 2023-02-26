@@ -71,8 +71,8 @@ public class AdminService {
 	}
 
 	//6. 4) 특정 회원 검색(at 관리자페이지) 
-	public List<MemberDTO> searchList(MemberDTO searchListMemberDTO) throws Exception {
-		return adminDAO.searchList(searchListMemberDTO);		
+	public List<MemberDTO> searchMemberList(MemberDTO searchListMemberDTO) throws Exception {
+		return adminDAO.searchMemberList(searchListMemberDTO);		
 	}
 
 	
@@ -137,12 +137,30 @@ public class AdminService {
 	}
 			
 		
+	//1. 3) 게시판 메인화면 게시글 검색(아작스)
+	public List<ReportDTO> searchList(ReportDTO searchListReportDTO, int page) throws Exception {
+			
+		int start = (page - 1) * page_listcnt; //한 페이지 
+		RowBounds rowBounds = new RowBounds(start, page_listcnt);
+			
+		List<ReportDTO> searchList = adminDAO.searchList(searchListReportDTO, rowBounds);		
+		return searchList; 
+	}
 		
+	//1. 2) 메인페이지의 페이징 작업  
+	public PageDTO searchPageDTO(ReportDTO searchListReportDTO, int currentPage) {
 		
+		//검색을 했을 때 나오는 게시물 수 
+		int searchCount = adminDAO.searchCount(searchListReportDTO);
+		PageDTO searchPageDTO = new PageDTO(searchCount, currentPage, page_listcnt, page_paginationcnt);
+		return searchPageDTO;
+	}
 		
-		
-	
-	
-	
+	public int searchCount(ReportDTO searchListReportDTO) {
+		int searchCount = adminDAO.searchCount(searchListReportDTO);
+		return searchCount;
+	}
+			
+
 
 }

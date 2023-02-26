@@ -53,7 +53,8 @@ public class BoardService {
 	}
 
 	
-	//1. 3) 게시판 메인화면 게시글 검색(아작스)
+	
+	//1. 3) 게시판 메인화면 게시글 검색
 	public List<PostDTO> searchList(PostDTO searchListPostDTO, int page) throws Exception {
 		
 		int start = (page - 1) * page_listcnt; //한 페이지 
@@ -75,6 +76,10 @@ public class BoardService {
 		int searchCount = boardDAO.searchCount(searchListPostDTO);
 		return searchCount;
 	}
+	
+	
+	
+	
 	
 	
 	//1. 4) 게시판 이름 가져오기 
