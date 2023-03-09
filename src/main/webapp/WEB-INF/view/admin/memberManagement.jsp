@@ -37,10 +37,11 @@ function searchList(){
 							str+="<td><center>"+item.memberNo+"</center></td>"; //회원번호
 							str+="<td><center>"+item.email+"</center></td>"; //제목
 							str+="<td><center>"+item.nick+"</center></td>"; //작성자
-							str+="<td><center>"+item.postCount+"</center></td>"; //게시글 수
+							str+="<td><center><a href='${root }myPage/myPosts?memberNo="+item.memberNo+"'>"+item.postCount+"<a></center></td>"; //게시글 수
 							str+="<td><center>"+item.replyCount+"</center></td>"; //댓글 수 
 							str+="<td><center>"+item.reportCount+"</center></td>"; //신고당한 건수
 							str+="<td><center>"+item.signUp_Date+"</center></td>"; //가입일
+							str+="<td><center>"+item.finalSignInDate_Date+"</center></td>"; //가입일
 							str+="<td><center><a href=''>강제탈퇴시키기</a></center></td>"; 
 						str+="</tr>"
 						
@@ -93,6 +94,7 @@ td{text-align:center; border: 1px solid black;}
 				<th style="text-align: center;">댓글수</th>
 				<th style="text-align: center;">신고게시글수</th>
 				<th style="text-align: center;">가입일</th>
+				<th style="text-align: center;">최종로그인일시</th>
 				<th style="text-align: center;"></th>
 			</tr>
 		</thead>
@@ -101,9 +103,7 @@ td{text-align:center; border: 1px solid black;}
 			<tr>
 				<td style="text-align: center;">${allMemberList.memberNo }</td>
 				<td style="text-align: center;">${allMemberList.email}</td>
-				<td style="text-align: center;">
-					<a href="">${allMemberList.nick }</a>
-				</td>
+				<td style="text-align: center;">${allMemberList.nick }</td>
 				<td style="text-align: center;">
 					<a href="${root }myPage/myPosts?memberNo=${allMemberList.memberNo}">${allMemberList.postCount}</a>
 				</td>
@@ -111,6 +111,9 @@ td{text-align:center; border: 1px solid black;}
 				<td style="text-align: center;">${allMemberList.reportCount}</td>
 				<td style="text-align: center;">
 					<fmt:formatDate pattern="yyyy-MM-dd(E) hh시 mm분 ss초" value="${allMemberList.signUpDate }"/>
+				</td>
+				<td style="text-align: center;">
+					<fmt:formatDate pattern="yyyy-MM-dd(E) hh시 mm분 ss초" value="${allMemberList.finalSignInDate }"/>
 				</td>
 				<td style="text-align: center;"><a href="">강제탈퇴시키기</a></td>
 			</tr>

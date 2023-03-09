@@ -50,7 +50,11 @@ thead{background-color:gold;}
 				<div>
     			<h3>추가 예정 기능</h3>
 				<p class="text-center" style="margin-bottom:100px">
+					1. 회원관리페이지(회원 로그인 시간 댓글방식으로) 완성하기 <br>
 					2. 지속적으로 악성댓글을 쓰는사람은 회원강퇴(유효한 신고건수가 50이상인경우)<br>
+					3. 주소를 갖게되는 웹 호스팅<br>
+					4. 일반 파일(이미지 파일뿐아닌)업로드<br>
+					5. 
     			</p>
 				</div>
 				<h3>공지사항</h3>

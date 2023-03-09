@@ -41,15 +41,14 @@ function signIn(){ //로그인
     	processData: false, // 이것을 붙이고 업로드가 되었다. 
     	type     : "post",    
     	success  : 
-			function(data, textStatus, xhr) {
+			function(data) {
     		
     			if (data == 'loginFail') {
 	        	  alert('아이디와 비밀번호는 다시한번 확인해주세요. '); 
 	        	  return; 
-	        	  
 	            } else {
 	           	  alert('로그인에 성공하였습니다.'); 
-	           	  location.href = "${root}";
+	           	  location.href = "${root}main";
 	           	  return; 
 	            }
         },          
@@ -68,7 +67,10 @@ body{ background-color: white; }
 <!-- 메뉴부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
-<article class="slider"><img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg"></article>
+<article class="slider">
+	<img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg">
+	<!-- http://localhost:8090/GoroGoroCommunity/       image/yamamotoshinji_sapporo_clockTower.jpg -->
+</article>
 <!-- 로그인 폼 -->
 <div class="container" style="margin-top:50px; margin-bottom:50px; ">
 	<div class="row">

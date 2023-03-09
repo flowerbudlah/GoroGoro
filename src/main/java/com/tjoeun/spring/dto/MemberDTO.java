@@ -20,6 +20,11 @@ public class MemberDTO {
 	private Date signUpDate; //가입일
 	private String signUp_Date; 
 	
+	private Date finalSignInDate; //최종로그인 날짜
+	private String finalSignIn_Date; 
+	
+	
+	
 	private String result; //회원가입 성공여부를 할려주는 결과변수
 	private boolean signIn; //로그인이 된상태면 이것이 true, 로그인이 안된상태면 false 
 	

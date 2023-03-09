@@ -37,7 +37,18 @@ h2{ font-family: 'Single Day', cursive; }
 <!--Post List(내가 쓴 게시글 리스트)-->
 <div class="container" style="margin-top:50px; margin-bottom:50px;">
 	<div class="card-body">	
-		<h2 class="card-title"> ${signInMemberDTO.nick}님께서 쓴 게시물</h2>
+		<h2 class="card-title">
+			<c:choose>
+				<c:when test="${ signInMemberDTO.memberNo == memberNo }">
+					<!-- 로그인을 한 회원본인이 자신이 쓴 게시글을 모아서 보는 경우 -->
+					${signInMemberDTO.nick}님께서 쓴 게시물
+				</c:when>
+				<c:otherwise>
+					<!-- 관리자가 특정 회원이 쓴글을 모아서 보는경우 -->
+					${memberDTO.nick }님께서 쓴 게시물
+				</c:otherwise>
+			</c:choose>	
+		</h2>
 		<c:choose>
 			<c:when test="${searchCount == null}"></c:when>
 			<c:otherwise>총 ${searchCount}개의 글이 검색되었습니다.</c:otherwise>

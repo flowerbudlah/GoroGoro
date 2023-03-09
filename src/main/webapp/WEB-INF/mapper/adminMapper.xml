@@ -29,6 +29,12 @@
 		delete from boardCategory where boardCategoryNo =#{boardCategoryNo}
 	</delete>
 	
+	<!-- 1. 6) 게시판이 속한 대분류 카테고리 변경 -->
+	<update id="changeCategory" parameterType="com.tjoeun.spring.dto.BoardDTO" >
+		update boardInCategory set boardCategoryNo = #{boardCategoryNo} where boardNo = #{boardNo}
+	</update>
+	
+	
 	
 	<!-- 2. 1) 회원목록 가져오기(at 관리자 페이지) -->
 	<select id="takeMemberList" resultType="com.tjoeun.spring.dto.MemberDTO">

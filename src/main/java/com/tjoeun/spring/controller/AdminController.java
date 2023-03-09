@@ -71,6 +71,14 @@ public class AdminController {
 	}
 	
 	
+	//1.6) 게시판이 속한 대분류 카테고리 변경 Updating
+	@RequestMapping("/boardManagement/changeCategory")
+	public String changeCategory(BoardDTO BoardDTOinCategory) {
+		adminService.changeCategory(BoardDTOinCategory);
+		return "redirect:/admin/boardManagement";
+	}
+	
+	
 	//2. 게시물 관리 페이지로 이동한다. (관리자에게 보내진 신고된 게시글 리스트)
 	@RequestMapping("/postManagement")
 	public String postManagement

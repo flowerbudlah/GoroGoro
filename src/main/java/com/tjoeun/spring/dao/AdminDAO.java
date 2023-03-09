@@ -43,29 +43,34 @@ public class AdminDAO {
 	public void deleteBoard(int boardNo) {
 		sqlSessionTemplate.delete("admin.deleteBoard", boardNo); 
 	}
-		
-	//6. 1) 회원목록 가져오기
+
+	//6. 게시판이 속한 대분류 카테고리 변경 Updating
+	public void changeCategory(BoardDTO boardDTOinCategory) {
+		sqlSessionTemplate.update("admin.changeCategory", boardDTOinCategory); 
+	}
+	
+	//7. 1) 회원목록 가져오기
 	public List<MemberDTO> takeMemberList() {
 		return sqlSessionTemplate.selectList("admin.takeMemberList");
 	}
 	
-	//6. 2) 특정한 한 회원이 쓴 글의 수 가져오기 
+	//7. 2) 특정한 한 회원이 쓴 글의 수 가져오기 
 	public int postCount(String writer) {
 		return sqlSessionTemplate.selectOne("admin.postCount", writer); 
 	}
 	
-	//6. 3) 특정한 한 회원이 쓴 댓글 수 가져오기 
+	//7. 3) 특정한 한 회원이 쓴 댓글 수 가져오기 
 	public int replyCount(String writer) {
 		return sqlSessionTemplate.selectOne("admin.postReply", writer); 
 	}
 	
-	//7. 관리자의 회원검색(with using a Ajax)
+	//8. 관리자의 회원검색(with using a Ajax)
 	public List<MemberDTO> searchMemberList(MemberDTO searchListMemberDTO) throws Exception {
 		return sqlSessionTemplate.selectList("admin.searchMemberList", searchListMemberDTO); 
 	}
 	
 	
-	//8. 1) 관리자가 신고된 게시물보기
+	//9. 1) 관리자가 신고된 게시물보기
 	public List<ReportDTO> takeReportedPost(RowBounds rowBounds){
 		return sqlSessionTemplate.selectList("admin.takeReportedPost", rowBounds);
 	}

@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tjoeun.spring.dao.MemberDAO;
 import com.tjoeun.spring.dto.AdminReplyDTO;
+import com.tjoeun.spring.dto.MemberDTO;
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
 
 import com.tjoeun.spring.dto.ReportDTO;
 import com.tjoeun.spring.service.AdminService;
-
 import com.tjoeun.spring.service.MyPageService;
 
 
@@ -32,6 +33,9 @@ public class MyPageController {
 	
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private MemberDAO memberDAO;
 	
 	//내가 신고한 내역보기 
 	@RequestMapping("/reportList")
@@ -126,7 +130,12 @@ public class MyPageController {
 	@RequestParam(value="page", defaultValue="1") int page){
 		
 		model.addAttribute("memberNo", memberNo); //게시판 일련번호(인덱스)
-			
+
+		MemberDTO memberDTO = memberDAO.takeMemberDTO(memberNo); 
+		model.addAttribute("memberDTO", memberDTO); 
+		
+		
+		
 		List<PostDTO> myPostList = myPageService.goMyPosts(memberNo, page);
 		model.addAttribute("myPostList", myPostList); //내가 쓴 글의 목록
 		
@@ -136,6 +145,8 @@ public class MyPageController {
 		model.addAttribute("page", page);
 		
 		return "myPage/myPosts";
+		
+		
 	}
 	
 	//검색과 페이지(페이지 [이전] 1 2 3 4 5 6 7 8 9 10 [다음])

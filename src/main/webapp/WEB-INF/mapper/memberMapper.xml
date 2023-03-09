@@ -19,6 +19,7 @@
 		select nick from members where nick = #{nick}
 	</select>
   	 
+  	 
 	
 	<!-- 2. 로그인(Sign In) -->
  	<select id="signIn" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
@@ -26,6 +27,16 @@
  		from members 
  		where email = #{email} and passwords = #{passwords}
 	</select>
+	
+	
+	<!-- 로그인을 성공한 시점에 로그인을 하면서 로그인을 하는 시간 때가 기록되는 것 -->
+	<insert id="signInTime">
+	
+	
+	</insert>
+	
+	
+	
 	
 	
 	<!-- 3. 1) 회원정보수정하기 위해서 정보수정 전 정보 가져오기 -->

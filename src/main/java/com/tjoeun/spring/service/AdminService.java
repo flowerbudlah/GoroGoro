@@ -55,28 +55,34 @@ public class AdminService {
 		adminDAO.deleteBoard(boardNo);
 	}	
 
-	//6. 1) 멤버리스트는 다 가져오는거(at 관리자페이지)
+	//6. 게시판이 속한 대분류 카테고리 변경 Updating
+	public void changeCategory(BoardDTO boardDTOinCategory) {
+		adminDAO.changeCategory(boardDTOinCategory);
+	}
+	
+	
+	//7. 1) 멤버리스트는 다 가져오는거(at 관리자페이지)
 	public List<MemberDTO> takeMemberList(){
 		return adminDAO.takeMemberList();
 	} 
 	
-	//6. 2) 특정한 한 회원이 쓴 글의 수 가져오기 (at 관리자페이지)
+	//7. 2) 특정한 한 회원이 쓴 글의 수 가져오기 (at 관리자페이지)
 	public int postCount(String writer) {
 		return adminDAO.postCount(writer);   
 	}
 		
-	//6. 3) 특정한 한 회원이 쓴 댓글 수 가져오기	(at 관리자페이지)
+	//7. 3) 특정한 한 회원이 쓴 댓글 수 가져오기	(at 관리자페이지)
 	public int replyCount(String writer) {
 		return adminDAO.replyCount(writer); 
 	}
 
-	//6. 4) 특정 회원 검색(at 관리자페이지) 
+	//7. 4) 특정 회원 검색(at 관리자페이지) 
 	public List<MemberDTO> searchMemberList(MemberDTO searchListMemberDTO) throws Exception {
 		return adminDAO.searchMemberList(searchListMemberDTO);		
 	}
 
 	
-	//7. 1) 관리자가 신고된 글 모두 리스트로 보기 (at 게시물페이지) 
+	//8. 1) 관리자가 신고된 글 모두 리스트로 보기 (at 게시물페이지) 
 	public List<ReportDTO> takeReportedPost(int page){
 		
 		int start = (page - 1) * page_listcnt; //한 페이지 
