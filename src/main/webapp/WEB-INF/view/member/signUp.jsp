@@ -43,7 +43,7 @@ $(document).ready(function(){	});
 		}
 			
 		if(nick == ""){			
-			alert("제목을 입력해주세요.");
+			alert("닉네임을 입력해주세요.");
 			$("#nick").focus();
 			return;
 		}
@@ -69,7 +69,23 @@ $(document).ready(function(){	});
 		                contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
 		                processData: false, // 이것을 붙이고 업로드가 되었다. 
 		                type     : "POST",    
-		                success  : function(obj){ insertBoardCallback(obj); },           
+		                success  : function(obj){
+		                	
+		                	if(obj != null){		
+		            			var result = obj.result;
+		            			
+		            			if(result == "success"){				
+		            				alert("회원가입을 성공하였습니다. 로그인 페이지로 이동하겠습니다.");				
+		            				signIn(); 
+		            				
+		            			} else {				
+		            				alert("회원가입에 실패하였습니다. ");	
+		            				return;
+		            			}
+		            		}
+		                	
+		          
+		                },           
 		                error: function(request,status,error){
 		                	alert("회원가입을 하시려면 중복되는 것이 없어야 합니다. ");
 		                }
@@ -81,22 +97,6 @@ $(document).ready(function(){	});
 			}
 		}//yn의 끝
 	} //signUpProcess()의 끝
-		
-	//회원가입 완료 콜백함수
-	function insertBoardCallback(obj){
-	
-		if(obj != null){		
-			
-			var result = obj.result;
-			if(result == "success"){				
-				alert("회원가입을 성공하였습니다. 로그인 페이지로 이동하겠습니다.");				
-				signIn(); 
-			} else {				
-				alert("회원가입에 실패하였습니다. ");	
-				return;
-			}
-		}
-	}
 				
 </script>
 <style>

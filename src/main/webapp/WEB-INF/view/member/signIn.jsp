@@ -17,13 +17,11 @@ function signIn(){ //로그인
 	
 	var email = $("#email").val(); //이메일(아이디)
 	var passwords = $("#passwords").val(); //작성자
-
 	if(email == ""){			
 		alert("이메일 주소를 입력해주세요.");
 		$("#email").focus();
 		return;
 	}
-
 	if (passwords == ""){			
 		alert("패스워드를 입력해주세요.");
 		$("#passwords").focus();
@@ -31,7 +29,6 @@ function signIn(){ //로그인
 	}
 	
 	var formData = new FormData($('#tmpSignInMemberDTO')[0]);	
-
 	 $.ajax({   
 		url      : "${root}member/signInProcess", 
     	data     : formData,
@@ -40,17 +37,13 @@ function signIn(){ //로그인
     	contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
     	processData: false, // 이것을 붙이고 업로드가 되었다. 
     	type     : "post",    
-    	success  : 
-			function(data) {
-    		
-    			if (data == 'loginFail') {
-	        	  alert('아이디와 비밀번호는 다시한번 확인해주세요. '); 
-	        	  return; 
-	            } else {
-	           	  alert('로그인에 성공하였습니다.'); 
-	           	  location.href = "${root}main";
-	           	  return; 
-	            }
+    	success  : function(data, textStatus, xhr) {
+           if (data == 'loginFail') {
+        	  alert('아이디와 비밀번호는 다시한번 확인해주세요. '); 
+            } else {
+           	  alert('로그인에 성공하였습니다.'); 
+           	  location.href = "${root}";
+            }
         },          
     	error: function(request,status,error){ 
     		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);   
@@ -67,10 +60,7 @@ body{ background-color: white; }
 <!-- 메뉴부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
-<article class="slider">
-	<img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg">
-	<!-- http://localhost:8090/GoroGoroCommunity/       image/yamamotoshinji_sapporo_clockTower.jpg -->
-</article>
+<article class="slider"><img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg"></article>
 <!-- 로그인 폼 -->
 <div class="container" style="margin-top:50px; margin-bottom:50px; ">
 	<div class="row">
@@ -78,7 +68,7 @@ body{ background-color: white; }
 			<div class="card shadow-none">
 				<div class="card-body">
 							
-				<form method="post" name="tmpSignInMemberDTO" id="tmpSignInMemberDTO" >
+				<form action="javascript:signIn()" method="post" name="tmpSignInMemberDTO" id="tmpSignInMemberDTO" >
 					<div class="form-group">
 						<label for="email">이메일(아이디)</label>
 						<input type="email" name="email" id="email" class="form-control"/>
@@ -94,7 +84,10 @@ body{ background-color: white; }
 						</div>
 						<br>
 						<div class="text-right">
+							<button class="btn btn-danger">로그인</button>
+						<!-- 
 							<button class="btn btn-danger" onclick="javascript:signIn()">로그인</button>
+							 -->
 						</div>
 					</div>
 				</form>

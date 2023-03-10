@@ -28,15 +28,10 @@ public class MemberDAO {
 
 	//2. Log In or Sign In
 	public MemberDTO signIn(MemberDTO tmpSignInMemberDTO) {
-		
 		return sqlSessionTemplate.selectOne("member.signIn", tmpSignInMemberDTO);
 	}
 	
-	
-	
 
-	
-	
 	
 	//3. 1) 수정할 회원정보 가져오기 
 	public MemberDTO takeMemberDTO(int memberNo) {                      

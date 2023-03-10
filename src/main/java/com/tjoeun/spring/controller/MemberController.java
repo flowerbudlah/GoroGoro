@@ -115,22 +115,25 @@ public class MemberController {
 	}
 	
 	//5.2) 로그인버튼을 누르고 로그인성공하기. 
-	@PostMapping("/signInProcess")
-	public void signInProcess
-	(HttpServletRequest request, HttpServletResponse response, MemberDTO tmpSignInMemberDTO) {
-			
-		memberService.signIn(tmpSignInMemberDTO); //로그인 시도 
-		
-		if(signInMemberDTO.isSignIn() == true) {//이것은 로그인이 성공했다는 의미
+		@PostMapping("/signInProcess")
+		public void signInProcess
+		(HttpServletRequest request, HttpServletResponse response, MemberDTO tmpSignInMemberDTO) {
 				
-		} else if(signInMemberDTO.isSignIn() ==  false ) { //이것은 로그인 실패 
-			try {
-				response.getWriter().write("loginFail");
-			} catch (IOException e) {
-				e.printStackTrace();
+			memberService.signIn(tmpSignInMemberDTO); //로그인 시도 
+			
+			if(signInMemberDTO.isSignIn() == true) {//이것은 로그인이 성공했다는 의미
+					
+			} else if(signInMemberDTO.isSignIn() ==  false ) { //이것은 로그인 실패 
+				try {
+					response.getWriter().write("loginFail");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
-	}
+	
+	
+	
 	
 	//6. 로그아웃(Sign Out)
 	@ResponseBody 

@@ -44,6 +44,7 @@ public class MemberService {
 		return memberDAO.checkNick(nick);
 	}
 
+	
 	//2. Sign In(로그인)
 	public void signIn(MemberDTO tmpSignInMemberDTO) {
 		
@@ -55,19 +56,13 @@ public class MemberService {
 			signInMemberDTO.setPasswords(memberDTOfromDB.getPasswords()); //로그인한 회원의 패스워드
 			signInMemberDTO.setNick(memberDTOfromDB.getNick()); //로그인한 회원의 대화명
 			
-			//로그인 시간의 기록
-			
-			
-			signInMemberDTO.setSignIn(true); //로그인 성공하니 sign in이 false에서 true로 바뀝니다.
+			signInMemberDTO.setSignIn(true); //로그인 성공하니 sign in이 false에서 true로 바뀝니다.		
 		} else if(memberDTOfromDB == null) { //로그인을 했더니, DB애 정보가 없다. 
 			signInMemberDTO.setSignIn(false); 
+			
 		}
+		
 	}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -121,9 +116,6 @@ public class MemberService {
 	}
 	
 	
-	
-	
-	
-	
+
 	
 }
