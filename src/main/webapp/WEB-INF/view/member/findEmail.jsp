@@ -29,13 +29,19 @@ function takeQuestion(){
 			function(result){
 				$('#findEmail').empty(); 	//테이블 초기화
 				
-				if(result.length == 0){//검색결과가 있는경우, 
-					str='입력하신 닉네임에 대한 회원정보가 없으니 다시 한번 확인하시고 입력해주세요!'; 
+				if(result.length == 0){//검색결과가 전혀없는 경우 
+					str="<img src='${root }image/banner/cryingPeko.jpg' width='100px;'><br>"; 
+					str+="입력하신 닉네임에 대한 회원정보가 없으니<br> 다시 한번 확인하시고 입력해주세요!"; 
 					$('#findEmail').append(str);
 					
 				}else{
-						str='아래의 질문에 응답해주세요!'; 
-						$('#findEmail').append(str);
+					
+					str="아래의 질문에 응답해주세요!<br><br><strong>"+result.question+"</strong>";
+													
+				
+					$('#findEmail').append(str);
+					
+	
 				}
 			}  //function(result)
 		}) //ajax의 끝

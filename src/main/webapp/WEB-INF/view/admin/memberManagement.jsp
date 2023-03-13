@@ -15,6 +15,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">    
 function searchList(){
+	
 	const keyword = $("#keyword").val(); 
 	if (keyword == ""){			
 		alert("검색어를 입력해주세요.");
@@ -31,23 +32,25 @@ function searchList(){
 				$('#boardtable').empty(); 	//테이블 초기화
 				$("#resultLength").html("총"+result.length+'명의 회원이 검색되었습니다.');
 				if(result.length>=1){//검색결과가 있는경우, 
-					result.forEach(function(item){
+					result.forEach(
+							function(item){
 						
-						str='<tr>'
-							str+="<td><center>"+item.memberNo+"</center></td>"; //회원번호
-							str+="<td><center>"+item.email+"</center></td>"; //제목
-							str+="<td><center>"+item.nick+"</center></td>"; //작성자
-							str+="<td><center><a href='${root }myPage/myPosts?memberNo="+item.memberNo+"'>"+item.postCount+"<a></center></td>"; //게시글 수
-							str+="<td><center>"+item.replyCount+"</center></td>"; //댓글 수 
-							str+="<td><center>"+item.reportCount+"</center></td>"; //신고당한 건수
-							str+="<td><center>"+item.signUp_Date+"</center></td>"; //가입일
-							str+="<td><center><a href=''>상세보기</a></center></td>"; 
-							str+="<td><center>0</center></td>"; 
-							str+="<td><center><a href=''>강제탈퇴시키기</a></center></td>"; 
-						str+="</tr>"
-						
-						$('#boardtable').append(str);
-        			})		
+								str='<tr>'
+									str+="<td><center>"+item.memberNo+"</center></td>"; //회원번호
+									str+="<td><center>"+item.email+"</center></td>"; //제목
+									str+="<td><center>"+item.nick+"</center></td>"; //작성자
+									str+="<td><center><a href='${root }myPage/myPosts?memberNo="+item.memberNo+"'>"+item.postCount+"<a></center></td>"; //게시글 수
+									str+="<td><center>"+item.replyCount+"</center></td>"; //댓글 수 
+									str+="<td><center>"+item.reportCount+"</center></td>"; //신고당한 건수
+									str+="<td><center>"+item.signUp_Date+"</center></td>"; //가입일
+									str+="<td><center><a href=''>상세보기</a></center></td>"; 
+									str+="<td><center>0</center></td>"; 
+									str+="<td><center><a href=''>강제탈퇴시키기</a></center></td>"; 
+								str+="</tr>"
+								
+								$('#boardtable').append(str);
+        				}
+					)		
 				}else{
 						str='검색결과가 없습니다.'; 
 						$('#boardtable').append(str);
