@@ -52,7 +52,9 @@ public class MemberDAO {
 		return sqlSessionTemplate.selectOne("member.takeQuestion", nick);
 	}
 	
-	
+	public String findEmail(MemberDTO memberDTOtoFindEmail) {
+		return sqlSessionTemplate.selectOne("member.findEmail", memberDTOtoFindEmail);
+	}
 	
 	
 

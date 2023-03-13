@@ -2,6 +2,7 @@ package com.tjoeun.spring.controller;
 
 import java.io.IOException;
 
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -173,6 +174,22 @@ public class MemberController {
 	
 	
 	//아이디 대용인 이메일을 분실했을경우, 사용하던 닉네임을 입력한 뒤에 질문을 보여준다. 
+	@GetMapping("/findIDemail")
+	public @ResponseBody String findEmail
+	(@RequestParam("nick") String nick, @RequestParam("answer") String answer, Model model) {
+		
+		MemberDTO memberDTOtoFindEmail = new MemberDTO(); 
+		memberDTOtoFindEmail.setNick(nick);  
+		memberDTOtoFindEmail.setAnswer(answer);  
+		
+		String email = memberService.findEmail(memberDTOtoFindEmail); 		
+		model.addAttribute("email", email);
+		return email;
+
+	}
+	
+
+	//아이디 대용인 이메일을 분실했을경우, 사용하던 닉네임을 입력한 뒤에 질문을 보여준다. 
 	@GetMapping("/takeQuestion")
 	public @ResponseBody MemberDTO takeQuestion(@RequestParam("nick") String nick, Model model) {
 		
@@ -181,6 +198,15 @@ public class MemberController {
 		
 		return toFindEmail;  //result
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

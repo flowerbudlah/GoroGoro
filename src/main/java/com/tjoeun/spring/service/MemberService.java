@@ -121,7 +121,12 @@ public class MemberService {
 		return toFindEmail; 
 	}
 	
-	
+	//잊어버린 이메일을 찾기위해서 닉네임과 질문에 대한 정답을 입력합니다. 
+	public String findEmail(MemberDTO memberDTOtoFindEmail) {
+		
+		String email = memberDAO.findEmail(memberDTOtoFindEmail); 
+		return email; 
+	}
 	
 	
 

@@ -13,6 +13,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+//질문을 가져오는 제이쿼리
 function takeQuestion(){
 	const nick = $("#nick").val(); 
 	if (nick == ""){			
@@ -35,17 +36,51 @@ function takeQuestion(){
 					$('#findEmail').append(str);
 					
 				}else{
-					
-					str="아래의 질문에 응답해주세요!<br><br><strong>"+result.question+"</strong>";
-													
-				
+					str="아래의 질문에 정확히 응답해주세요!<br><br><strong>"+result.question+"</strong><br>";
+					str+="<form action='javascript:findEmail()' name='search-form2'>"; 
+					str+="<input type='text' id='answer' name='answer'>"; 
+					str+="<input type='hidden' value='"+result.nick+"' id='nick' name='nick'>"; 
+					str+="<button class='btn btn-warning btn-sm'>제출하기</button></form>  ";
 					$('#findEmail').append(str);
-					
-	
+				
 				}
 			}  //function(result)
 		}) //ajax의 끝
 	}//function의 끝	
+	
+	
+	
+	function findEmail(){
+		const answer = $("#answer").val(); 
+		if (answer == ""){			
+			alert("질문에 대한 답을 입력해주세요!");
+			$("#answer").focus();
+			return;
+		}
+				
+		$.ajax({
+			type: 'get',
+			url : '${root}member/findIDemail',
+			data : $("form[name=search-form2]").serialize(), 
+			success : 
+				function(result){
+					$('#findEmail').empty(); 	//테이블 초기화
+					
+					if(result.length == 0){//검색결과가 전혀없는 경우 
+						str="<img src='${root }image/banner/cryingPeko.jpg' width='100px;'><br>"; 
+						str+="입력하신 회원정보가 없으니<br> 다시 한번 확인하시고 입력해주세요!"; 
+						$('#findEmail').append(str);
+						
+					}else{
+						str="<img src='${root }image/banner/bluePekko.png' width='100px;'><br>"; 
+						str+="이메일은 <strong>"+result+"</strong> 입니다.";
+				
+						$('#findEmail').append(str);
+					
+					}
+				}  //function(result)
+			}) //ajax의 끝
+		}//function의 끝	
 </script>
 <style>
 .slider img{ display:block; width:100%; max-width:100%; height:300px; }

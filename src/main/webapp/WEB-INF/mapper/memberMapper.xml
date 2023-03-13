@@ -64,6 +64,17 @@
     </select>
 
 
+	<!-- 아이디 대용인 이메일 분실시 질문과 답을 가져오기-->
+  	<select id="findEmail" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="java.lang.String">
+  		select email
+  		from members 
+  		where nick = #{nick} and answer = #{answer}
+    </select>
+	
+	
+	
+	
+
 
 
 
