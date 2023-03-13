@@ -10,12 +10,16 @@
 
 	<!--2. 댓글 목록 가져오기 -->
 	<select id="replyList" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.ReplyDTO">
-		select * from reply where postNo = #{postNo}        
+		select * 
+		from reply 
+		where postNo = #{postNo}        
 	</select>
 	
 	<!-- 3. 댓글 삭제 -->
 	<delete id="removeReply" parameterType="java.lang.Integer">
-		delete from reply where replyNo = #{replyNo}
+		delete 
+		from reply 
+		where replyNo = #{replyNo}
 	</delete>
 
 </mapper>

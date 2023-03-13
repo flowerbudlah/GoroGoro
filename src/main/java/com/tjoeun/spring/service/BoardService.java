@@ -108,7 +108,7 @@ public class BoardService {
 	}
 	
 	//2. 2) 이미지 파일 첨부
-	private String saveUploadFile(MultipartFile imageFile) {
+	public String saveUploadFile(MultipartFile imageFile) {
 				
 		String imageFileName = imageFile.getOriginalFilename();
 				
@@ -123,6 +123,7 @@ public class BoardService {
 		return imageFileName;
 	}
 		
+	
 	//2. 3) 게시물 신고  Create
 	public ReportDTO reportProcess(ReportDTO submitReportDTO) throws Exception {
 			
@@ -142,6 +143,9 @@ public class BoardService {
 		return reportDTO;		
 	}
 
+	
+	
+	
 	//3. 1) 글수정
 	public PostDTO modify(PostDTO modifyPostDTO) {
 			

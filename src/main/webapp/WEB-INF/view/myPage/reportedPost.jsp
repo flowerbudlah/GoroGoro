@@ -180,7 +180,6 @@ function deleteReportDTO(){
 			<c:if test="${readReportDTO.imageFileName != ''}">
           		<label for="fileName">첨부 이미지 파일</label>
 	          		<a href="http://localhost:8090/GoroGoroCommunity/upload/${readReportDTO.imageFileName}">
-	          				
 	          			${readReportDTO.imageFileName} 
 	          		</a> 
           	</c:if>  
@@ -240,7 +239,9 @@ function deleteReportDTO(){
 				<%--신고철회, 신고내용수정하기 신고를 한 사람만 볼수있게 한다. --%>
 				<c:choose>
 					<c:when test="${readReportDTO.reporter == signInMemberDTO.nick }">
-						<a href="modify?postNo=${postNo }" class="btn btn-info">신고내용 수정하기</a>
+						<a href="modify?reportNo=${reportNo }" class="btn btn-info">신고내용 수정하기</a>
+						<!-- http://localhost:8090/GoroGoroCommunity/myPage/      
+						modify?postNo= -->
 						<button class="btn btn-secondary" onclick="javascript:deleteReportDTO();">신고철회</button>
 					</c:when>
 					<c:otherwise></c:otherwise>

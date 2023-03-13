@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>게시판 수정</title>
+<title>게시글 수정하기</title>
 <link rel="icon" type="image/x-icon" href="image/favicon.png">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -79,8 +79,8 @@
 	//3. 첨부된 이미지를 삭제(실제는 업데이트기능)하는
 	function deleteImageFile(){
 		
-		var postNo = $("#postNo").val(); 
-		var imageFileName = $("#imageFileName").val(); 
+		//var postNo = $("#postNo").val(); 
+		//var imageFileName = $("#imageFileName").val(); 
 		
 		var formData = new FormData($('#imageFilePostDTO')[0]);	
 		
@@ -130,17 +130,19 @@
 			<div class="card shadow-sm">
 				<div class="card-body">
 					<h4 class="card-title">게시글 번호: ${postNo } </h4>
-											 <form id="imageFilePostDTO" name="imageFilePostDTO">
-	<input type="hidden" id="postNo" name="postNo" value="${postNo }"/>
-	<input type="hidden" id="imageFileName" name="imageFileName" value=""/>
-</form>
-<c:if test="${PostDTOfromDB.imageFileName != '' }" > 
-첨부 이미지: ${PostDTOfromDB.imageFileName }
-
-<button class="badge badge-pill badge-light" onclick="javascript:deleteImageFile();">   이 첨부파일 제거</button>
-</c:if> 
+					
+					<form id="imageFilePostDTO" name="imageFilePostDTO">
+						<input type="hidden" id="postNo" name="postNo" value="${postNo }"/>
+						<input type="hidden" id="imageFileName" name="imageFileName" value=""/>
+					</form>
+					<%-- 첨부이미지가 존재해야지 등장하는 부분 --%>
+					<c:if test="${PostDTOfromDB.imageFileName != '' }" > 
+						첨부 이미지: ${PostDTOfromDB.imageFileName }
+						<button class="badge badge-pill badge-light" onclick="javascript:deleteImageFile();">   이 첨부파일 제거</button>
+					</c:if> 
+					
 					<form id="modifyPostDTO" name="modifyPostDTO" enctype="multipart/form-data">
-					 <input type="hidden" name="postNo" value="${postNo }" > 
+						<input type="hidden" name="postNo" value="${postNo }" > 
 						<div class="form-group">
 							<label for="writer">작성자</label>
 							<input type="text" id="writer" name="writer" class="form-control" value="${PostDTOfromDB.writer }" disabled="disabled"/>
@@ -159,20 +161,20 @@
 						</div>
 
 						<label for="imageFile">
-							새로운 첨부 이미지:
-							<input type="hidden" value="${PostDTOfromDB.imageFileName }" id="imageFileName" name="imageFileName "/>
+							새로운 첨부 이미지: <input type="hidden" value="${PostDTOfromDB.imageFileName }" id="imageFileName" name="imageFileName "/>
 						</label>
+						
 						<div class="form-group">
 							<input type="file" name="imageFile" id="imageFile" class="form-control" accept="image/*"/>					
 						</div>
-            </form> <!-- 전체수정폼의 끝 -->
-            
-      		<div class="form-group">
-				<div class="text-right">
-					<button class="btn btn-primary btn-sm" onclick="javascript:modifyProcess();">수정완료</button>
-					<button class="btn btn-info btn-sm" onclick="javascript:history.back();">수정취소</button>
-				</div>
-			</div>
+            		</form> <!-- 전체수정폼의 끝 -->
+		            
+			      		<div class="form-group">
+							<div class="text-right">
+								<button class="btn btn-primary" onclick="javascript:modifyProcess();">수정완료</button>
+								<button class="btn btn-info" onclick="javascript:history.back();">수정취소</button>
+							</div>
+						</div>
             
 				</div>
 			</div>

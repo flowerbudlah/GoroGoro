@@ -4,14 +4,30 @@
 <!-- 게시판 -->  
 <mapper namespace="board">
 
-	<!-- 1. 1) 메인페이지로 간다.(with 글 목록) -->
+	<!-- 
+	1. 1) 메인페이지로 간다.(with 글 목록) 
 	<select id="goMain" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO">
 		select f.postNo, f.title, f.content, f.writer, f.regDate, f.viewCount, f.sameThinking, f.boardNo, f.imageFileName, 
 				(select count(*) from reply where postNo = f.postNo) as replyCount 
 		from freeBoard f, members m 
-		where f.writer = m.nick and f.boardNo = #{boardNo}
+		where (f.writer = m.nick) and f.boardNo = #{boardNo}
 		order by f.postNo desc
 	</select>
+	-->
+	
+	
+	<!-- 1. 1) 메인페이지로 간다.(with 글 목록) -->
+	<select id="goMain" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO">
+		select f.postNo, f.title, f.content, f.writer, f.regDate, f.viewCount, f.sameThinking, f.boardNo, f.imageFileName, 
+				(select count(*) from reply where postNo = f.postNo) as replyCount 
+		from freeBoard f
+		where f.boardNo = #{boardNo}
+		order by f.postNo desc
+	</select>
+	
+	
+	
+	
 	
 	<!-- 1. 2) 그 해당 게시판에 써져있는 게시글 수 가져오기(페이징 작업때문에 필요하다. ) -->
 	<select id="getPostCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
@@ -62,9 +78,6 @@
 				(title like CONCAT('%',#{keyword},'%') OR content like CONCAT('%',#{keyword},'%'))
 			</if>
 	</select>
-    
-    
-    
     
     
     

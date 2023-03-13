@@ -46,13 +46,32 @@
 	</select>
 
 
-	<!-- 2. 내가 신고한 내용 자세히 보기-->
+	<!-- 2. 내가 신고한 내용 자세히 보기, 신고내용 수정하기 전에 수정대상 신고내역 가져오기-->
 	<select id="readReportDTO" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.ReportDTO">
 		select * 
 		from reportBoard 
 		where reportNo = #{reportNo}
 	</select>
+
+	<!-- 3. 2) 신고내용 진짜 수정하기 -->
+	<update id="modifyReportDTO" parameterType="com.tjoeun.spring.dto.ReportDTO" >
+		update reportBoard  
+		set reason = #{reason}, detail = #{detail}, imageFileName = #{imageFileName, jdbcType=VARCHAR} 
+		where reportNo = #{reportNo}     
+	</update>
 	
+	
+	<!-- 4. 2) 글 수정 시 이미 업로드한 사진 파일도 삭제 -->
+	<update id="deleteImageFile" parameterType="com.tjoeun.spring.dto.ReportDTO">
+		update reportBoard  
+		set imageFileName = #{imageFileName} 
+		where reportNo = #{reportNo}
+	</update>	
+	
+	
+	
+	
+
 	<!-- 3. 신고내역 자체를 삭제한다.(이 신고철회는 신고자만 가능하다. ) -->
 	<delete id="deleteReportDTO" parameterType="java.lang.Integer">
     	delete 

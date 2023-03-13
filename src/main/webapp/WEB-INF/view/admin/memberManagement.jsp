@@ -41,7 +41,8 @@ function searchList(){
 							str+="<td><center>"+item.replyCount+"</center></td>"; //댓글 수 
 							str+="<td><center>"+item.reportCount+"</center></td>"; //신고당한 건수
 							str+="<td><center>"+item.signUp_Date+"</center></td>"; //가입일
-							str+="<td><center>"+item.finalSignInDate_Date+"</center></td>"; //가입일
+							str+="<td><center><a href=''>상세보기</a></center></td>"; 
+							str+="<td><center>0</center></td>"; 
 							str+="<td><center><a href=''>강제탈퇴시키기</a></center></td>"; 
 						str+="</tr>"
 						
@@ -94,7 +95,8 @@ td{text-align:center; border: 1px solid black;}
 				<th style="text-align: center;">댓글수</th>
 				<th style="text-align: center;">신고게시글수</th>
 				<th style="text-align: center;">가입일</th>
-				<th style="text-align: center;">최종로그인일시</th>
+				<th style="text-align: center;">상세로그인일시</th>
+				<th style="text-align: center;">유효신고건수</th>
 				<th style="text-align: center;"></th>
 			</tr>
 		</thead>
@@ -112,9 +114,8 @@ td{text-align:center; border: 1px solid black;}
 				<td style="text-align: center;">
 					<fmt:formatDate pattern="yyyy-MM-dd(E) hh시 mm분 ss초" value="${allMemberList.signUpDate }"/>
 				</td>
-				<td style="text-align: center;">
-					<fmt:formatDate pattern="yyyy-MM-dd(E) hh시 mm분 ss초" value="${allMemberList.finalSignInDate }"/>
-				</td>
+				<td style="text-align: center;"><a href="">상세보기</a></td>
+				<td style="text-align: center;">0</td>
 				<td style="text-align: center;"><a href="">강제탈퇴시키기</a></td>
 			</tr>
 		</c:forEach> 

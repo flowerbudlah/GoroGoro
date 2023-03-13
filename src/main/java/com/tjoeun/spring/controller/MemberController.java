@@ -10,11 +10,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tjoeun.spring.dto.MemberDTO;
@@ -68,6 +69,8 @@ public class MemberController {
 		return newMemberDTO; 
 	}
 	
+	
+	
 	//3.1) "회원정보수정페이지(modification)"로 이동한다. 
 	@GetMapping("/modify")
 	public String modify(@ModelAttribute("modifyMemberDTO") MemberDTO modifyMemberDTO) {
@@ -115,26 +118,23 @@ public class MemberController {
 	}
 	
 	//5.2) 로그인버튼을 누르고 로그인성공하기. 
-		@PostMapping("/signInProcess")
-		public void signInProcess
-		(HttpServletRequest request, HttpServletResponse response, MemberDTO tmpSignInMemberDTO) {
+	@PostMapping("/signInProcess")
+	public void signInProcess
+	(HttpServletRequest request, HttpServletResponse response, MemberDTO tmpSignInMemberDTO) {
 				
-			memberService.signIn(tmpSignInMemberDTO); //로그인 시도 
+		memberService.signIn(tmpSignInMemberDTO); //로그인 시도 
 			
-			if(signInMemberDTO.isSignIn() == true) {//이것은 로그인이 성공했다는 의미
-					
-			} else if(signInMemberDTO.isSignIn() ==  false ) { //이것은 로그인 실패 
-				try {
-					response.getWriter().write("loginFail");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		if(signInMemberDTO.isSignIn() == true) {//이것은 로그인이 성공했다는 의미
+		} else if(signInMemberDTO.isSignIn() ==  false ) { //이것은 로그인 실패 
+			try {
+				response.getWriter().write("loginFail");
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
+	}
 	
-	
-	
-	
+
 	//6. 로그아웃(Sign Out)
 	@ResponseBody 
 	@RequestMapping("/signOut")
@@ -159,10 +159,28 @@ public class MemberController {
 		return memberDTO;
 
 	}
+	
+	@RequestMapping("/findPasswords")
+	public String finePasswords() {
+		return "member/findPasswords";
+	}
 		
 	
+	@RequestMapping("/findEmail")
+	public String fineEmail() {
+		return "member/findEmail";
+	}
 	
 	
+	//아이디 대용인 이메일을 분실했을경우, 사용하던 닉네임을 입력한 뒤에 질문을 보여준다. 
+	@GetMapping("/takeQuestion")
+	public @ResponseBody MemberDTO takeQuestion(@RequestParam("nick") String nick, Model model) {
+		
+		MemberDTO toFindEmail = memberService.takeQuestion(nick);
+		model.addAttribute("toFindEmail", toFindEmail);
+		
+		return toFindEmail;  //result
+	}
 	
 	
 	

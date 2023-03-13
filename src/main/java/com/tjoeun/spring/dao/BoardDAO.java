@@ -78,6 +78,7 @@ public class BoardDAO {
 		return sqlSessionTemplate.delete("board.deletePost", postNo);
 	}
 		
+	
 	//5. 1) 글 수정 Updating
 	public int modify(PostDTO modifyPostDTO) {
 		return sqlSessionTemplate.update("board.modify", modifyPostDTO);
@@ -88,6 +89,7 @@ public class BoardDAO {
 		return sqlSessionTemplate.update("board.deleteImageFile", imageFilePostDTO);
 	}
 
+	
 	//6. 좋아요 버튼
 	public int like(int postNo) throws Exception {
 		return sqlSessionTemplate.update("board.like", postNo); 

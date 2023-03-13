@@ -27,10 +27,6 @@ public class MyPageDAO {
 		return reportCnt;
 	}
 	
-
-	
-	
-	
 	//"내가 신고한 게시판"에서 검색하기
 	public List<PostDTO> searchReportList(ReportDTO searchListReportDTO, RowBounds rowBounds) throws Exception {
 				
@@ -45,20 +41,25 @@ public class MyPageDAO {
 		return searchReportCount; 
 	}
 		
-
-	
-	
-	
-	
-	
-	
-	//8. 2) 신고된 게시글 상세보기
+	//8. 2) 신고된 게시글 상세보기(그리고 이 신고내역를 수정하고자 할때도 이것이 쓰인다.)
 	public ReportDTO readReportDTO(int reportNo) {
 		ReportDTO readReportDTO = sqlSessionTemplate.selectOne("myPage.readReportDTO", reportNo);  
 		return readReportDTO; 
 	}
 	
+
+	//3. 2)
+	public int modifyReportTO(ReportDTO modifyReportDTO){
+		return sqlSessionTemplate.update("myPage.modifyReportDTO", modifyReportDTO);
+	}
 	
+	
+	//5. 2) 글 수정시 아예 이미지 파일을 없애는 쿼리
+	public int deleteImageFile(ReportDTO imageFileReportDTO) {
+		return sqlSessionTemplate.update("myPage.deleteImageFile", imageFileReportDTO);
+	}
+	
+
 	//4. 특정 글 삭제하기 Delete
 	public int deleteReportDTO(int reportNo) throws Exception {
 		return sqlSessionTemplate.delete("myPage.deleteReportDTO", reportNo); 

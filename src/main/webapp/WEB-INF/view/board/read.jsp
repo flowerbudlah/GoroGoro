@@ -20,7 +20,9 @@
 function goMain(){
 	var boardNo = $("#boardNo").val();
 	location.href = "main?boardNo=${readPostDTO.boardNo}";
+	//http://localhost:8090/GoroGoroCommunity/board/      main?boardNo=4
 }
+
 
 //2. 1) 게시글 삭제
 function deletePost(){
@@ -84,7 +86,7 @@ function like(){
             		
             		if(result == "SUCCESS"){
             			alert("공감하셨습니다.");
-            			window.location.reload(); 
+            		
             			return;
             		} else {     
             			alert("공감하는것에 문제가 생김");    
@@ -195,6 +197,8 @@ function removeReply(){
 <!-- 그 게시판 윗 부분 그림-->  
 <article class="slider">
 	<img src="/GoroGoroCommunity/image/convenientStore.png"> 
+	<!-- http://localhost:8090/             GoroGoroCommunity/image/convenientStore.png -->
+	<!--  root = http://localhost:8090    /GoroGoroCommunity/image/convenientStore.png -->
 </article>
 <!-- 본문 -->
 <div class="container" style="margin-top:100px; margin-bottom:100px;">

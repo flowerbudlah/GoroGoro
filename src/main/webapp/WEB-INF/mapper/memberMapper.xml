@@ -11,12 +11,16 @@
 
 	<!-- 1. 2) 이메일(아이디 용) 중복체크(회원가입시) -->
 	<select id="checkEmail" resultType="java.lang.String" parameterType="java.lang.String">
-		select email from members where email like CONCAT (#{email}, '%')
+		select email 
+		from members 
+		where email like CONCAT (#{email}, '%')
 	</select>
 		
 	<!-- 1. 3) 대화명 중복체크 (회원가입시)-->
 	<select id="checkNick" resultType="java.lang.String" parameterType = "java.lang.String">
-		select nick from members where nick = #{nick}
+		select nick 
+		from members 
+		where nick = #{nick}
 	</select>
   	 
  
@@ -26,6 +30,7 @@
  		from members 
  		where email = #{email} and passwords = #{passwords}
 	</select>
+		
 		
 	<!-- 3. 1) 회원정보수정하기 위해서 정보수정 전 정보 가져오기 -->
   	<select id="takeMemberDTO" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.MemberDTO">
@@ -49,6 +54,14 @@
 		from members 
 		where email=#{email} and passwords=#{passwords}
 	</delete> 
+
+
+	<!-- 아이디 대용인 이메일 분실시 질문과 답을 가져오기-->
+  	<select id="takeQuestion" parameterType="java.lang.String" resultType="com.tjoeun.spring.dto.MemberDTO">
+  		select *
+  		from members 
+  		where nick = #{nick}
+    </select>
 
 
 

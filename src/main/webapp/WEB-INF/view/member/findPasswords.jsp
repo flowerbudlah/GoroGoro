@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>비밀번호 찾기</title>
+<title>이메일 찾기</title>
 <!-- Bootstrap CDN -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -26,23 +26,30 @@ body{ background-color: white; }
 <!-- 메뉴부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
-<article class="slider"><img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg"></article>
+<article class="slider"><img src="${root }image/yellowSmile.png"></article>
 <!-- 로그인 폼 -->
 <div class="container" style="margin-top:50px; margin-bottom:50px; ">
 	<div class="row">
-		 <div class="col-lg-4 col-sm-6"></div>
-			<div class="card shadow-none">
-				<div class="card-body">
-							
+		 <div class="col-lg-3 col-sm-7"></div>
+			
+				<div class="card-body" id="findPassword">
+					비밀번호를 잊으셨나요? 
+					<br>
+					먼저 로그인을 하실때 입력하셨던 이메일을 입력해주시고, 
+					<br>
+					아래의 정보확인 질문에 응답을 해주세요! 	
+					<br>
+					Email: 
+					<br>
+					
 	
-					비밀번호는 이메일을 이용해서 
 	
 	
 	
 				</div>
 		</div>
 	</div>
-</div>
+
 <div class="col-sm-3"></div>
 <!-- 하단 -->
 <c:import url="/WEB-INF/view/include/bottomInfo.jsp" />

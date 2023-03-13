@@ -31,8 +31,6 @@ public class MemberDAO {
 		return sqlSessionTemplate.selectOne("member.signIn", tmpSignInMemberDTO);
 	}
 	
-
-	
 	//3. 1) 수정할 회원정보 가져오기 
 	public MemberDTO takeMemberDTO(int memberNo) {                      
 		MemberDTO fromDBMemberDTO = sqlSessionTemplate.selectOne("member.takeMemberDTO", memberNo);
@@ -47,8 +45,15 @@ public class MemberDAO {
 	//회원 본인이 원해서 회원탈퇴
 	public int leave(MemberDTO MemberDTOIsLeaving) {
 		return sqlSessionTemplate.delete("member.leave", MemberDTOIsLeaving);
-
 	}
+	
+	//아이디 대용인 이메일을 분실했을경우, 사용하던 닉네임을 입력한 뒤에 질문을 보여준다. 
+	public MemberDTO takeQuestion(String nick) {
+		return sqlSessionTemplate.selectOne("member.takeQuestion", nick);
+	}
+	
+	
+	
 	
 
 

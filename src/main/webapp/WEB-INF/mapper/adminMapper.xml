@@ -6,36 +6,45 @@
 
 	<!-- 1. 1) 게시판 대분류 카테고리 생성  -->
 	<insert id="makeCategory" parameterType="java.lang.String" >
-		insert into boardCategory(boardCategoryName) values(#{boardCategoryName})
+		insert into boardCategory(boardCategoryName)
+				values(#{boardCategoryName})
 	</insert>
 
 	<!-- 1. 2) 대분류 카테고리에 속하는 진짜 게시판 이름과 인덱스 생성 -->
 	<insert id="makeBoard" parameterType="com.tjoeun.spring.dto.BoardDTO" >
-		insert into boardInCategory(boardName, boardCategoryNo) values(#{boardName}, #{boardCategoryNo})
+		insert into boardInCategory(boardName, boardCategoryNo)
+					values(#{boardName}, #{boardCategoryNo})
 	</insert>
 	
 	<!-- 1. 3) 게시판 이름 변경 -->
 	<update id="changeBoardName" parameterType="com.tjoeun.spring.dto.BoardDTO" >
-		update boardInCategory set boardName = #{boardName} where boardNo = #{boardNo}
+		update boardInCategory 
+		set boardName = #{boardName} 
+		where boardNo = #{boardNo}
 	</update>
 	
 	<!-- 1. 4) 게시판 제거  -->
 	<delete id="deleteBoard" parameterType="java.lang.Integer">
-		delete from boardInCategory where boardNo =#{boardNo}
+		delete 
+		from boardInCategory 
+		where boardNo =#{boardNo}
 	</delete>
 	
 	<!-- 1. 5) 게시판 상위 카테고리 제거  -->
 	<delete id="deleteCategory" parameterType="java.lang.Integer">
-		delete from boardCategory where boardCategoryNo =#{boardCategoryNo}
+		delete 
+		from boardCategory 
+		where boardCategoryNo =#{boardCategoryNo}
 	</delete>
 	
 	<!-- 1. 6) 게시판이 속한 대분류 카테고리 변경 -->
 	<update id="changeCategory" parameterType="com.tjoeun.spring.dto.BoardDTO" >
-		update boardInCategory set boardCategoryNo = #{boardCategoryNo} where boardNo = #{boardNo}
+		update boardInCategory 
+		set boardCategoryNo = #{boardCategoryNo} 
+		where boardNo = #{boardNo}
 	</update>
 	
-	
-	
+
 	<!-- 2. 1) 회원목록 가져오기(at 관리자 페이지) -->
 	<select id="takeMemberList" resultType="com.tjoeun.spring.dto.MemberDTO">
 		select m.memberNo, m.email, m.nick, m.signUpdate, 

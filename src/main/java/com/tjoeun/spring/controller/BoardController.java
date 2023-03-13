@@ -134,8 +134,7 @@ public class BoardController {
 	//검색과 페이지(페이지 1 2 3 4 5 6 7 8 9 10)
 	@RequestMapping("/searchResult")
 	public String searchResult
-	(
-	Model model, 
+	(Model model, 
 	@RequestParam("boardNo") int boardNo, 
 	@RequestParam("type") String type, 
 	@RequestParam("keyword") String keyword, 
@@ -204,7 +203,8 @@ public class BoardController {
 	
 	//3.글 수정 페이지로 이동(Updating)
 	@RequestMapping("/modify")
-	public String modify(@RequestParam("postNo") int postNo, @ModelAttribute("modifyPostDTO") PostDTO modifyPostDTO, Model model) {
+	public String modify
+	(@RequestParam("postNo") int postNo, @ModelAttribute("modifyPostDTO") PostDTO modifyPostDTO, Model model) {
 				
 		model.addAttribute("postNo", postNo);
 		

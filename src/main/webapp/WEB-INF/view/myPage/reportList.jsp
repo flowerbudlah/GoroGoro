@@ -52,7 +52,13 @@ thead{background-color: gold; }
 								<br>
 								<c:choose>
 									<c:when test="${reportDTO.replyCount == 0 }"></c:when>
-									<c:otherwise><font color="red">관리자의 답글이 도착했습니다.</font></c:otherwise>
+									<c:otherwise>
+										<!-- 관리자가 답글을 달았다면 -->
+										<c:if test="${reportDTO.replyCount != 0 }">
+											<img src="/GoroGoroCommunity/image/letter.png" width=20px;>
+										</c:if>
+										<font color="red">관리자의 답글이 도착했습니다.</font>
+									</c:otherwise>
 								</c:choose>
 							</a>
 						</td>

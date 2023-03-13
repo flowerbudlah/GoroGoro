@@ -66,9 +66,7 @@ public class MemberService {
 	
 	
 	
-	
-	
-	
+
 	//3. 1) 수정하고자하는 회원 정보를 가져오기. 
 	public void takeMemberDTO(MemberDTO modifyMemberDTO) {
 		MemberDTO fromDBMemberDTO = memberDAO.takeMemberDTO(signInMemberDTO.getMemberNo());
@@ -81,6 +79,7 @@ public class MemberService {
 		modifyMemberDTO.setAnswer(fromDBMemberDTO.getAnswer());
 		
 		modifyMemberDTO.setMemberNo(signInMemberDTO.getMemberNo());
+		
 	} 
 
 	//3. 2) 진정으로 회원정보 수정하기! 
@@ -114,6 +113,15 @@ public class MemberService {
 		}
 			return memberDTO;
 	}
+	
+	//아이디 대용인 이메일을 분실했을경우, 사용하던 닉네임을 입력한 뒤에 질문을 보여준다. 
+	public MemberDTO takeQuestion(String nick) {
+		
+		MemberDTO toFindEmail = memberDAO.takeQuestion(nick);
+		return toFindEmail; 
+	}
+	
+	
 	
 	
 

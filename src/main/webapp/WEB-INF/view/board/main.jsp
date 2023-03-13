@@ -79,7 +79,9 @@ h1{ font-family: 'Single Day', cursive; }
 					<td class="text-center d-none d-md-table-cell">
 						<c:choose>
 							<c:when test="${postDTO.boardNo == 2 }">익명</c:when>
-							<c:otherwise>${postDTO.writer}</c:otherwise>
+							<c:otherwise>
+								${postDTO.writer}
+							</c:otherwise>
 						</c:choose>
 					</td>
 					<td class="text-center d-none d-md-table-cell">

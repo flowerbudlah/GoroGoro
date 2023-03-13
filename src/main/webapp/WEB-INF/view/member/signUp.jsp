@@ -59,7 +59,7 @@ $(document).ready(function(){	});
 		
 		if(yn){
 			
-			if(passwords == passwordsConfirm && ( emailValidity.test($("#email").val()) ) ){
+			if(passwords == passwordsConfirm && ( emailValidity.test( $("#email").val() )    )   ){
 				
 				 $.ajax({   
 		                url      : "${root}member/signUpProcess", 
@@ -109,7 +109,9 @@ body{ background-color: white; }
 <!-- 메뉴부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
-<article class="slider"><img src="${root }image/Camping.jpg"></article>
+<article class="slider">
+	<img src="${root }image/Camping.jpg">
+</article>
 <!-- 회원가입 폼 -->
 <div class="container" style="margin-top:50px; margin-bottom:50px;">
 	<div class="row">
@@ -122,15 +124,18 @@ body{ background-color: white; }
 				<tr>
 					<td>이메일(E-mail address)</td>
 	  				<td>
-	  					<input type="email" id="email" name="email" class="form-control"/>
+	  					<div class="input-group">
+	  						<input type="email" id="email" name="email" class="form-control"/>
+	  						<div class="input-group-append">
+								<button class="btn btn-danger" onClick="checkID();">이메일 인증</button>
+							</div>
+						</div>
 	  					<font id="checkId" size="2"></font>
 	  				</td>			
 				</tr>
 				<tr>
 	 	 			<td>비밀번호</td>
-	  				<td>
-	  					<input type="password" name="passwords" id="passwords" class="form-control pw"/>
-	  				</td>
+	  				<td><input type="password" name="passwords" id="passwords" class="form-control pw"/></td>
 				</tr>
 				<tr>
 					<td>↑ 위 비밀번호 확인</td>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tjoeun.spring.dao.MemberDAO;
 import com.tjoeun.spring.dto.AdminReplyDTO;
@@ -110,7 +111,7 @@ public class MyPageController {
 		return "myPage/reportedPost";		
 	}
 		
-	//5. 신고내용 삭제(Deleting)
+	//5. 신고내용 삭제(Deleting) or 철회
 	@RequestMapping("/deleteReportDTO")
 	public @ResponseBody ReportDTO deleteReportDTO(
 		
@@ -121,7 +122,41 @@ public class MyPageController {
 		
 	}
 
+	//6. 관리자에게 신고한 내용 수정(Updating)하고자 할 때 
+	@RequestMapping("/modify")
+	public String modify
+	(@RequestParam("reportNo") int reportNo, @ModelAttribute("modifyReportDTO") ReportDTO modifyReportDTO, Model model) {
+			
+		model.addAttribute("reportNo", reportNo);
+		
+		ReportDTO ReportDTOfromDB =  myPageService.readReportDTO(reportNo); 
+		System.out.println(	ReportDTOfromDB.getReason()); 
+		model.addAttribute("ReportDTOfromDB", ReportDTOfromDB); //수정하고자 하는 그 글! 
+		model.addAttribute("reason", ReportDTOfromDB.getReason()); //수정하고자 하는 그 글!
+		
+
+		return "myPage/modify";	
+	}
 	
+	
+	
+	//3.1) 관리자에게 신고한 내용 수정(Updating) 완료(Complete Updating)
+	@RequestMapping("/modifyProcess")
+	public @ResponseBody ReportDTO modifyProcess
+	(HttpServletRequest request, HttpServletResponse response, ReportDTO modifyReportDTO, MultipartFile imageFile) throws Exception{
+		ReportDTO reportDTO =  myPageService.modify(modifyReportDTO); 
+		//수정하겠다고 하는 그 글들이 입력되어 고쳐쓴 새로운 PostDTO가 된다. 
+		return reportDTO;
+	}
+	
+	 
+	//7. 이미지 첨부파일 삭제
+	@RequestMapping("/deleteImageFile")
+	public @ResponseBody ReportDTO deleteImageFile(HttpServletRequest request, HttpServletResponse response, ReportDTO imageFileReportDTO) {
+		ReportDTO afterDeletingImageFile = myPageService.deleteImageFile(imageFileReportDTO); 
+		return afterDeletingImageFile;
+	}
+
 	//내가 쓴 게시물 
 	@RequestMapping("/myPosts")
 	public String myPost
@@ -134,8 +169,6 @@ public class MyPageController {
 		MemberDTO memberDTO = memberDAO.takeMemberDTO(memberNo); 
 		model.addAttribute("memberDTO", memberDTO); 
 		
-		
-		
 		List<PostDTO> myPostList = myPageService.goMyPosts(memberNo, page);
 		model.addAttribute("myPostList", myPostList); //내가 쓴 글의 목록
 		
@@ -145,8 +178,7 @@ public class MyPageController {
 		model.addAttribute("page", page);
 		
 		return "myPage/myPosts";
-		
-		
+	
 	}
 	
 	//검색과 페이지(페이지 [이전] 1 2 3 4 5 6 7 8 9 10 [다음])

@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tjoeun.spring.dao.MyPageDAO;
+
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
 import com.tjoeun.spring.dto.ReportDTO;
@@ -25,6 +27,9 @@ public class MyPageService {
 	
 	@Autowired
 	private MyPageDAO myPageDAO; 
+	
+	@Autowired
+	private BoardService boardService; 
 
 	//내가 신고한 내역
 	public List<ReportDTO> takeMyReportedPost(String reporter, int page){
@@ -75,9 +80,55 @@ public class MyPageService {
 	public ReportDTO readReportDTO(int reportNo) {
 		
 		ReportDTO readReportDTO = myPageDAO.readReportDTO(reportNo);
+	
 		return readReportDTO;
 		
 	}
+	
+	
+	public ReportDTO modify(ReportDTO modifyReportDTO) {
+		
+		ReportDTO reportDTO = new ReportDTO();  
+		
+		//글을 수정하면서 이참에 새롭게 이미지를 업로드 하실려는 경우, 
+		MultipartFile imageFile = modifyReportDTO.getImageFile(); 
+				
+		if(imageFile.getSize() > 0) { //원글에서 업로드 된 파일이 있다면 
+			
+			String UploadingImageFileName = boardService.saveUploadFile(imageFile);
+			modifyReportDTO.setImageFileName(UploadingImageFileName);
+		}
+				
+		int successOrFail = myPageDAO.modifyReportTO(modifyReportDTO);
+		
+		if(successOrFail > 0) { //수정 성공
+		
+			reportDTO.setResult("success");
+			 
+		} else { //회원정보 수정 실패
+			 reportDTO.setResult("fail");
+		}
+		return reportDTO;
+	}
+
+	
+	
+	//3. 2) 글을 수정하는데 그냥 이미지 파일을 없애는 경우 
+	public ReportDTO deleteImageFile(ReportDTO imageFileReportDTO) {
+			
+		ReportDTO reportDTO = new ReportDTO(); 
+			
+		int deleteImageFile = myPageDAO.deleteImageFile(imageFileReportDTO); 
+			
+		if (deleteImageFile > 0) {
+			reportDTO.setResult("SUCCESS"); 
+		} else {
+			reportDTO.setResult("FAIL");
+		}
+			
+		return reportDTO; 
+	}
+		
 
 	//5. 오직 신고자만 신고내용 삭제가능
 	public ReportDTO deleteReportDTO(int reportNo) throws Exception {
@@ -94,6 +145,10 @@ public class MyPageService {
 		return reportDTO;
 		
 	}
+	
+	
+	
+	
 	
 	
 	//1. 나의 페이지에서 내가 쓴 게시글 검색 시 
@@ -140,5 +195,4 @@ public class MyPageService {
 	}
 
 	
-
 }
