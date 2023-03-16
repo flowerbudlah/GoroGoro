@@ -239,7 +239,6 @@ function removeReply(){
 		<c:if test="${readPostDTO.imageFileName != ''}">
           	<div class="form-group">
           		<label for="fileName">첨부 이미지</label>
-          		<!-- http://localhost:8090/GoroGoroCommunity/board/upload/ -->
           		<img src="/GoroGoroCommunity/upload/${readPostDTO.imageFileName}" width=100%; height=250px;/>       
           	</div>
 		</c:if>
