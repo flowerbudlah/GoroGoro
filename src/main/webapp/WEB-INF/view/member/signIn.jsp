@@ -79,15 +79,13 @@ body{ background-color: white; }
 					</div>
 					<div class="form-group ">
 						<div class="text-left">
-							<a href="${root }member/findEmail" style="">이메일(아이디)</a>또는 
+							<a href="${root }member/findEmail">이메일(아이디)</a>또는 
 							<a href="${root }member/findPasswords" style="">비밀번호</a>를 잊으셨습니까? 
 						</div>
 						<br>
 						<div class="text-right">
 							<button class="btn btn-danger">로그인</button>
-						<!-- 
-							<button class="btn btn-danger" onclick="javascript:signIn()">로그인</button>
-							 -->
+							<!-- <button class="btn btn-danger" onclick="javascript:signIn()">로그인</button> -->
 						</div>
 					</div>
 				</form>

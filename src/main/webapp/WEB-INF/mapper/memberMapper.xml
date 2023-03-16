@@ -73,6 +73,14 @@
 	
 	
 	
+	<!--  비밀번호 분실시 -->
+  	<select id="findPasswords" parameterType="java.lang.String" resultType="com.tjoeun.spring.dto.MemberDTO">
+  		select *
+  		from members 
+  		where email = #{email}
+    </select>
+	
+	
 	
 
 

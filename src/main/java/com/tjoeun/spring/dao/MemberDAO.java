@@ -56,6 +56,23 @@ public class MemberDAO {
 		return sqlSessionTemplate.selectOne("member.findEmail", memberDTOtoFindEmail);
 	}
 	
+	//아이디 대용인 이메일을 분실했을경우, 사용하던 닉네임을 입력한 뒤에 질문을 보여준다. 
+	public MemberDTO findPasswords(String email) {
+		return sqlSessionTemplate.selectOne("member.findPasswords", email);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 

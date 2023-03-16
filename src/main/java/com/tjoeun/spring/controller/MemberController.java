@@ -82,8 +82,7 @@ public class MemberController {
 	//3.2) 닉네임 중복체크(at 회원정보수정 페이지)
 	@RequestMapping("/checkNickInModify")
 	public @ResponseBody String checkNickInModify(String nick) {
-		
-		System.out.println("===================================Test=============================================="); 
+		System.out.println("===================================Test==================================="); 
 		System.out.println("signInMemberDTO: "+signInMemberDTO.getNick());
 		System.out.println(nick); 
 			
@@ -161,33 +160,11 @@ public class MemberController {
 
 	}
 	
-	@RequestMapping("/findPasswords")
-	public String finePasswords() {
-		return "member/findPasswords";
-	}
-		
-	
+	//이메일 분실시 이메일 찾는 페이지로 간다. 
 	@RequestMapping("/findEmail")
 	public String fineEmail() {
 		return "member/findEmail";
 	}
-	
-	
-	//아이디 대용인 이메일을 분실했을경우, 사용하던 닉네임을 입력한 뒤에 질문을 보여준다. 
-	@GetMapping("/findIDemail")
-	public @ResponseBody String findEmail
-	(@RequestParam("nick") String nick, @RequestParam("answer") String answer, Model model) {
-		
-		MemberDTO memberDTOtoFindEmail = new MemberDTO(); 
-		memberDTOtoFindEmail.setNick(nick);  
-		memberDTOtoFindEmail.setAnswer(answer);  
-		
-		String email = memberService.findEmail(memberDTOtoFindEmail); 		
-		model.addAttribute("email", email);
-		return email;
-
-	}
-	
 
 	//아이디 대용인 이메일을 분실했을경우, 사용하던 닉네임을 입력한 뒤에 질문을 보여준다. 
 	@GetMapping("/takeQuestion")
@@ -199,9 +176,36 @@ public class MemberController {
 		return toFindEmail;  //result
 	}
 	
+	//이메일(아이디용)을 분실했을경우, 사용하던 닉네임을 입력한 뒤에 질문을 보여준다. 
+	@GetMapping("/findIDemail")
+	public @ResponseBody String findEmail
+	(@RequestParam("nick") String nick, @RequestParam("answer") String answer, Model model) {
+			
+		MemberDTO memberDTOtoFindEmail = new MemberDTO(); 
+		memberDTOtoFindEmail.setNick(nick);  
+		memberDTOtoFindEmail.setAnswer(answer);  
+			
+		String email = memberService.findEmail(memberDTOtoFindEmail); 		
+		model.addAttribute("email", email);
+		return email;
+	}
 	
 	
+	//비밀번호 분실시 비밀번호 찾는 페이지로 간다. 
+	@RequestMapping("/findPasswords")
+	public String finePasswords() {
+		return "member/findPasswords";
+	}
 	
+	//로그인시 패쓰워드를 분실했을경우, 로그인을 할때 입력하던 이메일 주소를 입력한 뒤 
+	@GetMapping("/findPassword")
+	public @ResponseBody MemberDTO findPassword(@RequestParam("email") String email, Model model) {
+		
+		MemberDTO toFindPasswords = memberService.findPasswords(email);
+		model.addAttribute("toFindPasswords", toFindPasswords);
+		
+		return toFindPasswords;  //result
+	}
 	
 	
 	

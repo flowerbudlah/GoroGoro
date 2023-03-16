@@ -128,6 +128,12 @@ public class MemberService {
 		return email; 
 	}
 	
+	//잊어버린 패쓰워드를 찾기위한 첫번째 절차
+	public MemberDTO findPasswords(String email){
+		
+		MemberDTO toFindPasswords = memberDAO.findPasswords(email);
+		return toFindPasswords;
+	}
 	
 
 	
