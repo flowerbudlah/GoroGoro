@@ -34,18 +34,12 @@ function findPasswords(){
 						
 					}else{
 						str="입력하신 이메일로 임시비밀번호가 발급되었습니다. 해당 이메일을 확인해주세요!";
-						sendEmail(); 
 						$('#findPasswords').append(str);
-						
 					}
 			}  //function(result)
 		}
 	) //ajax의 끝
 }//function의 끝	
-
-function sendEmail(){//임시 비밀번호를 알려주는 이메일을 보낸다. 발신인은 flowerbudlah_project@naver.com
-	
-}
 
 </script>
 <style>

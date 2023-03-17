@@ -61,7 +61,11 @@ public class MemberDAO {
 		return sqlSessionTemplate.selectOne("member.findPasswords", email);
 	}
 	
-	
+	//이메일로 보낼 임시비밀번호를 DB에 반영한다. 
+	public int makeTemporaryPasswords(MemberDTO tempPasswords){
+		return sqlSessionTemplate.update("member.makeTemporaryPasswords", tempPasswords);
+	}
+		
 	
 	
 	

@@ -7,6 +7,32 @@
                 
 	<!-- Controller 설정하기 -->
 	<bean class="com.tjoeun.spring.dto.MemberDTO" id="signInMemberDTO" scope="session"/>                
+         
+	
+	<!-- smtp프로토콜과 gmail 계정을 사용한 메일전송 설정
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587"/>
+		<property name="username" value="flowerbudlahjapan@gmail.com"/>
+		<property name="password" value="lah880103!"/>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+	 -->
+	
+	         
+         
+         
+         
+         
+         
+         
                 
                       
 </beans>

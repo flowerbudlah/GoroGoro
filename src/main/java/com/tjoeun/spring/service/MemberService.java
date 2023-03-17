@@ -136,5 +136,16 @@ public class MemberService {
 	}
 	
 
+	//이메일로 보낼 임시비밀번호를 DB에 반영한다. 
+	public void makeTemporaryPasswords(MemberDTO tempPasswords){
+			
+		memberDAO.makeTemporaryPasswords(tempPasswords); 
+		System.out.println(tempPasswords.getPasswords()); 
+			
+	}
+	
+	
+	
+	
 	
 }
