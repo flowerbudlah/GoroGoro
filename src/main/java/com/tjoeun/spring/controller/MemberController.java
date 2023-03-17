@@ -245,7 +245,7 @@ public class MemberController {
 	 
 		// 1. 발신자의 메일 계정과 비밀번호 설정
 		final String user = "flowerbudlahjapan@gmail.com";
-		final String password = "atsjrfrnhfysueqf";//구글 앱 비밀번호 
+		final String password = "***************";//구글 앱 비밀번호 
 		
 		// 2. Property에 SMTP 서버 정보 설정
 		Properties prop = new Properties();
