@@ -147,9 +147,10 @@ function writeReplyCallback(obj){
 }
 }
 	
-//8. 댓글 삭제 콜백 함수
-function removeReply(){
-	var replyNo = $("#replyNo").val(); //리플 번호
+//댓글삭제
+function removeReply(replyNo){
+
+	alert(replyNo); 
 	
 	var yn = confirm("댓글을 삭제하시겠습니까?");		
 		
@@ -261,7 +262,7 @@ function removeReply(){
 				댓글작성일시: <fmt:formatDate value="${reply.replyRegDate}" pattern="yyyy-MM-dd hh:mm:ss" />
 				<c:choose>
 					<c:when test="${signInMemberDTO.nick == reply.replyWriter || signInMemberDTO.memberNo == 1 || signInMemberDTO.nick == readPostDTO.writer  }">
-						<a class="badge badge-pill badge-light" style="font-size:13px;" onclick="javascript:removeReply();" >
+						<a class="badge badge-pill badge-light" style="font-size:13px;" onclick="javascript:removeReply(${reply.replyNo});" >
 							<input type="hidden" id="replyNo" name="replyNo" value="${reply.replyNo}"/>X <!-- 댓글삭제버튼 -->
 						</a>
 					</c:when>
@@ -313,7 +314,6 @@ function removeReply(){
 			<a href="modify?postNo=${postNo }" class="btn btn-info btn-sm">수정하기</a>
 			<button type="button" class="btn btn-secondary btn-sm" onclick="javascript:deletePost();">삭제하기</button>
 			
-			
 			<c:choose>
 				<%--로그인을 한 회원에게만 보이는 게시글 신고버튼--%> 
 				<c:when test="${signInMemberDTO.signIn == true }">
@@ -321,8 +321,7 @@ function removeReply(){
 				</c:when>
 				<c:otherwise></c:otherwise>
 			</c:choose>&emsp;&emsp; 	
-			
-			
+
 		</div>
 	</div>
           

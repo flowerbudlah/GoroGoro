@@ -26,7 +26,7 @@ thead{background-color: gold; }
 <!-- 그 게시판 윗 부분 그림-->
 <article class="slider">
 	<img src="${root }image/convenientStore.png">
-	<!-- http://localhost:8090/GoroGoroCommunity/        image/convenientStore.png -->
+	<!-- http://localhost:8090/GoroGoroCommunity/ -->
 </article>
 <!--Post List(게시글 리스트)-->
 <div class="container" style="margin-top:50px; margin-bottom:50px;">
@@ -34,6 +34,12 @@ thead{background-color: gold; }
 		<div class="card-body">	
 			<h4 class="card-title">관리자 전용 페이지(For the Administrator Only)</h4>
 			<p>관리자에게 신고 접수된 게시물들을 보여줍니다.</p><br>
+			<c:choose>
+				<c:when test="${searchList != null}">
+					검색결과 총 ${searchCount }의 신고접수 건이 존재합니다. 
+				</c:when>
+				<c:otherwise></c:otherwise>
+			</c:choose>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -63,8 +69,7 @@ thead{background-color: gold; }
 						</td>
 					</tr>
 				</c:forEach>
-				<!-- 특정 조건으로 검색 시 출력된 관리장에게 신고접수된   -->
-							<!-- 관리자에게 신고접수된 신고게시글 목록 -->
+				<!-- 특정 조건으로 검색 시 출력된 관리장에게 신고접수된(검색)  -->
 				<c:forEach var="reportDTO" items="${searchList }" >
 					<tr>
 						<td class="text-center d-none d-md-table-cell">${reportDTO.reportNo }</td>
@@ -88,53 +93,52 @@ thead{background-color: gold; }
 			</table>
 			<!-- 페이징 -->
 			<c:choose>
-		
 				<c:when test="${searchListPageDTO.prePage >= 0 }">
 				<div class="d-none d-md-block">
 				<ul class="pagination justify-content-center" id="page">
-				<!-- 이전 -->
-				<c:choose>
-					<c:when test="${searchListPageDTO.prePage <= 0 }" >
-						<li class="page-item disabled"><a href="#" class="page-link">이전</a></li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item">
-							<a href="searchResult?boardNo=${boardNo}&type=${type }&keyword=${keyword }&page=${pageDTO.prePage}" class="page-link">이전</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-				<!-- 1 2 3 4 5 6 7 8 9 10 -->
-				<c:forEach var="idx" begin="${searchListPageDTO.min }" end="${searchListPageDTO.max }">
-				<c:choose>
-					<c:when test="${idx == searchListPageDTO.currentPage }">
-						<li class="page-item active">
-							<a href="searchResult?boardNo=${boardNo}&type=${type }&keyword=${keyword }&page=${idx}" class="page-link">${idx}</a>
-							<!-- http://localhost:8090/GoroGoroCommunity/board/      main?boardNo=2&page=1 -->
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item">
-							<a href="searchResult?boardNo=${boardNo}&type=${type }&keyword=${keyword }&page=${idx}" class="page-link">${idx}</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-				</c:forEach>  
-				<!-- 다음 -->
-				<c:choose>
-					<c:when test="${searchListPageDTO.max >= searchListPageDTO.pageCount }">
-					<!--맨 마지막 페이지인 경우에는 다음 버튼이 안 보이도록 함 (최대페이지가 전체페이지개수보다 크면 다음이 안 보이도록 함) -->
-						<li class="page-item disabled">
-							<a href="#" class="page-link">다음</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item">
-							<a href="searchResult?boardNo=${boardNo }&type=${type }&keyword=${keyword }&page=${searchPageDTO.prePage}" class='page-link'>다음</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
+					<!-- 이전 -->
+					<c:choose>
+						<c:when test="${searchListPageDTO.prePage <= 0 }" >
+							<li class="page-item disabled"><a href="#" class="page-link">이전</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item">
+								<a href="searchResult?boardNo=${boardNo}&type=${type }&keyword=${keyword }&page=${pageDTO.prePage}" class="page-link">이전</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+					<!-- 1 2 3 4 5 6 7 8 9 10 -->
+					<c:forEach var="idx" begin="${searchListPageDTO.min }" end="${searchListPageDTO.max }">
+					<c:choose>
+						<c:when test="${idx == searchListPageDTO.currentPage }">
+							<li class="page-item active">
+								<a href="searchResult?boardNo=${boardNo}&type=${type }&keyword=${keyword }&page=${idx}" class="page-link">${idx}</a>
+								<!-- http://localhost:8090/GoroGoroCommunity/board/      main?boardNo=2&page=1 -->
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item">
+								<a href="searchResult?boardNo=${boardNo}&type=${type }&keyword=${keyword }&page=${idx}" class="page-link">${idx}</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+					</c:forEach>  
+					<!-- 다음 -->
+					<c:choose>
+						<c:when test="${searchListPageDTO.max >= searchListPageDTO.pageCount }">
+						<!--맨 마지막 페이지인 경우에는 다음 버튼이 안 보이도록 함 (최대페이지가 전체페이지개수보다 크면 다음이 안 보이도록 함) -->
+							<li class="page-item disabled">
+								<a href="#" class="page-link">다음</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item">
+								<a href="searchResult?boardNo=${boardNo }&type=${type }&keyword=${keyword }&page=${searchPageDTO.prePage}" class='page-link'>다음</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
 				</ul>
-			</div>
+				</div>
 				</c:when>
 				<c:otherwise>
 				<!-- 페이징(Paging) -->			

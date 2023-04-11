@@ -52,8 +52,6 @@ public class BoardService {
 		return pageDTO;
 	}
 
-	
-	
 	//1. 3) 게시판 메인화면 게시글 검색
 	public List<PostDTO> searchList(PostDTO searchListPostDTO, int page) throws Exception {
 		
@@ -78,15 +76,12 @@ public class BoardService {
 	}
 	
 	
-	
-	
-	
-	
 	//1. 4) 게시판 이름 가져오기 
 	public String getBoardName(int boardNo) {
 		return boardDAO.getBoardName(boardNo);
 	}
 	
+
 	//2. 1) 글쓰기 
 	public PostDTO writeProcess(PostDTO writePostDTO) throws Exception {
 		

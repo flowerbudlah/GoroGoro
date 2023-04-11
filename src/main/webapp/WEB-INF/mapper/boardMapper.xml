@@ -115,6 +115,7 @@
 				values(#{postNo}, #{reason}, #{detail}, #{reporter}, Now(), #{imageFileName})
 	</insert>
 
+
 	<!-- 4. 1) 글 수정하기 Updating-->
 	<update id="modify" parameterType="com.tjoeun.spring.dto.PostDTO">
 		update freeBoard
@@ -125,12 +126,16 @@
 	
 	<!-- 4. 2) 글 수정 시 이미 업로드한 사진 파일도 삭제 -->
 	<update id="deleteImageFile" parameterType="com.tjoeun.spring.dto.PostDTO">
-		update freeBoard set imageFileName = #{imageFileName} where postNo = #{postNo}
+		update freeBoard 
+		set imageFileName = #{imageFileName} 
+		where postNo = #{postNo}
 	</update>	
 	
 	<!-- 5. 글 삭제 deleting -->
 	<delete id="deletePost" parameterType="java.lang.Integer">
-    	delete from freeBoard where postNo = #{postNo}
+    	delete 
+    	from freeBoard 
+    	where postNo = #{postNo}
     </delete> 
  
 	

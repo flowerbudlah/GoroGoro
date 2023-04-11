@@ -96,6 +96,66 @@ public class AdminController {
 	}
 	
 
+	//관리자의 신고된 글에 대한 검색과 페이지(페이지 1 2 3 4 5 6 7 8 9 10)
+	@RequestMapping("/searchResult")
+	public String searchResult(
+	Model model, 
+	@RequestParam("type") String type, 
+	@RequestParam("keyword") String keyword, 
+	@RequestParam(value="page", defaultValue="1") int page ) throws Exception {
+		
+		ReportDTO searchListReportDTO = new ReportDTO(); 
+		searchListReportDTO.setType(type); 
+		searchListReportDTO.setKeyword(keyword); 
+				
+		//검색결과 리스트
+		List<ReportDTO> searchList = adminService.searchList(searchListReportDTO, page); 
+		model.addAttribute("searchList", searchList); 
+		//result.put("searchList", searchList);	
+				
+		//검색결과 수 searchCount
+		int searchCount = adminService.searchCount(searchListReportDTO); 
+		model.addAttribute("searchCount", searchCount);
+		//result.put("searchCount", searchCount); 
+				
+		//페이징
+		PageDTO searchListPageDTO = adminService.searchPageDTO(searchListReportDTO, page); 
+		//result.put("searchListPageDTO", searchListPageDTO); // 페이징
+		model.addAttribute("searchListPageDTO", searchListPageDTO);
+			
+		//result.put("page", page);
+		model.addAttribute("page", page);
+			
+		//result.put("type", type);
+		model.addAttribute("type", type);
+			
+		//result.put("keyword", keyword);
+		model.addAttribute("keyword", keyword);
+			
+		//result.put("boardNo", boardNo); 
+		//ResponseEntity.ok(result); 
+		return "admin/postManagement";
+	} 
+	
+	
+	//6.1) 관리자가 신고된 글에대한 답글을 다는것 
+	@RequestMapping("/writeAdminReplyProcess")
+	public @ResponseBody AdminReplyDTO writeReplyProcess(HttpServletRequest request, HttpServletResponse response, AdminReplyDTO writeAdminReplyDTO) {	
+			
+		AdminReplyDTO adminReplyDTO =  adminService.writeAdminReplyProcess(writeAdminReplyDTO);
+		return adminReplyDTO;
+		
+	}
+	
+
+	//6.2) 관리자의 신고된 글에 대한 댓글삭제
+	@RequestMapping("/removeAdminReply")
+	public @ResponseBody AdminReplyDTO removeAdminReply(HttpServletRequest request, HttpServletResponse response, int replyNo) {
+	
+		AdminReplyDTO ReplyDTO = adminService.removeAdminReply(replyNo); 
+		return ReplyDTO;
+	}
+	
 	
 	
 	//3. 회원 관리 페이지로 이동한다. 
@@ -125,85 +185,8 @@ public class AdminController {
 	
 	
 
-	//6.1) 관리자가 신고된 글에대한 답글을 다는것 
-	@RequestMapping("/writeAdminReplyProcess")
-	public @ResponseBody AdminReplyDTO writeReplyProcess(HttpServletRequest request, HttpServletResponse response, AdminReplyDTO writeAdminReplyDTO) {	
-			
-		AdminReplyDTO adminReplyDTO =  adminService.writeAdminReplyProcess(writeAdminReplyDTO);
-		return adminReplyDTO;
-		
-	}
-	
+
 	
 
-	//6.2) 관리자의 신고된 글에 대한 댓글삭제
-	@RequestMapping("/removeAdminReply")
-	public @ResponseBody AdminReplyDTO removeAdminReply(HttpServletRequest request, HttpServletResponse response, int replyNo) {
-	
-		AdminReplyDTO ReplyDTO = adminService.removeAdminReply(replyNo); 
-		return ReplyDTO;
-	}
-	
-	
-	
-	//관리자의 신고된 글에 대한 검색과 페이지(페이지 1 2 3 4 5 6 7 8 9 10)
-	@RequestMapping("/searchResult")
-	public String searchResult(
-	Model model, 
-	@RequestParam("type") String type, 
-	@RequestParam("keyword") String keyword, 
-	@RequestParam(value="page", defaultValue="1") int page 
-	) throws Exception {
-	
-		ReportDTO searchListReportDTO = new ReportDTO(); 
-		searchListReportDTO.setType(type); 
-		searchListReportDTO.setKeyword(keyword); 
-			
-		//검색결과 리스트
-		List<ReportDTO> searchList = adminService.searchList(searchListReportDTO, page); 
-		model.addAttribute("searchList", searchList); 
-		//result.put("searchList", searchList);	
-			
-		//검색결과 수 searchCount
-		int searchCount = adminService.searchCount(searchListReportDTO); 
-		model.addAttribute("searchCount", searchCount);
-		//result.put("searchCount", searchCount); 
-			
-		//페이징
-		PageDTO searchListPageDTO = adminService.searchPageDTO(searchListReportDTO, page); 
-		
-		//result.put("searchListPageDTO", searchListPageDTO); // 페이징
-		model.addAttribute("searchListPageDTO", searchListPageDTO);
-		
-		//result.put("page", page);
-		model.addAttribute("page", page);
-		
-		//result.put("type", type);
-		model.addAttribute("type", type);
-		
-		//result.put("keyword", keyword);
-		model.addAttribute("keyword", keyword);
-		
-		
-		//result.put("boardNo", boardNo); 
-		//ResponseEntity.ok(result); 
-		return "admin/postManagement";
-	} 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

@@ -24,9 +24,12 @@
 
         var title = $("#title").val();
         var content = $("#content").val();
-        var postNo = $("#postNo").val();    
         
         var formData = new FormData($('#modifyPostDTO')[0]);	
+        alert(formData); 
+        alert(formData.title);
+        alert(formData.content);
+        alert(formData.postNo); 
         
         if (title == ""){            
             alert("제목을 입력해주세요.");
@@ -54,27 +57,28 @@
                cache    : false,
                async    : true,
                type     : "POST",    
-               success  : function(obj) { updateBoardCallback(obj); },           
-               error    : function(xhr, status, error) {}
+               success  : function(obj) { 
+            		if(obj != null){        
+            			var result = obj.result;
+                        
+                        if(result == "SUCCESS"){                
+            				alert("게시글 수정을 성공하였습니다."); 
+            				location.href = "read?postNo=${postNo }";
+                        } else {                
+                        	alert("게시글 수정을 실패하였습니다.");    
+                            return;
+                        }
+                    }
+            	   
+    
+               },           
+               error    : function(request, status, error) {
+            	   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+               }
             });
         }
     }
-    
-	//2.글 수정 콜백함수
-	function updateBoardCallback(obj){
-		
-		if(obj != null){        
-			var result = obj.result;
-            
-            if(result == "SUCCESS"){                
-				alert("게시글 수정을 성공하였습니다."); 
-				location.href = "read?postNo=${postNo }";
-            } else {                
-            	alert("게시글 수정을 실패하였습니다.");    
-                return;
-            }
-        }
-    } 
+   
 	
 	//3. 첨부된 이미지를 삭제(실제는 업데이트기능)하는
 	function deleteImageFile(){

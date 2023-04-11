@@ -80,12 +80,26 @@ public class MemberController {
 		}
 	}
 	
+	//1. 3) 닉네임 중복체크(회원가입시)
+	@RequestMapping("/verifyEmail")
+	public @ResponseBody String verifyEmail(String email) {
+		
+		String verificationResult = memberService.checkEmail(email);
+		if(verificationResult == null){
+			return "verificationOK"; //검증완료
+		} else {
+			return "verificationFail"; //검증불가
+		}
+	}
+	
 	//2. 회원가입 완료버튼 누르고 회원가입 하기(Creating)
 	@RequestMapping("/signUpProcess")
 	public @ResponseBody MemberDTO signUpProcess(MemberDTO signUpMemberDTO){
 		MemberDTO newMemberDTO = memberService.signUpProcess(signUpMemberDTO); //회원가입 완료
 		return newMemberDTO; 
 	}
+	
+	
 	
 	
 	
@@ -229,7 +243,7 @@ public class MemberController {
 			memberDTOtoFindPasswords.setPasswords(tempPasswords); //암호화 시킨 비밀번호를 저장 
 			memberService.makeTemporaryPasswords(memberDTOtoFindPasswords); //암호화 시킨 비밀번호를 DB까지 저장 
 						
-			sendTempPasswords(tempPasswords, email); 
+			sendTempPasswords(tempPasswords, email); //임시비밀번호를 이메일로 보낸다. 
 
 		} else {}
 		
@@ -237,15 +251,15 @@ public class MemberController {
 	}
 
 	
-	//발신인은 관리자인 flowerbudlah_project@naver.com 또는 flowerbudlahjapan@gmail.com
+	//발신인은 관리자인 flowerbudlah_project@naver.com 또는 flowerbudlah@gmail.com
 	//수신인 이메일은 email, 보낼내용은 임시비밀번호 tempPasswords 
 	public void sendTempPasswords(String tempPasswords, String email){
 		String recipient =email; 
 		String code = tempPasswords;
 	 
 		// 1. 발신자의 메일 계정과 비밀번호 설정
-		final String user = "flowerbudlahjapan@gmail.com";
-		final String password = "***************";//구글 앱 비밀번호 
+		final String user = "flowerbudlah@gmail.com";
+		final String password = "gepkhwdixvpnoldc";//구글 앱 비밀번호 
 		
 		// 2. Property에 SMTP 서버 정보 설정
 		Properties prop = new Properties();
@@ -263,8 +277,7 @@ public class MemberController {
 			}
 		});
 		
-		// 4. Message 클래스의 객체를 사용하여 수신자와 내용, 제목의 메시지를 작성한다.
-		// 5. Transport 클래스를 사용하여 작성한 메세지를 전달한다.
+		// 4. Message 클래스의 객체를 사용하여 수신자와 내용, 제목의 메시지를 작성한다. 
 		MimeMessage message = new MimeMessage(session);
 		
 		try {
@@ -274,12 +287,13 @@ public class MemberController {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 			
 			// Subject
-			message.setSubject("PLAYDDIT verification code");
+			message.setSubject("고로고로(GoroGoroCommunity) 임시비밀번호입니다. ");
 			
 			// Text
-			message.setText("Welcome to playddit. your code is ["+code+"]");
+			message.setText("임시비밀번호는 "+code+" 입니다.감사합니다. ");
 			
-			Transport.send(message);    // send message
+			// 5. Transport 클래스를 사용하여 작성한 메세지를 전달한다. send message
+			Transport.send(message);
 			System.out.println("전송성공"); 
 	 
 		} catch (AddressException e) {

@@ -37,7 +37,7 @@ $(document).ready(function(){	});
 		var formData = new FormData($('#signUpMemberDTO')[0]);	
 		
 		if(email == ""){			
-			alert("작성자를 입력해주세요.");
+			alert("이메일을 입력해주세요.");
 			$("#email").focus();
 			return;
 		}
@@ -97,7 +97,51 @@ $(document).ready(function(){	});
 			}
 		}//yn의 끝
 	} //signUpProcess()의 끝
-				
+	
+
+	//회원가입시 이메일 검증 
+	function verifyEmail(){
+		var email = $("#email").val(); //이메일(아이디)
+
+		if(email == ""){			
+			alert("이메일을 입력해주세요.");
+		}
+		
+		if(email != "" ){
+			
+			 $.ajax({   
+	             url      : "${root}member/verifyEmail", 
+	         	data      : {email: email},
+	             cache    : false,
+	             async    : true,
+	             contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
+	             processData: false, // 이것을 붙이고 업로드가 되었다. 
+	             type     : "POST",    
+	             success  : function(obj){
+	             	
+	             	if(obj != null){		
+	         			var result = obj.result;
+	         			
+	         			if(result == "verificationOK"){		
+	         				alert("이메일을 확인해주세요. ");			
+	         				alert("이메일 인증성공하였습니다. ");				
+	         				return; 
+	         			} else {				
+	         				alert("이메일 인증실패하였습니다. 다시한번 시도해주세요! ");	
+	         				return;
+	         			}
+	         		}
+	             	
+	       
+	             },           
+	             error: function(request,status,error){
+	             	alert("회원가입을 하시려면 중복되는 것이 없어야 합니다. ");
+	             }
+				}) //아작스	
+		}
+		
+		
+	}
 </script>
 <style>
 /* 슬라이더 영역 CSS */
@@ -127,7 +171,7 @@ body{ background-color: white; }
 	  					<div class="input-group">
 	  						<input type="email" id="email" name="email" class="form-control"/>
 	  						<div class="input-group-append">
-								<button class="btn btn-danger" onClick="checkID();">이메일 인증</button>
+								<button class="btn btn-danger" onClick="verifyEmail();">이메일 인증</button>
 							</div>
 						</div>
 	  					<font id="checkId" size="2"></font>

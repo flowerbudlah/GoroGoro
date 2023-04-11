@@ -28,7 +28,6 @@ public class BoardDAO {
 		return postCnt;
 	}
 	
-	
 	//1. 3) 게시판 이름 가져오기 
 	public String getBoardName(int boardNo) {
 		return sqlSessionTemplate.selectOne("board.getBoardName", boardNo);

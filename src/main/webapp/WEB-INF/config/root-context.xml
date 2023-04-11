@@ -14,7 +14,7 @@
 		<property name="host" value="smtp.gmail.com"/>
 		<property name="port" value="587"/>
 		<property name="username" value="flowerbudlahjapan@gmail.com"/>
-		<property name="password" value="lah880103!"/>
+		<property name="password" value="*****"/> Gmail비밀번호가 아닌 구글 앱 비밀번호(2단계인증한)가 들어가야 합니다. 
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.transport.protocol">smtp</prop>
