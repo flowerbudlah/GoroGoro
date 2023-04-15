@@ -154,7 +154,6 @@ function deleteImageFile(){
 		<div class="col-sm-3"></div>
 	</div>
 </div>
-
 <!-- 하단 정보 -->  
 <c:import url="/WEB-INF/view/include/bottomInfo.jsp" />
 </body>
