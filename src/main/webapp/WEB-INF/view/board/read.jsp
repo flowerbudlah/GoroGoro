@@ -196,11 +196,7 @@ function removeReply(replyNo){
 <!-- 상단 메뉴 부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp" />
 <!-- 그 게시판 윗 부분 그림-->  
-<article class="slider">
-	<img src="/GoroGoroCommunity/image/convenientStore.png"> 
-	<!-- http://localhost:8090/             GoroGoroCommunity/image/convenientStore.png -->
-	<!--  root = http://localhost:8090    /GoroGoroCommunity/image/convenientStore.png -->
-</article>
+<article class="slider"><img src="/GoroGoroCommunity/image/convenientStore.png"> </article>
 <!-- 본문 -->
 <div class="container" style="margin-top:100px; margin-bottom:100px;">
 	<div class="row">

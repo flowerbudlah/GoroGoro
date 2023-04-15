@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>회원정보수정</title>
+<link rel="icon" type="image/x-icon" href="${root }image/favicon.png">
 <!-- Bootstrap CDN -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
@@ -14,8 +15,6 @@
 <script src="${root }js/validation.js"></script>
 <script type="text/javascript">
 
-	$(document).ready(function(){			});
-	
 	//1. 회원정보수정 버튼을 누른 뒤에  
 	function modifyMemberDTO(){
 		
@@ -89,7 +88,9 @@ body{ background-color: white; }
 		<div class="col-sm-7"><h4>회원정보수정</h4>
 		<div class="card shadow-none">
 		<div class="card-body">
+		
 		<form method='post' modelAttribute="modifyMemberDTO" id="modifyMemberDTO">
+		
 		<input type="hidden" id="memberNo" name="memberNo" value="${signInMemberDTO.memberNo }"/>
 			<table>
 				<tr>
@@ -118,7 +119,6 @@ body{ background-color: white; }
 					<td>이메일 또는 비밀번호 분실시 질문&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td>
 						<select name="question" id="question" class="form-control">
-							<!-- <option value="${modifyMemberDTO.question }">${modifyMemberDTO.question }</option> -->
 							<option value="당신의 고향은 어디입니까?">당신의 고향은 어디입니까?</option>
     						<option value="별명은 무엇인가요?">별명은 무엇인가요? </option>
     						<option value="첫 사랑은 누구인가요?">첫 사랑은 누구인가요?</option>
@@ -130,6 +130,7 @@ body{ background-color: white; }
 				<tr>
 					<td>↑ 위 질문에 대한 답</td>
 					<td>
+						
 						<input type="text" name="answer" id="answer" class="form-control" value="${modifyMemberDTO.answer }"/>
 					</td>
 				</tr>
@@ -138,12 +139,17 @@ body{ background-color: white; }
 	  					<div class="text-right" style="margin-top:50px; margin-bottom:50px;">
 							<input type="button" class="btn btn-danger" onclick="javascript:modifyMemberDTO();" value="회원정보수정 완료"/>
 							<a href="${root }member/getOut" class="btn btn-danger">회원탈퇴</a>
-							<!-- http://localhost:8090/GoroGoroCommunity/member/getOut -->
+
 						</div>
 	  				</td>
 				</tr>
 			</table>
+			
 			</form>
+			
+			
+			
+			
 <script>
 $("#question").val("${modifyMemberDTO.question }"); 
 $('.pw').focusout(function(){

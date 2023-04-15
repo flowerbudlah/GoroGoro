@@ -17,6 +17,10 @@ public class MemberDTO {
 	private String question; //아이디 비밀번호 분실시 질문
 	private String answer; //아이디 비밀번호 분실시 답(위 질문에 대한 답)
 	
+	
+	
+	
+	
 	private Date signUpDate; //가입일
 	private String signUp_Date; 
 	

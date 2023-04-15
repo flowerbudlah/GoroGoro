@@ -40,7 +40,9 @@ public class MyPageDAO {
 		int searchReportCount = sqlSessionTemplate.selectOne("myPage.searchReportCount", searchListReportDTO);
 		return searchReportCount; 
 	}
-		
+	
+	
+	
 	//8. 2) 신고된 게시글 상세보기(그리고 이 신고내역를 수정하고자 할때도 이것이 쓰인다.)
 	public ReportDTO readReportDTO(int reportNo) {
 		ReportDTO readReportDTO = sqlSessionTemplate.selectOne("myPage.readReportDTO", reportNo);  
@@ -48,7 +50,7 @@ public class MyPageDAO {
 	}
 	
 
-	//3. 2)
+	//3. 2)신고내역 수정하기(신고한자만 가능)
 	public int modifyReportTO(ReportDTO modifyReportDTO){
 		return sqlSessionTemplate.update("myPage.modifyReportDTO", modifyReportDTO);
 	}
@@ -60,6 +62,11 @@ public class MyPageDAO {
 	}
 	
 
+	
+	
+	
+	
+	
 	//4. 특정 글 삭제하기 Delete
 	public int deleteReportDTO(int reportNo) throws Exception {
 		return sqlSessionTemplate.delete("myPage.deleteReportDTO", reportNo); 

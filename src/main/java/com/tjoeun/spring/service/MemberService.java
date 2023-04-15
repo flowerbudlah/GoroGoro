@@ -64,9 +64,6 @@ public class MemberService {
 		
 	}
 	
-	
-	
-
 	//3. 1) 수정하고자하는 회원 정보를 가져오기. 
 	public void takeMemberDTO(MemberDTO modifyMemberDTO) {
 		MemberDTO fromDBMemberDTO = memberDAO.takeMemberDTO(signInMemberDTO.getMemberNo());
@@ -82,7 +79,7 @@ public class MemberService {
 		
 	} 
 
-	//3. 2) 진정으로 회원정보 수정하기! 
+	//3. 2) 진정으로 회원정보 수정(Update)하기! 
 	public MemberDTO modifyMemberDTO(MemberDTO modifyMemberDTO){
 		
 		MemberDTO memberDTO = new MemberDTO(); 
@@ -99,7 +96,8 @@ public class MemberService {
 	}
 	
 	
-	//회원본인이 원해서 탈퇴하기 
+	
+	//회원본인이 원해서 탈퇴(Delete)하기 
 	public MemberDTO leave(MemberDTO memberDTOisLeaving) throws Exception {
 		
 		MemberDTO memberDTO = new MemberDTO();
@@ -113,6 +111,7 @@ public class MemberService {
 		}
 			return memberDTO;
 	}
+	
 	
 	//아이디 대용인 이메일을 분실했을경우, 사용하던 닉네임을 입력한 뒤에 질문을 보여준다. 
 	public MemberDTO takeQuestion(String nick) {
@@ -135,7 +134,6 @@ public class MemberService {
 		return toFindPasswords;
 	}
 	
-
 	//이메일로 보낼 임시비밀번호를 DB에 반영한다. 
 	public void makeTemporaryPasswords(MemberDTO tempPasswords){
 			
@@ -143,9 +141,5 @@ public class MemberService {
 		System.out.println(tempPasswords.getPasswords()); 
 			
 	}
-	
-	
-	
-	
 	
 }

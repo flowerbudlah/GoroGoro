@@ -3,7 +3,7 @@
 
 <mapper namespace="myPage">
 	
-	<!-- 1. 내가 신고한 게시글 리스트 보기 -->
+	<!-- 1. 내가 신고한 목록 보기(게시판 메인화면) -->
 	<select id="takeMyReportDTO" parameterType="java.lang.String" resultType="com.tjoeun.spring.dto.ReportDTO">
 		select *, (select count(*) from adminReply where reportNo = r.reportNo) as replyCount 
 		from reportBoard r
@@ -17,34 +17,6 @@
 		from reportBoard  
 		where reporter = #{reporter}
 	</select>
-	
-	<!-- 4. 관리자에게 신고한 내역 검색 -->
-	<select id="searchReportList" parameterType="com.tjoeun.spring.dto.ReportDTO" resultType="com.tjoeun.spring.dto.ReportDTO">
-		select * 
-		from  reportBoard 
-		where reporter = #{reporter} and
-			<if test="type!=null and type == 'reason'">
-				reason like CONCAT('%',#{keyword},'%')
-			</if>
-			<if test="type!=null and type == 'postNo'">
-				postNo like CONCAT('%',#{keyword},'%') 	
-			</if>
-				order by reportNo DESC 
-	</select>
-	
-	<!-- 4. 관리자에게 신고한 내역의 수-->
-	<select id="searchReportCount" parameterType="com.tjoeun.spring.dto.ReportDTO" resultType="java.lang.Integer">
-		select count(*)
-		from  reportBoard 
-		where reporter = #{reporter} and
-		<if test="type!=null and type == 'reason'">
-			reason like CONCAT('%',#{keyword},'%')
-		</if>
-		<if test="type!=null and type == 'postNo'">
-			postNo like CONCAT('%',#{keyword},'%') 	
-		</if>
-	</select>
-
 
 	<!-- 2. 내가 신고한 내용 자세히 보기, 신고내용 수정하기 전에 수정대상 신고내역 가져오기-->
 	<select id="readReportDTO" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.ReportDTO">
@@ -70,9 +42,37 @@
 	
 	
 	
+		<!-- 4. 1) 관리자에게 신고한 내역 검색 -->
+	<select id="searchReportList" parameterType="com.tjoeun.spring.dto.ReportDTO" resultType="com.tjoeun.spring.dto.ReportDTO">
+		select * 
+		from  reportBoard 
+		where reporter = #{reporter} and
+			<if test="type!=null and type == 'reason'">
+				reason like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="type!=null and type == 'postNo'">
+				postNo like CONCAT('%',#{keyword},'%') 	
+			</if>
+				order by reportNo DESC 
+	</select>
+	
+	<!-- 4. 2) 관리자에게 신고한 내역의 수(검색 후 페이징 작업을 위해서 필요하다. )-->
+	<select id="searchReportCount" parameterType="com.tjoeun.spring.dto.ReportDTO" resultType="java.lang.Integer">
+		select count(*)
+		from  reportBoard 
+		where reporter = #{reporter} and
+		<if test="type!=null and type == 'reason'">
+			reason like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="type!=null and type == 'postNo'">
+			postNo like CONCAT('%',#{keyword},'%') 	
+		</if>
+	</select>
+	
+	
 	
 
-	<!-- 3. 신고내역 자체를 삭제한다.(이 신고철회는 신고자만 가능하다. ) -->
+	<!-- 3. 신고내역 자체를 삭제(Deleting)한다.(이 신고철회는 신고자만 가능하다. ) -->
 	<delete id="deleteReportDTO" parameterType="java.lang.Integer">
     	delete 
     	from reportBoard 
@@ -115,7 +115,7 @@
 				order by f.postNo DESC 
 	</select>
 
-	<!-- 1. 4) 게시글 검색후, "검색결과 수"  페이징 작업 -->
+	<!-- 1. 4) 게시글 검색후, "검색결과 수" (페이징 작업 때문에 필요하다.) -->
 	<select id="searchCount" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="java.lang.Integer">
 		select count(*)
 		from freeBoard f, boardInCategory b

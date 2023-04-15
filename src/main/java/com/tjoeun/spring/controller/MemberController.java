@@ -99,13 +99,11 @@ public class MemberController {
 		return newMemberDTO; 
 	}
 	
-	
-	
-	
-	
+		
 	//3.1) "회원정보수정페이지(modification)"로 이동한다. 
 	@GetMapping("/modify")
-	public String modify(@ModelAttribute("modifyMemberDTO") MemberDTO modifyMemberDTO) {
+	public String modify
+	(@ModelAttribute("modifyMemberDTO") MemberDTO modifyMemberDTO) {
 		memberService.takeMemberDTO(modifyMemberDTO); //회원정보를 수정할 대상을 가져온다. 
 		return "member/modify";
 	}
@@ -142,6 +140,9 @@ public class MemberController {
 		return memberDTOAfter;
 	}
 		
+	
+	
+	
 	//5.1) 로그인 페이지로 입장
 	@RequestMapping("/signIn")
 	public String signIn() {

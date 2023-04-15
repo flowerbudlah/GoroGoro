@@ -31,6 +31,8 @@ public class MemberDAO {
 		return sqlSessionTemplate.selectOne("member.signIn", tmpSignInMemberDTO);
 	}
 	
+	
+	
 	//3. 1) 수정할 회원정보 가져오기 
 	public MemberDTO takeMemberDTO(int memberNo) {                      
 		MemberDTO fromDBMemberDTO = sqlSessionTemplate.selectOne("member.takeMemberDTO", memberNo);
@@ -41,6 +43,8 @@ public class MemberDAO {
 	public int modifyMemberDTO(MemberDTO modifyMemberDTO){
 		return sqlSessionTemplate.update("member.modifyMemberDTO", modifyMemberDTO);
 	}
+	
+	
 	
 	//회원 본인이 원해서 회원탈퇴
 	public int leave(MemberDTO MemberDTOIsLeaving) {

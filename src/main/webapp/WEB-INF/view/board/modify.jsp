@@ -146,7 +146,7 @@
 					</c:if> 
 					
 					<form id="modifyPostDTO" name="modifyPostDTO" enctype="multipart/form-data">
-						<input type="hidden" name="postNo" value="${postNo }" > 
+						<input type="hidden" id = "postNo" name="postNo" value="${postNo }" > 
 						<div class="form-group">
 							<label for="writer">작성자</label>
 							<input type="text" id="writer" name="writer" class="form-control" value="${PostDTOfromDB.writer }" disabled="disabled"/>

@@ -140,7 +140,8 @@ public class AdminController {
 	
 	//6.1) 관리자가 신고된 글에대한 답글을 다는것 
 	@RequestMapping("/writeAdminReplyProcess")
-	public @ResponseBody AdminReplyDTO writeReplyProcess(HttpServletRequest request, HttpServletResponse response, AdminReplyDTO writeAdminReplyDTO) {	
+	public @ResponseBody AdminReplyDTO writeReplyProcess
+	(HttpServletRequest request, HttpServletResponse response, AdminReplyDTO writeAdminReplyDTO) {	
 			
 		AdminReplyDTO adminReplyDTO =  adminService.writeAdminReplyProcess(writeAdminReplyDTO);
 		return adminReplyDTO;
@@ -150,7 +151,8 @@ public class AdminController {
 
 	//6.2) 관리자의 신고된 글에 대한 댓글삭제
 	@RequestMapping("/removeAdminReply")
-	public @ResponseBody AdminReplyDTO removeAdminReply(HttpServletRequest request, HttpServletResponse response, int replyNo) {
+	public @ResponseBody AdminReplyDTO removeAdminReply
+	(HttpServletRequest request, HttpServletResponse response, int replyNo) {
 	
 		AdminReplyDTO ReplyDTO = adminService.removeAdminReply(replyNo); 
 		return ReplyDTO;
