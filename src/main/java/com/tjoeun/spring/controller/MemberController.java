@@ -31,6 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,20 +56,7 @@ public class MemberController {
 	public String signUp(){ //회원가입 페이지로 이동
 		return "member/signUp";
 	}
-	
-	//1. 2) 아이디용인 이메일 중복체크(at 회원가입 페이지)
-	@RequestMapping("/checkEmail")
-	public @ResponseBody String checkEmail(String email) {
-		
-		String result = memberService.checkEmail(email);
-			
-		if(result == null){
-			return "available"; //사용가능
-		} else {
-			return "unavailable"; //사용불가
-		}
-	}
-	
+
 	//1. 3) 닉네임 중복체크(회원가입시)
 	@RequestMapping("/checkNick")
 	public @ResponseBody String checkNick(String nick) {
@@ -80,15 +68,16 @@ public class MemberController {
 		}
 	}
 	
-	//1. 3) 닉네임 중복체크(회원가입시)
-	@RequestMapping("/verifyEmail")
-	public @ResponseBody String verifyEmail(String email) {
+	//1. 2) 아이디용인 이메일 중복체크(at 회원가입 페이지)
+	@RequestMapping("/checkEmail")
+	public @ResponseBody String checkEmail(String email) {
 		
-		String verificationResult = memberService.checkEmail(email);
-		if(verificationResult == null){
-			return "verificationOK"; //검증완료
+		String result = memberService.checkEmail(email);
+			
+		if(result == null){
+			return "available"; //사용가능
 		} else {
-			return "verificationFail"; //검증불가
+			return "unavailable"; //사용불가
 		}
 	}
 	
@@ -140,9 +129,6 @@ public class MemberController {
 		return memberDTOAfter;
 	}
 		
-	
-	
-	
 	//5.1) 로그인 페이지로 입장
 	@RequestMapping("/signIn")
 	public String signIn() {
@@ -166,7 +152,6 @@ public class MemberController {
 		}
 	}
 	
-
 	//6. 로그아웃(Sign Out)
 	@ResponseBody 
 	@RequestMapping("/signOut")
@@ -303,7 +288,5 @@ public class MemberController {
 	            e.printStackTrace();
 		}
 	}
-	
-	
 	
 }

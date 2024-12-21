@@ -34,17 +34,18 @@ public class MemberService {
 		return newMemberDTO; 
 	}
 	
-	//1. 2) 회원가입 시 (아이디 용)이메일 중복체크 
+	//1. 2) 회원가입 시 (아이디 용)이메일 중복체크 	
 	public String checkEmail(String email) {
 		return memberDAO.checkEmail(email);
 	} 
+
+	
 
 	//1. 3) 대화명(닉네임) 중복 체크 (회원가입, 회원정보수정 모두 해당됨)
 	public String checkNick(String nick) {
 		return memberDAO.checkNick(nick);
 	}
 
-	
 	//2. Sign In(로그인)
 	public void signIn(MemberDTO tmpSignInMemberDTO) {
 		

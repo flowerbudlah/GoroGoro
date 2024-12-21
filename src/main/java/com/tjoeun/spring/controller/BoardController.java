@@ -52,7 +52,7 @@ public class BoardController {
 		PageDTO pageDTO = boardService.mainPageDTO(boardNo, page); 
 		model.addAttribute("pageDTO", pageDTO);
 		model.addAttribute("page", page);
-		
+	
 		return "board/main";
 	}
 	
@@ -200,7 +200,6 @@ public class BoardController {
         return postDTO;
     }
 
-	
 	//3.글 수정 페이지로 이동(Updating)
 	@RequestMapping("/modify")
 	public String modify
@@ -214,7 +213,6 @@ public class BoardController {
 		return "board/modify";	
 	}
 	
-	
 	//3.1) 게시판 수정완료(Complete Updating)
 	@RequestMapping("/modifyProcess")
 	public @ResponseBody PostDTO modifyProcess
@@ -223,7 +221,6 @@ public class BoardController {
 		//수정하겠다고 하는 그 글들이 입력되어 고쳐쓴 새로운 PostDTO가 된다. 
 		return postDTO;
 	}
-	
 	
 	//4. 글읽기 Reading (댓글 포함)
 	@RequestMapping("/read")
@@ -253,7 +250,6 @@ public class BoardController {
         return postDTO;
     }
 	
-
 	//6.1) 댓글등록 
 	@RequestMapping("/writeReplyProcess")
     public @ResponseBody ReplyDTO writeReplyProcess

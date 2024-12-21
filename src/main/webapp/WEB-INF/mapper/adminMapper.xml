@@ -4,161 +4,191 @@
 <!-- 관리자 페이지 -->
 <mapper namespace="admin">
 
-	<!-- 1. 1) 게시판 대분류 카테고리 생성  -->
-	<insert id="makeCategory" parameterType="java.lang.String" >
+	<!-- 1. 1) 게시판 대분류 카테고리 생성 -->
+	<insert id="makeCategory" parameterType="java.lang.String">
 		insert into boardCategory(boardCategoryName)
-				values(#{boardCategoryName})
+		values(#{boardCategoryName})
 	</insert>
+	
+	<!-- 1. 7) 같은 이름의 카테고리를 만들수 없다. -->
+	<select id="checkCategory"  resultType="java.lang.String" parameterType="java.lang.String">
+		select *
+		from boardcategory
+		where boardCategoryName = #{boardCategoryName}
+	</select>
 
 	<!-- 1. 2) 대분류 카테고리에 속하는 진짜 게시판 이름과 인덱스 생성 -->
-	<insert id="makeBoard" parameterType="com.tjoeun.spring.dto.BoardDTO" >
-		insert into boardInCategory(boardName, boardCategoryNo)
-					values(#{boardName}, #{boardCategoryNo})
+	<insert id="makeBoard" parameterType="com.tjoeun.spring.dto.BoardDTO">
+		insert into
+		boardInCategory(boardName, boardCategoryNo)
+		values(#{boardName}, #{boardCategoryNo})
 	</insert>
-	
+
 	<!-- 1. 3) 게시판 이름 변경 -->
-	<update id="changeBoardName" parameterType="com.tjoeun.spring.dto.BoardDTO" >
-		update boardInCategory 
-		set boardName = #{boardName} 
+	<update id="changeBoardName" parameterType="com.tjoeun.spring.dto.BoardDTO">
+		update boardInCategory
+		set boardName = #{boardName}
 		where boardNo = #{boardNo}
 	</update>
-	
-	<!-- 1. 4) 게시판 제거  -->
+
+	<!-- 1. 4) 게시판 제거 -->
 	<delete id="deleteBoard" parameterType="java.lang.Integer">
-		delete 
-		from boardInCategory 
+		delete
+		from boardInCategory
 		where boardNo =#{boardNo}
 	</delete>
-	
-	<!-- 1. 5) 게시판 상위 카테고리 제거  -->
+
+	<!-- 1. 5) 게시판 상위 카테고리 제거 -->
 	<delete id="deleteCategory" parameterType="java.lang.Integer">
-		delete 
-		from boardCategory 
+		delete
+		from boardCategory
 		where boardCategoryNo =#{boardCategoryNo}
 	</delete>
-	
+
 	<!-- 1. 6) 게시판이 속한 대분류 카테고리 변경 -->
-	<update id="changeCategory" parameterType="com.tjoeun.spring.dto.BoardDTO" >
-		update boardInCategory 
-		set boardCategoryNo = #{boardCategoryNo} 
+	<update id="changeCategory" parameterType="com.tjoeun.spring.dto.BoardDTO">
+		update boardInCategory
+		set boardCategoryNo = #{boardCategoryNo}
 		where boardNo = #{boardNo}
 	</update>
+
+	<!-- 같은 카테고리(대분류) 안에서는 같은 이름의 게시판을 만들수 없다. -->
+	<select id="checkSameBoardName"  resultType="java.lang.String" parameterType="com.tjoeun.spring.dto.BoardDTO">
+		select *
+		from boardInCategory
+		where boardCategoryNo = #{boardCategoryNo} and boardName=#{boardName}
+	</select>
 	
+
 
 	<!-- 2. 1) 회원목록 가져오기(at 관리자 페이지) -->
 	<select id="takeMemberList" resultType="com.tjoeun.spring.dto.MemberDTO">
-		select m.memberNo, m.email, m.nick, m.signUpdate, 
-				(select count(*) from freeBoard f where f.writer =m.nick ) as 'postCount', 
-				(select count(*) from reply r where r.replyWriter =m.nick ) as 'replyCount', 
-				(select count(*) from 
-									(select f.postNo, f.title
-									from freeBoard f, reportBoard r, members mm 
-									where  (f.writer = mm.nick) and (r.postNo = f.postNo) and mm.memberNo = m.memberNo
-									group by f.postNo ) newBoard ) as 'reportCount'
+		select m.memberNo, m.email, m.nick, m.signUpdate,
+		(select count(*) from freeBoard f where f.writer =m.nick ) as 'postCount',
+		(select count(*) from reply r where r.replyWriter =m.nick ) as
+		'replyCount',
+		(select count(*) from
+		(select f.postNo, f.title
+		from freeBoard f, reportBoard r, members mm
+		where (f.writer = mm.nick) and (r.postNo = f.postNo) and mm.memberNo =
+		m.memberNo
+		group by f.postNo ) newBoard ) as 'reportCount'
 		from members m
-		order by memberNo asc;
+		order by
+		memberNo asc;
 	</select>
-	
-	<!-- 2. 2) 회원정보 검색(at 관리자페이지)	-->
-	<select id="searchMemberList" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
-		select m.memberNo, m.email, m.nick, DATE_FORMAT (m.signUpDate, '%Y년%m월%d일 %H시%i분%S초') as signUp_Date, 
-				(select count(*) from freeBoard f where f.writer =m.nick ) as 'postCount', 
-				(select count(*) from reply r where r.replyWriter =m.nick ) as 'replyCount', 
-				(select count(*) from (select f.postNo, f.title
-										from freeBoard f, reportBoard r, members mm 
-										where  (f.writer = mm.nick) and (r.postNo = f.postNo) and mm.memberNo = m.memberNo
-										group by f.postNo ) newBoard ) as 'reportCount'
+
+	<!-- 2. 2) 회원정보 검색(at 관리자페이지) -->
+	<select id="searchMemberList"
+		parameterType="com.tjoeun.spring.dto.MemberDTO"
+		resultType="com.tjoeun.spring.dto.MemberDTO">
+select m.memberNo, m.email, m.nick, DATE_FORMAT (m.signUpDate,'%Y년%m월%d일 %H시%i분%S초') as signUp_Date, 
+				(select count(*) from freeBoard f where f.writer =m.nick ) as 'postCount', (select count(*) from reply r where r.replyWriter =m.nick ) as
+		'replyCount',
+		(select count(*) from (select f.postNo, f.title
+		from freeBoard f, reportBoard r, members mm
+		where (f.writer = mm.nick) and (r.postNo = f.postNo) and mm.memberNo =
+		m.memberNo
+		group by f.postNo ) newBoard ) as 'reportCount'
 		from members m
-		where 
+		where
 		<if test="type!=null and type == 'email'">
 			email like CONCAT('%',#{keyword},'%')
 		</if>
 		<if test="type!=null and type == 'nick'">
 			nick like CONCAT('%',#{keyword},'%')
 		</if>
-			order by memberNo DESC 
+		order by memberNo DESC
 	</select>
 
 
 	<!--2. 3) 특정한 한 회원이 쓴글의 수 -->
-	<select id="postCount" parameterType="java.lang.String" resultType="java.lang.Integer">
-		select count(*) from freeBoard where writer = #{writer}	
-	</select>	
+	<select id="postCount" parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		select count(*) from freeBoard where writer = #{writer}
+	</select>
 
 	<!--2. 4) 특정한 한 회원이 쓴 댓글의 수 -->
-	<select id="replyCount" parameterType="java.lang.String" resultType="java.lang.Integer">
-		select count(*) from reply where writer = #{writer}	
-	</select>		
+	<select id="replyCount" parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		select count(*) from reply where writer = #{writer}
+	</select>
 
 	<!-- 3. 1) 신고된 게시글 보기 -->
-	<select id="takeReportedPost" resultType="com.tjoeun.spring.dto.ReportDTO">
-		select *,  (select count(*) from adminReply where reportNo = r.reportNo) as replyCount 
-		from reportBoard r 
+	<select id="takeReportedPost"
+		resultType="com.tjoeun.spring.dto.ReportDTO">
+		select *, (select count(*) from adminReply where reportNo =
+		r.reportNo) as replyCount
+		from reportBoard r
 		order by reportNo desc
 	</select>
-	
+
 	<!-- 3. 3) 신고된 게시글의 수(관리자페이지에서 페이지작업으로 필요) -->
 	<select id="countOfReportedPost" resultType="java.lang.Integer">
-		select count(*) from reportBoard
+		select count(*) from
+		reportBoard
 	</select>
-	
 
 	<!--4. 1) 관리자가 신고된 기록에 대한 댓글 달기 -->
-	<insert id="writeAdminReplyProcess" parameterType="com.tjoeun.spring.dto.AdminReplyDTO" useGeneratedKeys="true" keyProperty="replyNo">
-		insert into adminReply(reportNo, replyContent, replyWriter, replyRegDate) 
-						values(	#{reportNo}, #{replyContent}, #{replyWriter}, Now() )
+	<insert id="writeAdminReplyProcess"
+		parameterType="com.tjoeun.spring.dto.AdminReplyDTO"
+		useGeneratedKeys="true" keyProperty="replyNo">
+		insert into adminReply(reportNo,
+		replyContent, replyWriter, replyRegDate)
+		values( #{reportNo}, #{replyContent}, #{replyWriter}, Now() )
 	</insert>
-	
-	
+
+
 	<!--4. 2) 관리자가 신고게시글에 답변한 댓글 목록 가져오기 -->
-	<select id="adminReplyList" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.AdminReplyDTO">
-		select * 
-		from adminReply 
-		where reportNo = #{reportNo}        
-	</select>	
-	
-	
-	<!-- 4. 3) 관리자가 본인이 쓴 댓글 삭제 -->
-	<delete id="removeAdminReply" parameterType="java.lang.Integer">
-		delete 
-		from adminReply 
-		where replyNo = #{replyNo}
-	</delete>
-	
-	
-	<!-- 1. 4) 관리자에게 신고 접수된 게시물 검색 -->
-	<select id="searchList" parameterType="com.tjoeun.spring.dto.ReportDTO" resultType="com.tjoeun.spring.dto.ReportDTO">
+	<select id="adminReplyList" parameterType="java.lang.Integer"
+		resultType="com.tjoeun.spring.dto.AdminReplyDTO">
 		select *
-		from reportBoard
-		where 
-			<if test="type!=null and type == 'reason'">
-				reason like CONCAT('%',#{keyword},'%')
-			</if>
-			<if test="type!=null and type == 'reporter'">
-				reporter like CONCAT('%',#{keyword},'%')
-			</if>
-			<if test="type!=null and type == 'postNo'">
-				postNo like CONCAT('%',#{keyword},'%')
-			</if>
-				order by reportNo DESC 
+		from adminReply
+		where reportNo = #{reportNo}
 	</select>
 
+	<!-- 4. 3) 관리자가 본인이 쓴 댓글 삭제 -->
+	<delete id="removeAdminReply" parameterType="java.lang.Integer">
+		delete
+		from adminReply
+		where replyNo = #{replyNo}
+	</delete>
 
-	<!-- 1. 4) 관리자에게 신고 접수된 게시물 검색후, "검색결과 수"  페이징 작업때문에 필효 -->
-	<select id="searchCount" parameterType="com.tjoeun.spring.dto.ReportDTO" resultType="java.lang.Integer">
+	<!-- 1. 4) 관리자에게 신고 접수된 게시물 검색 -->
+	<select id="searchList"
+		parameterType="com.tjoeun.spring.dto.ReportDTO"
+		resultType="com.tjoeun.spring.dto.ReportDTO">
+		select *
+		from reportBoard
+		where
+		<if test="type!=null and type == 'reason'">
+			reason like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="type!=null and type == 'reporter'">
+			reporter like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="type!=null and type == 'postNo'">
+			postNo like CONCAT('%',#{keyword},'%')
+		</if>
+		order by reportNo DESC
+	</select>
+
+	<!-- 1. 4) 관리자에게 신고 접수된 게시물 검색후, "검색결과 수" 페이징 작업때문에 필효 -->
+	<select id="searchCount"
+		parameterType="com.tjoeun.spring.dto.ReportDTO"
+		resultType="java.lang.Integer">
 		select count(*)
 		from reportBoard
 		where
-			<if test="type!=null and type == 'reason'">
-				reason like CONCAT('%',#{keyword},'%')
-			</if>
-			<if test="type!=null and type == 'reporter'">
-				reporter like CONCAT('%',#{keyword},'%')
-			</if>
-			<if test="type!=null and type == 'postNo'">
-				postNo like CONCAT('%',#{keyword},'%')
-			</if>
+		<if test="type!=null and type == 'reason'">
+			reason like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="type!=null and type == 'reporter'">
+			reporter like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="type!=null and type == 'postNo'">
+			postNo like CONCAT('%',#{keyword},'%')
+		</if>
 	</select>
 	
-
 </mapper>

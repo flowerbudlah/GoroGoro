@@ -146,10 +146,7 @@ body{ background-color: white; }
 			</table>
 			
 			</form>
-			
-			
-			
-			
+					
 <script>
 $("#question").val("${modifyMemberDTO.question }"); 
 $('.pw').focusout(function(){
@@ -192,9 +189,6 @@ $("#nick").blur(function(){
 		}
 	});
 });
-
-
-
 
 </script>
 		</div>

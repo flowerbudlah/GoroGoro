@@ -3,10 +3,12 @@
 
 <mapper namespace="member">
 
-	<!-- 1. 1) 회원가입 Create-->
-	<insert id="signUpProcess" parameterType="com.tjoeun.spring.dto.MemberDTO" useGeneratedKeys="true" keyProperty="memberNo">
-		insert into members(email, passwords, nick, question, answer, signUpDate) 
-		values(#{email}, #{passwords}, #{nick}, #{question}, #{answer}, Now())
+	<!-- 1. 1) 회원가입 Create -->
+	<insert id="signUpProcess"
+		parameterType="com.tjoeun.spring.dto.MemberDTO"
+		useGeneratedKeys="true" keyProperty="memberNo">
+		insert into members(email, passwords, nick, question, answer, signUpDate)
+					values(#{email}, #{passwords}, #{nick}, #{question}, #{answer}, Now())
 	</insert>
 
 	<!-- 1. 2) 이메일(아이디 용) 중복체크(회원가입시) -->
@@ -15,81 +17,77 @@
 		from members 
 		where email like CONCAT (#{email}, '%')
 	</select>
-		
-	<!-- 1. 3) 대화명 중복체크 (회원가입시)-->
-	<select id="checkNick" resultType="java.lang.String" parameterType = "java.lang.String">
-		select nick 
-		from members 
+
+	<!-- 1. 3) 대화명 중복체크 (회원가입시) -->
+	<select id="checkNick" resultType="java.lang.String"
+		parameterType="java.lang.String">
+		select nick
+		from members
 		where nick = #{nick}
 	</select>
-  	 
- 
-	<!-- 2. 로그인(Sign In) -->
- 	<select id="signIn" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="com.tjoeun.spring.dto.MemberDTO">
- 		select * 
- 		from members 
- 		where email = #{email} and passwords = #{passwords}
-	</select>
-		
-		
-	<!-- 3. 1) 회원정보수정하기 위해서 정보수정 전 정보 가져오기 -->
-  	<select id="takeMemberDTO" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.MemberDTO">
-  		select * 
-  		from members 
-  		where memberNo = #{memberNo}
-    </select>
-  
-  
-  	<!-- 3. 2) 회원정보수정하기 -->
-	<update id="modifyMemberDTO" parameterType="com.tjoeun.spring.dto.MemberDTO" >
-		update members 
-		set passwords = #{passwords}, nick = #{nick}, question = #{question}, answer=#{answer}
-		where memberNo = #{memberNo}     
-	</update>
 
+	<!-- 2. 로그인(Sign In) -->
+	<select id="signIn"
+		parameterType="com.tjoeun.spring.dto.MemberDTO"
+		resultType="com.tjoeun.spring.dto.MemberDTO">
+		select *
+		from members
+		where email = #{email} and passwords = #{passwords}
+	</select>
+
+	<!-- 3. 1) 회원정보수정하기 위해서 정보수정 전 정보 가져오기 -->
+	<select id="takeMemberDTO" parameterType="java.lang.Integer"
+		resultType="com.tjoeun.spring.dto.MemberDTO">
+		select *
+		from members
+		where memberNo = #{memberNo}
+	</select>
+
+	<!-- 3. 2) 회원정보수정하기 -->
+	<update id="modifyMemberDTO"
+		parameterType="com.tjoeun.spring.dto.MemberDTO">
+		update members
+		set passwords = #{passwords}, nick = #{nick}, question = #{question},
+		answer=#{answer}
+		where memberNo = #{memberNo}
+	</update>
 
 	<!-- 회원이 원해서 회원탈퇴(본인의 비밀번호를 입력하여 탈퇴) -->
-	<delete id="leave" parameterType="com.tjoeun.spring.dto.MemberDTO">
-		delete 
-		from members 
+	<delete id="leave"
+		parameterType="com.tjoeun.spring.dto.MemberDTO">
+		delete
+		from members
 		where email=#{email} and passwords=#{passwords}
-	</delete> 
+	</delete>
 
+	<!-- 아이디 대용인 이메일 분실시 질문과 답을 가져오기 -->
+	<select id="takeQuestion" parameterType="java.lang.String" resultType="com.tjoeun.spring.dto.MemberDTO">
+		select *
+		from members
+		where nick = #{nick}
+	</select>
 
-	<!-- 아이디 대용인 이메일 분실시 질문과 답을 가져오기-->
-  	<select id="takeQuestion" parameterType="java.lang.String" resultType="com.tjoeun.spring.dto.MemberDTO">
-  		select *
-  		from members 
-  		where nick = #{nick}
-    </select>
+	<!-- 아이디 대용인 이메일 분실시 질문과 답을 가져오기 -->
+	<select id="findEmail" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="java.lang.String">
+		select email
+		from members
+		where nick = #{nick} and answer = #{answer}
+	</select>
 
+	<!-- 비밀번호 분실시 -->
+	<select id="findPasswords" parameterType="java.lang.String"
+		resultType="com.tjoeun.spring.dto.MemberDTO">
+		select *
+		from members
+		where email = #{email}
+	</select>
 
-	<!-- 아이디 대용인 이메일 분실시 질문과 답을 가져오기-->
-  	<select id="findEmail" parameterType="com.tjoeun.spring.dto.MemberDTO" resultType="java.lang.String">
-  		select email
-  		from members 
-  		where nick = #{nick} and answer = #{answer}
-    </select>
-	
-	
-	
-	<!--  비밀번호 분실시 -->
-  	<select id="findPasswords" parameterType="java.lang.String" resultType="com.tjoeun.spring.dto.MemberDTO">
-  		select *
-  		from members 
-  		where email = #{email}
-    </select>
-	
-	<!-- 이메일로 보낼 임시비밀번호를 DB에 반영한다.  -->
-	<update id="makeTemporaryPasswords" parameterType="com.tjoeun.spring.dto.MemberDTO" >
-		update members 
+	<!-- 이메일로 보낼 임시비밀번호를 DB에 반영한다. -->
+	<update id="makeTemporaryPasswords"
+		parameterType="com.tjoeun.spring.dto.MemberDTO">
+		update members
 		set passwords = #{passwords}
-		where email = #{email}     
+		where email = #{email}
 	</update>
-	
-	
-
-
-
 
 </mapper>

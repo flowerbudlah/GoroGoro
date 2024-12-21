@@ -29,7 +29,8 @@ function signIn(){ //로그인
 	}
 	
 	var formData = new FormData($('#tmpSignInMemberDTO')[0]);	
-	 $.ajax({   
+	
+	$.ajax({   
 		url      : "${root}member/signInProcess", 
     	data     : formData,
     	cache    : false,
@@ -60,14 +61,16 @@ body{ background-color: white; }
 <!-- 메뉴부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
-<article class="slider"><img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg"></article>
+<article class="slider">
+	<img src="${root }image/theHillsOfTheFourSeasons.jpg">
+</article>
 <!-- 로그인 폼 -->
-<div class="container" style="margin-top:50px; margin-bottom:50px; ">
+<div class="container" style="margin-top:50px; margin-bottom:50px;">
 	<div class="row">
 		 <div class="col-lg-4 col-sm-6"></div>
 			<div class="card shadow-none">
 				<div class="card-body">
-							
+			
 				<form action="javascript:signIn()" method="post" name="tmpSignInMemberDTO" id="tmpSignInMemberDTO" >
 					<div class="form-group">
 						<label for="email">이메일(아이디)</label>

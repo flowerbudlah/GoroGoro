@@ -7,13 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tjoeun.spring.dao.AdminDAO;
 import com.tjoeun.spring.dto.AdminReplyDTO;
 import com.tjoeun.spring.dto.BoardDTO;
+import com.tjoeun.spring.dto.CategoryDTO;
 import com.tjoeun.spring.dto.MemberDTO;
 import com.tjoeun.spring.dto.PageDTO;
-
+import com.tjoeun.spring.dto.PostDTO;
 import com.tjoeun.spring.dto.ReportDTO;
 
 @Service
@@ -29,12 +31,27 @@ public class AdminService {
 	@Value("${page.paginationcnt}")
 	private int page_paginationcnt;	// 한 페이지당 보여주는 페이지 버튼 개수
 	
-		
 	//1. 게시판 대분류 카테고리 생성 Create
-	public void makeCategory(String boardCategoryName) {
-		adminDAO.makeCategory(boardCategoryName);
+	public CategoryDTO makeCategory(String boardCategoryName) {
+		
+		CategoryDTO categoryDTO = new CategoryDTO();
+						
+		int categoryMakingCount = adminDAO.makeCategory(boardCategoryName);
+		
+		if (categoryMakingCount > 0) {
+			categoryDTO.setResult("Success");
+		} else {
+			categoryDTO.setResult("Fail"); 
+		}
+		return categoryDTO;		
+		
+		
 	}
 
+	public String checkCategory(String boardCategoryName) {
+		return adminDAO.checkCategory(boardCategoryName); 
+	}
+		
 	//2. 카테고리 삭제 Delete 
 	public void deleteCategory(int boardCategoryNo) {
 		adminDAO.deleteCategory(boardCategoryNo);
@@ -166,7 +183,10 @@ public class AdminService {
 		int searchCount = adminDAO.searchCount(searchListReportDTO);
 		return searchCount;
 	}
-			
 
-
+	public String checkBoardNameInTheSameCategory(BoardDTO boardNameAndCategoryNo) {
+		return adminDAO.checkBoardNameInTheSameCategory(boardNameAndCategoryNo); 
+	}
+	
+	
 }

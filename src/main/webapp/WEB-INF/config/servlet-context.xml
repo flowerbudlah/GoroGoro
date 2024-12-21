@@ -29,7 +29,6 @@
 			<beans:property name="suffix" value=".jsp" />
 		</beans:bean>
 		
-		
 		<!-- 프로젝트에서 사용하는 정적 파일(이미지, 사운드, 동영상, js, css 등) 경로 설정하기 -->
 		<resources mapping="/**" location="/resources/" />  
 		
@@ -85,7 +84,6 @@
 			</interceptor>
 		</interceptors>  
   
-  
 		<!-- Message Source 등록하기 -->
 		<beans:bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource" id="messageSource" >
 		<beans:property name="basenames" >
@@ -95,9 +93,6 @@
 		</beans:property>
 		</beans:bean> 
 		
-		
-
-	
 		<!-- Message 에 접근하기 위한 Accessor 등록하기 -->
 		<beans:bean class="org.springframework.context.support.MessageSourceAccessor">
     		<beans:constructor-arg ref="messageSource"/>
@@ -108,12 +103,5 @@
 			<beans:property name="maxUploadSize" value="100000000" />   <!-- Max upload size : 10MB -->	        
 			<beans:property name="maxInMemorySize" value="100000000" /> <!-- Max size of file in memory : 10MB -->
 		</beans:bean>
-		
-
-		
-		
-		
-		
-    
-                 
+		 
 </beans:beans>
