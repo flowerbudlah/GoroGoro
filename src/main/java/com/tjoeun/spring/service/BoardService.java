@@ -138,9 +138,6 @@ public class BoardService {
 		return reportDTO;		
 	}
 
-	
-	
-	
 	//3. 1) 글수정
 	public PostDTO modify(PostDTO modifyPostDTO) {
 			
@@ -204,8 +201,7 @@ public class BoardService {
 		}
 		return likePostDTO;
 	}
-			
-	
+
 	//5. 게시글 삭제 Delete
 	public PostDTO deletePost(int postNo) throws Exception {
 		PostDTO postDTO = new PostDTO();
@@ -218,10 +214,5 @@ public class BoardService {
 		}
 		return postDTO;
 	}
-
-	
-	
-	
-	
 	
 }

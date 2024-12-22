@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tjoeun.spring.dto.AdminReplyDTO;
 import com.tjoeun.spring.dto.BoardDTO;
 import com.tjoeun.spring.dto.CategoryDTO;
+import com.tjoeun.spring.dto.LoginRecordDTO;
 import com.tjoeun.spring.dto.MemberDTO;
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.ReportDTO;
@@ -33,6 +34,16 @@ public class AdminController {
 	@RequestMapping("/boardManagement")
 	public String boardManagement() {
 		return "admin/boardManagement";
+	}
+	
+	// 1. 로그인 기록 
+	@RequestMapping("/realTimeAboutLogin")
+	public String realTimeAboutLogin(Model model, @RequestParam(value = "email") String email) {
+		
+		List<LoginRecordDTO> realTimeLoginRecordList = adminService.takeLoginRecord(email);
+		model.addAttribute("realTimeLoginRecordList", realTimeLoginRecordList);
+		
+		return "admin/realTimeAboutLogin";
 	}
 
 	// 1.1) 게시판 관리 페이지 안에서 게시판 카테고리(게시판 대분류)를 생성한다.
@@ -78,12 +89,13 @@ public class AdminController {
 
 	// 1.4) 카테고리 삭제
 	@RequestMapping("/deleteCategory")
-	public void deleteCategory(int boardCategoryNo) {
+	public @ResponseBody CategoryDTO deleteCategory(int boardCategoryNo) {
 		
-		adminService.deleteCategory(boardCategoryNo);
+		CategoryDTO categoryDTO = adminService.deleteCategory(boardCategoryNo);
+        return categoryDTO;
 		
 	}
-
+		
 	// 1.5) 게시판 삭제
 	@RequestMapping("/boardManagement/deleteBoard")
 	public String deleteBoard(int boardNo) {
@@ -115,8 +127,11 @@ public class AdminController {
 
 	// 관리자의 신고된 글에 대한 검색과 페이지(페이지 1 2 3 4 5 6 7 8 9 10)
 	@RequestMapping("/searchResult")
-	public String searchResult(Model model, @RequestParam("type") String type, @RequestParam("keyword") String keyword,
-			@RequestParam(value = "page", defaultValue = "1") int page) throws Exception {
+	public String searchResult
+	(Model model, 
+	@RequestParam("type") String type, 
+	@RequestParam("keyword") String keyword,
+	@RequestParam(value = "page", defaultValue = "1") int page) throws Exception {
 
 		ReportDTO searchListReportDTO = new ReportDTO();
 		searchListReportDTO.setType(type);

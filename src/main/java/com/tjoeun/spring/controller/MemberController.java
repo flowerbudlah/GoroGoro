@@ -67,7 +67,7 @@ public class MemberController {
 			return "unavailable"; //사용불가
 		}
 	}
-	
+
 	//1. 2) 아이디용인 이메일 중복체크(at 회원가입 페이지)
 	@RequestMapping("/checkEmail")
 	public @ResponseBody String checkEmail(String email) {
@@ -87,8 +87,7 @@ public class MemberController {
 		MemberDTO newMemberDTO = memberService.signUpProcess(signUpMemberDTO); //회원가입 완료
 		return newMemberDTO; 
 	}
-	
-		
+
 	//3.1) "회원정보수정페이지(modification)"로 이동한다. 
 	@GetMapping("/modify")
 	public String modify
@@ -118,17 +117,16 @@ public class MemberController {
 			}
 		}
 	}
-	
-	
-	//4. 회원정보수정 완료 버튼 누르고, 진짜 회원정보 수정이 이뤄지는 그 과정
+
+	// 4. 회원정보수정 완료 버튼 누르고, 진짜 회원정보 수정이 이뤄지는 그 과정
 	@RequestMapping("/modifyProcess")
-	public @ResponseBody MemberDTO modifyMemberDTO(MemberDTO modifyMemberDTO){
-		
-		//수정할 대상인 회원정보를 수정한 뒤에 정보수정을 완료한 새로운 memberDTO를 가져온다. 
+	public @ResponseBody MemberDTO modifyMemberDTO(MemberDTO modifyMemberDTO) {
+
+		// 수정할 대상인 회원정보를 수정한 뒤에 정보수정을 완료한 새로운 memberDTO를 가져온다.
 		MemberDTO memberDTOAfter = memberService.modifyMemberDTO(modifyMemberDTO);
 		return memberDTOAfter;
 	}
-		
+
 	//5.1) 로그인 페이지로 입장
 	@RequestMapping("/signIn")
 	public String signIn() {
@@ -139,19 +137,28 @@ public class MemberController {
 	@PostMapping("/signInProcess")
 	public void signInProcess
 	(HttpServletRequest request, HttpServletResponse response, MemberDTO tmpSignInMemberDTO) {
-				
-		memberService.signIn(tmpSignInMemberDTO); //로그인 시도 
-			
-		if(signInMemberDTO.isSignIn() == true) {//이것은 로그인이 성공했다는 의미
-		} else if(signInMemberDTO.isSignIn() ==  false ) { //이것은 로그인 실패 
+
+		// 로그인 시도
+		memberService.signIn(tmpSignInMemberDTO);
+
+		// 이것은 로그인이 성공했다는 의미
+		if(signInMemberDTO.isSignIn() == true) {
+
+		// 이것은 로그인 실패
+		} else if (signInMemberDTO.isSignIn() == false) {
+
 			try {
+
 				response.getWriter().write("loginFail");
+
 			} catch (IOException e) {
+
 				e.printStackTrace();
+
 			}
 		}
 	}
-	
+
 	//6. 로그아웃(Sign Out)
 	@ResponseBody 
 	@RequestMapping("/signOut")

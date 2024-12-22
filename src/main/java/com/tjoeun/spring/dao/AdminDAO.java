@@ -9,10 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import com.tjoeun.spring.dto.AdminReplyDTO;
 import com.tjoeun.spring.dto.BoardDTO;
-import com.tjoeun.spring.dto.CategoryDTO;
+
+import com.tjoeun.spring.dto.LoginRecordDTO;
 import com.tjoeun.spring.dto.MemberDTO;
 
 import com.tjoeun.spring.dto.ReportDTO;
+
 
 @Repository
 public class AdminDAO {
@@ -40,8 +42,8 @@ public class AdminDAO {
 	}
 
 	// 4. 카테고리 삭제
-	public void deleteCategory(int boardCategoryNo) {
-		sqlSessionTemplate.delete("admin.deleteCategory", boardCategoryNo);
+	public int deleteCategory(int boardCategoryNo) {
+		return sqlSessionTemplate.delete("admin.deleteCategory", boardCategoryNo);
 	}
 
 	// 5. 카테고리에 속한 게시판 삭제
@@ -116,7 +118,9 @@ public class AdminDAO {
 	public String checkBoardNameInTheSameCategory(BoardDTO boardNameAndCategoryNo) {
 		return sqlSessionTemplate.selectOne("admin.checkSameBoardName", boardNameAndCategoryNo);
 	}
-	
 
+	public List<LoginRecordDTO> takeLoginRecord(String email) {
+		return sqlSessionTemplate.selectList("admin.takeLoginRecord", email);
+	}
 
 }

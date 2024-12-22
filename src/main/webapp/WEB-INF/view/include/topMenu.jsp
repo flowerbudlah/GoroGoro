@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath }/" />
 <!-- 폰트 -->
@@ -79,8 +78,7 @@
 				location.href = "${root}main";
 			},
 			error : function(request, status, error) {
-				alert("code:" + request.status + "\n" + "message:"
-						+ request.responseText + "\n" + "error:" + error);
+				alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 			}
 		}) //아작스		
 	}
@@ -113,9 +111,8 @@
 								<c:when
 									test="${CategoryListDTO.boardCategoryNo == BoardListDTO.boardCategoryNo }">
 									<li>
-										<!-- 진짜 메뉴 나오는 부분! --> <a
-										href="${root }board/main?boardNo=${BoardListDTO.boardNo}"
-										style="color: black;'"> ${BoardListDTO.boardName } </a>
+										<!-- 진짜 메뉴 나오는 부분! --> 
+										<a href="${root }board/main?boardNo=${BoardListDTO.boardNo}" style="color: black;'"> ${BoardListDTO.boardName } </a>
 									</li>
 									<br>
 								</c:when>
@@ -153,17 +150,11 @@
 					<c:choose>
 						<c:when test="${signInMemberDTO.signIn == true }">
 							<!-- 로그인을 해야지 보이는 관리자 페이지 -->
-							<li>
-								<a href="${root }admin/memberManagement" style="color: black;">
-									회원 관리
-								</a>
-							</li>
+							<li><a href="${root }admin/memberManagement" style="color: black;">회원 관리</a></li>
 							<br>
-							<li><a href="${root }admin/postManagement"
-								style="color: black;'">게시물 관리</a></li>
+							<li><a href="${root }admin/postManagement" style="color: black;'">게시물 관리</a></li>
 							<br>
-							<li><a href="${root }admin/boardManagement"
-								style="color: black;">게시판 관리</a></li>
+							<li><a href="${root }admin/boardManagement" style="color: black;">게시판 관리</a></li>
 						</c:when>
 						<c:otherwise></c:otherwise>
 					</c:choose>

@@ -117,7 +117,10 @@ td{text-align:center; border: 1px solid black;}
 				<td style="text-align: center;">
 					<fmt:formatDate pattern="yyyy-MM-dd(E) hh시 mm분 ss초" value="${allMemberList.signUpDate }"/>
 				</td>
-				<td style="text-align: center;"><a href="">상세보기</a></td>
+				<!-- 로그인 정보 -->
+				<td style="text-align: center;">
+					<a href="${root }admin/realTimeAboutLogin?email=${allMemberList.email}">상세보기</a>
+				</td>
 				<td style="text-align: center;">0</td>
 				<td style="text-align: center;"><a href="">강제탈퇴시키기</a></td>
 			</tr>

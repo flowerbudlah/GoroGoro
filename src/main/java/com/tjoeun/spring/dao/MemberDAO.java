@@ -3,6 +3,8 @@ package com.tjoeun.spring.dao;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.tjoeun.spring.dto.LoginRecordDTO;
 import com.tjoeun.spring.dto.MemberDTO;
 
 @Repository
@@ -29,6 +31,11 @@ public class MemberDAO {
 	// 2. Log In or Sign In
 	public MemberDTO signIn(MemberDTO tmpSignInMemberDTO) {
 		return sqlSessionTemplate.selectOne("member.signIn", tmpSignInMemberDTO);
+	}
+
+	// 회원이 로그인을 할때마다 로그인시간이 기록된다. -->
+	public int recordRealTimeLogin(LoginRecordDTO realTimeLoginRecordDTO) {
+		return sqlSessionTemplate.insert("member.recordRealTimeLogin", realTimeLoginRecordDTO);
 	}
 
 	// 3. 1) 수정할 회원정보 가져오기

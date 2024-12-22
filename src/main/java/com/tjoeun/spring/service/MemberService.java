@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.tjoeun.spring.dao.MemberDAO;
+import com.tjoeun.spring.dto.LoginRecordDTO;
 import com.tjoeun.spring.dto.MemberDTO;
 
 @Service
@@ -39,30 +40,39 @@ public class MemberService {
 		return memberDAO.checkEmail(email);
 	} 
 
-	
-
 	//1. 3) 대화명(닉네임) 중복 체크 (회원가입, 회원정보수정 모두 해당됨)
 	public String checkNick(String nick) {
 		return memberDAO.checkNick(nick);
 	}
 
-	//2. Sign In(로그인)
+	// 2. Sign In(로그인)
 	public void signIn(MemberDTO tmpSignInMemberDTO) {
-		
-		MemberDTO memberDTOfromDB = memberDAO.signIn(tmpSignInMemberDTO); //아이디와 비밀번호로 로그인
-		
-		if(memberDTOfromDB != null) {//로그인을 했더니, DB애 정보가 있다.
-			signInMemberDTO.setMemberNo(memberDTOfromDB.getMemberNo());//로그인한 회원의 회원번호
-			signInMemberDTO.setEmail(memberDTOfromDB.getEmail()); //로그인한 회원의 아이디 이메일
-			signInMemberDTO.setPasswords(memberDTOfromDB.getPasswords()); //로그인한 회원의 패스워드
-			signInMemberDTO.setNick(memberDTOfromDB.getNick()); //로그인한 회원의 대화명
+
+		MemberDTO memberDTOfromDB = memberDAO.signIn(tmpSignInMemberDTO); // 아이디와 비밀번호로 로그인
+	
+		// 로그인을 했더니, DB애 정보가 있다. 로그인 가능
+		if (memberDTOfromDB != null) {
+	
+			signInMemberDTO.setMemberNo(memberDTOfromDB.getMemberNo());// 로그인한 회원의 회원번호
+			signInMemberDTO.setEmail(memberDTOfromDB.getEmail()); // 로그인한 회원의 아이디 이메일
+			signInMemberDTO.setPasswords(memberDTOfromDB.getPasswords()); // 로그인한 회원의 패스워드
+			signInMemberDTO.setNick(memberDTOfromDB.getNick()); // 로그인한 회원의 대화명
 			
-			signInMemberDTO.setSignIn(true); //로그인 성공하니 sign in이 false에서 true로 바뀝니다.		
-		} else if(memberDTOfromDB == null) { //로그인을 했더니, DB애 정보가 없다. 
-			signInMemberDTO.setSignIn(false); 
+			signInMemberDTO.setSignIn(true); // 로그인 성공하니 sign in이 false에서 true로 바뀝니다.
 			
+			LoginRecordDTO realTimeLoginRecordDTO = new LoginRecordDTO();
+			realTimeLoginRecordDTO.setMemberNo(signInMemberDTO.getMemberNo());
+			realTimeLoginRecordDTO.setEmail(signInMemberDTO.getEmail());
+			memberDAO.recordRealTimeLogin(realTimeLoginRecordDTO);
+			System.out.println(realTimeLoginRecordDTO);
+			// 회원이 로그인을 하면, 그 로그인을 한 시각이 기록된다.
+			
+		} else if (memberDTOfromDB == null) { // 로그인을 했더니, DB애 정보가 없다. 로그인 불가
+
+			signInMemberDTO.setSignIn(false);
+
 		}
-		
+
 	}
 	
 	//3. 1) 수정하고자하는 회원 정보를 가져오기. 

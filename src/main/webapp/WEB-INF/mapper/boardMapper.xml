@@ -24,27 +24,22 @@
 	</select>
 
 	<!-- 1. 2) 그 해당 게시판에 써져있는 게시글 수 가져오기(페이징 작업때문에 필요하다. ) -->
-	<select id="getPostCnt" parameterType="java.lang.Integer"
-		resultType="java.lang.Integer">
+	<select id="getPostCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		select count(*) from freeBoard where boardNo = #{boardNo}
 	</select>
 
 	<!-- 1. 3) 게시판 이름, 정보 가져오기 -->
-	<select id="getBoardName" parameterType="java.lang.Integer"
-		resultType="java.lang.String">
-		select boardName from boardInCategory where
-		boardNo=#{boardNo}
+	<select id="getBoardName" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select boardName 
+		from boardInCategory 
+		where boardNo=#{boardNo}
 	</select>
 
 	<!-- 1. 4) 게시글 검색 -->
-	<select id="searchList"
-		parameterType="com.tjoeun.spring.dto.PostDTO"
-		resultType="com.tjoeun.spring.dto.PostDTO">
-		select postNo, title, writer, DATE_FORMAT(regDate,'%Y-%m-%d') as
-		regDate, viewCount, sameThinking, boardNo
+	<select id="searchList" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="com.tjoeun.spring.dto.PostDTO">
+		select postNo, title, writer, DATE_FORMAT(regDate,'%Y-%m-%d') as regDate, viewCount, sameThinking, boardNo
 		from freeBoard
-		where boardNo =
-		#{boardNo} and
+		where boardNo = #{boardNo} and
 		<if test="type!=null and type == 'title'">
 			title like CONCAT('%',#{keyword},'%')
 		</if>
@@ -55,16 +50,13 @@
 			writer like CONCAT('%',#{keyword},'%')
 		</if>
 		<if test="type!=null and type == 'titleANDcontent'">
-			(title like CONCAT('%',#{keyword},'%') OR content like
-			CONCAT('%',#{keyword},'%'))
+			(title like CONCAT('%',#{keyword},'%') OR content like CONCAT('%',#{keyword},'%'))
 		</if>
 		order by postNo DESC
 	</select>
 
 	<!-- 1. 4) 게시글 검색후, "검색결과 수" 페이징 작업 -->
-	<select id="searchCount"
-		parameterType="com.tjoeun.spring.dto.PostDTO"
-		resultType="java.lang.Integer">
+	<select id="searchCount" parameterType="com.tjoeun.spring.dto.PostDTO" resultType="java.lang.Integer">
 		select count(*)
 		from freeBoard
 		where boardNo = #{boardNo} and
@@ -84,13 +76,9 @@
 	</select>
 
 	<!-- 2. 글쓰기 Create(이미지 파일 첨부기능포함) -->
-	<insert id="writeProcess"
-		parameterType="com.tjoeun.spring.dto.PostDTO" useGeneratedKeys="true"
-		keyProperty="postNo">
-		insert into freeBoard(boardNo, title, content, writer,
-		regDate, imageFileName)
-		values(#{boardNo}, #{title}, #{content},
-		#{writer}, Now(), #{imageFileName})
+	<insert id="writeProcess" parameterType="com.tjoeun.spring.dto.PostDTO" useGeneratedKeys="true" keyProperty="postNo">
+		insert into freeBoard(boardNo, title, content, writer, regDate, imageFileName)
+		values(#{boardNo}, #{title}, #{content}, #{writer}, Now(), #{imageFileName})
 	</insert>
 
 	<!-- 3. 1) 글 하나 읽기 Reading -->

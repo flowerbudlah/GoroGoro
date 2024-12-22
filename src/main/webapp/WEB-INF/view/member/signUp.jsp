@@ -57,63 +57,58 @@ $(document).ready(function(){	});
 		var yn = confirm("회원가입을 하시겠습니까?"); //작동
 		
 		if(yn){
-
-			$.ajax({
-				url : "${root}member/checkEmail",
-				type : "post",
-				data : {email : email},
-				success : 
-					
-				function(data){
-					
-					if(data == "unavailable"){ //아이디 중복으로 사용불가 
-						alert("이미 그 아이디는 누가 사용하고 있기에 사용불가입니다. "); 
-					
-					}else if(data == "available"){ //아이디 사용가능 
+			
+			if((passwords == passwordsConfirm) 
+					&& (      emailValidity.test( $("#email").val() )    ) ){
 				
-						if((passwords == passwordsConfirm) && (      emailValidity.test( $("#email").val() )    )){
-							
-							 $.ajax({   
-					                url      : "${root}member/signUpProcess", 
-					            	data     : formData,
-					                cache    : false,
-					                async    : true,
-					                contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
-					                processData: false, // 이것을 붙이고 업로드가 되었다. 
-					                type     : "POST",    
-					                success  : function(obj){
-					                	
-					                	if(obj != null){		
-					            			var result = obj.result;
-					            			
-					            			if(result == "success"){				
-					            				alert("회원가입을 성공하였습니다. 로그인 페이지로 이동하겠습니다.");				
-					            				signIn(); 
-					            				
-					            			} else {				
-					            				alert("회원가입에 실패하였습니다. ");	
-					            				return;
-					            			}
-					            		}
-					          
-					                },           
-					                error: 
-					                	function(request,status,error) { 
-					                	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);      
-					                 }
-					               
-									}) //아작스
-									
-						} else if(passwords != passwordsConfirm) {
-							alert("패스워드는 같아야합니다. "); 
-						} else if( !emailValidity.test(   $("#email").val()  ) ) {//이메일 형식에 맞지않는경우, 
-							alert("이메일 형식에 맞게 입력을 해주시고 다시한번 회원가입 시도해주세요!"); 
-						} 
+				$.ajax({
+					url : "${root}member/checkEmail",
+					type : "post",
+					data : {email : email},
+					success : 
 						
-					} //아이디 사용가능 
+					function(data){
+						
+						if(data == "unavailable") { 
+							alert("이미 그 아이디는 누가 사용하고 있기에 사용불가입니다. "); 
+						
+						} else if(data == "available") { //아이디 사용가능 
 					
-				}
-			});
+							$.ajax({
+								url      : "${root}member/signUpProcess", 
+								data     : formData,
+								cache    : false,
+								async    : true,
+								contentType: false, //이것을 붙이고 나서 업로드가 된것이다. 
+								processData: false, // 이것을 붙이고 업로드가 되었다. 
+								type     : "POST",    
+								success  : function(obj){
+						                
+									if(obj != null){
+										var result = obj.result;
+						            	
+										if(result == "success"){
+											alert("회원가입을 성공하였습니다. 로그인 페이지로 이동하겠습니다.");	
+											signIn();		
+						            	} else {
+											alert("회원가입에 실패하였습니다. ");	
+						            		return;
+						            	}
+						            }
+									
+								},
+								error: function(request,status,error) {
+									alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+								}
+							}) //아작스
+						} // if의 끝
+					} //function(data)
+					})//아작스
+			} else if(passwords != passwordsConfirm) {
+				alert("패스워드는 같아야합니다. "); 
+			} else if( !emailValidity.test(   $("#email").val()  ) ) {//이메일 형식에 맞지않는경우, 
+				alert("이메일 형식에 맞게 입력을 해주시고 다시한번 회원가입 시도해주세요!"); 
+			}			
 			
 		}//yn의 끝
 	} //signUpProcess()의 끝

@@ -59,8 +59,6 @@ function deletePost(){
     } //yn 끝        
 } //deletePost
 
-
-
 //4. 신고하기
 function report(){
 	location.href = "report";

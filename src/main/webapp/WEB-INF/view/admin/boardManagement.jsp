@@ -45,7 +45,7 @@
 									return; 
 								} else {
 									alert("새로운 카테고리가 생성되었습니다.");
-									return; 
+									location.reload(true);
 								}
 							}
 
@@ -59,12 +59,45 @@
 
 	} //  makeCategory()의 끝
 
-	
+	//
+	function deleteCategory(){
+		var boardCategoryNo = $("#boardCategoryNo").val();
+		
+		var yn = confirm("해당 카테고리를 제거하시겠습니까? Do you want to delete this Category? ");        
+	    
+		if(yn){
+	        
+	        $.ajax({    
+	         	url      : "${root}admin/deleteCategory",
+	            type     : "POST",    
+	            data : { boardCategoryNo : boardCategoryNo },
+	            dataType : "JSON",
+	            success  : function(obj) {
+	            	
+	            	 if(obj != null){
+	            	        var result = obj.result;
+	            	        
+	            	        if(result == "SUCCESS"){  
+	            	            alert("Success of The Category's elimination");                
+	            	            location.reload(true);
+	            	        } else {     
+	            	            alert("This Category's elimination was failed. This Category was not deleted.");    
+	            	            return;
+	            	        }
+						}
+				},         
+	            error    : function(request, status, error) {
+	            	alert("You don't have the right to delete The Category");
+	            }
+				
+	         });
+	    } //yn 끝        
+	} //delete
+
 </script>
 <style>
 body {
-	background-image:
-		url(http://localhost:8090/GoroGoroCommunity/image/bottom-bg.jpg);
+	background-image: url(http://localhost:8090/GoroGoroCommunity/image/bottom-bg.jpg);
 	background-repeat: no-repeat;
 	background-position: center bottom;
 	background-attachment: fixed;
@@ -99,6 +132,7 @@ body {
 				카테고리 생성하기
 				</button>
 			</form>
+			
 			<form name="deleteCategoryDTO" method="post" id="deleteCategoryDTO" style="padding-top: 2px; padding-bottom: 20px;">
 				2) 카테고리 삭제<br> 
 				(1) 삭제할 카테고리 선택: 
@@ -113,14 +147,16 @@ body {
 			
 			<hr>
 			<!-- start 게시판 생성부분(같은 그룹안에 같은이름을 갖고있는 게시판은 만들수없다.) -->
-			<form action="${root }admin/boardManagement/boardName" style="padding-top: 40px; padding-bottom: 40px;">
+			<form action="${root }admin/boardManagement/boardName" style="padding-top: 20px; padding-bottom: 40px;">
 				<h5><strong>2. 게시판</strong></h5>
-				1) 게시판 생성<br> (1) 대분류 카테고리 선택: <select name="boardCategoryNo"
-					style="width: 300px;">
+				1) 게시판 생성<br>
+				(1) 대분류 카테고리 선택: 
+				<select name="boardCategoryNo" style="width: 300px;">
 					<c:forEach var="CategoryListDTO" items="${CategoryList }">
 						<option value="${CategoryListDTO.boardCategoryNo }">${CategoryListDTO.boardCategoryName }</option>
 					</c:forEach>
-				</select><br> (2) 새로운 게시판 이름 설정: 
+				</select><br> 
+				(2) 새로운 게시판 이름 설정: 
 				<input type="hidden" id="boardCategoryNo" value="boardCategoryNo" name="boardCategoryNo" />
 				<input type="text" id="boardName" value="" name="boardName" style="width: 300px;">
 				<button type="submit" class="btn btn-warning btn-sm" style="text-align: right;" onClick="checkBoardName();">

@@ -17,6 +17,7 @@ function signIn(){ //로그인
 	
 	var email = $("#email").val(); //이메일(아이디)
 	var passwords = $("#passwords").val(); //작성자
+	
 	if(email == ""){			
 		alert("이메일 주소를 입력해주세요.");
 		$("#email").focus();
@@ -62,7 +63,7 @@ body{ background-color: white; }
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
 <article class="slider">
-	<img src="${root }image/theHillsOfTheFourSeasons.jpg">
+	<img src="${root }image/candy01.jpg">
 </article>
 <!-- 로그인 폼 -->
 <div class="container" style="margin-top:50px; margin-bottom:50px;">

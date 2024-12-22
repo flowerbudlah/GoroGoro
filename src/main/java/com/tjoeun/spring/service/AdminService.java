@@ -13,6 +13,7 @@ import com.tjoeun.spring.dao.AdminDAO;
 import com.tjoeun.spring.dto.AdminReplyDTO;
 import com.tjoeun.spring.dto.BoardDTO;
 import com.tjoeun.spring.dto.CategoryDTO;
+import com.tjoeun.spring.dto.LoginRecordDTO;
 import com.tjoeun.spring.dto.MemberDTO;
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
@@ -53,8 +54,18 @@ public class AdminService {
 	}
 		
 	//2. 카테고리 삭제 Delete 
-	public void deleteCategory(int boardCategoryNo) {
-		adminDAO.deleteCategory(boardCategoryNo);
+	public  CategoryDTO deleteCategory(int boardCategoryNo) {
+		
+		CategoryDTO deleteCatetoryDTO = new CategoryDTO();
+		int deleteCnt = adminDAO.deleteCategory(boardCategoryNo);
+		 
+		if (deleteCnt > 0) {
+			deleteCatetoryDTO.setResult("SUCCESS");
+		} else {
+			deleteCatetoryDTO.setResult("FAIL");
+		}
+		
+		return deleteCatetoryDTO;
 	}
 	
 	//3. 게시판 이름 생성 Create
@@ -83,6 +94,13 @@ public class AdminService {
 		return adminDAO.takeMemberList();
 	} 
 	
+	// 로그인 기록
+	public List<LoginRecordDTO> takeLoginRecord(String email){
+		
+		return adminDAO.takeLoginRecord(email);
+	
+	} 
+	
 	//7. 2) 특정한 한 회원이 쓴 글의 수 가져오기 (at 관리자페이지)
 	public int postCount(String writer) {
 		return adminDAO.postCount(writer);   
@@ -98,7 +116,6 @@ public class AdminService {
 		return adminDAO.searchMemberList(searchListMemberDTO);		
 	}
 
-	
 	//8. 1) 관리자가 신고된 글 모두 리스트로 보기 (at 게시물페이지) 
 	public List<ReportDTO> takeReportedPost(int page){
 		
@@ -118,8 +135,7 @@ public class AdminService {
 				
 		return pageDTO;
 	}
-		
-	
+
 	//1. 댓글 작성 Create 
 	public AdminReplyDTO writeAdminReplyProcess(AdminReplyDTO writeReplyDTO) {
 				
@@ -135,14 +151,12 @@ public class AdminService {
 					
 		return adminReplyDTO;				
 	}
-	
-	
+
 	//2. 댓글리스트 조회 Read
 	public List<AdminReplyDTO> replyAdminList(int reportNo){
 		return adminDAO.adminReplyList(reportNo);
 	}
 
-			
 	//3. 댓글삭제 delete
 	public AdminReplyDTO removeAdminReply(int replyNo) {
 				
