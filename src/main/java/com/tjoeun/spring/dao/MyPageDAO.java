@@ -16,6 +16,8 @@ public class MyPageDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
+	
+	
 	//8. 1) 관리자가 신고된 게시물들 리스트로 보기
 	public List<ReportDTO> takeMyReportedPost(String reporter, RowBounds rowBounds){
 		return sqlSessionTemplate.selectList("myPage.takeMyReportDTO", reporter, rowBounds);
@@ -61,16 +63,13 @@ public class MyPageDAO {
 		return sqlSessionTemplate.update("myPage.deleteImageFile", imageFileReportDTO);
 	}
 	
-
-	
-	
-	
-	
-	
-	//4. 특정 글 삭제하기 Delete
+	//4. 신고된 리포트 철회
 	public int deleteReportDTO(int reportNo) throws Exception {
 		return sqlSessionTemplate.delete("myPage.deleteReportDTO", reportNo); 
 	}
+	
+
+	
 
 	//5. 내가 쓴 글 검색
 	public List<PostDTO> searchList(PostDTO searchListPostDTO, RowBounds rowBounds) throws Exception {

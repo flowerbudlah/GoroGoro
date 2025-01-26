@@ -12,10 +12,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script type="text/javascript">    
+<script type="text/javascript">
 </script>
 <style>
-.slider img{display:block; width:100%; max-width:100%; height:300px;} /* 슬라이더 영역 CSS */
+/* 슬라이더 영역 CSS */
+.slider img{display:block; width:100%; max-width:100%; height:300px;}
 thead{background-color: gold; }
 </style>
 </head>
@@ -23,10 +24,7 @@ thead{background-color: gold; }
 <!-- 상단 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!-- 그 게시판 윗 부분 그림-->
-<article class="slider">
-	<img src="${root }image/convenientStore.png">
-	<!-- http://localhost:8090/GoroGoroCommunity/ -->
-</article>
+<article class="slider"><img src="${root }image/candy05.jpg"></article>
 <!--Post List(게시글 리스트)-->
 <div class="container" style="margin-top:50px; margin-bottom:50px;">
 	<div class="card shadow-none">
@@ -34,9 +32,7 @@ thead{background-color: gold; }
 			<h4 class="card-title">관리자 전용 페이지(For the Administrator Only)</h4>
 			<p>관리자에게 신고 접수된 게시물들을 보여줍니다.</p><br>
 			<c:choose>
-				<c:when test="${searchList != null}">
-					검색결과 총 ${searchCount }의 신고접수 건이 존재합니다. 
-				</c:when>
+				<c:when test="${searchList != null}">검색결과 총 ${searchCount }의 신고접수 건이 존재합니다. </c:when>
 				<c:otherwise></c:otherwise>
 			</c:choose>
 			<table class="table table-hover">
@@ -77,7 +73,9 @@ thead{background-color: gold; }
 								${reportDTO.reason}	(게시글 번호: ${reportDTO.postNo })<br>
 								<c:choose>
 									<c:when test="${reportDTO.replyCount == 0 }"></c:when>
-									<c:otherwise><font color="red">답변완료</font></c:otherwise>
+									<c:otherwise>
+										<font color="red">답변완료</font>
+									</c:otherwise>
 								</c:choose>
 							</a>
 						</td>
@@ -188,7 +186,6 @@ thead{background-color: gold; }
 					</c:choose>
 					</ul>
 				</div>
-	
 				</c:otherwise>
 			</c:choose>			
 			<!-- 검색 기능 -->			

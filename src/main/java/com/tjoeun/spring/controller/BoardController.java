@@ -1,6 +1,5 @@
 package com.tjoeun.spring.controller;
 
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -146,8 +145,7 @@ public class BoardController {
 		String boardName = boardService.getBoardName(boardNo); 
 		model.addAttribute("boardName", boardName);//게시판 이름
 			
-		PostDTO searchListPostDTO = new PostDTO(); 
-				
+		PostDTO searchListPostDTO = new PostDTO();
 		searchListPostDTO.setBoardNo(boardNo); 
 		searchListPostDTO.setType(type); 
 		searchListPostDTO.setKeyword(keyword); 
@@ -183,24 +181,23 @@ public class BoardController {
 		//ResponseEntity.ok(result); 
 		return "board/main";
 	} 
-		
+
 	//2. 글쓰기 페이지로 이동 
 	@RequestMapping("/write") 
 	public String write(Model model, @RequestParam("boardNo") int boardNo){
 		model.addAttribute("boardNo", boardNo); //게시판 일련번호(인덱스)
 		return "board/write";
 	}
-	
-	
+
 	//2.1) 게시글 등록 Creating 
 	@RequestMapping("/writeProcess")
-    public  @ResponseBody PostDTO writeProcess
+    public @ResponseBody PostDTO writeProcess
     (HttpServletRequest request, HttpServletResponse response, PostDTO writePostDTO, MultipartFile imageFile) throws Exception{	
 		PostDTO postDTO = boardService.writeProcess(writePostDTO);
         return postDTO;
     }
 
-	//3.글 수정 페이지로 이동(Updating)
+	// 3.글 수정 페이지로 이동(Updating)
 	@RequestMapping("/modify")
 	public String modify
 	(@RequestParam("postNo") int postNo, @ModelAttribute("modifyPostDTO") PostDTO modifyPostDTO, Model model) {
@@ -240,8 +237,7 @@ public class BoardController {
 		return "board/read";
 		
 	}
-	
-	
+
 	//5. 글삭제(Deleting)
 	@RequestMapping("/deletePost")
     public @ResponseBody PostDTO deleteBoard
@@ -283,7 +279,7 @@ public class BoardController {
 		PostDTO likePostDTO = boardService.like(postNo);
 		return likePostDTO;
 	}
-	
+
 	//9.1) 게시글 신고페이지로 이동! 
 	@RequestMapping("/report")
 	public String report(@RequestParam("postNo") int postNo, Model model) {
@@ -291,7 +287,6 @@ public class BoardController {
 		return "board/report";		
 	}
 	
-
 	//9.2) 게시글 신고
 	@RequestMapping("/reportProcess")
 	public @ResponseBody ReportDTO reportProcess

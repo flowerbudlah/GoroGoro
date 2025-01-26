@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath }/" />
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,31 +36,34 @@ body {
 	<c:import url="/WEB-INF/view/include/topMenu.jsp" />
 	<!--가운데 그림-->
 	<article class="slider">
-		<img src="${root }image/wakayamaSea01.jpg">
+		<img src="${root }image/jewely.png">
 	</article>
 	<!--메인화면에 내용 들어가는 부분  -->
-	<div style="padding-top: 50px; padding-bottom: 50px;">
+	<div style="padding-left: 50px; padding-top: 50px; padding-bottom: 50px;">
 		<div class="container">
-			<h3>로그인 기록 정보</h3>
-<table style="width: 1100px; margin: auto;">
+		${nick}님의 로그인 정보
+		<table style="width: 1100px; margin: auto;">
 
 		<thead>
 			<tr>
-				<th style="text-align: center;">로그인일련</th>
-				<th style="text-align: center;">회원번호</th>
-				<th style="text-align: center;">이메일</th>
-				<th style="text-align: center;">로그인시각</th>
+				<th style="text-align: center;"></th>
+				<th style="text-align: center;">로그인 시각</th>
 			</tr>
 		</thead>
+
 		<tbody id="boardtable">
+		
+		
 		<c:forEach items="${realTimeLoginRecordList}" var="realTimeLoginRecordList">
 			<tr>
 				<td style="text-align: center;">${realTimeLoginRecordList.loginRecordNo}</td>
-				<td style="text-align: center;">${realTimeLoginRecordList.memberNo }</td>
-				<td style="text-align: center;">${realTimeLoginRecordList.email}</td>
-				<td style="text-align: center;">${realTimeLoginRecordList.loginRecordRealTime}</td>
+				<td style="text-align: center;">
+					<fmt:formatDate pattern="yyyy-MM-dd(E) HH시 mm분 ss초" value="${realTimeLoginRecordList.loginRecordRealTime}"/>
+				</td>
 			</tr>
-	</c:forEach> 
+		</c:forEach> 
+		
+		
 		</tbody>
 			
 </table> 

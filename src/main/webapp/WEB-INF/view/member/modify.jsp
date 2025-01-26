@@ -15,8 +15,8 @@
 <script src="${root }js/validation.js"></script>
 <script type="text/javascript">
 
-	//1. 회원정보수정 버튼을 누른 뒤에  
-	function modifyMemberDTO(){
+	// 1. 회원정보수정 버튼 누르면 작동하는 아작스
+	function modifyInformation(){
 		
 		var nick = $("#nick").val(); // 대화명
 		var question = $("#question").val(); //질문
@@ -38,36 +38,56 @@
 			return;
 		}
 	
+		// 회원정보 수정 페이지에서 입력한 비밀번호가 같으면
 		if(passwords == passwordsConfirm){
-			$.ajax({   
-				url      : "${root}member/modifyProcess", 
-		        data     : formData,
-				contentType: false, //이것을 붙이고 나서 수정 업로드가 된것이다. 
-				processData: false, // 이것을 붙이고 수정 업로드가 되었다. 
-				cache    : false,
-				async    : true,
-				type     : "POST",    
-				success  : 
-					function(obj){ 
-						if(obj != null){        
-							var result = obj.result;
-				            if(result == "success"){                
-								alert("수정을 성공하였습니다."); 
-								location.href = "${root}main";
-				            } else {                
-				            	alert("수정을 실패하였습니다.");    
-				                return;
-				            }
-				        }
-					},           
-				error	 : function(request,status,error){	
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			}) //아작스		
+			
+			// 입력한 닉네임 중복 확인을 진행한다. 
+			$.ajax({
+				url : "${root}member/checkNickInModify",
+				type : "post",
+				data : {nick: $("#nick").val()},
+				success : function(result) {
+							
+							if (result == "unavailable") {
+								
+								alert("입력하신 닉네임은 중복된 것이기 때문에 사용하실 수 없습니다. 다른 닉네임을 사용해주새요. "); 	
+								
+							// 입력한 닉네임은 사용가능한 것으로 중복되지 않은 닉네임
+							} else if (result == "available") {
+							
+								// 닉네임이 중복되는 것이 아니기에 회원정보 수정으로 진행한다. 
+								$.ajax({
+									url      : "${root}member/modifyProcess", 
+							        data     : formData,
+									contentType: false, // 이것을 안붙이면 "수정에 실패했습니다"가 나온다 
+									processData: false, // 이것을 안붙이면 아예 회원정보 수정 버튼이 작동조차 안한다. 
+									type     : "POST",    
+									success  : 
+										function(obj){ 
+											if(obj != null){        
+												var result = obj.result;
+									            if(result == "success"){                
+													alert("회원정보의 수정을 성공하였습니다."); 
+													location.href = "${root}main";
+									            } else {                
+									            	alert("회원정보의 수정을 실패하였습니다.");    
+									                return;
+									            }
+									        }
+										},           
+									error	 : function(request,status,error){	
+										alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+									}
+								}) // 회원정보 수정 아작스	
+								
+							}
+						}
+			}) // 닉네임 중복체크 아작스의 끝 
+				
 		} else if(passwords != passwordsConfirm) {
 			alert("패스워드는 같아야합니다. "); 
 		}	
-	} //펑션의 끝
+	} // modifyInformation()의 끝
 	
 </script>
 <style>
@@ -80,7 +100,7 @@ body{ background-color: white; }
 <!-- 메뉴부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
-<article class="slider"><img src="${root }image/Camping.jpg"></article>
+<article class="slider"><img src="${root }image/candy04.jpg"></article>
 <!-- 회원가입 폼 -->
 <div class="container" style="margin-top:50px; margin-bottom:50px;">
 	<div class="row">
@@ -137,9 +157,8 @@ body{ background-color: white; }
 				<tr>
 	  				<td colspan = "2" align = "center">
 	  					<div class="text-right" style="margin-top:50px; margin-bottom:50px;">
-							<input type="button" class="btn btn-danger" onclick="javascript:modifyMemberDTO();" value="회원정보수정 완료"/>
+							<input type="button" class="btn btn-primary" onclick="javascript:modifyInformation();" value="회원정보수정 완료"/>
 							<a href="${root }member/getOut" class="btn btn-danger">회원탈퇴</a>
-
 						</div>
 	  				</td>
 				</tr>
@@ -180,11 +199,17 @@ $("#nick").blur(function(){
 		data : {nick: $("#nick").val()},
 		success : function(result){
 			if(result == "unavailable"){
+				
 				$("#checkNick").html('중복된 닉네임! 사용불가'); 
 				$("#checkNick").attr('color','red');
+				alert("cannot use"); 
+
 			}else if(result == "available"){
+				
 				$("#checkNick").html('사용가능합니다.');
 	        	$("#checkNick").attr('color','green');
+	        	alert("can use"); 
+			
 			}
 		}
 	});

@@ -10,5 +10,6 @@ public class LoginRecordDTO {
 	private int loginRecordNo;
 	private int memberNo;
 	private String email;
+	private String nick;
 	private Date loginRecordRealTime;
 }

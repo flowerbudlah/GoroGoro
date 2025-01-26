@@ -11,5 +11,6 @@ public class BoardDTO {
 	private String boardName; // 그 게시판의 이름
 	private Date CreationDate; // 게시판의 생성일(Now() 기본)
 	private int boardCategoryNo; // 게시판이 속한 카테고리의 인덱스 번호(외래키)
+	private String result;
 
 }

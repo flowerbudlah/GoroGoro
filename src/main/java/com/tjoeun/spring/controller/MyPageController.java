@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tjoeun.spring.dao.MemberDAO;
 import com.tjoeun.spring.dto.AdminReplyDTO;
+import com.tjoeun.spring.dto.FlagDTO;
 import com.tjoeun.spring.dto.MemberDTO;
 import com.tjoeun.spring.dto.PageDTO;
 import com.tjoeun.spring.dto.PostDTO;
@@ -121,6 +122,14 @@ public class MyPageController {
 		return reportDTO;
 		
 	}
+	
+	// 관리자에게 신고된 내용을 관리자가 받아드리고, 신고된 게시글은 경고플래그1을 받는다.  
+	@RequestMapping("/increaseFlag")
+	public  @ResponseBody FlagDTO increaseFlag(FlagDTO flagDTO) {
+		
+		return adminService.increaseFlag(flagDTO);
+	
+	}
 
 	//6. 관리자에게 신고한 내용 수정(Updating)하고자 할 때 신고내용 수정 페이지로 간다. 
 	@GetMapping("/modify")
@@ -141,13 +150,7 @@ public class MyPageController {
 		//수정하겠다고 하는 그 글들이 입력되어 고쳐쓴 새로운 PostDTO가 된다. 
 		return reportDTO;
 	}
-	
-	
-	
-	
-	
-	
-	 
+
 	//7. 이미지 첨부파일 삭제
 	@RequestMapping("/deleteImageFile")
 	public @ResponseBody ReportDTO deleteImageFile(HttpServletRequest request, HttpServletResponse response, ReportDTO imageFileReportDTO) {
@@ -155,7 +158,7 @@ public class MyPageController {
 		return afterDeletingImageFile;
 	}
 
-	//내가 쓴 게시물 
+	//내가 쓴 게시물
 	@RequestMapping("/myPosts")
 	public String myPost
 	(Model model, 
@@ -214,5 +217,4 @@ public class MyPageController {
 		return "myPage/myPosts";
 	} 
 
-	
 }

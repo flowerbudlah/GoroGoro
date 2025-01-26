@@ -32,7 +32,7 @@ h2{ font-family: 'Single Day', cursive; }
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!-- 그 게시판 윗 부분 그림-->
 <article class="slider">
-	<img src="/GoroGoroCommunity/image/convenientStore.png"> 
+	<img src="/GoroGoroCommunity/image/candy03.jpg"> 
 </article>
 <!--Post List(내가 쓴 게시글 리스트)-->
 <div class="container" style="margin-top:50px; margin-bottom:50px;">

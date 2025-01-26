@@ -87,7 +87,7 @@ public class BoardService {
 		
 		PostDTO postDTO = new PostDTO();
 		
-		//이미지 파일을 업로드
+		// 이미지 파일을 업로드
 		MultipartFile imageFile = writePostDTO.getImageFile(); 
 		String UploadingImageFileName = saveUploadFile(imageFile);
 		writePostDTO.setImageFileName(UploadingImageFileName);

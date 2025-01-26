@@ -11,8 +11,8 @@
 
 	<!-- 회원이 로그인을 할때마다 로그인 일시기록 -->
 	<insert id="recordRealTimeLogin" parameterType="com.tjoeun.spring.dto.LoginRecordDTO" useGeneratedKeys="true" keyProperty="loginRecordNo">
-		insert into LoginRecord(memberNo, email, loginRecordRealTime)
-							value(#{memberNo}, #{email}, Now());
+		insert into LoginRecord(memberNo, email, nick, loginRecordRealTime)
+							value(#{memberNo}, #{email}, #{nick}, Now());
 	</insert>
 
 	<!-- 1. 2) 이메일(아이디 용) 중복체크(회원가입시) -->
@@ -76,8 +76,7 @@
 	</select>
 
 	<!-- 비밀번호 분실시 -->
-	<select id="findPasswords" parameterType="java.lang.String"
-		resultType="com.tjoeun.spring.dto.MemberDTO">
+	<select id="findPasswords" parameterType="java.lang.String" resultType="com.tjoeun.spring.dto.MemberDTO">
 		select *
 		from members
 		where email = #{email}
@@ -88,6 +87,6 @@
 		update members
 		set passwords = #{passwords}
 		where email = #{email}
-	</update>	
+	</update>
 
 </mapper>

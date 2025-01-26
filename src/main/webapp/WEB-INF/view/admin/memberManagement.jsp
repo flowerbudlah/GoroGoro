@@ -60,6 +60,12 @@ function searchList(){
 	}//function의 끝	
 </script>
 <style>
+body {
+	background-image: url(http://localhost:8090/GoroGoroCommunity/image/banner/bottom-bg.jpg);
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	background-attachment: fixed;
+}
 /* 슬라이더 영역 CSS */
 .slider img{ display:block; width:100%; max-width:100%; height:300px; }
 body{ background-color: white; }
@@ -72,7 +78,9 @@ td{text-align:center; border: 1px solid black;}
 <!-- 메뉴부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
-<article class="slider"><img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg"></article>
+<article class="slider">
+	<img src="${root }image/yamamotoshinji_sapporo_clockTower.jpg">
+</article>
 <!--메인화면에 내용 들어가는 부분  -->
 <div style="padding-top:50px; padding-bottom:100px">
 <div class="container">
@@ -96,7 +104,7 @@ td{text-align:center; border: 1px solid black;}
 				<th style="text-align: center;">닉네임</th>
 				<th style="text-align: center;">게시글수</th>
 				<th style="text-align: center;">댓글수</th>
-				<th style="text-align: center;">신고게시글수</th>
+				<th style="text-align: center;">신고받은 게시글수</th>
 				<th style="text-align: center;">가입일</th>
 				<th style="text-align: center;">상세로그인일시</th>
 				<th style="text-align: center;">유효신고건수</th>
@@ -119,10 +127,10 @@ td{text-align:center; border: 1px solid black;}
 				</td>
 				<!-- 로그인 정보 -->
 				<td style="text-align: center;">
-					<a href="${root }admin/realTimeAboutLogin?email=${allMemberList.email}">상세보기</a>
+					<a href="${root }admin/realTimeAboutLogin?nick=${allMemberList.nick }">상세보기</a>
 				</td>
-				<td style="text-align: center;">0</td>
-				<td style="text-align: center;"><a href="">강제탈퇴시키기</a></td>
+				<td style="text-align: center;">${allMemberList.flagCount}</td>
+				<td style="text-align: center;"><a href="">일시정지</a></td>
 			</tr>
 		</c:forEach> 
 		</tbody>

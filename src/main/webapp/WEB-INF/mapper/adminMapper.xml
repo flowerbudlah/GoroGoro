@@ -9,7 +9,7 @@
 		insert into boardCategory(boardCategoryName)
 						values(#{boardCategoryName})
 	</insert>
-	
+
 	<!-- 1. 7) 같은 이름의 카테고리를 만들수 없다. -->
 	<select id="checkCategory"  resultType="java.lang.String" parameterType="java.lang.String">
 		select *
@@ -17,11 +17,17 @@
 		where boardCategoryName = #{boardCategoryName}
 	</select>
 
+	<!-- 같은 카테고리(대분류) 안에서는 같은 이름의 게시판을 만들수 없다. -->
+	<select id="checkSameBoardName"  resultType="java.lang.String" parameterType="com.tjoeun.spring.dto.BoardDTO">
+		select *
+		from boardInCategory
+		where boardCategoryNo = #{boardCategoryNo} and boardName = #{boardName}
+	</select>
+
 	<!-- 1. 2) 대분류 카테고리에 속하는 진짜 게시판 이름과 인덱스 생성 -->
 	<insert id="makeBoard" parameterType="com.tjoeun.spring.dto.BoardDTO">
-		insert into
-		boardInCategory(boardName, boardCategoryNo)
-		values(#{boardName}, #{boardCategoryNo})
+		insert into boardInCategory(boardName, boardCategoryNo)
+							values(#{boardName}, #{boardCategoryNo})
 	</insert>
 
 	<!-- 1. 3) 게시판 이름 변경 -->
@@ -52,34 +58,36 @@
 		where boardNo = #{boardNo}
 	</update>
 
-	<!-- 같은 카테고리(대분류) 안에서는 같은 이름의 게시판을 만들수 없다. -->
-	<select id="checkSameBoardName"  resultType="java.lang.String" parameterType="com.tjoeun.spring.dto.BoardDTO">
-		select *
-		from boardInCategory
-		where boardCategoryNo = #{boardCategoryNo} and boardName = #{boardName}
-	</select>
-	
 	<!-- 2. 1) 회원목록 가져오기(at 관리자 페이지) -->
 	<select id="takeMemberList" resultType="com.tjoeun.spring.dto.MemberDTO">
-		select m.memberNo, m.email, m.nick, m.signUpdate,
+	select m.memberNo, m.email, m.nick, m.signUpdate,
 			(select count(*) from freeBoard f where f.writer =m.nick ) as 'postCount',
 			(select count(*) from reply r where r.replyWriter =m.nick ) as 'replyCount',
 			(select count(*) 
-			from
-				(select f.postNo, f.title
+			from(
+				select f.postNo, f.title
 				from freeBoard f, reportBoard r, members mm
-				where (f.writer = mm.nick) and (r.postNo = f.postNo) and mm.memberNo = m.memberNo
-				group by f.postNo 
-				) newBoard ) as 'reportCount'
+				where (f.writer = mm.nick) and (r.postNo = f.postNo) and (mm.memberNo = m.memberNo)
+				group by f.postNo
+				) newBoard ) as 'reportCount', 
+                
+			(select count(*) 
+            from ( 
+				select ms.nick, fb.postNo
+				from flag fg, members ms, freeboard fb 
+				where (fg.postNo = fb.postNo)  and (ms.nick = fb.writer)  and (ms.nick = m.nick) 
+                group by ms.nick ) validCaution ) as 'flagCount'
 		from members m
 		order by
 		memberNo asc;
 	</select>
 	
+	<!-- 로그인 시간 정보 가져오기 -->
 	<select id="takeLoginRecord" parameterType="java.lang.String" resultType="com.tjoeun.spring.dto.LoginRecordDTO">
 		select *
 		from LoginRecord
-		where email = #{email}
+		where nick =  #{nick}
+		order by loginRecordNo desc
 	</select>
 
 	<!-- 2. 2) 회원정보 검색(at 관리자페이지) -->
@@ -114,22 +122,22 @@
 
 	<!-- 3. 1) 신고된 게시글 보기 -->
 	<select id="takeReportedPost" resultType="com.tjoeun.spring.dto.ReportDTO">
-		select *, (select count(*) from adminReply where reportNo =
-		r.reportNo) as replyCount
+		select *, (select count(*)  
+					from adminReply 
+					where reportNo = r.reportNo) as replyCount
 		from reportBoard r
 		order by reportNo desc
 	</select>
 
 	<!-- 3. 3) 신고된 게시글의 수(관리자페이지에서 페이지작업으로 필요) -->
 	<select id="countOfReportedPost" resultType="java.lang.Integer">
-		select count(*) from
-		reportBoard
+		select count(*) from reportBoard
 	</select>
 
 	<!--4. 1) 관리자가 신고된 기록에 대한 댓글 달기 -->
 	<insert id="writeAdminReplyProcess" parameterType="com.tjoeun.spring.dto.AdminReplyDTO" useGeneratedKeys="true" keyProperty="replyNo">
 		insert into adminReply(reportNo, replyContent, replyWriter, replyRegDate)
-						values( #{reportNo}, #{replyContent}, #{replyWriter}, Now() )
+						values(#{reportNo}, #{replyContent}, #{replyWriter}, Now())
 	</insert>
 
 	<!--4. 2) 관리자가 신고게시글에 답변한 댓글 목록 가져오기 -->
@@ -147,9 +155,7 @@
 	</delete>
 
 	<!-- 1. 4) 관리자에게 신고 접수된 게시물 검색 -->
-	<select id="searchList"
-		parameterType="com.tjoeun.spring.dto.ReportDTO"
-		resultType="com.tjoeun.spring.dto.ReportDTO">
+	<select id="searchList" parameterType="com.tjoeun.spring.dto.ReportDTO" resultType="com.tjoeun.spring.dto.ReportDTO">
 		select *
 		from reportBoard
 		where
@@ -166,9 +172,7 @@
 	</select>
 
 	<!-- 1. 4) 관리자에게 신고 접수된 게시물 검색후, "검색결과 수" 페이징 작업때문에 필효 -->
-	<select id="searchCount"
-		parameterType="com.tjoeun.spring.dto.ReportDTO"
-		resultType="java.lang.Integer">
+	<select id="searchCount" parameterType="com.tjoeun.spring.dto.ReportDTO" resultType="java.lang.Integer">
 		select count(*)
 		from reportBoard
 		where
@@ -183,4 +187,15 @@
 		</if>
 	</select>
 	
+	<insert id="increaseFlag" useGeneratedKeys="true" keyProperty="flagNo" parameterType="com.tjoeun.spring.dto.FlagDTO">
+		insert into Flag(memberNo, postNo, reportNo, reporter)
+					value(#{memberNo},#{postNo},#{reportNo},#{reporter})
+	</insert>
+	
+	<select id="checkFlagedAlready" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select * 
+		from flag 
+		where postNo = #{postNo}
+	</select>
+
 </mapper>

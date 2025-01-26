@@ -33,7 +33,7 @@ h1{ font-family: 'Single Day', cursive; }
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!-- 그 게시판 윗 부분 그림-->
 <article class="slider">
-	<img src="/GoroGoroCommunity/image/candy.png">
+	<img src="/GoroGoroCommunity/image/candy01.png">
 </article>
 <!--Post List(게시글 리스트)-->
 <div class="container" style="margin-top:50px; margin-bottom:100px;">
@@ -228,7 +228,6 @@ h1{ font-family: 'Single Day', cursive; }
 					<c:when test="${idx == pageDTO.currentPage }">
 						<li class="page-item active">
 							<a href="main?boardNo=${boardNo}&page=${idx}" class="page-link">${idx}</a>
-								<!-- http://localhost:8090/GoroGoroCommunity/board/      main?boardNo=2&page=1 -->
 						</li>
 					</c:when>
 					<c:otherwise>
@@ -257,10 +256,8 @@ h1{ font-family: 'Single Day', cursive; }
 			</c:otherwise>
 		</c:choose>
 		<!-- 페이징 끝 -->
-		<!-- <div class="card-body">	 -->	
 		</div>
-		<!-- 검색 기능 -->		
-		<!-- http://localhost:8090/GoroGoroCommunity/GoroGoroCommunity/searchResult?type=titleANDcontent&keyword=test&boardNo=2 -->	
+		<!-- 검색 기능 -->
 		<form action="searchResult" name="search-form" autocomplete="off" class="text-center" style="margin-top:30px;">
 			<select id="type" name="type">
 				<option value="titleANDcontent">제목+내용</option>

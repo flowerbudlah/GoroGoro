@@ -28,10 +28,13 @@ public class MemberDTO {
 
 	private int postCount; // 특정한 회원이 쓴 글의 수
 	private int replyCount; // 특정한 회원이 쓴
+	
 	private int reportCount; // 이 회원이 신고당한 건수
+	private int reportedPost; // 이 회원이 신고당한 
+	
+	private int flagCount; // 이 회원이 신고당한 
 
-	private String keyword;// 키워드 (관리자페이지)
+	private String keyword; // 키워드 (관리자페이지)
 	private String type; // 검색종류 (관리자페이지)
 
-	
 }

@@ -16,21 +16,14 @@
 <% String postNo = request.getParameter("postNo");%> 
 <c:set var="postNo" value="<%=postNo %>"/> 
 <script type="text/javascript">
-	
-	$(document).ready(function(){        });
-	
 	//1. 글 수정 아작스
-	function modifyProcess(){
+	function modifyPost(){
 
         var title = $("#title").val();
         var content = $("#content").val();
         
         var formData = new FormData($('#modifyPostDTO')[0]);	
-        alert(formData); 
-        alert(formData.title);
-        alert(formData.content);
-        alert(formData.postNo); 
-        
+
         if (title == ""){            
             alert("제목을 입력해주세요.");
             $("#title").focus();
@@ -175,7 +168,7 @@
 		            
 			      		<div class="form-group">
 							<div class="text-right">
-								<button class="btn btn-primary" onclick="javascript:modifyProcess();">수정완료</button>
+								<button class="btn btn-primary" onclick="javascript:modifyPost();">수정완료</button>
 								<button class="btn btn-info" onclick="javascript:history.back();">수정취소</button>
 							</div>
 						</div>

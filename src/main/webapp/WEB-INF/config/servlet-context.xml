@@ -1,107 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans 
-       xmlns="http://www.springframework.org/schema/mvc"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xmlns:beans="http://www.springframework.org/schema/beans"
-   xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
                       http://www.springframework.org/schema/mvc/spring-mvc.xsd
                       http://www.springframework.org/schema/beans 
                       http://www.springframework.org/schema/beans/spring-beans.xsd
                       http://www.springframework.org/schema/context
                       http://www.springframework.org/schema/context/spring-context.xsd">
-                      
 
-	<!-- 스캔한 클래스 내부의 클래스 중 @Controller Annotation 을 가지고 있는 클래스들이 Controller 로 동작하게 함-->
 
-	<!-- Annotation 이 가능하도록 설정하기  -->
+	<!-- 스캔한 클래스 내부의 클래스 중 @Controller Annotation 을 가지고 있는 클래스들이 Controller 
+		로 동작하게 함 -->
+
+	<!-- Annotation 이 가능하도록 설정하기 -->
 	<annotation-driven />
-	
-		<!-- Scan 할 Bean 들이 모여있는 package 를 지정함 -->
-		<context:component-scan base-package="com.tjoeun.spring.controller" />
-		<context:component-scan base-package="com.tjoeun.spring.dao" />
-		<context:component-scan base-package="com.tjoeun.spring.service" />
-		
-		<!-- Controller 에서 return하는 문자열(경로)에 접두사, 접미사 설정하기 -->
-		<!-- ViewResolver : View 해석기 -->
-		<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-			<beans:property name="prefix" value="/WEB-INF/view/" />
-			<beans:property name="suffix" value=".jsp" />
-		</beans:bean>
-		
-		<!-- 프로젝트에서 사용하는 정적 파일(이미지, 사운드, 동영상, js, css 등) 경로 설정하기 -->
-		<resources mapping="/**" location="/resources/" />  
-		
-		<!-- properties 파일 내용을 사용할 수 있도록 Bean 등록 -->
-		<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+
+	<!-- Scan 할 Bean 들이 모여있는 package 를 지정함 -->
+	<context:component-scan base-package="com.tjoeun.spring.controller" />
+	<context:component-scan base-package="com.tjoeun.spring.dao" />
+	<context:component-scan base-package="com.tjoeun.spring.service" />
+
+	<!-- Controller 에서 return하는 문자열(경로)에 접두사, 접미사 설정하기 -->
+	<!-- ViewResolver : View 해석기 -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/view/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+
+	<!-- 프로젝트에서 사용하는 정적 파일(이미지, 사운드, 동영상, js, css 등) 경로 설정하기 -->
+	<resources mapping="/**" location="/resources/" />
+
+	<!-- properties 파일 내용을 사용할 수 있도록 Bean 등록 -->
+	<beans:bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<beans:property name="locations">
-		<beans:list>
-			<beans:value>/WEB-INF/properties/db.properties</beans:value>
-			<beans:value>/WEB-INF/properties/option.properties</beans:value>
-		</beans:list>
+			<beans:list>
+				<beans:value>/WEB-INF/properties/db.properties</beans:value>
+				<beans:value>/WEB-INF/properties/option.properties</beans:value>
+			</beans:list>
 		</beans:property>
-		</beans:bean>
-	
-		<!-- 데이터베이스 접속 정보 관리 Bean -->
-		<beans:bean class="org.apache.commons.dbcp2.BasicDataSource" id="basic_data_source">
-			<beans:property name="driverClassName" value="${db.classname}"/>
-			<beans:property name="url" value="${db.url}"/>
-			<beans:property name="username" value="${db.username}"/>
-			<beans:property name="password" value="${db.password}"/>
-		</beans:bean>
-	
-		<!-- 쿼리문과 접속정보 관리 Bean -->
-		<beans:bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSession">
-			<beans:property name="dataSource" ref="basic_data_source" />
-			<beans:property name="mapperLocations" value="/WEB-INF/mapper/*.xml" />
-		</beans:bean>
-	
-		<!-- 쿼리문 실행 Bean (Mapper 관리) -->
-		<beans:bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSessionTemplate">
-		<beans:constructor-arg index="0" ref="sqlSession"/></beans:bean> 
-	
-		<!-- Interceptor 등록하기 -->
-		<interceptors>
-			<interceptor>
-				<mapping path="/**"/>
-				<beans:bean class="com.tjoeun.spring.interceptor.TopMenuInterceptor"/>
-			</interceptor>
-			<!-- 관리자 전용 페이지를 만들기 위한 인터셉터(The intercepter for making the administrator's only page) -->
-			<interceptor>
-				<mapping path="/admin/**" />
-				<beans:bean class="com.tjoeun.spring.interceptor.AdminInterceptor"/>
-			</interceptor>
-			<!-- 게시글(글 삭제, 수정은 글쓴이만 할수있다.) -->	
-			<interceptor>
-				<mapping path="/board/modify" /> <!-- 게시글 수정 -->
-			 <!--	<mapping path="/myPage/deleteReportDTO" /> 신고내용 삭제 -->
-				<beans:bean class="com.tjoeun.spring.interceptor.CheckWriterInterceptor"/>
-			</interceptor>
-			<!-- 게시글삭제는 관리자와 글쓴이만 할수있는걸로 한다.  -->
-			<interceptor>
-				<mapping path="/board/deletePost" /> <!-- 게시글 삭제 -->
-				<beans:bean class="com.tjoeun.spring.interceptor.DeleteInterceptor"/>
-			</interceptor>
-		</interceptors>  
-  
-		<!-- Message Source 등록하기 -->
-		<beans:bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource" id="messageSource" >
-		<beans:property name="basenames" >
+	</beans:bean>
+
+	<!-- 데이터베이스 접속 정보 관리 Bean -->
+	<beans:bean class="org.apache.commons.dbcp2.BasicDataSource" id="basic_data_source">
+		<beans:property name="driverClassName" value="${db.classname}" />
+		<beans:property name="url" value="${db.url}" />
+		<beans:property name="username" value="${db.username}" />
+		<beans:property name="password" value="${db.password}" />
+	</beans:bean>
+
+	<!-- 쿼리문과 접속정보 관리 Bean -->
+	<beans:bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSession">
+		<beans:property name="dataSource" ref="basic_data_source" />
+		<beans:property name="mapperLocations" value="/WEB-INF/mapper/*.xml" />
+	</beans:bean>
+
+	<!-- 쿼리문 실행 Bean (Mapper 관리) -->
+	<beans:bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSessionTemplate">
+		<beans:constructor-arg index="0" ref="sqlSession" />
+	</beans:bean>
+
+	<!-- Interceptor 등록하기 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/**" />
+			<beans:bean
+				class="com.tjoeun.spring.interceptor.TopMenuInterceptor" />
+		</interceptor>
+		<!-- 관리자 전용 페이지를 만들기 위한 인터셉터(The intercepter for making the administrator's 
+			only page) -->
+		<interceptor>
+			<mapping path="/admin/**" />
+			<beans:bean class="com.tjoeun.spring.interceptor.AdminInterceptor" />
+		</interceptor>
+		<!-- 게시글(글 삭제, 수정은 글쓴이만 할수있다.) -->
+		<interceptor>
+			<mapping path="/board/modify" /> <!-- 게시글 수정 -->
+			<!-- <mapping path="/myPage/deleteReportDTO" /> 신고내용 삭제 -->
+			<beans:bean class="com.tjoeun.spring.interceptor.CheckWriterInterceptor" />
+		</interceptor>
+		<!-- 게시글삭제는 관리자와 글쓴이만 할수있는걸로 한다. -->
+		<interceptor>
+			<mapping path="/board/deletePost" /> <!-- 게시글 삭제 -->
+			<beans:bean class="com.tjoeun.spring.interceptor.DeleteInterceptor" />
+		</interceptor>
+	</interceptors>
+
+	<!-- Message Source 등록하기 -->
+	<beans:bean
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+		id="messageSource">
+		<beans:property name="basenames">
 			<beans:list>
 				<beans:value>/WEB-INF/properties/errorMessage</beans:value>
 			</beans:list>
 		</beans:property>
-		</beans:bean> 
-		
-		<!-- Message 에 접근하기 위한 Accessor 등록하기 -->
-		<beans:bean class="org.springframework.context.support.MessageSourceAccessor">
-    		<beans:constructor-arg ref="messageSource"/>
-    	</beans:bean>
-  
-		<!-- 파일 업로드 데이터 관리 -->
-		<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">	 
-			<beans:property name="maxUploadSize" value="100000000" />   <!-- Max upload size : 10MB -->	        
-			<beans:property name="maxInMemorySize" value="100000000" /> <!-- Max size of file in memory : 10MB -->
-		</beans:bean>
-		 
+	</beans:bean>
+
+	<!-- Message 에 접근하기 위한 Accessor 등록하기 -->
+	<beans:bean class="org.springframework.context.support.MessageSourceAccessor">
+		<beans:constructor-arg ref="messageSource" />
+	</beans:bean>
+
+	<!-- 파일 업로드 데이터 관리 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="100000000" />   <!-- Max upload size : 10MB -->
+		<beans:property name="maxInMemorySize" value="100000000" /> <!-- Max size of file in memory : 10MB -->
+	</beans:bean>
+
 </beans:beans>

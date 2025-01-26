@@ -15,21 +15,18 @@ import com.tjoeun.spring.service.MainService;
 
 @Controller
 public class MainController {
-	
+
 	@Autowired
 	private MainService mainService;
-	
+
 	@RequestMapping("/main")
 	public String main(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
-		List<PostDTO> postList = mainService.getMainList(); 
 
-		model.addAttribute("postList", postList); 
-	
+		List<PostDTO> postList = mainService.getMainList();
+
+		model.addAttribute("postList", postList);
+
 		return "main";
 	}
-	
-	
-	
-	
+
 }

@@ -99,7 +99,6 @@ public class MemberController {
 	//3.2) 닉네임 중복체크(at 회원정보수정 페이지)
 	@RequestMapping("/checkNickInModify")
 	public @ResponseBody String checkNickInModify(String nick) {
-		System.out.println("===================================Test==================================="); 
 		System.out.println("signInMemberDTO: "+signInMemberDTO.getNick());
 		System.out.println(nick); 
 			

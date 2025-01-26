@@ -9,12 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import com.tjoeun.spring.dto.AdminReplyDTO;
 import com.tjoeun.spring.dto.BoardDTO;
-
+import com.tjoeun.spring.dto.FlagDTO;
 import com.tjoeun.spring.dto.LoginRecordDTO;
 import com.tjoeun.spring.dto.MemberDTO;
-
 import com.tjoeun.spring.dto.ReportDTO;
-
 
 @Repository
 public class AdminDAO {
@@ -32,13 +30,18 @@ public class AdminDAO {
 	}
 
 	// 2. 대분류 카테고리에 속하는 진짜 게시판 이름과 인덱스 생성
-	public void makeBoard(BoardDTO BoardDTOinCategory) {
-		sqlSessionTemplate.insert("admin.makeBoard", BoardDTOinCategory);
+	public int makeBoard(BoardDTO BoardDTOinCategory) {
+		return sqlSessionTemplate.insert("admin.makeBoard", BoardDTOinCategory);
 	}
 
 	// 3. 게시판 이름 변경 Updating
-	public void changeBoardName(BoardDTO boardDTOinCategory) {
-		sqlSessionTemplate.update("admin.changeBoardName", boardDTOinCategory);
+	public int changeBoardName(BoardDTO boardDTOinCategory) {
+		return sqlSessionTemplate.update("admin.changeBoardName", boardDTOinCategory);
+	}
+	
+	// 게시판 이름 중복체크
+	public String checkBoardNameInTheSameCategory(BoardDTO boardNameAndCategoryNo) {
+		return sqlSessionTemplate.selectOne("admin.checkSameBoardName", boardNameAndCategoryNo);
 	}
 
 	// 4. 카테고리 삭제
@@ -52,9 +55,11 @@ public class AdminDAO {
 	}
 
 	// 6. 게시판이 속한 대분류 카테고리 변경 Updating
-	public void changeCategory(BoardDTO boardDTOinCategory) {
-		sqlSessionTemplate.update("admin.changeCategory", boardDTOinCategory);
+	public int changeCategory(BoardDTO boardDTOinCategory) {
+		return sqlSessionTemplate.update("admin.changeCategory", boardDTOinCategory);
 	}
+	
+	
 
 	// 7. 1) 회원목록 가져오기
 	public List<MemberDTO> takeMemberList() {
@@ -103,10 +108,8 @@ public class AdminDAO {
 
 	// 1. 4) 메인 게시판에서 글 검색
 	public List<ReportDTO> searchList(ReportDTO searchListReportDTO, RowBounds rowBounds) throws Exception {
-
 		List<ReportDTO> searchList = sqlSessionTemplate.selectList("admin.searchList", searchListReportDTO, rowBounds);
 		return searchList;
-
 	}
 
 	// 아작스로 검색 시 검색결과 수(아작스로 페이징 작업때문에 필요)
@@ -115,12 +118,18 @@ public class AdminDAO {
 		return searchCount;
 	}
 
-	public String checkBoardNameInTheSameCategory(BoardDTO boardNameAndCategoryNo) {
-		return sqlSessionTemplate.selectOne("admin.checkSameBoardName", boardNameAndCategoryNo);
+	public List<LoginRecordDTO> takeLoginRecord(String nick) {
+		return sqlSessionTemplate.selectList("admin.takeLoginRecord", nick);
 	}
 
-	public List<LoginRecordDTO> takeLoginRecord(String email) {
-		return sqlSessionTemplate.selectList("admin.takeLoginRecord", email);
+	// 2. 1) 글쓰기 Create
+	public int increaseFlag(FlagDTO flagDTO) {
+		return sqlSessionTemplate.insert("admin.increaseFlag", flagDTO);
+	}
+
+	// 해당 글이 이미 신고되어 유효한 경고 플래그를 받은경우인지 체크 
+	public String checkFlagedAlready(int postNo) {
+		return sqlSessionTemplate.selectOne("admin.checkFlagedAlready", postNo);
 	}
 
 }

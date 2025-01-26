@@ -9,7 +9,7 @@
 	text-align: center;
 	margin: 0;
 	padding: 0;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 .main li {
@@ -34,8 +34,8 @@
 
 .main>li {
 	font-color: white;
-	margin-right: 20px;
-	margin-left: 20px;
+	margin-right: 15px;
+	margin-left: 15px;
 	margin-top: 10px;
 	margin-bottom: 10px;
 	line-height: 30px;
@@ -45,7 +45,7 @@
 	float: left;
 	list-style: none;
 	font-weight: bolder;
-	font-size: 14px;
+	font-size: 15px;
 	position: relative;
 	margin: 0 auto;
 }
@@ -56,7 +56,7 @@
 }
 
 .ml-auto {
-	font-size: 14px;
+	font-size: 15px;
 }
 
 .navbar-collapse{
@@ -80,7 +80,7 @@
 			error : function(request, status, error) {
 				alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 			}
-		}) //아작스		
+		}) // 아작스		
 	}
 </script>
 <nav class="navbar navbar-expand-md bg-light navbar-dark fixed-top shadow-lg">
@@ -101,51 +101,55 @@
 		<!-- 게시판 메뉴 -->
 		<ul class="navbar-nav main">
 			<li>
-				<a href="${root }board/main?boardNo=1" style="color: black;'"> 공지사항 </a>
+				<a href="${root }board/main?boardNo=1" style="color: black;'">공지사항</a>
 			</li>
 			<c:forEach var="CategoryListDTO" items="${CategoryList}">
-				<li class="nav-item">${CategoryListDTO.boardCategoryName }<!-- 카테고리 나오는 부분 -->
-					<ul>
-						<c:forEach var="BoardListDTO" items="${BoardList }">
-							<c:choose>
-								<c:when
-									test="${CategoryListDTO.boardCategoryNo == BoardListDTO.boardCategoryNo }">
-									<li>
-										<!-- 진짜 메뉴 나오는 부분! --> 
-										<a href="${root }board/main?boardNo=${BoardListDTO.boardNo}" style="color: black;'"> ${BoardListDTO.boardName } </a>
-									</li>
-									<br>
-								</c:when>
-								<c:otherwise></c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</ul>
-				</li>
+			<!-- 카테고리 나오는 부분 -->
+			<li class="nav-item">${CategoryListDTO.boardCategoryName }
+				<ul>
+					<c:forEach var="BoardListDTO" items="${BoardList }">
+						<c:choose>
+							<c:when test="${CategoryListDTO.boardCategoryNo == BoardListDTO.boardCategoryNo }">
+								<li>
+									<!-- 진짜 메뉴 나오는 부분! --> 
+									<a href="${root }board/main?boardNo=${BoardListDTO.boardNo}" style="color: black;'"> ${BoardListDTO.boardName } </a>
+								</li>
+								<br>
+							</c:when>
+							<c:otherwise></c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</ul>
+			</li>
 			</c:forEach>
-			<li><a href="${root }board/main?boardNo=2" style="color: black;'">익명</a></li>
+			<li>
+				<a href="${root }board/main?boardNo=2" style="color: black;'">익명</a>
+			</li>
 		</ul>
 		<!-- 게시판 메뉴의 끝 -->
 		<ul class="navbar-nav main">
-			<li>마이 페이지
+			<li>마이페이지
 				<ul>
 					<c:choose>
 						<c:when test="${signInMemberDTO.signIn == true }">
 							<!-- 로그인을 해야지 보이는 관리자 페이지 -->
-							<li><a href="${root }member/modify" style="color: black;">회원정보수정</a></li>
+							<li>
+								<a href="${root }member/modify" style="color: black;">회원정보수정</a>
+							</li>
 							<br>
-							<li><a
-								href="${root }myPage/myPosts?memberNo=${signInMemberDTO.memberNo}"
-								style="color: black;">나의 게시물</a></li>
+							<li>
+								<a href="${root }myPage/myPosts?memberNo=${signInMemberDTO.memberNo}" style="color: black;">나의 게시물</a>
+							</li>
 							<br>
-							<li><a
-								href="${root }myPage/reportList?reporter=${signInMemberDTO.nick}"
-								style="color: black;">나의 신고내역</a></li>
+							<li>
+								<a href="${root }myPage/reportList?reporter=${signInMemberDTO.nick}" style="color: black;">나의 신고내역</a>
+							</li>
 						</c:when>
 						<c:otherwise></c:otherwise>
 					</c:choose>
 				</ul>
 			</li>
-			<li>관리자 페이지
+			<li>관리자페이지
 				<ul>
 					<c:choose>
 						<c:when test="${signInMemberDTO.signIn == true }">

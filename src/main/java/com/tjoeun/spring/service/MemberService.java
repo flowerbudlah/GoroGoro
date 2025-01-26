@@ -63,10 +63,10 @@ public class MemberService {
 			LoginRecordDTO realTimeLoginRecordDTO = new LoginRecordDTO();
 			realTimeLoginRecordDTO.setMemberNo(signInMemberDTO.getMemberNo());
 			realTimeLoginRecordDTO.setEmail(signInMemberDTO.getEmail());
-			memberDAO.recordRealTimeLogin(realTimeLoginRecordDTO);
-			System.out.println(realTimeLoginRecordDTO);
+			realTimeLoginRecordDTO.setNick(memberDTOfromDB.getNick());
 			// 회원이 로그인을 하면, 그 로그인을 한 시각이 기록된다.
-			
+			memberDAO.recordRealTimeLogin(realTimeLoginRecordDTO);
+
 		} else if (memberDTOfromDB == null) { // 로그인을 했더니, DB애 정보가 없다. 로그인 불가
 
 			signInMemberDTO.setSignIn(false);

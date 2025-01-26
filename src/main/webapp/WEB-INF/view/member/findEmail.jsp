@@ -95,7 +95,9 @@ body{
 <!-- 메뉴부분 -->
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
-<article class="slider"><img src="${root }image/yellowSmile.png"></article>
+<article class="slider">
+	<img src="${root }image/candy04.jpg">
+</article>
 <!-- 로그인 폼 -->
 <div class="container" style="margin-top:50px; margin-bottom:50px; ">
 	<div class="row">

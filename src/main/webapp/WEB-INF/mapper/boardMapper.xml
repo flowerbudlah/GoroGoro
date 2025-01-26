@@ -11,8 +11,7 @@
 		f.postNo desc </select> -->
 
 	<!-- 1. 1) 메인페이지로 간다.(with 글 목록) -->
-	<select id="goMain" parameterType="java.lang.Integer"
-		resultType="com.tjoeun.spring.dto.PostDTO">
+	<select id="goMain" parameterType="java.lang.Integer" resultType="com.tjoeun.spring.dto.PostDTO">
 		select f.postNo, f.title, f.content, f.writer, f.regDate,
 		f.viewCount, f.sameThinking, f.boardNo, f.imageFileName,
 		(select
@@ -109,23 +108,18 @@
 	</update>
 
 	<!-- 3. 4) 게시글 신고 (이미지 파일 첨부기능포함) -->
-	<insert id="reportProcess"
-		parameterType="com.tjoeun.spring.dto.ReportDTO"
-		useGeneratedKeys="true" keyProperty="reportNo">
-		insert into reportBoard(postNo,
-		reason, detail, reporter, reportDate, imageFileName)
-		values(#{postNo},
-		#{reason}, #{detail}, #{reporter}, Now(), #{imageFileName})
+	<insert id="reportProcess" parameterType="com.tjoeun.spring.dto.ReportDTO" useGeneratedKeys="true" keyProperty="reportNo">
+		insert into reportBoard(postNo, reason, detail, reporter, reportDate, imageFileName)
+						values(#{postNo},#{reason}, #{detail}, #{reporter}, Now(), #{imageFileName})
 	</insert>
 
 	<!-- 4. 1) 글 수정하기 Updating -->
-	<update id="modify"
-		parameterType="com.tjoeun.spring.dto.PostDTO">
+	<update id="modify" parameterType="com.tjoeun.spring.dto.PostDTO">
 		update freeBoard
-		set title = #{title}, content = #{content},
-		imageFileName = #{imageFileName, jdbcType=VARCHAR}
-		where postNo =
-		#{postNo}
+		set title = #{title}, 
+			content = #{content},
+			imageFileName = #{imageFileName, jdbcType=VARCHAR}
+		where postNo = #{postNo}
 		<!-- 위의 file은 데이터베이스에 저장되어있는 이미지 파일이름을 저장하는 변수 -->
 	</update>
 
@@ -141,8 +135,7 @@
 	<delete id="deletePost" parameterType="java.lang.Integer">
 		delete
 		from freeBoard
-		where
-		postNo = #{postNo}
+		where postNo = #{postNo}
 	</delete>
 
 </mapper>

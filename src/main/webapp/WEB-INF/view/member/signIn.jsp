@@ -63,7 +63,7 @@ body{ background-color: white; }
 <c:import url="/WEB-INF/view/include/topMenu.jsp"/>
 <!--가운데 그림-->
 <article class="slider">
-	<img src="${root }image/candy01.jpg">
+	<img src="${root }image/candy05.jpg">
 </article>
 <!-- 로그인 폼 -->
 <div class="container" style="margin-top:50px; margin-bottom:50px;">
